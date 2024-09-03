@@ -1,10 +1,16 @@
 import mongoose from 'mongoose'
 
-const mongooseURI:string = "mongodb://localhost:27017";
+const mongooseURI = 'mongodb://localhost:27017';
 
-const connectToMongoDB = () => 
-{
-    mongoose.connect(mongooseURI);
+export const connectToMongoDB = async () => {
+    try
+    {
+        mongoose.connect(mongooseURI);
+        console.log('Connect to mongoDB successfully!');
+    }
+    catch(error)
+    {
+        console.error('Error connecting to MongoDB:', error);
+    }
+
 }
-
-module.exports = connectToMongoDB;

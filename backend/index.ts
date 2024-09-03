@@ -1,22 +1,18 @@
 import express from 'express';
+import cors from 'cors';
+import { connectToMongoDB } from './connectToMongo';
 
-const connect = require('./connectToMongo');
-var cors = require('cors');
 
-connect();
+connectToMongoDB();
 
 const app = express();
-const port:number = 5000;
+const PORT = 5000;
 
-app.use(cors);
+app.use(cors());
 app.use(express.json())
 
-app.use('api/user', require('./routes/user'));
-app.use('api/note', require('./routes/note'));
+app.use('/api/user', require('./routes/user'));
 
-
-app.listen(port, () => 
-    { 
-        console.log(`listen to http://localhost:${port}`)
-    }
-)
+app.listen(PORT, () => { 
+    console.log(`Server listen to http://localhost:${PORT}`);
+})

@@ -1,15 +1,15 @@
-import { model, now, Schema } from 'mongoose';
-import { userInterface } from '../interface/UserInterface';
+import mongoose from 'mongoose';
+import { userInterface } from '../interface/dbInterface';
 
-const UserSchema = new Schema<userInterface>
+const UserSchema = new mongoose.Schema<userInterface>
 (
     {
-        name: { Types: String, required: true },
-        email: { Types: String, required: true, unique: true },
-        password: { Types: String, required: true },
-        date: { Types: Date, default: now }
+        name: { type: String },
+        email: { type: String },
+        password: { type: String },
+        createdAt: { type: Date, default: Date.now }
     }
 );
 
-export const User = model<userInterface>('user', UserSchema);
-module.exports = User;
+const User = mongoose.model<userInterface>('User', UserSchema);
+export default User;

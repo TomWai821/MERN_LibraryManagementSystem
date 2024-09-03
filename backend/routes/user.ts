@@ -1,77 +1,38 @@
-import express, {Request, Response} from 'express';
-import {UserService} from '../services/user'
-import { validationResult, body } from 'express-validator';
+import express, { Request, Response } from 'express';
+import { createUser, findUser } from '../handler/user';
+import { bcryptHash, jwtSign } from '../handler/validation';
+import { createUserInterface, user } from '../interface/requestInterface';
 
 const router = express.Router();
-const userService = new UserService();
 
-router.post('/createUser',
-    [
-        body('name','').isLength({min: 3}),
-        body('email','Please input valid email!').isEmail(),
-        body('password','').isLength({min: 3})
-    ], 
-    async(request:Request, response:Response) => 
+router.post('/createUser', async (req: Request, res: Response) => 
+{
+    const { email, name, password }: createUserInterface = req.body;
+    let success: boolean = false;
+
+    try 
     {
-        const errors = validationResult(request);
-        let success:boolean = false;
-        const {userName, email, password} = request.body;
+        const user = await findUser({ email: email }) as user | null ;
 
-        if(!errors.isEmpty())
+        if(!user)
         {
-            return response.status(400).json({success, errors});
+            return res.status(400).json({ error: 'User already exists' });
         }
 
-        try
-        {
-            let user = await userService.getUseremail(email);
+        const secPass = await bcryptHash(password);
+        const newUser = await createUser({ email: email, name: name, password: secPass }) as user;
 
-            if(user)
-            {
-                return response.status(400).json("This user are already exist!");
-            }
+        const data = { user: { id: newUser._id }};
+        const authToken:string = await jwtSign(data);
 
-            user = await userService.createUser(userName, email, password);
-            
-            const authToken = await userService.encryptUserData(userName);
-            success = true;
-            response.json({success, authToken});
-
-        }
-        catch(error)
-        {
-            return response.status(500).json("Some error occured");
-        }
+        success = true;
+        res.json({ success, authToken });
+    } 
+    catch (error) 
+    {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-);
+});
 
-router.post('/login', async(request:Request, response:Response) => 
-    {
-        const {email, password} = request.body;
-        let success:boolean = false;
-
-        try
-        {
-            let user = await userService.getUseremail(email);
-
-            if(!user)
-            {
-                return response.status(400).json({success, error:"Invalid credentials!"});
-            }
-
-            const comparePassword = await userService.passwordAuth(password , user.password);
-
-            if(!comparePassword)
-            {
-                return response.status(400).json({success, error:"Invalid credentials!"});
-            }
-            
-            const data = userService.encryptUserData(user.id);
-            success = true;
-            response.json({success, data});
-        }
-        catch(error)
-        {
-            return response.status(500).json("some error occured");
-        }
-    });
+module.exports = router;

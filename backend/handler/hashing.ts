@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 
 const JWT_SECERT = "Wh@t@ver";
 
+
 export const bcryptHash = async(password:string) => 
 {
     const salt = await bcrypt.genSalt(10);
@@ -17,4 +18,9 @@ export const comparePassword = async(inputPassword:string, comparePassword:strin
 export const jwtSign = async(UserID:Record<string, any>) => 
 {
     return jwt.sign(UserID, JWT_SECERT);
+}
+
+export const jwtVerify = async(token:string) =>
+{
+    return jwt.verify(token, JWT_SECERT) as { user:{ _id:string } };
 }

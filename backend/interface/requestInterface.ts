@@ -7,10 +7,23 @@ export interface createUserInterface
     password:string;
 }
 
+export interface loginInterface
+{
+    email:string;
+    password:string;
+}
+
 export interface user
 {
     _id:Types.ObjectId;
     name:string;
     email:string;
     password:string;
+}
+
+export interface changePassword
+{
+    _id:Types.ObjectId;
+    oldPassword:string;
+    newPassword:string;
 }

@@ -1,20 +1,10 @@
 import User from '../schema/user';
-import { Request, Response, NextFunction } from 'express';
-import { jwtVerify } from './hashing';
-
-export interface authRequest extends Request 
-{
-    user: 
-    { 
-        _id: string; 
-    };
-}
 
 export const findUser = async (email:Record<string, any>) => 
 {
     try
     { 
-        return await User.findOne(email);
+        return User.findOne(email);
     }
     catch(error)
     {
@@ -26,7 +16,7 @@ export const createUser = async (user: Record<string, any>) =>
 { 
     try
     {
-        return await User.create(user);
+        return User.create(user);
     }
     catch(error)
     {
@@ -34,29 +24,19 @@ export const createUser = async (user: Record<string, any>) =>
     }
 };
 
-export const fetchuser = async (req: authRequest, res: Response, next: NextFunction) => 
+export const getUser = async(userId:string) => 
 {
-    const token = req.header('auth-token');
-
-    if (!token) 
+    try
     {
-        res.status(401).send({ error: "Please authenticate using a valid token" });
-        return;
+        return User.findById(userId).select("-password");
     }
-  
-    try 
+    catch(error)
     {
-        const data = await jwtVerify(token);
-        req.user = data.user;
-        next();
-    } 
-    catch (error) 
-    {
-        res.status(401).send({ error: "Please authenticate using a valid token" });
+        return error;
     }
-};
+}
 
-export const findUserById = async (id:string) =>
+export const changePasword = async()
 {
-    return await User.findById(id).select("-password");
+    return User.findByIdAndUpdate();
 }

@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { AuthRequest } from './middleware';
 
-const JWT_SECERT = "Wh@t@ver";
-
+const JWT_SECRET:string = "Wh@t@ver"
 
 export const bcryptHash = async(password:string) => 
 {
@@ -17,10 +17,10 @@ export const comparePassword = async(inputPassword:string, comparePassword:strin
 
 export const jwtSign = async(UserID:Record<string, any>) => 
 {
-    return jwt.sign(UserID, JWT_SECERT);
+    return jwt.sign(UserID, JWT_SECRET);
 }
 
 export const jwtVerify = async(token:string) =>
 {
-    return jwt.verify(token, JWT_SECERT) as { user:{ _id:string } };
+    return jwt.verify(token, JWT_SECRET) as AuthRequest;
 }

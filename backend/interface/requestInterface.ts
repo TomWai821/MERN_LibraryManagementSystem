@@ -13,7 +13,7 @@ export interface loginInterface
     password:string;
 }
 
-export interface user
+export interface UserInterface
 {
     _id:Types.ObjectId;
     name:string;

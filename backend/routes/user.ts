@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { createUser,  findUser, getUser } from '../handler/userHandler';
+import { createUser,  findUser, getUser, updatePassword } from '../handler/userHandler';
 import { bcryptHash, comparePassword, jwtSign } from '../handler/hashing';
 import { changePassword, createUserInterface, loginInterface, UserInterface } from '../interface/requestInterface';
 import fetchuser, { AuthRequest } from '../handler/middleware';
@@ -23,7 +23,7 @@ router.post('/register', async (req: Request, res: Response) =>
         const secPass = await bcryptHash(password);
         const newUser = await createUser({ email: email, name: name, password: secPass }) as UserInterface;
 
-        const data = { user: { id: newUser._id }};
+        const data = { user: { _id: newUser._id }};
         const authToken:string = await jwtSign(data);
 
         success = true;
@@ -74,8 +74,8 @@ router.post('/login', async (req:Request, res:Response) =>
 // GET method ,login required, it get user data
 router.get('/user', fetchuser, async(req:AuthRequest, res:Response) => 
 {
-    const userId = req.user?.id;
-
+    const userId = req.user?._id;
+    console.log(userId);
     if(!userId)
     {
         return res.status(401).json({error: "Invalid auth Token!"});
@@ -83,14 +83,14 @@ router.get('/user', fetchuser, async(req:AuthRequest, res:Response) =>
 
     try
     {
-        const foundUser = await getUser(userId) ;
+        const foundUser = await getUser(userId) as  UserInterface | null ;
 
         if(!foundUser)
         {
             return res.status(401).json({error: "Invalid auth Token!"});
         }
 
-        res.send(foundUser);
+        res.send({foundUser});
     }
     catch(error)
     {
@@ -99,11 +99,12 @@ router.get('/user', fetchuser, async(req:AuthRequest, res:Response) =>
     }
 });
 
-router.put('/changePassword', fetchuser, async(req:AuthRequest, res:Response) => 
+
+router.put('/changePassword/:id', fetchuser, async(req:AuthRequest, res:Response) => 
 {
     const {oldPassword, newPassword}:changePassword = req.body;
     let success:boolean = false;
-    const userId = req.user?.id;
+    const userId = req.user?._id;
 
     if(!userId)
     {
@@ -112,10 +113,27 @@ router.put('/changePassword', fetchuser, async(req:AuthRequest, res:Response) =>
 
     try
     {
+        const foundUser = await getUser(userId) as UserInterface;
         
+        if(!foundUser)
+        {
+            return res.status(401).json({error : "Cannot found this account!"});
+        }
+
+        const compare = await comparePassword(oldPassword, foundUser.password);
+
+        if(!compare)
+        {
+            return res.status(401).json({error : "Password Incorrect!"});
+        }
+
         const hashPassword = await bcryptHash(newPassword);
+
+
+        updatePassword(userId, hashPassword);
         success = true;
-        res.json({success, message: "Change password successfully!"})
+        res.json({success, message: "Change password successfully!"});
+
     }
     catch(error)
     {
@@ -123,5 +141,7 @@ router.put('/changePassword', fetchuser, async(req:AuthRequest, res:Response) =>
         res.status(500).json({ error: "Internal Server Error!"});
     }
 });
+
+
 
 module.exports = router;

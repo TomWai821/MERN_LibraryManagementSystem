@@ -28,7 +28,7 @@ export const getUser = async(userId:string) =>
 {
     try
     {
-        return User.findById(userId).select("-password");
+        return User.findById(userId);
     }
     catch(error)
     {
@@ -36,7 +36,7 @@ export const getUser = async(userId:string) =>
     }
 }
 
-export const changePasword = async()
+export const updatePassword = async(userId:string, newPassword:string) =>
 {
-    return User.findByIdAndUpdate();
+    return User.findByIdAndUpdate(userId, {password:newPassword});
 }

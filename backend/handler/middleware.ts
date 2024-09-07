@@ -1,11 +1,11 @@
 import { Response, Request, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { jwtVerify } from './hashing';
-const JWT_SECRET:string = "Wh@t@ver";
+import { userInterface } from '../interface/dbInterface';
 
 export interface AuthRequest extends Request
 {
-    user?: { id:string };
+    user?: userInterface;
 }
 
 

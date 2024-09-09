@@ -2,7 +2,8 @@ import mongoose from 'mongoose'
 
 const mongooseURI = 'mongodb://localhost:27017';
 
-export const connectToMongoDB = async () => {
+export const connectToMongoDB = async () => 
+{
     try
     {
         mongoose.connect(mongooseURI);
@@ -12,5 +13,4 @@ export const connectToMongoDB = async () => {
     {
         console.error('Error connecting to MongoDB:', error);
     }
-
 }

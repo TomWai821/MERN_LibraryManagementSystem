@@ -1,5 +1,4 @@
 import { Response, Request, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
 import { jwtVerify } from './hashing';
 import { userInterface } from '../interface/dbInterface';
 
@@ -9,25 +8,27 @@ export interface AuthRequest extends Request
 }
 
 
-const fetchuser = async (req: AuthRequest, res: Response, next: NextFunction) => 
+export const fetchuser = async (req: AuthRequest, res: Response, next: NextFunction) => 
 {
     try 
     {
         const token = req.header('auth-token');
-    
-        if (!token) 
+
+        if(token != "")
         {
-            return res.status(401).send({ error: "Please authenticate using a valid token" });
+            if (!token) 
+            {
+                return res.status(401).send({ error: "Please authenticate using a valid token" });
+            }
+
+            const data = await jwtVerify(token);
+
+            if(!data)
+            {
+                return res.status(401).send({ error: "Invalid token!" });
+            }
+            req.user = data.user;
         }
-
-        const data = await jwtVerify(token);
-
-        if(!data)
-        {
-            return res.status(401).send({ error: "Invalid token!" });
-        }
-
-        req.user = data.user;
         next();
     } 
     catch (error) 
@@ -35,5 +36,3 @@ const fetchuser = async (req: AuthRequest, res: Response, next: NextFunction) =>
         return res.status(401).send({ error: "Please authenticate using a valid token" });
     }
 };
-
-export default fetchuser;

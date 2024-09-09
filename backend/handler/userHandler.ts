@@ -28,6 +28,10 @@ export const getUser = async(userId:string) =>
 {
     try
     {
+        if(userId.match("{}"))
+        {
+           return User.find({});
+        }
         return User.findById(userId);
     }
     catch(error)

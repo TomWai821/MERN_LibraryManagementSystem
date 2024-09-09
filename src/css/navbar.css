@@ -1,0 +1,28 @@
+#nav
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 75px;
+    background-color: black;
+    opacity: 85%;
+}
+
+#nav-right
+{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#nav-right a 
+{
+    margin: 0 25px 0 25px;
+    transition: 0.25s ease;
+    color:white;
+}
+
+#nav-right a:hover
+{
+    color:lightgray;
+}

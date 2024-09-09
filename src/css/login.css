@@ -1,0 +1,14 @@
+#login, #loginPanel
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#Panel
+{
+    width: 800px;
+    width: 800px;
+    border-color: black;
+    border-radius: 5px;
+}

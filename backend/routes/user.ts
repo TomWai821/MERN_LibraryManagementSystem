@@ -2,10 +2,11 @@ import express, { Request, Response } from 'express';
 import { createUser,  findUser, getUser, updatePassword } from '../handler/userHandler';
 import { bcryptHash, comparePassword, jwtSign } from '../handler/hashing';
 import { changePassword, createUserInterface, loginInterface, UserInterface } from '../interface/requestInterface';
-import fetchuser, { AuthRequest } from '../handler/middleware';
+import { fetchuser, AuthRequest } from '../handler/middleware';
 
 const router = express.Router();
 
+// POST method, it used to create a user in mongoDB
 router.post('/register', async (req: Request, res: Response) => 
 {
     const { email, name, password }: createUserInterface = req.body;
@@ -21,7 +22,7 @@ router.post('/register', async (req: Request, res: Response) =>
         }
 
         const secPass = await bcryptHash(password);
-        const newUser = await createUser({ email: email, name: name, password: secPass }) as UserInterface;
+        const newUser = await createUser({ email: email, name: name, password: secPass, role: "User", banned: false }) as UserInterface;
 
         const data = { user: { _id: newUser._id }};
         const authToken:string = await jwtSign(data);
@@ -36,7 +37,7 @@ router.post('/register', async (req: Request, res: Response) =>
     }
 });
 
-// POST method, no login required ,it used to login(verify)
+// POST method, no login required, it used to login(verify)
 router.post('/login', async (req:Request, res:Response) => 
 {
     const {email, password}:loginInterface = req.body; 
@@ -49,6 +50,11 @@ router.post('/login', async (req:Request, res:Response) =>
         if(!user)
         {
             return res.status(400).json({ error: "Invalid Credentials" });
+        }
+
+        if(user.banned == true)
+        {
+            return res.status(401).json( { error: "This user was banned" });
         }
 
         const compare = await comparePassword(password, user.password);
@@ -71,14 +77,19 @@ router.post('/login', async (req:Request, res:Response) =>
     }
 });
 
-// GET method ,login required, it get user data
+// GET method, login required, it get user data
 router.get('/user', fetchuser, async(req:AuthRequest, res:Response) => 
 {
-    const userId = req.user?._id;
-    console.log(userId);
-    if(!userId)
+    let userId = "{}";
+     
+    if(req.user?._id != null)
     {
-        return res.status(401).json({error: "Invalid auth Token!"});
+        userId = req.user?._id;
+
+        if(!userId)
+        {
+            return res.status(401).json({error: "Invalid auth Token!"});
+        }
     }
 
     try
@@ -99,7 +110,7 @@ router.get('/user', fetchuser, async(req:AuthRequest, res:Response) =>
     }
 });
 
-
+// PUT method, login required, which used to change user password
 router.put('/changePassword/:id', fetchuser, async(req:AuthRequest, res:Response) => 
 {
     const {oldPassword, newPassword}:changePassword = req.body;
@@ -128,8 +139,6 @@ router.put('/changePassword/:id', fetchuser, async(req:AuthRequest, res:Response
         }
 
         const hashPassword = await bcryptHash(newPassword);
-
-
         updatePassword(userId, hashPassword);
         success = true;
         res.json({success, message: "Change password successfully!"});
@@ -141,7 +150,5 @@ router.put('/changePassword/:id', fetchuser, async(req:AuthRequest, res:Response
         res.status(500).json({ error: "Internal Server Error!"});
     }
 });
-
-
 
 module.exports = router;

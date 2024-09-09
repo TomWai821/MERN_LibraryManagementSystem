@@ -5,6 +5,7 @@ export interface createUserInterface
     email:string;
     name:string;
     password:string;
+    role:string;
 }
 
 export interface loginInterface
@@ -19,6 +20,7 @@ export interface UserInterface
     name:string;
     email:string;
     password:string;
+    banned: boolean;
 }
 
 export interface changePassword

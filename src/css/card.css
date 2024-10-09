@@ -13,13 +13,14 @@
 #card-title
 {
     font-size:28px;
+    padding-top: 25px;
 }
 
 #card-input
 {
     display: flex;
     flex-direction: column;
-    margin: 20px 0 20px 0;
+    margin: 20px 20px 20px 20px;
 }
 
 #card-label

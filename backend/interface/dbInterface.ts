@@ -1,12 +1,9 @@
 import { Types } from "mongoose";
+import { createUserInterface } from './requestInterface'
 
-export interface userInterface
+export interface userInterface extends createUserInterface
 {
     _id:string;
-    name:string;
-    email:string;
-    password:string;
-    role:string;
     banned:boolean;
     createdAt?:Date;
 }

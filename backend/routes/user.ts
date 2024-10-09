@@ -1,15 +1,15 @@
 import express, { Request, Response } from 'express';
-import { createUser,  findUser, getUser, updatePassword } from '../handler/userHandler';
+import { createUser,  findUser, getUser, changePassword } from '../handler/userHandler';
 import { bcryptHash, comparePassword, jwtSign } from '../handler/hashing';
-import { changePassword, createUserInterface, loginInterface, UserInterface } from '../interface/requestInterface';
+import { changeData, createUserInterface, loginInterface, UserInterface } from '../interface/requestInterface';
 import { fetchuser, AuthRequest } from '../handler/middleware';
 
 const router = express.Router();
 
 // POST method, it used to create a user in mongoDB
-router.post('/register', async (req: Request, res: Response) => 
+router.post('/register',async (req: Request, res: Response) => 
 {
-    const { email, name, password }: createUserInterface = req.body;
+    const { email, name, password, gender, birthDay }: createUserInterface = req.body;
     let success: boolean = false;
 
     try 
@@ -22,13 +22,13 @@ router.post('/register', async (req: Request, res: Response) =>
         }
 
         const secPass = await bcryptHash(password);
-        const newUser = await createUser({ email: email, name: name, password: secPass, role: "User", banned: false }) as UserInterface;
+        const newUser = await createUser("create",{ email: email, name: name, password: secPass, gender:gender, birthDay:birthDay, role: "User", banned: false }) as UserInterface;
 
         const data = { user: { _id: newUser._id }};
         const authToken:string = await jwtSign(data);
 
         success = true;
-        res.json({ success, authToken });
+        res.json({ success, name , authToken });
     } 
     catch (error) 
     {
@@ -65,10 +65,11 @@ router.post('/login', async (req:Request, res:Response) =>
         }
 
         const data = { user:{ _id:user._id } };
+        const name = user.name;
 
         const authToken:string = await jwtSign(data);
         success = true;
-        res.json({success, authToken});
+        res.json({success, name , authToken});
     }
     catch(error)
     {
@@ -94,14 +95,14 @@ router.get('/user', fetchuser, async(req:AuthRequest, res:Response) =>
 
     try
     {
-        const foundUser = await getUser(userId) as  UserInterface | null ;
+        const foundUser = await getUser({userId}) as  UserInterface | null ;
 
         if(!foundUser)
         {
             return res.status(401).json({error: "Invalid auth Token!"});
         }
 
-        res.send({foundUser});
+        res.send({message: foundUser._id});
     }
     catch(error)
     {
@@ -111,9 +112,9 @@ router.get('/user', fetchuser, async(req:AuthRequest, res:Response) =>
 });
 
 // PUT method, login required, which used to change user password
-router.put('/changePassword/:id', fetchuser, async(req:AuthRequest, res:Response) => 
+router.put('/changePassword/id=:id', fetchuser, async(req:AuthRequest, res:Response) => 
 {
-    const {oldPassword, newPassword}:changePassword = req.body;
+    const {oldUsername, newUsername, oldPassword, newPassword}:changeData = req.body;
     let success:boolean = false;
     const userId = req.user?._id;
 
@@ -124,24 +125,27 @@ router.put('/changePassword/:id', fetchuser, async(req:AuthRequest, res:Response
 
     try
     {
-        const foundUser = await getUser(userId) as UserInterface;
+        const foundUser = await getUser({userId}) as UserInterface;
         
         if(!foundUser)
         {
             return res.status(401).json({error : "Cannot found this account!"});
         }
 
-        const compare = await comparePassword(oldPassword, foundUser.password);
-
-        if(!compare)
+        if(oldPassword != null && newPassword != null)
         {
-            return res.status(401).json({error : "Password Incorrect!"});
+            const compare = await comparePassword( oldPassword, foundUser.password);
+
+            if(!compare)
+            {
+                return res.status(401).json({error : "Password Incorrect!"});
+            }
+            const hashPassword = await bcryptHash(newPassword);
+            changePassword(userId, hashPassword);
         }
 
-        const hashPassword = await bcryptHash(newPassword);
-        updatePassword(userId, hashPassword);
         success = true;
-        res.json({success, message: "Change password successfully!"});
+        res.json({success, message: "Change data successfully!"});
 
     }
     catch(error)

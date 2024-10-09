@@ -7,6 +7,8 @@ const UserSchema = new mongoose.Schema<userInterface>
         name: { type: String },
         email: { type: String },
         password: { type: String },
+        gender: { type: String },
+        birthDay: { type: String},
         role: { type: String },
         banned: { type: Boolean },
         createdAt: { type: Date, default: Date.now }

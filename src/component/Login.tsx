@@ -1,6 +1,9 @@
 import { FormEvent, ChangeEvent, useState } from 'react';
+import { LoginHandler } from '../Handler/UserHandler';
+import { Button, FormControl, TextField } from '@mui/material';
 import '../css/card.css'
 import '../css/pages.css'
+
 
 const Login = () =>
 {
@@ -9,29 +12,7 @@ const Login = () =>
     const handleLogin = async (e: FormEvent) => 
     {
         e.preventDefault();
-        const response = await fetch('http://localhost:5000/api/user/login',
-            {
-                method:'POST',
-                headers: 
-                { 
-                    'Content-Type':'application/json'
-                },
-                body: JSON.stringify(
-                    {
-                        email: Credentials.email,
-                        password: Credentials.password
-                    }
-                )
-            }
-        );
-
-        const result = await response.json();
-        console.log(result);
-
-        if(result.success)
-        {
-            
-        }
+        LoginHandler(Credentials.email, Credentials.password);
     }
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => 
@@ -41,22 +22,24 @@ const Login = () =>
 
     return(
         <section id="page"> 
-            <div id="card">
+            <FormControl variant="standard" sx={{ minWidth: 500 }}>
                 <span id="card-title">Login Page</span>
-                <form onSubmit={handleLogin}>
+
                     <div id="card-input">
                         <label htmlFor="email" id="card-label">Email:</label>
-                        <input type="email" name="email" value={Credentials.email} onChange={onChange}/>
+                        <TextField type="email" name="email" value={Credentials.email} onChange={onChange} size="small" required/>
                     </div>
                             
                     <div id="card-input">
                         <label htmlFor="password" id="card-label">Password:</label>
-                        <input type="password" name="password" value={Credentials.password} onChange={onChange}/>
+                        <TextField type="password" name="password" value={Credentials.password} onChange={onChange} size="small" required/>
                     </div>
 
-                    <input type="submit"/>
-                </form>
-            </div>
+                    <div id="card-input">
+                        <Button variant="contained" onClick={handleLogin}>Submit</Button>
+                    </div>
+
+            </FormControl>
         </section>
     )
 }

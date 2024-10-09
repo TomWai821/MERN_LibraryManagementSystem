@@ -12,7 +12,7 @@ export const findUser = async (email:Record<string, any>) =>
     } 
 }
 
-export const createUser = async (user: Record<string, any>) => 
+export const createUser = async (p0: string, user: Record<string, any>) => 
 { 
     try
     {
@@ -24,7 +24,7 @@ export const createUser = async (user: Record<string, any>) =>
     }
 };
 
-export const getUser = async(userId:string) => 
+export const getUser = async(userId:Record<string, any>) => 
 {
     try
     {
@@ -40,7 +40,7 @@ export const getUser = async(userId:string) =>
     }
 }
 
-export const updatePassword = async(userId:string, newPassword:string) =>
+export const changePassword = async(userId:string, newPassword:string) =>
 {
     return User.findByIdAndUpdate(userId, {password:newPassword});
 }

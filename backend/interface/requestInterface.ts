@@ -5,6 +5,8 @@ export interface createUserInterface
     email:string;
     name:string;
     password:string;
+    gender:string,
+    birthDay:string,
     role:string;
 }
 
@@ -14,18 +16,17 @@ export interface loginInterface
     password:string;
 }
 
-export interface UserInterface
+export interface UserInterface extends createUserInterface
 {
     _id:Types.ObjectId;
-    name:string;
-    email:string;
-    password:string;
     banned: boolean;
 }
 
-export interface changePassword
+export interface changeData
 {
     _id:Types.ObjectId;
-    oldPassword:string;
-    newPassword:string;
+    oldUsername:string | null;
+    newUsername:string | null;
+    oldPassword:string | null;
+    newPassword:string | null;
 }

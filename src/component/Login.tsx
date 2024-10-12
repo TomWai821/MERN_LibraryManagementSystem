@@ -27,24 +27,18 @@ const Login = () =>
                 <span id="card-title">Login Page</span>
 
                     <InputField name="email" 
-                        label="Email:" 
+                        label="Email" 
                         type="email" 
                         value={Credentials.email} 
                         onChange={onChange}
-                        size="small" 
-                        required={false} 
-                        disabled={false}
                         requireText=""
                     />
                             
                     <InputField name="password" 
-                        label="Password:" 
+                        label="Password" 
                         type="password" 
                         value={Credentials.password} 
                         onChange={onChange}
-                        size="small" 
-                        required={false} 
-                        disabled={false}
                         requireText=""
                     />
 

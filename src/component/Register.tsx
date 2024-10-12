@@ -35,45 +35,33 @@ const Register = () =>
 
                 <InputField name="email" 
                     type="email" 
-                    label="Email:" 
+                    label="Email" 
                     value={Credentials.email} 
                     onChange={onChange} 
-                    size="small" 
-                    required={true}
-                    disabled={false}
                     requireText="" 
                 />
 
                 <InputField name="name" 
                     type="text" 
-                    label="Username:" 
+                    label="Username" 
                     value={Credentials.name} 
                     onChange={onChange} 
-                    size="small" 
-                    required={true} 
-                    disabled={false}
                     requireText="Must be at least 6 characters long" 
                 />
 
                 <InputField name="password" 
                     type="password" 
-                    label="Password:" 
+                    label="Password" 
                     value={Credentials.password} 
                     onChange={onChange} 
-                    size="small" 
-                    required={true}
-                    disabled={false}
                     requireText="Must be at least 6 characters long" 
                 />
 
                 <InputField name="birthDay" 
                     type="date" 
-                    label="Date of Birth:" 
+                    label="Date of Birth" 
                     value={Credentials.birthDay} 
                     onChange={onChange} 
-                    size="small" 
-                    required={true}
-                    disabled={false}
                     requireText="" 
                 />
 

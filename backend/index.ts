@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import { connectToMongoDB } from './connectToMongo';
 
-
 connectToMongoDB();
 
 const app = express();

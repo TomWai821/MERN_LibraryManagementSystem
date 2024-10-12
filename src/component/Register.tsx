@@ -1,5 +1,6 @@
 import { FormEvent, ChangeEvent, useState } from 'react';
 import { RegisterHandler } from '../Handler/UserHandler';
+import InputField from './InputField'
 import { MenuItem, Select, FormControl, SelectChangeEvent, TextField, Button } from '@mui/material'
 import '../css/card.css'
 import '../css/pages.css'
@@ -32,29 +33,49 @@ const Register = () =>
 
                 <span id="card-title">Register</span>
 
-                <div id="card-input">
-                    <label htmlFor="email" id="card-label">Email:</label>
-                    <TextField name="email" type="email" value={Credentials.email} onChange={onChange} size="small" required/>
-                    <span></span>
-                </div>
+                <InputField name="email" 
+                    type="email" 
+                    label="Email:" 
+                    value={Credentials.email} 
+                    onChange={onChange} 
+                    size="small" 
+                    required={true}
+                    disabled={false}
+                    requireText="" 
+                />
 
-                <div id="card-input">
-                    <label htmlFor="name" id="card-label">UserName:</label>
-                    <TextField name="name" type="text" value={Credentials.name} onChange={onChange} size="small" required/>
-                    <span>Must be at least 6 characters long</span>
-                </div>
+                <InputField name="name" 
+                    type="text" 
+                    label="Username:" 
+                    value={Credentials.name} 
+                    onChange={onChange} 
+                    size="small" 
+                    required={true} 
+                    disabled={false}
+                    requireText="Must be at least 6 characters long" 
+                />
 
-                <div id="card-input">
-                    <label htmlFor="password" id="card-label">Password:</label>
-                    <TextField name="password" type="password" value={Credentials.password} onChange={onChange} size="small" required/>
-                    <span>Must be at least 6 characters long</span>
-                </div>
+                <InputField name="password" 
+                    type="password" 
+                    label="Password:" 
+                    value={Credentials.password} 
+                    onChange={onChange} 
+                    size="small" 
+                    required={true}
+                    disabled={false}
+                    requireText="Must be at least 6 characters long" 
+                />
 
-                <div id="card-input">
-                    <label htmlFor="birthDay" id="card-label">Date Of Birth:</label>
-                    <TextField name="birthDay" type="date" value={Credentials.birthDay} onChange={onChange} size="small" required/>
-                    
-                </div>
+                <InputField name="birthDay" 
+                    type="date" 
+                    label="Date of Birth:" 
+                    value={Credentials.birthDay} 
+                    onChange={onChange} 
+                    size="small" 
+                    required={true}
+                    disabled={false}
+                    requireText="" 
+                />
 
                 <div id="card-input">
                     <label htmlFor="gender" id="card-label">Gender:</label>

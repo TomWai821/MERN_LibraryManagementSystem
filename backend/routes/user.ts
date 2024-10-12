@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import { createUser,  findUser, getUser, changePassword } from '../handler/userHandler';
+import { UserUtils, changeData } from '../handler/userHandler';
 import { bcryptHash, comparePassword, jwtSign } from '../handler/hashing';
-import { changeData, createUserInterface, loginInterface, UserInterface } from '../interface/requestInterface';
+import { changeDataInterface, createUserInterface, loginInterface, UserInterface } from '../interface/requestInterface';
 import { fetchuser, AuthRequest } from '../handler/middleware';
 
 const router = express.Router();
@@ -14,7 +14,7 @@ router.post('/register',async (req: Request, res: Response) =>
 
     try 
     {
-        const user = await findUser({ email: email }) as UserInterface | null ;
+        const user = await UserUtils("find", {email}) as UserInterface;
 
         if(user)
         {
@@ -22,7 +22,7 @@ router.post('/register',async (req: Request, res: Response) =>
         }
 
         const secPass = await bcryptHash(password);
-        const newUser = await createUser("create",{ email: email, name: name, password: secPass, gender:gender, birthDay:birthDay, role: "User", banned: false }) as UserInterface;
+        const newUser = await UserUtils("create", { email: email, name: name, password: secPass, gender:gender, birthDay:birthDay, role: "User", banned: false }) as UserInterface;
 
         const data = { user: { _id: newUser._id }};
         const authToken:string = await jwtSign(data);
@@ -40,16 +40,16 @@ router.post('/register',async (req: Request, res: Response) =>
 // POST method, no login required, it used to login(verify)
 router.post('/login', async (req:Request, res:Response) => 
 {
-    const {email, password}:loginInterface = req.body; 
+    const {email, password}: loginInterface = req.body; 
     let success:boolean = false;
 
     try
     {
-        const user = await findUser({email}) as UserInterface | null;
+        const user = await UserUtils("find", {email}) as UserInterface;
 
         if(!user)
         {
-            return res.status(400).json({ error: "Invalid Credentials" });
+            return res.status(400).json({ error: email + "Invalid Credentials" });
         }
 
         if(user.banned == true)
@@ -61,7 +61,7 @@ router.post('/login', async (req:Request, res:Response) =>
 
         if(!compare)
         {
-            return res.status(400).json({ error: "Invalid Credentials" });
+            return res.status(400).json({ error: " compare Invalid Credentials" });
         }
 
         const data = { user:{ _id:user._id } };
@@ -73,7 +73,6 @@ router.post('/login', async (req:Request, res:Response) =>
     }
     catch(error)
     {
-        console.log(error)
         res.status(500).json({success, error: 'Internal Server Error!'});
     }
 });
@@ -81,8 +80,8 @@ router.post('/login', async (req:Request, res:Response) =>
 // GET method, login required, it get user data
 router.get('/user', fetchuser, async(req:AuthRequest, res:Response) => 
 {
-    let userId = "{}";
-     
+    let userId = "";
+
     if(req.user?._id != null)
     {
         userId = req.user?._id;
@@ -95,14 +94,15 @@ router.get('/user', fetchuser, async(req:AuthRequest, res:Response) =>
 
     try
     {
-        const foundUser = await getUser({userId}) as  UserInterface | null ;
+        const foundUser = await UserUtils("get", userId) as UserInterface ;
 
         if(!foundUser)
         {
             return res.status(401).json({error: "Invalid auth Token!"});
         }
 
-        res.send({message: foundUser._id});
+
+        res.send({message: foundUser});
     }
     catch(error)
     {
@@ -114,7 +114,7 @@ router.get('/user', fetchuser, async(req:AuthRequest, res:Response) =>
 // PUT method, login required, which used to change user password
 router.put('/changePassword/id=:id', fetchuser, async(req:AuthRequest, res:Response) => 
 {
-    const {oldUsername, newUsername, oldPassword, newPassword}:changeData = req.body;
+    const {oldUsername, newUsername, oldPassword, newPassword}:changeDataInterface = req.body;
     let success:boolean = false;
     const userId = req.user?._id;
 
@@ -125,7 +125,7 @@ router.put('/changePassword/id=:id', fetchuser, async(req:AuthRequest, res:Respo
 
     try
     {
-        const foundUser = await getUser({userId}) as UserInterface;
+        const foundUser = await UserUtils("get", {userId}) as UserInterface;
         
         if(!foundUser)
         {
@@ -134,14 +134,14 @@ router.put('/changePassword/id=:id', fetchuser, async(req:AuthRequest, res:Respo
 
         if(oldPassword != null && newPassword != null)
         {
-            const compare = await comparePassword( oldPassword, foundUser.password);
+            const compare = await comparePassword(oldPassword, foundUser.password);
 
             if(!compare)
             {
                 return res.status(401).json({error : "Password Incorrect!"});
             }
             const hashPassword = await bcryptHash(newPassword);
-            changePassword(userId, hashPassword);
+            changeData("password", userId, hashPassword);
         }
 
         success = true;

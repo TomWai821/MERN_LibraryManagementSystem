@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { createUserInterface } from './requestInterface'
 
-export interface userInterface extends createUserInterface
+export interface DBUserInterface extends createUserInterface
 {
     _id:string;
     banned:boolean;

@@ -4,6 +4,9 @@ import  { getUserCookie } from '../Handler/CookieHandler'
 
 const NavBar = () => 
 {
+    const isLoggedIn = (getUserCookie("authToken")) == "";
+    const username = getUserCookie("name");
+
     return(
         <section id="nav">
             <div id="nav-left">
@@ -11,15 +14,14 @@ const NavBar = () =>
                     <img src=""/>
                 </a>
             </div>
-                {
-                (getUserCookie("authToken")) == "" ?  
+                {isLoggedIn ?  
                     <div id="nav-right">
                         <a href="./login">Login</a>
                         <a href="./register">Register</a>
                     </div>
                     :
                     <div id="nav-right">
-                        <a href="./profile">{getUserCookie("name")}</a>
+                        <a href="./profile">{username}</a>
                         <a onClick={handleLogout}>Logout</a>
                     </div>
                 }

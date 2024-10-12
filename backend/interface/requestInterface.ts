@@ -1,10 +1,8 @@
 import { Types } from "mongoose";
 
-export interface createUserInterface
+export interface createUserInterface extends loginInterface
 {
-    email:string;
     name:string;
-    password:string;
     gender:string,
     birthDay:string,
     role:string;
@@ -18,11 +16,12 @@ export interface loginInterface
 
 export interface UserInterface extends createUserInterface
 {
-    _id:Types.ObjectId;
+    _id: Types.ObjectId;
     banned: boolean;
+    createdAt:Date;
 }
 
-export interface changeData
+export interface changeDataInterface
 {
     _id:Types.ObjectId;
     oldUsername:string | null;

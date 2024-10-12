@@ -1,10 +1,33 @@
+import { UserMethod, DataType } from '../enum/enum'
+
 import User from '../schema/user';
 
-export const findUser = async (email:Record<string, any>) => 
+export const UserUtils = async (method:string, data: string | Record<string, any>) => 
 {
     try
     { 
-        return User.findOne(email);
+        switch(method)
+        {
+            case UserMethod.FIND:
+                if (typeof data === 'string') 
+                {
+                    throw new Error("Invalid data type for findOne");
+                }
+                return await User.findOne(data);
+            
+            case UserMethod.CREATE:
+                return await User.create(data);
+            
+            case UserMethod.GET: 
+                if(JSON.stringify(data) === '{}')
+                {
+                    return await User.find({});
+                }
+                return await User.findById(data).select("-createdAt -password");       
+
+            default:
+                return null;
+        }
     }
     catch(error)
     {
@@ -12,35 +35,17 @@ export const findUser = async (email:Record<string, any>) =>
     } 
 }
 
-export const createUser = async (p0: string, user: Record<string, any>) => 
-{ 
-    try
-    {
-        return User.create(user);
-    }
-    catch(error)
-    {
-        return error;
-    }
-};
-
-export const getUser = async(userId:Record<string, any>) => 
+export const changeData = async(dataType:string, userId:string, newData:string) =>
 {
-    try
+    switch(dataType)
     {
-        if(userId.match("{}"))
-        {
-           return User.find({});
-        }
-        return User.findById(userId);
+        case DataType.PASSWORD:
+            return User.findByIdAndUpdate(userId, {dataType:newData});
+        
+        case DataType.NAME:
+            return User.findByIdAndUpdate(userId, {name:newData});
+        
+        default:
+            return null;
     }
-    catch(error)
-    {
-        return error;
-    }
-}
-
-export const changePassword = async(userId:string, newPassword:string) =>
-{
-    return User.findByIdAndUpdate(userId, {password:newPassword});
 }

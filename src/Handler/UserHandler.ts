@@ -2,6 +2,8 @@ import { setUserCookie, deleteUserCookie } from "./CookieHandler";
 
 
 const contentType:string = 'application/json';
+const localhost:string = 'http://localhost:5000/api/user';
+const mainPage:string = 'http://localhost:3000/';
 
 interface result
 {
@@ -16,7 +18,7 @@ export const LoginHandler = async (email:String, password:String) =>
     try
     {
         const request = new XMLHttpRequest();
-        request.open('POST', 'http://localhost:5000/api/user/login', true);
+        request.open('POST', `${localhost}/login`);
         request.setRequestHeader('content-type', contentType);
         request.send(JSON.stringify(user));
         
@@ -25,7 +27,6 @@ export const LoginHandler = async (email:String, password:String) =>
             if(request.status === 200)
             {
                 const result: result = JSON.parse(request.response);
-                console.log(result);
                 handleSuccess(result);
             }
         }
@@ -36,13 +37,13 @@ export const LoginHandler = async (email:String, password:String) =>
     }
 }
 
-export const RegisterHandler = async (email:string, name:string, password:string, gender:string, birthDay:string) => 
+export const RegisterHandler = async (email:string, name:string, password:string, birthDay:string, gender:string) => 
 {
-    const user = {email, name, password, gender, birthDay};
+    const user = {email, name, password, birthDay, gender};
 
     try
     {
-        const response = await fetch('http://localhost:5000/api/user/register',
+        const response = await fetch(`${localhost}/register`,
             {
                 method: 'POST',
                 headers: { 'content-type': contentType },
@@ -61,35 +62,34 @@ export const RegisterHandler = async (email:string, name:string, password:string
     }
 }
 
-/*
 export const fetchUserData = async(authToken:string) => 
 {
     try
     {
-        const response = await fetch('',
+        const response = await fetch(`${localhost}/user`,
             {
                 method: 'GET',
-                headers: { 'content-type': contentType},
-                body: JSON.stringify();
+                headers: 
+                { 
+                    'content-type': contentType,
+                    'authToken': authToken
+                },
             }
         )
-
         const result: result = await response.json();
+        console.log(response.body)
         console.log(result);
-
-        handleSuccess(result);
     }
     catch(error)
     {
         console.log("");
     }
 }
-*/
 
 export const handleLogout = async() =>
 {
     deleteUserCookie();
-    window.location.href = 'http://localhost:3000/';
+    window.location.href = mainPage;
 }
 
 export const handleSuccess = async(result: result) =>
@@ -97,7 +97,7 @@ export const handleSuccess = async(result: result) =>
     if(result)
     {
         setUserCookie(result.authToken, result.name, 30);
-        window.location.href = 'http://localhost:3000/';
+        window.location.href = mainPage;
     }
 }
     

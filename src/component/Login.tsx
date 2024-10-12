@@ -1,6 +1,7 @@
 import { FormEvent, ChangeEvent, useState } from 'react';
 import { LoginHandler } from '../Handler/UserHandler';
-import { Button, FormControl, TextField } from '@mui/material';
+import InputField from './InputField';
+import { Button, FormControl } from '@mui/material';
 import '../css/card.css'
 import '../css/pages.css'
 
@@ -25,15 +26,27 @@ const Login = () =>
             <FormControl variant="standard" sx={{ minWidth: 500 }}>
                 <span id="card-title">Login Page</span>
 
-                    <div id="card-input">
-                        <label htmlFor="email" id="card-label">Email:</label>
-                        <TextField type="email" name="email" value={Credentials.email} onChange={onChange} size="small" required/>
-                    </div>
+                    <InputField name="email" 
+                        label="Email:" 
+                        type="email" 
+                        value={Credentials.email} 
+                        onChange={onChange}
+                        size="small" 
+                        required={false} 
+                        disabled={false}
+                        requireText=""
+                    />
                             
-                    <div id="card-input">
-                        <label htmlFor="password" id="card-label">Password:</label>
-                        <TextField type="password" name="password" value={Credentials.password} onChange={onChange} size="small" required/>
-                    </div>
+                    <InputField name="password" 
+                        label="Password:" 
+                        type="password" 
+                        value={Credentials.password} 
+                        onChange={onChange}
+                        size="small" 
+                        required={false} 
+                        disabled={false}
+                        requireText=""
+                    />
 
                     <div id="card-input">
                         <Button variant="contained" onClick={handleLogin}>Submit</Button>

@@ -1,15 +1,10 @@
 import { setUserCookie, deleteUserCookie } from "./CookieHandler";
-
+import { resultInterface, getResultInterface } from "../Interface/resultInterface";
 
 const contentType:string = 'application/json';
 const localhost:string = 'http://localhost:5000/api/user';
 const mainPage:string = 'http://localhost:3000/';
 
-interface result
-{
-    authToken: string,
-    name: string
-}
 
 export const LoginHandler = async (email:String, password:String) => 
 {
@@ -26,7 +21,7 @@ export const LoginHandler = async (email:String, password:String) =>
         {
             if(request.status === 200)
             {
-                const result: result = JSON.parse(request.response);
+                const result: resultInterface = JSON.parse(request.response);
                 handleSuccess(result);
             }
         }
@@ -51,8 +46,7 @@ export const RegisterHandler = async (email:string, name:string, password:string
             }
         )
 
-        const result: result = await response.json();
-        console.log(result);
+        const result: resultInterface = await response.json();
 
         handleSuccess(result);
     }
@@ -76,9 +70,8 @@ export const fetchUserData = async(authToken:string) =>
                 },
             }
         )
-        const result: result = await response.json();
-        console.log(response.body)
-        console.log(result);
+        const result: getResultInterface = await response.json();
+        return result;
     }
     catch(error)
     {
@@ -92,7 +85,7 @@ export const handleLogout = async() =>
     window.location.href = mainPage;
 }
 
-export const handleSuccess = async(result: result) =>
+export const handleSuccess = async(result: resultInterface) =>
 {
     if(result)
     {

@@ -1,18 +1,8 @@
+import { TableRowProps } from "../Interface/propsInterface";
 import { FC } from 'react'
 import { TextField } from "@mui/material"
 
-interface TableRowProps
-{
-    firstName:string;
-    firstLabel:string;
-    firstType: string;
-    secondName:string;
-    secondLabel:string;
-    secondType: string;
-    disabled: boolean;
-}  
-
-const TableRow: FC<TableRowProps> = ({firstName, firstLabel, firstType, secondName, secondLabel, secondType, disabled}) => 
+const TableRow: FC<TableRowProps> = ({firstName, firstLabel, firstType, firstValue, secondName, secondLabel, secondType, secondValue, onChange, disabled}) => 
 {
     return(
     <tr>
@@ -21,7 +11,7 @@ const TableRow: FC<TableRowProps> = ({firstName, firstLabel, firstType, secondNa
         </td>
 
         <td>
-            <TextField name={firstName} type={firstType} size="small" disabled={disabled}/>
+            <TextField name={firstName} type={firstType} value={firstValue} size="small" onChange={onChange} disabled={disabled}/>
         </td>
         
         <td>
@@ -29,7 +19,7 @@ const TableRow: FC<TableRowProps> = ({firstName, firstLabel, firstType, secondNa
         </td>
 
         <td>
-            <TextField name={secondName} type={secondType}  size="small" disabled={disabled}/>
+            <TextField name={secondName} type={secondType} value={secondValue} size="small" onChange={onChange} disabled={disabled}/>
         </td>
     </tr>
     )

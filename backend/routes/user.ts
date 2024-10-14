@@ -101,8 +101,7 @@ router.get('/user', fetchuser, async(req:AuthRequest, res:Response) =>
             return res.status(401).json({error: "Invalid auth Token!"});
         }
 
-
-        res.send({message: foundUser});
+        res.send(foundUser);
     }
     catch(error)
     {

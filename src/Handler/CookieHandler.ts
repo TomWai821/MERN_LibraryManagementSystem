@@ -1,6 +1,6 @@
 let cookie:string = document.cookie;
 
-export const setUserCookie = (authToken:string, name:string, days:number) => 
+export const setUserCookie = (authToken:string, name:string, role:string, days:number) => 
 {
     let expires = "";
     if(days)
@@ -10,7 +10,7 @@ export const setUserCookie = (authToken:string, name:string, days:number) =>
         date.setTime(date.getTime() + milliSeconds);
         expires = ":expires=" + date.toUTCString();
     }
-    document.cookie = "authToken="+ authToken + ":name=" + name + expires +":path=/" ;
+    document.cookie = "authToken="+ authToken + ":name=" + name +": role=" + role + expires +":path=/" ;
 }
 
 export const getUserCookie = (name:string) => 

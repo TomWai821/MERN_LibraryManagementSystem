@@ -1,18 +1,30 @@
 import { FormEvent, ChangeEvent, useState } from 'react';
 import { RegisterHandler } from '../Handler/UserHandler';
-import InputField from './InputField'
-import { MenuItem, Select, FormControl, SelectChangeEvent, TextField, Button } from '@mui/material'
-import '../css/card.css'
-import '../css/pages.css'
+import { MenuItem, Button, Card, CardContent, Typography, TextField, Box, FormControl } from '@mui/material'
+
+interface Credentials 
+{ 
+    email: string; 
+    name: string; 
+    password: string; 
+    birthDay: string;
+}
 
 const Register = () => 
 {
     const [Credentials, setCredentials] = useState({email: "", name: "", password: "", birthDay: "", gender: "Male"});
 
+    const Fields = 
+    [
+        {name:"email", type:"email", label:"Email:"},
+        {name:"name", type:"text", label:"Username:"},
+        {name:"password", type:"password", label:"Password:"},
+        {name:"birthDay", type:"date", label:"Date Of Birth:"}
+    ]
+
     const handleRegister = async (e: FormEvent) => 
     {
         e.preventDefault();
-
         await RegisterHandler(Credentials.email, Credentials.name, Credentials.password, Credentials.birthDay, Credentials.gender);
     }
 
@@ -21,63 +33,35 @@ const Register = () =>
         setCredentials({...Credentials, [e.target.name]: e.target.value});
     }
 
-    const selectonChange = (e: SelectChangeEvent<string>) => 
-    {
-        setCredentials({...Credentials, [e.target.name]: e.target.value});
-    }
-
     return(
-        <section id="page">
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 5}}>
+            <Card variant='outlined' sx={{ width: 600 }}>
+                <CardContent>
+                    <Typography sx={{ fontSize: 36, marginBottom: 3 }}>Register</Typography>
 
-            <FormControl variant="standard" sx={{ minWidth: 500 }}>
+                    {
+                        Fields.map((field) =>
+                            (
+                                <FormControl sx={{ marginBottom: 3, width: '100%'}}>
+                                    <Typography>{field.label}</Typography>
+                                    <TextField name={field.name} type={field.type} value={Credentials[field.name as keyof Credentials]} onChange={onChange} size="small" required/>
+                                </FormControl>
+                            )
+                        )
+                    }       
 
-                <span id="card-title">Register</span>
+                    <FormControl sx={{ marginBottom: 5, width: '100%' }}>
+                        <Typography>Gender</Typography>
+                        <TextField name="gender" value={Credentials.gender} size="small" onChange={onChange} select required>
+                            <MenuItem value={"Male"}>Male</MenuItem>
+                            <MenuItem value={"Female"}>Female</MenuItem>
+                        </TextField>
+                    </FormControl>
 
-                <InputField name="email" 
-                    type="email" 
-                    label="Email" 
-                    value={Credentials.email} 
-                    onChange={onChange} 
-                    requireText="" 
-                />
-
-                <InputField name="name" 
-                    type="text" 
-                    label="Username" 
-                    value={Credentials.name} 
-                    onChange={onChange} 
-                    requireText="Must be at least 6 characters long" 
-                />
-
-                <InputField name="password" 
-                    type="password" 
-                    label="Password" 
-                    value={Credentials.password} 
-                    onChange={onChange} 
-                    requireText="Must be at least 6 characters long" 
-                />
-
-                <InputField name="birthDay" 
-                    type="date" 
-                    label="Date of Birth" 
-                    value={Credentials.birthDay} 
-                    onChange={onChange} 
-                    requireText="" 
-                />
-
-                <div id="card-input">
-                    <label htmlFor="gender" id="card-label">Gender:</label>
-                    <Select name="gender" value={Credentials.gender} onChange={selectonChange} size="small" required>
-                        <MenuItem value={"Male"}>Male</MenuItem>
-                        <MenuItem value={"Female"}>Female</MenuItem>
-                    </Select>
-                </div>
-                
-                <div id="card-input">
-                    <Button variant="contained" onClick={handleRegister}>Submit</Button>
-                </div>
-            </FormControl>
-        </section>
+                    <Button variant='contained' onClick={handleRegister}>Register</Button>
+                </CardContent>
+            </Card>
+        </Box>
     )
 }
 

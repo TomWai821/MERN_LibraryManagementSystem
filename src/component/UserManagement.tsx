@@ -1,9 +1,10 @@
-import { Box, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Box, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
+import { useEffect } from "react"
 
-const MainPage = () =>
+const UserManagement = () =>
 {
+    useEffect(() => {})
     
-
     return(
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 5}}>
             <Table>
@@ -20,7 +21,7 @@ const MainPage = () =>
                 </TableBody>
             </Table>
         </Box>
-    );
+    )
 }
 
-export default MainPage
+export default UserManagement

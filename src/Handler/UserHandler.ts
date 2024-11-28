@@ -89,7 +89,7 @@ export const handleSuccess = async(result: resultInterface) =>
 {
     if(result)
     {
-        setUserCookie(result.authToken, result.name, 30);
+        setUserCookie(result.authToken, result.name, result.role , 30);
         window.location.href = mainPage;
     }
 }

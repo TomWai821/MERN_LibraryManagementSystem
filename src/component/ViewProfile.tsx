@@ -1,12 +1,10 @@
 import { ChangeEvent,  useEffect, useState } from 'react'
 import { fetchUserData } from '../Handler/UserHandler'
 import { getUserCookie } from '../Handler/CookieHandler'
-import TableRow from './TableRow'
-import '../css/card.css'
-import '../css/pages.css'
-import { Button } from '@mui/material'
+import { Box, Button, Card, CardContent, FormControl, InputLabel, TextField, Typography } from '@mui/material'
 
-const ViewProfile = () => {
+const ViewProfile = () => 
+{
     const [Credentials, setCredentials] = useState({ name: "", gender: "", role: "", email: "", newName: "", newPassword: ""});
 
     useEffect(() => {
@@ -19,17 +17,19 @@ const ViewProfile = () => {
                 try 
                 {
                     const userData = await fetchUserData(authToken);
-                    console.log('Fetched user data:', userData); 
                     if (userData) 
                     {
-                        setCredentials({
-                            name: userData.name || "",
-                            gender: userData.gender || "",
-                            role: userData.role || "",
-                            email: userData.email || "",
-                            newName: "",
-                            newPassword: ""
-                        });
+                        setCredentials
+                        (
+                            {
+                                name: userData.name || "", 
+                                gender: userData.gender || "",
+                                role: userData.role || "",
+                                email: userData.email || "",
+                                newName: "",
+                                newPassword: ""
+                            }
+                        );
                     }
                 } 
                 catch (error) 
@@ -49,51 +49,37 @@ const ViewProfile = () => {
     };
 
     return (
-        <section id="page">
-            <span id="card-title">Profile</span>
-            <table width="1000">
-                <tbody>
-                    <TableRow
-                        firstName="name"
-                        firstLabel="UserName"
-                        firstType="text"
-                        firstValue={Credentials.name}
-                        secondName="gender"
-                        secondLabel="Gender"
-                        secondType="text"
-                        secondValue={Credentials.gender}
-                        onChange={onChange}
-                        disabled={true}
-                    />
-                    <TableRow
-                        firstName="role"
-                        firstLabel="Role"
-                        firstType="text"
-                        firstValue={Credentials.role}
-                        secondName="email"
-                        secondLabel="Email"
-                        secondType="email"
-                        secondValue={Credentials.email}
-                        onChange={onChange}
-                        disabled={true}
-                    />
-                    <TableRow
-                        firstName="newName"
-                        firstLabel="New Name"
-                        firstType="text"
-                        firstValue={Credentials.newName}
-                        secondName="newPassword"
-                        secondLabel="New Password"
-                        secondType="password"
-                        secondValue={Credentials.newPassword}
-                        onChange={onChange}
-                        disabled={false}
-                    />
+        <Card>
+            <CardContent sx={{  justifyContent: 'center' }}>
+                <Typography sx={{ fontSize: 36 }}>Profile</Typography>
+
+                    <FormControl sx={{ display: 'flex', flexDirection: 'row' }}>
+                        <InputLabel>Email:</InputLabel>
+                        <TextField name="email" type="text" value={Credentials.email} size="small" onChange={onChange} disabled/>
+
+                        <InputLabel>Gender:</InputLabel>
+                        <TextField name="gender" type="text" value={Credentials.gender} size="small" onChange={onChange} disabled/>
+                    </FormControl>
+
+                    <FormControl sx={{ display: 'flex', flexDirection: 'row' }}>
+                        <InputLabel>UserName:</InputLabel>
+                        <TextField name="name" type="text" value={Credentials.name} size="small" onChange={onChange} disabled/>
+
+                        <InputLabel>New UserName:</InputLabel>
+                        <TextField name="newName" type="text" value={Credentials.newName} size="small" onChange={onChange}/>
+                    </FormControl>
+
+                    <FormControl sx={{ display: 'flex', flexDirection: 'row' }}>
+                        <InputLabel>Role:</InputLabel>
+                        <TextField name="role" type="text" value={Credentials.role} size="small" onChange={onChange} disabled/>
+
+                        <InputLabel>New Password:</InputLabel>
+                        <TextField name="newPassword" type="password" value={Credentials.newPassword} size="small" onChange={onChange}/>
+                    </FormControl>
 
                     <Button variant='contained'>Submit</Button>
-                </tbody>
-            </table>
-        </section>
+            </CardContent>
+        </Card>
     );
 };
 

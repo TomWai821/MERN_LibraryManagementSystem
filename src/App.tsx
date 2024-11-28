@@ -5,11 +5,12 @@ import Login from './component/Login'
 import Register from './component/Register'
 import MainPage from './component/MainPage';
 import ViewProfile from './component/ViewProfile';
+import { Box } from '@mui/material';
 
 const App: React.FC = () => 
 {
     return (
-        <div className="App">
+        <Box className="App">
             <NavNar/>
                 <Routes>
                     <Route path="/" element={<MainPage/>}/>
@@ -17,7 +18,7 @@ const App: React.FC = () =>
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/profile" element={<ViewProfile/>}/>
                 </Routes>
-        </div>
+        </Box>
     );
 }
 

@@ -66,10 +66,11 @@ router.post('/login', async (req:Request, res:Response) =>
 
         const data = { user:{ _id:user._id } };
         const name = user.name;
+        const role = user.role;
 
         const authToken:string = await jwtSign(data);
         success = true;
-        res.json({success, name , authToken});
+        res.json({success, name, role, authToken});
     }
     catch(error)
     {

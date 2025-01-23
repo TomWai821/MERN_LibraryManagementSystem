@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import { DBUserInterface } from '../interface/dbInterface';
+import { DBUserInterface } from '../model/dbInterface';
 
 const UserSchema = new mongoose.Schema<DBUserInterface>
 (
     {
-        name: { type: String },
+        username: { type: String },
         email: { type: String },
         password: { type: String },
         gender: { type: String },

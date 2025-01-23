@@ -7,7 +7,7 @@ export interface resultInterface
 
 export interface getResultInterface
 {
-    name: string;
+    username: string;
     email: string;
     gender: string;
     role: string;

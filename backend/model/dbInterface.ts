@@ -1,17 +1,17 @@
 import { Types } from "mongoose";
-import { createUserInterface } from './requestInterface'
+import { CreateUserInterface } from './requestInterface'
 
-export interface DBUserInterface extends createUserInterface
+export interface DBUserInterface extends CreateUserInterface
 {
     _id:string;
     banned:boolean;
     createdAt?:Date;
 }
 
-export interface noteInterface
+export interface BookInterface
 {
     _id:Types.ObjectId;
-    user:Types.ObjectId;
+    author:string;
     title:string;
     content:string;
     tag:string;

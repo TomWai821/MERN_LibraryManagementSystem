@@ -31,7 +31,7 @@ export const getUserCookie = (name:string) =>
     return null;
 }
     
-export const deleteUserCookie = () =>
+export const deleteUserCookie = (username: string | null) =>
 {
-    document.cookie = "authToken=";
+    document.cookie = "authToken=" + username + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 }

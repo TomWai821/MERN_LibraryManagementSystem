@@ -6,7 +6,7 @@ const localhost:string = 'http://localhost:5000/api/user';
 const mainPage:string = 'http://localhost:3000/';
 
 
-export const LoginController =  async (email:String, password:String, time:number): Promise<any> => 
+export const LoginController =  async (email:String, password:String, stayLogin:boolean): Promise<any> => 
 {
     const user = {email, password};
 
@@ -43,7 +43,7 @@ export const LoginController =  async (email:String, password:String, time:numbe
         if(response.ok)
         {
             const result: resultInterface = await response.json();
-            handleSuccess(result, 30);
+            handleSuccess(result, stayLogin);
             return true;
         }
         else
@@ -75,7 +75,7 @@ export const RegisterController = async (email:string, username:string, password
         if(response.ok)
         {
             const result: resultInterface = await response.json();
-            handleSuccess(result, 30);
+            handleSuccess(result, false);
             return true;
         }
         else
@@ -121,15 +121,26 @@ export const fetchUserData = async(authToken:string) =>
 
 export const handleLogout = async(username: string | null) =>
 {
-    deleteUserCookie(username);
+    if(document.cookie)
+    {
+        deleteUserCookie(username);
+    }
+    sessionStorage.clear();
     window.location.href = mainPage;
 }
 
-export const handleSuccess = async(result: resultInterface, time:number) =>
+export const handleSuccess = async(result: resultInterface, stayLogin:boolean) =>
 {
     if(result)
     {
-        setUserCookie(result.authToken, result.name, result.role , time);
+        if(!stayLogin)
+        {
+            sessionStorage.setItem("authToken", result.authToken);
+            sessionStorage.setItem("username", result.name);
+            sessionStorage.setItem("role", result.role);
+            return;
+        }
+        setUserCookie(result.authToken, result.name, result.role , 30);
     }
 }
     

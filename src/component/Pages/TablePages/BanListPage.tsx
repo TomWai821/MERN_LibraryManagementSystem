@@ -1,12 +1,12 @@
+
+import { Box, Typography } from "@mui/material";
 import { FC } from "react";
-import { Box } from "@mui/material";
 
 const BanListPage:FC = () =>
 {
-    
     return(
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 5}}>
-            
+            <Typography>Ban List</Typography>
         </Box>
     );
 }

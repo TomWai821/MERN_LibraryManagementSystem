@@ -1,8 +1,19 @@
-import { AlertColor } from "@mui/material/Alert";
+import { ReactNode } from "react";
 
-export interface AlertInterface
+export interface AlertConfig
 {
-    AlertType: AlertColor;
+    AlertType: 'success' | 'info' | 'warning' | 'error';
     Message: string;
-    Timer: number;
+    open: boolean;
+    onClose?: () => void;
+}
+
+export interface AlertContextProps
+{
+    setAlertConfig: (config: AlertConfig | null) => void;
+}
+
+export interface AlertProviderProps
+{
+    children: ReactNode;
 }

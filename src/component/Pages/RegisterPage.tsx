@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent, useState, useRef } from 'react';
+import { FormEvent, ChangeEvent, useState } from 'react';
 import { RegisterController } from '../../Controller/UserController/UserController';
 import { MenuItem, Button, Card, CardContent, Typography, TextField, Box, FormControl } from '@mui/material'
 import { RegisterModel } from '../../Model/InputFieldModel';
@@ -19,7 +19,6 @@ const getCurrentDate = (): string =>
 
 const RegisterPage = () => 
 {
-
     const [Credentials, setCredentials] = useState({email: "", username: "", password: "", birthDay: getCurrentDate(), gender: "Male"});
 
     const handleRegister = async (event: FormEvent) => 
@@ -31,6 +30,46 @@ const RegisterPage = () =>
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
         setCredentials({...Credentials, [event.target.name]: event.target.value});
+    }
+
+    const validateField = (name:string, value: string) => 
+    {
+        switch(name)
+        {
+            case "email":
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if(!emailRegex.test(value))
+                {
+
+                }
+                break;
+            
+            case "username":
+                if(!value)
+                {
+
+                    break;
+                }
+                break;
+
+            case "password":
+                if(!value)
+                {
+                    break;
+                }
+
+                if(value.length < 6)
+                {
+
+                    break;
+                }
+                break;
+            
+            default:
+                break;
+        }
+
     }
 
     return(

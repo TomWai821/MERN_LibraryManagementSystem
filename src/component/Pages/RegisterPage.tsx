@@ -1,89 +1,62 @@
-import { FormEvent, ChangeEvent, useState } from 'react';
-import { RegisterController } from '../../Controller/UserController/UserController';
+import { FormEvent, ChangeEvent, useState, useContext } from 'react';
+
 import { MenuItem, Button, Card, CardContent, Typography, TextField, Box, FormControl } from '@mui/material'
+
+import { RegisterController } from '../../Controller/UserController/UserPostController';
+import { ValidateField } from '../../Controller/ValidateController'
+
+import { RegisterFields } from '../../Model/UIRenderingModel/TextFieldsModel'
 import { RegisterModel } from '../../Model/InputFieldModel';
 
-const Fields = 
-[
-    {name:"email", type:"email", label:"Email:"},
-    {name:"username", type:"text", label:"Username:"},
-    {name:"password", type:"password", label:"Password:"},
-    {name:"birthDay", type:"date", label:"Date Of Birth:"}
-]
-
-const getCurrentDate = (): string => 
-{ 
-    const date = new Date(); 
-    return date.toISOString().split('T')[0]; 
-}
+import { AlertContext } from '../../Context/AlertContext';
+import { PageTitleSyntax } from '../../Model/UIRenderingModel/FormatSyntaxModel';
+import { GetCurrentDate } from '../../Controller/OtherController';
 
 const RegisterPage = () => 
 {
-    const [Credentials, setCredentials] = useState({email: "", username: "", password: "", birthDay: getCurrentDate(), gender: "Male"});
+    const [Credentials, setCredentials] = useState({email: "", username: "", password: "", birthDay: GetCurrentDate(), gender: "Male"});
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errors, setErrors] = useState({email: "", username: "", password: ""});
+    const [helperTexts, setHelperText] = useState({email: "", username: "", password: ""});
+
+    //const alertContext = useContext(AlertContext);
 
     const handleRegister = async (event: FormEvent) => 
     {
         event.preventDefault();
+        setIsSubmitted(true);
         await RegisterController(Credentials.email, Credentials.username, Credentials.password, Credentials.birthDay, Credentials.gender);
     }
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
-        setCredentials({...Credentials, [event.target.name]: event.target.value});
-    }
+        const {name, value} = event.target;
+        setCredentials({...Credentials, [name]: value});
 
-    const validateField = (name:string, value: string) => 
-    {
-        switch(name)
-        {
-            case "email":
-
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if(!emailRegex.test(value))
-                {
-
-                }
-                break;
-            
-            case "username":
-                if(!value)
-                {
-
-                    break;
-                }
-                break;
-
-            case "password":
-                if(!value)
-                {
-                    break;
-                }
-
-                if(value.length < 6)
-                {
-
-                    break;
-                }
-                break;
-            
-            default:
-                break;
-        }
-
+        const {helperText, error} = ValidateField(name, value);
+        setHelperText({...helperTexts, [name]: helperText});
+        setErrors({...errors, [name]: error});
     }
 
     return(
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 5}}>
             <Card variant='outlined' sx={{ width: 600 }}>
                 <CardContent>
-                    <Typography sx={{ fontSize: 36, marginBottom: 3 }}>Register</Typography>
-                
+                    <Typography sx={PageTitleSyntax}>Register</Typography>
                     {
-                        Fields.map((field) =>
+                        RegisterFields.map((field, index) =>
                             (
-                                <FormControl key={field.label} sx={{ marginBottom: 3, width: '100%'}}>
+                                <FormControl key={index} sx={{ marginBottom: 3, width: '100%'}}>
                                     <Typography>{field.label}</Typography>
-                                    <TextField name={field.name} type={field.type} value={Credentials[field.name as keyof RegisterModel]} onChange={onChange} size="small" required/>
+                                    <TextField 
+                                        name={field.name} 
+                                        type={field.type} 
+                                        value={Credentials[field.name as keyof RegisterModel]}
+                                        helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
+                                        error={isSubmitted && errors[field.name as keyof typeof errors] != ""} 
+                                        onChange={onChange} 
+                                        size="small" 
+                                        required/>
                                 </FormControl>
                             )
                         )

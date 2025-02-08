@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { UserMethod, DataType } from '../enum/enum'
 import User from '../schema/user';
 import { CreateUserInterface, LoginInterface, UserInterface, ChangeDataInterface } from '../model/requestInterface';
@@ -7,14 +7,15 @@ import { AuthRequest } from './middleware';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {
-    const { email, username, password, gender, birthDay }: CreateUserInterface = req.body;
+    const { email, username, password, gender, birthDay, role, status}: CreateUserInterface = req.body;
     let success = false;
 
     try
     {
-        const user = await UserUtils('find', { email }) as UserInterface; 
+        const userByEmail = await UserUtils('find', { email }) as UserInterface;
+        const userByName = await UserUtils('find', { username }) as UserInterface; 
 
-        if (user) 
+        if (userByEmail || userByName) 
         { 
             return res.status(400).json({ error: 'User already exists' }); 
         } 
@@ -26,9 +27,10 @@ export const UserRegister = async(req: Request, res: Response) =>
                 email: email, 
                 username: username, 
                 password: hashedPassword, 
-                gender, birthDay, 
-                role: 'User', 
-                banned: false 
+                gender: gender, 
+                birthDay: birthDay, 
+                role: role, 
+                status: status
             }
         ) as UserInterface; 
         
@@ -57,7 +59,7 @@ export const UserLogin = async(req: Request, res:Response) =>
             return res.status(400).json({ error: email + "Invalid Credentials" });
         }
 
-        if(user.banned == true)
+        if(user.status == "Banned")
         {
             return res.status(401).json( { error: "This user was banned" });
         }

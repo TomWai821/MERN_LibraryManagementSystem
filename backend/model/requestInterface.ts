@@ -12,6 +12,7 @@ export interface CreateUserInterface extends LoginInterface
     gender:string,
     birthDay:string,
     role:string;
+    status:string;
 }
 
 export interface ChangeDataInterface
@@ -26,7 +27,6 @@ export interface ChangeDataInterface
 export interface UserInterface extends CreateUserInterface
 {
     _id: Types.ObjectId;
-    banned: boolean;
     createdAt:Date;
 }
 

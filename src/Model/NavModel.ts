@@ -5,7 +5,7 @@ interface NavInterface
     AvatarSize: string;
 }
 
-export interface NavSyntaxInterface {
+interface NavSyntaxInterface {
     fontSize?: number;
     transition?: string;
     bgcolor?: string;
@@ -15,14 +15,13 @@ export interface NavSyntaxInterface {
     };
 }
 
-
-export interface MenuItemSyntaxInterface
+interface MenuItemSyntaxInterface
 {
     m: number;
     p: number;
 }
 
-export interface ProfileMenuInterface extends NavInterface
+interface ProfileMenuInterface extends NavInterface
 {
     anchorElUser: HTMLElement | null;
     handleUserMenu: (event: React.MouseEvent<HTMLElement>) => void;
@@ -31,10 +30,12 @@ export interface ProfileMenuInterface extends NavInterface
 }
 
 
-export interface NavMenuInterface extends NavInterface
+interface NavMenuInterface extends NavInterface
 {
     anchorElNav: HTMLElement | null;
     handleNavMenu: (event: React.MouseEvent<HTMLElement>) => void;
     NavSyntax: NavSyntaxInterface;
     MenuItemSyntax: MenuItemSyntaxInterface;
 }
+
+export type {NavSyntaxInterface, MenuItemSyntaxInterface, ProfileMenuInterface, NavMenuInterface}

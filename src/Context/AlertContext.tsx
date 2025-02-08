@@ -1,12 +1,11 @@
-import React, { createContext, useState, ReactNode, useContext } from 'react';
+import React, { createContext, useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { AlertConfig, AlertContextProps, AlertProviderProps } from '../Model/AlertModel';
+import { AlertConfig, AlertContextProps, ProviderProps } from '../Model/ContextAndProviderModel';
 
-// Create the AlertContext with default values
 const AlertContext = createContext<AlertContextProps | undefined>(undefined);
 
-const AlertProvider: React.FC<AlertProviderProps> = ({ children }) => 
+const AlertProvider: React.FC<ProviderProps> = ({ children }) => 
 {
     const [alertConfig, setAlertConfig] = useState<AlertConfig | null>(null);
     const Duration = 3000;

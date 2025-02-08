@@ -1,11 +1,11 @@
-import { getUserCookie } from "./CookieController";
+import { GetUserCookie } from "./CookieController";
 
-export const ChangePage = (location: string) => 
+const ChangePage = (location: string) => 
 {
     window.location.href = location;
 }
 
-export const GetAuthToken = () => 
+const IsLoggedIn = () => 
 {
     const tokenFromCookie = document.cookie.split(';').find(row => row.startsWith('authToken='));
 
@@ -16,7 +16,21 @@ export const GetAuthToken = () =>
     return false;
 }
 
-export const GetRole = (): string | undefined => 
+const GetRole = (): string | undefined => 
 {
-    return getUserCookie("role") || sessionStorage.getItem("role") || undefined;
+    return GetUserCookie("role") || sessionStorage.getItem("role") || undefined;
 }
+
+const GetUsername = (): string | null =>
+{
+    return GetUserCookie("username") || sessionStorage.getItem("username");
+};
+
+const GetCurrentDate = (): string => 
+{ 
+    const date = new Date(); 
+    return date.toISOString().split('T')[0]; 
+}
+
+
+export {ChangePage, IsLoggedIn, GetRole, GetUsername, GetCurrentDate}

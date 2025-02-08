@@ -2,22 +2,14 @@ import React, { useState } from 'react';
 
 import { AppBar, Box, Button, Toolbar } from '@mui/material';
 
-import { GetAuthToken, GetRole } from '../../Controller/OtherController';
+import { IsLoggedIn, GetRole } from '../../Controller/OtherController';
 
-import { NavSyntaxInterface } from '../../Model/NavModel';
+import { AvatarSize, MenuItemSyntax, NavColor, NavSyntax } from '../../Model/UIRenderingModel/FormatSyntaxModel';
 
 import ProfileMenu from './ProfileMenu';
 import NavMenu from './NavMenu';
 
-// Variable for UI format in MUI
-const Color = { background: "#00796B", word: "white", wordHover: "#B2DFDB" };
-const Transition = "color 1s, background-color 1s";
-
-const NavSyntax: NavSyntaxInterface = { fontSize: 24, transition: Transition, bgcolor: Color.background, color: Color.word, '&:hover': { color: Color.wordHover } };
-const MenuItemSyntax = { m: 0, p: 0 };
-const AvatarSize = "42px";
-
-const isLoggedIn = GetAuthToken();
+const isLoggedIn = IsLoggedIn();
 const role = GetRole();
 
 const NavBar = () => 
@@ -36,10 +28,10 @@ const NavBar = () =>
     };
 
     return (
-        <AppBar position="static" sx={{ bgcolor: Color.background }}>
+        <AppBar position="static" sx={{ bgcolor: NavColor.background }}>
             <Toolbar>
                 <Box>
-                    <Button sx={{ fontSize: 32, mr: 3, bgcolor: Color.background, color: Color.word }} href="./">Library</Button>
+                    <Button sx={{ fontSize: 32, mr: 3, bgcolor: NavColor.background, color: NavColor.word }} href="./">Library</Button>
                 </Box>
 
                 <NavMenu  isLoggedIn={isLoggedIn} role={role} AvatarSize={AvatarSize} NavSyntax={NavSyntax} anchorElNav={anchorElNav} 

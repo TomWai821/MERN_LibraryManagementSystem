@@ -1,12 +1,12 @@
 import { FC } from 'react'
 
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import InputLabel from '@mui/material/InputLabel';
+import { Box, TextField, Typography, InputLabel } from '@mui/material';
+import { useModal } from '../../../Context/ModalContext';
 
 const EditBookModal:FC = ({}) => 
 {
+    const modalContext = useModal();
+    
     return(
         <Box>
             <Typography>Edit Book Record</Typography>

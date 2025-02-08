@@ -1,24 +1,8 @@
 import { FC } from 'react';
 import { Avatar, Box, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material"
-
-import { handleLogout } from '../../Controller/UserController/UserController';
-
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-
-import { getUserCookie } from "../../Controller/CookieController";
-import { ChangePage } from "../../Controller/OtherController";
 import { ProfileMenuInterface } from '../../Model/NavModel';
-
-const settings =
-[
-    { label: 'View Profile', clickEvent: () => ChangePage("/profile"), icon: <AccountCircleIcon /> },
-    { label: 'Issue Record', clickEvent: () => ChangePage(""), icon: <AssignmentIcon /> },
-    { label: 'Logout', clickEvent: () => handleLogout(username), icon: <ExitToAppIcon /> }
-];
-
-const username = getUserCookie("username") || sessionStorage.getItem("username");
+import { settings } from '../../Model/UIRenderingModel/NavModel';
+import { GetUsername } from '../../Controller/OtherController';
 
 const ProfileMenu:FC<ProfileMenuInterface> = ({isLoggedIn, role, AvatarSize, anchorElUser, handleUserMenu, NavSyntax, MenuItemSyntax}) => 
 {
@@ -40,7 +24,7 @@ const ProfileMenu:FC<ProfileMenuInterface> = ({isLoggedIn, role, AvatarSize, anc
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', padding: '10px 0 10px 0' }}>
                     <Avatar alt="" src="/static/images/avatar/2.jpg" sx={{ width: AvatarSize, height: AvatarSize, margin: '0 5px 0 10px' }} />
                     <Box sx={{ display: 'block', flexDirection: 'column', marginLeft: '10px' }}>
-                        <Typography sx={{ fontSize: '24px', fontWeight: 'bold' }}>{username}</Typography>
+                        <Typography sx={{ fontWeight: 'bold' }}>{GetUsername()}</Typography>
                         <Typography>{role}</Typography>
                     </Box>
 

@@ -1,4 +1,4 @@
-export const setUserCookie = (authToken:string, name:string, role:string, days:number, expires?:string) => 
+const SetUserCookie = (authToken:string, name:string, role:string, days:number, expires?:string) => 
 {
     if(!expires)
     {
@@ -14,16 +14,14 @@ export const setUserCookie = (authToken:string, name:string, role:string, days:n
     document.cookie = "authToken="+ authToken + ";name=" + name +"; role=" + role + expires +";path=/" ;
 }
 
-export const getUserCookie = (name:string) => 
+const GetUserCookie = (name:string) => 
 {
-    if(name != "authToken")
-    {
-        return document.cookie.split(';').find(row => row.startsWith(name+'='));
-    }
-    return null;
+    return document.cookie.split(';').find(row => row.startsWith(name+'='));
 }
     
-export const deleteUserCookie = (username: string | null) =>
+const DeleteUserCookie = (username: string | null) =>
 {
     document.cookie = "authToken=" + username + '; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 }
+
+export {SetUserCookie, GetUserCookie, DeleteUserCookie}

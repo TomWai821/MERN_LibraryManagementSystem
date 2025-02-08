@@ -4,16 +4,18 @@ import { CreateUserInterface } from './requestInterface'
 export interface DBUserInterface extends CreateUserInterface
 {
     _id:string;
-    banned:boolean;
+    status:string;
     createdAt?:Date;
 }
 
 export interface BookInterface
 {
     _id:Types.ObjectId;
+    name: string
     author:string;
-    title:string;
-    content:string;
-    tag:string;
+    publisher:string;
+    genre:string;
+    page:number;
+    description:string;
     createdAt:Date;
 }

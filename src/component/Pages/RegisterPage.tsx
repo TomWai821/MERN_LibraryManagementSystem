@@ -9,7 +9,7 @@ import { RegisterFields } from '../../Model/UIRenderingModel/TextFieldsModel'
 import { RegisterModel } from '../../Model/InputFieldModel';
 
 import { AlertContext } from '../../Context/AlertContext';
-import { PageTitleSyntax } from '../../Model/UIRenderingModel/FormatSyntaxModel';
+import { PageItemToCenter, PageTitleSyntax } from '../../Model/UIRenderingModel/FormatSyntaxModel';
 import { GetCurrentDate } from '../../Controller/OtherController';
 
 const RegisterPage = () => 
@@ -19,7 +19,7 @@ const RegisterPage = () =>
     const [errors, setErrors] = useState({email: "", username: "", password: ""});
     const [helperTexts, setHelperText] = useState({email: "", username: "", password: ""});
 
-    //const alertContext = useContext(AlertContext);
+    const alertContext = useContext(AlertContext);
 
     const handleRegister = async (event: FormEvent) => 
     {
@@ -39,7 +39,7 @@ const RegisterPage = () =>
     }
 
     return(
-        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 5}}>
+        <Box sx={PageItemToCenter}>
             <Card variant='outlined' sx={{ width: 600 }}>
                 <CardContent>
                     <Typography sx={PageTitleSyntax}>Register</Typography>

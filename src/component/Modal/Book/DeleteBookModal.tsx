@@ -1,21 +1,33 @@
 import { FC } from 'react'
 
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import InputLabel from '@mui/material/InputLabel';
+import { Box, Button, Modal, Typography} from '@mui/material';
+import { useModal } from '../../../Context/ModalContext';
+import { BookDataInterface } from '../../../Model/TablePageModel';
+import { CreateModalSyntax, ModalSyntax } from '../../../Model/UIRenderingModel/FormatSyntaxModel';
 
-const DeleteBookModal:FC = ({}) => 
-{
+const DeleteBookModal:FC<BookDataInterface> = ({name, genre, publisher, author, pages}) => 
+{   
+    const {open, handleClose} = useModal();
+
     return(
-        <Box>
-            <Typography>Delete Book Record</Typography>
+        <Modal open={open} onClose={handleClose} >
+            <Box sx={{...ModalSyntax, ...CreateModalSyntax}}>
+                <Box>
+                    <Typography>Delete Book Record</Typography>
 
-            <Box>
-                <InputLabel></InputLabel>
-                <TextField></TextField>
+                    <Box>
+                        <Typography>Book Name:{name}</Typography>
+                        <Typography>Book Genre:{genre}</Typography>
+                        <Typography>Publisher Name:{publisher}</Typography>
+                        <Typography>Author Name:{author}</Typography>
+                        <Typography>Number of Pages:{pages}</Typography>                       
+                    </Box>
+
+                    <Button>Delete</Button>
+                    <Button onClick={handleClose}>Exit</Button>
+                </Box>
             </Box>
-        </Box>
+        </Modal>
     );
 }
 

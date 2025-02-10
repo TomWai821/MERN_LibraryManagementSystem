@@ -13,7 +13,7 @@ import { ViewProfileFields } from '../../Model/UIRenderingModel/TextFieldsModel'
 // Controllers
 import { FetchUserData } from '../../Controller/UserController/UserGetController'
 import { GetUserCookie } from '../../Controller/CookieController'
-import { PageTitleSyntax } from '../../Model/UIRenderingModel/FormatSyntaxModel'
+import { PageItemToCenter, PageTitleSyntax } from '../../Model/UIRenderingModel/FormatSyntaxModel'
 
 const ButtonFormat = {width: '75%', mt: '15px', deleteButtonColor: 'rgb(230, 0, 0)', deleteButtonHoverColor: 'rgb(210, 0, 0)'};
 
@@ -72,7 +72,7 @@ const ViewProfilePage = () =>
     }
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 5}}>
+        <Box sx={PageItemToCenter}>
             <Card variant='outlined' sx={{ width: '900px' }}>
                 <CardContent>
                     <Typography sx={ PageTitleSyntax }>Profile</Typography>

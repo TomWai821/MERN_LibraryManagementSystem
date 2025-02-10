@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Box, Button, Typography } from "@mui/material";
+import { useModal } from '../../../Context/ModalContext';
 
 const ButtonInfo = [
     {buttonName: 'Yes', BackgroundColor: ''},
@@ -12,6 +13,7 @@ const buttonFontColor = 'white';
 const DeleteAccountConfirmModal = (message: any) => 
 {
     const [OpenModal, handleOpenModal] = useState(false);
+    const modalContext = useModal();
 
     return(
         <Box>

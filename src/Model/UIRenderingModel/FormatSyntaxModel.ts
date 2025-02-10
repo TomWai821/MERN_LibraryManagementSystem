@@ -1,5 +1,10 @@
 import { NavSyntaxInterface } from "../NavModel";
 
+// For all items/tables
+const ItemToCenter = {display: 'flex', justifyContent: 'center'}
+
+const PageItemToCenter = {...ItemToCenter, marginTop: 5};
+
 // Nav bar syntax
 const NavColor = { background: "#00796B", word: "white", wordHover: "#B2DFDB" };
 const NavButtonTransition = "color 1s, background-color 1s";
@@ -36,4 +41,4 @@ const ModalBodySyntax =
 
 const CreateModalSyntax = {width: '400px', height: '400px'}
 
-export {NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSyntax, CreateModalSyntax, ModalBodySyntax}
+export {ItemToCenter, PageItemToCenter, NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSyntax, CreateModalSyntax, ModalBodySyntax}

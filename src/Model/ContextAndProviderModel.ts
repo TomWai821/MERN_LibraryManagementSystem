@@ -23,8 +23,9 @@ interface AlertContextProps
 interface ModalContextProps
 {
     open: boolean;
-    handleOpen: () => void;
+    handleOpen: (content: ReactNode) => void;
     handleClose: () => void
+    content: ReactNode;
 }
 
 export type {ProviderProps, AlertConfig, AlertContextProps, ModalContextProps}

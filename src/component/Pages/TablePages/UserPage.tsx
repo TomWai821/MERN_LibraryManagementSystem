@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from "react";
 
 import { ChangePage, GetRole } from "../../../Controller/OtherController";
 import UserFilter from "./Filter/UserFilter";
+import { PageItemToCenter } from "../../../Model/UIRenderingModel/FormatSyntaxModel";
 
 const role = GetRole();
 const isAdmin:boolean = (role === "Admin");
@@ -20,7 +21,7 @@ const UserPage:FC = () =>
     })
     
     return(
-        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: 5, padding: '0 50px 0 50px'}}>
+        <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <Typography sx={{fontSize: '24px'}}>User Management Page</Typography>
 
             <UserFilter isAdmin={isAdmin}/>

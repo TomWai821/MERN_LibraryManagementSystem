@@ -9,6 +9,7 @@ import { UserDataInterface, UserFilterInterface } from "../../../../Model/TableP
 import { UserSearchFields } from "../../../../Model/UIRenderingModel/TextFieldsModel";
 
 import { useModal } from "../../../../Context/ModalContext";
+import CreateUserModal from "../../../Modal/User/CreateUserModal";
 
 const UserFilter:FC<UserFilterInterface> = ({isAdmin}) => 
 {
@@ -27,6 +28,12 @@ const UserFilter:FC<UserFilterInterface> = ({isAdmin}) =>
 
     const {handleOpen} = useModal();
 
+    const openCreateUserModal = () => 
+    {
+        handleOpen(<CreateUserModal />);
+    };
+
+
     return(
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{paddingBottom: '25px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -36,7 +43,7 @@ const UserFilter:FC<UserFilterInterface> = ({isAdmin}) =>
                 </IconButton>
                 <Button variant='contained'>Search</Button>
                 {isAdmin?
-                    <Button variant='contained' sx={{marginLeft: '10px'}} onClick={handleOpen}>Create User</Button>: <></>
+                    <Button variant='contained' sx={{marginLeft: '10px'}} onClick={openCreateUserModal}>Create User</Button>: <></>
                 }
             </Box>
 

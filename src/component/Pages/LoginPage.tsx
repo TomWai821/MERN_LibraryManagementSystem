@@ -7,7 +7,7 @@ import { LoginModel } from '../../Model/InputFieldModel';
 import { LoginFields } from '../../Model/UIRenderingModel/TextFieldsModel'
 
 // Model for css syntax
-import { PageTitleSyntax } from '../../Model/UIRenderingModel/FormatSyntaxModel';
+import { PageItemToCenter, PageTitleSyntax } from '../../Model/UIRenderingModel/FormatSyntaxModel';
 
 import { ValidateField } from '../../Controller/ValidateController'
 import { LoginController } from '../../Controller/UserController/UserPostController';
@@ -52,7 +52,7 @@ const LoginPage = () =>
     };
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 5 }}>
+        <Box sx={PageItemToCenter}>
             <Card variant='outlined' sx={{ width: 600 }}>
                 <CardContent>
                     <Typography sx={PageTitleSyntax}>Login</Typography>

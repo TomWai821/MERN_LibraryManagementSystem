@@ -21,6 +21,7 @@ interface UserDataInterface
     gender:string;
 }
 
+
 interface ActionTableCellInterface
 {
     TableName: string;

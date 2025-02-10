@@ -9,6 +9,7 @@ const bookSchema = new mongoose.Schema<BookInterface>
         publisher: { type: String, required: true },
         author: { type: String, required: true },
         page: { type: Number, required: true },
+        description: {type: String },
         createdAt: { type: Date, default: Date.now }
     }
 )

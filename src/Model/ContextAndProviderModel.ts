@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-interface ProviderProps
+interface ChildProps
 {
     children: ReactNode;
 }
@@ -28,4 +28,10 @@ interface ModalContextProps
     content: ReactNode;
 }
 
-export type {ProviderProps, AlertConfig, AlertContextProps, ModalContextProps}
+interface ModalTemplateProps extends ChildProps
+{
+    title: string;
+    CancelButtonName: string;
+}
+
+export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps}

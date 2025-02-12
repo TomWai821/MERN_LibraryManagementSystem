@@ -1,13 +1,13 @@
 import { FormEvent, ChangeEvent, useState, useContext } from 'react';
 
 import { Box, Button, Card, CardContent, FormControl, TextField, Typography, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
-import { AlertContext } from '../../Context/AlertContext';
+import { AlertContext } from '../../Context/SnackBarContext';
 
 import { LoginModel } from '../../Model/InputFieldModel';
-import { LoginFields } from '../../Model/UIRenderingModel/TextFieldsModel'
+import { LoginField } from '../../Maps/TextFieldsMaps'
 
 // Model for css syntax
-import { PageItemToCenter, PageTitleSyntax } from '../../Model/UIRenderingModel/FormatSyntaxModel';
+import { PageItemToCenter, PageTitleSyntax } from '../../Maps/FormatSyntaxMaps';
 
 import { ValidateField } from '../../Controller/ValidateController'
 import { LoginController } from '../../Controller/UserController/UserPostController';
@@ -56,7 +56,7 @@ const LoginPage = () =>
             <Card variant='outlined' sx={{ width: 600 }}>
                 <CardContent>
                     <Typography sx={PageTitleSyntax}>Login</Typography>
-                    {LoginFields.map((field, index) => (
+                    {LoginField.map((field, index) => (
                         <FormControl key={index} sx={{ marginBottom: 3, width: '100%' }}>
                             <Typography>{field.label}</Typography>
                             <TextField

@@ -3,10 +3,21 @@ import { FC, useEffect, useState } from "react";
 
 import { ChangePage, GetRole } from "../../../Controller/OtherController";
 import UserFilter from "./Filter/UserFilter";
-import { PageItemToCenter } from "../../../Model/UIRenderingModel/FormatSyntaxModel";
+import { PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
+import { UserTableHeader } from "../../../Maps/TableMaps";
+import { UserDataInterface } from "../../../Model/TablePageModel";
+import ContentTableCell from "./TableCell/ContentTableCell";
+import ActionTableCell from "./TableCell/ActionTableCell";
 
 const role = GetRole();
 const isAdmin:boolean = (role === "Admin");
+
+const UserData: UserDataInterface [] = 
+[
+    {name: "A", email: "ABC@gmail.com", role: "User", status: "Normal", gender: "Male"},
+    {name: "B", email: "DEF@gmail.com", role: "User", status: "Normal", gender: "Female"},
+    {name: "C", email: "GHI@gmail.com", role: "User", status: "Normal", gender: "Male"},
+];
 
 const UserPage:FC = () =>
 {
@@ -26,29 +37,32 @@ const UserPage:FC = () =>
 
             <UserFilter isAdmin={isAdmin}/>
 
-            <TableContainer sx={{ minWidth: '500px', marginTop: 5 }} component={Paper}>
+            <TableContainer sx={{ marginTop: 5 }} component={Paper}>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>No.</TableCell>
-                            <TableCell>Username</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Role</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Gender</TableCell>
-                            <TableCell>Actions</TableCell>
+                            {UserTableHeader.map((header, index) =>
+                                (
+                                    <TableCell key={index}>{header.label}</TableCell>
+                                ) 
+                            )}  
                         </TableRow>
                     </TableHead>
 
                     <TableBody>
-                        <TableRow>
-                            <TableCell>1</TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                        </TableRow>
+                        {UserData.map((data, index) => 
+                            (
+                                <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
+                                    <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
+                                    <ContentTableCell>{data.name}</ContentTableCell>
+                                    <ContentTableCell>{data.email}</ContentTableCell>
+                                    <ContentTableCell>{data.role}</ContentTableCell>
+                                    <ContentTableCell>{data.status}</ContentTableCell>
+                                    <ContentTableCell>{data.gender}</ContentTableCell>
+                                    <ActionTableCell TableName={"User"} Information={data} isAdmin={isAdmin}/>
+                                </TableRow>
+                            )
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>

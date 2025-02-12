@@ -1,6 +1,6 @@
-import { ChangePage, GetUsername } from "../../Controller/OtherController";
+import { ChangePage, GetUsername } from "../Controller/OtherController";
 
-import { handleLogout } from "../../Controller/UserController/UserOtherController";
+import { handleLogout } from "../Controller/UserController/UserOtherController";
 
 // MUI Image
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -32,6 +32,4 @@ const settings =
     { label: 'Logout', clickEvent: () => handleLogout(GetUsername()), icon: <ExitToAppIcon /> }
 ];
 
-const BookTableHeader = [{ label:"No."}, {label:"Book Name"}, {label:"Genre"}, {label:"Publisher"}, {label:"Author"}, {label:"Pages"}, {label:"Actions", condition:"isLoggedIn"}];
-
-export {userPage, adminPage, settings, BookTableHeader}
+export {userPage, adminPage, settings}

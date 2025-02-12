@@ -16,16 +16,16 @@ interface ViewProfileModel extends SecondRow, FirstRow
     gender: string;
 };
 
-interface RegisterModel extends LoginModel
-{
-    username: string; 
-    birthDay: string;
-}
-
 interface LoginModel
 {
     email:string,
     password:string
 }
 
-export type {ViewProfileModel, RegisterModel, LoginModel}
+interface RegisterModel extends LoginModel
+{
+    username: string; 
+    birthDay: string;
+}
+
+export type {ViewProfileModel, LoginModel, RegisterModel}

@@ -1,44 +1,48 @@
 import { ChangeEvent, FC, useState } from 'react'
 
 
-import { Box, TextField, Typography, Modal, Button } from '@mui/material';
+import { TextField, Button, Box } from '@mui/material';
 
-import { CreateModalSyntax, ModalBodySyntax, ModalSyntax, ModalTitleSyntax } from '../../../Model/UIRenderingModel/FormatSyntaxModel';
-import { BookSearchFields } from '../../../Model/UIRenderingModel/TextFieldsModel';
+import { CreateTableInputField } from '../../../Maps/TextFieldsMaps';
 import { BookDataInterface } from '../../../Model/TablePageModel';
-
+import ModalTemplate from '../../Templates/ModalTemplate';
+import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
 import { useModal } from '../../../Context/ModalContext';
+import CreateBookConfirmModal from '../Confirmation/Book/CreateBookConfirmModal';
+
 
 const CreateBookModal:FC = ({}) => 
 {
-    const [book, setBook] = useState({name: "", genre: "", publisher: "", author: "", pages: ""});
-    const {open, handleClose} = useModal();
-
+    const [book, setBook] = useState<BookDataInterface>({name: "", genre: "", publisher: "", author: "", pages: "", amount: ""});
+    const {handleOpen} = useModal();
+    
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
         setBook({...book, [event.target.name]: event.target.value});
     }
 
-    return(
-        <Modal open={open} onClose={handleClose} >
-            <Box sx={{...ModalSyntax, ...CreateModalSyntax}}>
-                <Typography id="modal-title" sx={ModalTitleSyntax}>Create Book Record</Typography>
+    const onClick = () => 
+    {
+        handleOpen(<CreateBookConfirmModal defaultData={book}/>);
+        console.log("opened")
+    }
 
-                <Box id="modal-description" sx={ModalBodySyntax}>
-                    <TextField label="Book Name" name="name" type="text" size="small" value={book.name} onChange={onChange}/>
-                    {
-                        BookSearchFields.map((field, index) => 
-                        (
-                            <TextField key={index} label={field.label} name={field.name} value={book[field.name as keyof BookDataInterface]} 
-                                type={field.type} size="small" onChange={onChange} select={field.select} slotProps={field.slotProps} />
-                        ))
-                    
-                    }
-                </Box>
-                <Button variant='contained' sx={{marginRight: '10px'}}>Create</Button>
-                <Button onClick={handleClose}>Exit</Button>
+    return(
+        <ModalTemplate title={"Create Book Record"} CancelButtonName={"Exit"}>
+            <Box id="modal-description" sx={ModalBodySyntax}>
+            {
+                CreateTableInputField.map((field, index) => 
+                (
+                    <TextField key={index} label={field.label} name={field.name} value={book[field.name as keyof BookDataInterface]} 
+                        type={field.type} size="small" onChange={onChange} select={field.select} slotProps={field.slotProps} />
+                ))
+            }
             </Box>
-        </Modal>
+
+            <Button variant='contained' onClick={onClick}>Create</Button>
+        </ModalTemplate>
+                
+        
     );
 }
 

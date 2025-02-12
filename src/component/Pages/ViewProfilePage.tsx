@@ -8,18 +8,19 @@ import { Box, Button, Card, CardContent, TextField, Typography } from '@mui/mate
 // Models
 import { ViewProfileModel } from '../../Model/InputFieldModel'
 import { GetResultInterface } from '../../Model/ResultModel'
-import { ViewProfileFields } from '../../Model/UIRenderingModel/TextFieldsModel'
+import { ViewProfileField } from '../../Maps/TextFieldsMaps'
 
 // Controllers
 import { FetchUserData } from '../../Controller/UserController/UserGetController'
 import { GetUserCookie } from '../../Controller/CookieController'
-import { PageItemToCenter, PageTitleSyntax } from '../../Model/UIRenderingModel/FormatSyntaxModel'
-
-const ButtonFormat = {width: '75%', mt: '15px', deleteButtonColor: 'rgb(230, 0, 0)', deleteButtonHoverColor: 'rgb(210, 0, 0)'};
+import { DeleteButton, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../Maps/FormatSyntaxMaps'
+import { useModal } from '../../Context/ModalContext'
+import DeleteProfileConfirmModal from '../Modal/Confirmation/Profile/DeleteProfileComfirmModal'
 
 const ViewProfilePage = () => 
 {
     const [Credentials, setCredentials] = useState<ViewProfileModel>({ email: "", gender: "", username: "",  newName: "", role: "", newPassword: ""});
+    const {handleOpen} = useModal();
 
     useEffect(() => {
         const fetchUser = async () => 
@@ -71,6 +72,11 @@ const ViewProfilePage = () =>
         event.preventDefault();
     }
 
+    const onClick = () => 
+    {
+        handleOpen(<DeleteProfileConfirmModal/>);
+    }
+
     return (
         <Box sx={PageItemToCenter}>
             <Card variant='outlined' sx={{ width: '900px' }}>
@@ -78,7 +84,7 @@ const ViewProfilePage = () =>
                     <Typography sx={ PageTitleSyntax }>Profile</Typography>
                     <Box sx={{ padding: '20px', display: 'grid', gap: '10px 50px', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'}}>
                     {
-                        ViewProfileFields.map((field, index) =>
+                        ViewProfileField.map((field, index) =>
                         (
                             <React.Fragment key={index}>
                                 <TextField 
@@ -96,9 +102,9 @@ const ViewProfilePage = () =>
                     }
                     </Box>
 
-                    <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', mt: ButtonFormat.mt}}>
-                        <Button variant='contained' sx={{width: ButtonFormat.width, mt: ButtonFormat.mt}} onClick={onSubmit}>Change Data</Button>
-                        <Button variant='contained' sx={{width: ButtonFormat.width, mt: ButtonFormat.mt, backgroundColor: ButtonFormat.deleteButtonColor, '&:hover': {backgroundColor: ButtonFormat.deleteButtonHoverColor} }}>Delete Account</Button>
+                    <Box sx={{...PageItemToCenter, flexDirection: 'column', alignItems: 'center', mt: ViewProfileButton.marginTop}}>
+                        <Button variant='contained' sx={{...ViewProfileButton}} onClick={onSubmit}>Change Data</Button>
+                        <Button variant='contained' sx={{...ViewProfileButton, ...DeleteButton}} onClick={onClick}>Delete Account</Button>
                     </Box>
                 </CardContent>
             </Card>

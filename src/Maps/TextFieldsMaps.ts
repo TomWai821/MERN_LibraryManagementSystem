@@ -1,4 +1,4 @@
-const RegisterFields = 
+const RegisterField = 
 [
     {name:"email", type:"email", label:"Email:"},
     {name:"username", type:"text", label:"Username:"},
@@ -6,31 +6,31 @@ const RegisterFields =
     {name:"birthDay", type:"date", label:"Date Of Birth:"}
 ]
 
-const LoginFields = 
+const LoginField = 
 [
     { name: "email", type: "email", label: "Email" },
     { name: "password", type: "password", label: "Password" }
 ];
 
-const ViewProfileFields = 
+const ViewProfileField = 
 [
     {name: "email", label: "Email:", type: "email", disable: true}, 
-    {name: "gender", label: "Gender:", type: "string", disable: true},
-    {name: "username", label: "Username:", type: "string", disable: true}, 
-    {name: "newName", label: "New Name:", type: "string"},
-    {name: "role", label: "Role:",  type: "string", disable: true}, 
+    {name: "gender", label: "Gender:", type: "text", disable: true},
+    {name: "username", label: "Username:", type: "text", disable: true}, 
+    {name: "newName", label: "New Name:", type: "text"},
+    {name: "role", label: "Role:",  type: "text", disable: true}, 
     {name: "newPassword", label: "New Password:", type: "password"}
 ]
 
-const BookSearchFields = 
+const BookSearchField = 
 [
     {name: "genre", label: "Genre", type: "text", select: true},
     {name: "publisher", label: "Publisher Name", type: "text"},
     {name: "author", label: "Author Name", type: "text"},
-    {name: "pages", label: "Pages", type: "number", slotProps: {htmlInput:{min: 0, max: 500}}}
+    {name: "pages", label: "Pages", type: "number", slotProps: {htmlInput:{min: 0}}}
 ]
 
-const UserSearchFields = 
+const UserSearchField = 
 [
     {name: "email", label: "Email", type: "email"},
     {name: "role", label: "Role", type: "text"},
@@ -38,4 +38,11 @@ const UserSearchFields =
     {name: "gender", label: "Gender", type: "text"}
 ]
 
-export {RegisterFields, LoginFields, ViewProfileFields, BookSearchFields, UserSearchFields}
+const CreateTableInputField = 
+[
+    {name: "name", label: "Book Name", type:"text", select:false, slotProps: {}},
+    ...BookSearchField,
+    {name: "amount", label: "Book Amount", type:"number", slotProps: {htmlInput:{min: 0}}}
+]
+
+export {RegisterField, LoginField, ViewProfileField, BookSearchField, UserSearchField, CreateTableInputField}

@@ -1,11 +1,11 @@
 import { Response, Request, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 import { jwtVerify } from './hashing';
-import { DBUserInterface } from '../model/dbInterface';
+import { UserInterface } from '../model/dbInterface';
 
 export interface AuthRequest extends Request
 {
-    user?: DBUserInterface;
+    user?: UserInterface;
 }
 
 export const Validate = (req: Request, res: Response, next: NextFunction) => 

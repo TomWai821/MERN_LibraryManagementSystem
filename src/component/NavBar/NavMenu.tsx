@@ -2,7 +2,7 @@ import { Box, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material"
 
 import { FC } from "react";
 import { NavMenuInterface } from "../../Model/NavModel";
-import { adminPage, userPage } from '../../Model/UIRenderingModel/NavModel'
+import { adminPage, userPage } from '../../Maps/NavMaps'
 
 
 const NavMenu:FC<NavMenuInterface> = ({isLoggedIn, role, AvatarSize, anchorElNav, handleNavMenu, NavSyntax, MenuItemSyntax}) => 

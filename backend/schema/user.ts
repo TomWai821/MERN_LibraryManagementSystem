@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { DBUserInterface } from '../model/dbInterface';
+import { UserInterface } from '../model/dbInterface';
 
-const UserSchema = new mongoose.Schema<DBUserInterface>
+const UserSchema = new mongoose.Schema<UserInterface>
 (
     {
         username: { type: String, require: true },
@@ -15,5 +15,5 @@ const UserSchema = new mongoose.Schema<DBUserInterface>
     }
 );
 
-const User = mongoose.model<DBUserInterface>('User', UserSchema);
+const User = mongoose.model<UserInterface>('User', UserSchema);
 export default User;

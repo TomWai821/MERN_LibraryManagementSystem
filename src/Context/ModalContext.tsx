@@ -1,9 +1,9 @@
 import { createContext, FC, ReactNode, useContext, useState } from "react";
-import { ModalContextProps, ProviderProps } from "../Model/ContextAndProviderModel";
+import { ChildProps, ModalContextProps } from "../Model/ContextAndProviderModel";
 
 const ModalContext = createContext<ModalContextProps | undefined>(undefined);
     
-const ModalProvider:FC<ProviderProps> = ({children}) => 
+const ModalProvider:FC<ChildProps> = ({children}) => 
 {
     const [open, setOpen] = useState(false);
     const [content, setContent] = useState<React.ReactNode>(null);

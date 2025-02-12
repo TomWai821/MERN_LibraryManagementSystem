@@ -1,14 +1,14 @@
 import { Types } from "mongoose";
 import { CreateUserInterface } from './requestInterface'
 
-export interface DBUserInterface extends CreateUserInterface
+interface UserInterface extends CreateUserInterface
 {
     _id:string;
     status:string;
     createdAt?:Date;
 }
 
-export interface BookInterface
+interface BookInterface
 {
     _id:Types.ObjectId;
     name: string
@@ -19,3 +19,11 @@ export interface BookInterface
     description:string;
     createdAt:Date;
 }
+
+interface GenreInterface
+{
+    genreID:string;
+    genre:string
+}
+
+export {UserInterface, BookInterface,  GenreInterface}

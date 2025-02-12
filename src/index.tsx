@@ -3,7 +3,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { AlertProvider } from './Context/AlertContext';
+import { AlertProvider } from './Context/SnackBarContext';
 import { ModalProvider } from './Context/ModalContext';
 
 const root = ReactDOM.createRoot(

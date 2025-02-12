@@ -17,8 +17,8 @@ interface NavSyntaxInterface {
 
 interface MenuItemSyntaxInterface
 {
-    m: number;
-    p: number;
+    margin: number;
+    padding: number;
 }
 
 interface ProfileMenuInterface extends NavInterface

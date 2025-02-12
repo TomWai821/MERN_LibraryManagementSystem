@@ -2,14 +2,15 @@ import { FC } from "react";
 
 import { Box, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper, Table } from "@mui/material";
 
-import { BookDataInterface, UserDataInterface } from "../../../Model/TablePageModel";
-import { BookTableHeader } from "../../../Model/UIRenderingModel/NavModel";
+import { BookDataInterface } from "../../../Model/TablePageModel";
+import { BookTableHeader } from "../../../Maps/TableMaps";
 
 import { GetRole, IsLoggedIn } from "../../../Controller/OtherController";
 
 import BookFilter from "./Filter/BookFilter";
-import { PageItemToCenter } from "../../../Model/UIRenderingModel/FormatSyntaxModel";
-import ActionTableCellWithProvider from "./TableCell/ActionTableCell";
+import { PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
+import ActionTableCell from "./TableCell/ActionTableCell";
+import ContentTableCell from "./TableCell/ContentTableCell";
 
 const role = GetRole();
 const isAdmin:boolean = (role === "Admin");
@@ -17,9 +18,9 @@ const isLoggedIn = IsLoggedIn();
 
 const BookData: BookDataInterface [] = 
 [
-    { name: "A", genre: "A", author: "A", publisher: "A", pages: "100" },
-    { name: "B", genre: "B", author: "B", publisher: "B", pages: "100" },
-    { name: "C", genre: "C", author: "C", publisher: "C", pages: "100" }
+    { name: "A", genre: "A", author: "A", publisher: "A", pages: "100", amount: "1" },
+    { name: "B", genre: "B", author: "B", publisher: "B", pages: "100", amount: "1" },
+    { name: "C", genre: "C", author: "C", publisher: "C", pages: "100", amount: "1" }
 ];
 
 const SetTitle = isAdmin ? "Manage Books Record": "View Books";
@@ -32,15 +33,15 @@ const BookPage:FC = () =>
 
             <BookFilter isAdmin={isAdmin}/>
 
-            <TableContainer sx={{ minWidth: '650px', marginTop: 5 }} component={Paper}>
+            <TableContainer sx={{ marginTop: 5 }} component={Paper}>
                 <Table>
                     <TableHead>
                         <TableRow>
                             {
-                                BookTableHeader.map((header)=>
+                                BookTableHeader.map((header, index)=>
                                 {
                                     if (header.condition && !isLoggedIn) return null;
-                                    return <TableCell key={header.label}>{header.label}</TableCell>;
+                                    return <TableCell key={index}>{header.label}</TableCell>;
                                 })  
                             }
                         </TableRow>
@@ -49,15 +50,16 @@ const BookPage:FC = () =>
                     <TableBody>
                         {BookData.map((data, index) => 
                             (
-                                <TableRow key={index} sx={{"&:hover": {backgroundColor: "lightGray"}}}>
-                                    <TableCell>{index + 1}</TableCell>
-                                    <TableCell>{data.name}</TableCell>
-                                    <TableCell>{data.genre}</TableCell>
-                                    <TableCell>{data.author}</TableCell>
-                                    <TableCell>{data.publisher}</TableCell>
-                                    <TableCell>{data.pages}</TableCell>
+                                <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
+                                    <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
+                                    <ContentTableCell>{data.name}</ContentTableCell>
+                                    <ContentTableCell>{data.genre}</ContentTableCell>
+                                    <ContentTableCell>{data.author}</ContentTableCell>
+                                    <ContentTableCell>{data.publisher}</ContentTableCell>
+                                    <ContentTableCell>{data.pages}</ContentTableCell>
+                                    <ContentTableCell>{data.amount}</ContentTableCell>
                                     {isLoggedIn ? 
-                                        <ActionTableCellWithProvider TableName={"Book"} Information={data} isAdmin={isAdmin}/> : <></>
+                                        <ActionTableCell TableName={"Book"} Information={data} isAdmin={isAdmin}/> : <></>
                                     }
                                 </TableRow>
                             )

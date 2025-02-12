@@ -3,13 +3,18 @@ interface FilterInterface
     isAdmin:boolean;
 }
 
-interface BookDataInterface
+interface BookSearchInterface
 {
     name:string;
     genre:string;
     author:string;
     publisher:string;
     pages:string;
+}
+
+interface BookDataInterface extends BookSearchInterface
+{
+    amount:string;
 }
 
 interface UserDataInterface
@@ -39,4 +44,10 @@ interface UserFilterInterface extends FilterInterface
     
 }
 
-export type {BookDataInterface, UserDataInterface, ActionTableCellInterface, BookFilterInterface, UserFilterInterface}
+interface ConfirmInterface
+{
+    defaultData: BookDataInterface;
+    editData?: BookDataInterface;
+}
+
+export type {BookSearchInterface, BookDataInterface, UserDataInterface, ActionTableCellInterface, BookFilterInterface, UserFilterInterface, ConfirmInterface}

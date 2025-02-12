@@ -5,11 +5,11 @@ import { MenuItem, Button, Card, CardContent, Typography, TextField, Box, FormCo
 import { RegisterController } from '../../Controller/UserController/UserPostController';
 import { ValidateField } from '../../Controller/ValidateController'
 
-import { RegisterFields } from '../../Model/UIRenderingModel/TextFieldsModel'
+import { RegisterField } from '../../Maps/TextFieldsMaps'
 import { RegisterModel } from '../../Model/InputFieldModel';
 
-import { AlertContext } from '../../Context/AlertContext';
-import { PageItemToCenter, PageTitleSyntax } from '../../Model/UIRenderingModel/FormatSyntaxModel';
+import { AlertContext } from '../../Context/SnackBarContext';
+import { PageItemToCenter, PageTitleSyntax } from '../../Maps/FormatSyntaxMaps';
 import { GetCurrentDate } from '../../Controller/OtherController';
 
 const RegisterPage = () => 
@@ -44,7 +44,7 @@ const RegisterPage = () =>
                 <CardContent>
                     <Typography sx={PageTitleSyntax}>Register</Typography>
                     {
-                        RegisterFields.map((field, index) =>
+                        RegisterField.map((field, index) =>
                             (
                                 <FormControl key={index} sx={{ marginBottom: 3, width: '100%'}}>
                                     <Typography>{field.label}</Typography>

@@ -6,33 +6,36 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import BlockIcon from '@mui/icons-material/Block';
 
 import { useModal } from "../../../../Context/ModalContext";
 
 // Modals
 import DeleteBookModal from "../../../Modal/Confirmation/Book/DeleteBookConfirmModal";
-import DeleteUserConfirmModal from "../../../Modal/Confirmation/Profile/DeleteUserConfirmModal";
+import DeleteUserConfirmModal from "../../../Modal/Confirmation/User/DeleteUserConfirmModal";
 import EditUserModal from "../../../Modal/User/EditUserModal";
 import EditBookModal from "../../../Modal/Book/EditBookModal";
 
 import { ActionTableCellInterface, BookDataInterface, UserDataInterface } from "../../../../Model/TablePageModel";
 
 import { DeleteButton } from "../../../../Maps/FormatSyntaxMaps";
+import BanUserConfirmModal from "../../../Modal/Confirmation/User/BanUserConfirmModal";
 
 const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information, isAdmin }) => 
 {
     const { handleOpen } = useModal();
 
-    
-
-    const openEditModal = () => {
+    const openEditModal = () => 
+    {
         switch (TableName) 
         {
             case "Book":
-                handleOpen(<EditBookModal {...Information as BookDataInterface} />);
+                const bookData = Information as BookDataInterface;
+                handleOpen(<EditBookModal editData={bookData} compareData={bookData}  />);
                 break;
             case "User":
-                handleOpen(<EditUserModal {...Information as UserDataInterface} />);
+                const userData = Information as UserDataInterface;
+                handleOpen(<EditUserModal editData={userData} compareData={userData}/>);
                 break;
         }
     }
@@ -50,6 +53,11 @@ const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information,
         }
     }
 
+    const openBannedModal = () => 
+    {
+        handleOpen(<BanUserConfirmModal />);
+    }
+
     return (
         isAdmin ?
             <TableCell sx={{marginLeft: '20px'}}>
@@ -64,6 +72,15 @@ const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information,
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip>
+
+                {
+                    (TableName === "User") ? 
+                    <Tooltip title={"Banned"} arrow>
+                        <IconButton sx={{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'gray' } }} onClick={openBannedModal}>
+                            <BlockIcon />
+                        </IconButton>
+                    </Tooltip>:<></>
+                }
             </TableCell>
             :
             <TableCell sx={{marginLeft: '20px'}}>

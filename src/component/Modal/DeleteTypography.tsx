@@ -11,7 +11,7 @@ const DeleteTypography:FC = () =>
 {
     return( 
         <Typography sx={{display:'flex', alignContent: 'center', color: DeleteButton.backgroundColor, paddingBottom: '30px'}}>
-            <WarningAmberIcon/>Warning: This Action could not be undo
+            <WarningAmberIcon/>Warning: This Action could not be undone
         </Typography>
     )
 }

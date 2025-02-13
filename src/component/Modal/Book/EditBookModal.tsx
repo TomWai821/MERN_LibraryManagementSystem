@@ -2,16 +2,17 @@ import { ChangeEvent, FC, useState } from 'react'
 
 import { Box, TextField, Button } from '@mui/material';
 import { useModal } from '../../../Context/ModalContext';
-import { BookDataInterface } from '../../../Model/TablePageModel';
+import { BookDataInterface, EditModalInterface } from '../../../Model/TablePageModel';
 import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
 import { CreateBookInputField } from '../../../Maps/TextFieldsMaps';
-import EditBookRecordConfirmModal from '../Confirmation/Book/EditBookConfirmModal';
+import EditBookConfirmModal from '../Confirmation/Book/EditBookConfirmModal';
 import ModalTemplate from '../../Templates/ModalTemplate';
 
-const EditBookModal:FC<BookDataInterface> = ({...defaultData}) => 
+const EditBookModal:FC<EditModalInterface> = ({editData, compareData}) => 
 {
-    const { name, genre, publisher, author, pages, amount } = defaultData;
-    const [book, setBook] = useState<BookDataInterface>({name: name, genre: genre, publisher: publisher, author: author, pages: pages, amount: amount});
+    const { bookname, genre, publisher, author, pages, amount } = editData as BookDataInterface;
+
+    const [book, setBook] = useState<BookDataInterface>({bookname: bookname, genre: genre, publisher: publisher, author: author, pages: pages, amount: amount});
     const { handleOpen } = useModal();
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
@@ -21,7 +22,7 @@ const EditBookModal:FC<BookDataInterface> = ({...defaultData}) =>
 
     const onClick = () => 
     {
-        handleOpen(<EditBookRecordConfirmModal editData={book} defaultData={{...defaultData}}/>);
+        handleOpen(<EditBookConfirmModal editData={book} compareData={compareData}/>);
     }
 
     return(

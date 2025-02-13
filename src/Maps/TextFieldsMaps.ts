@@ -25,8 +25,8 @@ const ViewProfileField =
 const BookSearchField = 
 [
     {name: "genre", label: "Genre", type: "text", select: true},
-    {name: "publisher", label: "Publisher Name", type: "text"},
-    {name: "author", label: "Author Name", type: "text"},
+    {name: "publisher", label: "Publisher Name", type: "text", select: true},
+    {name: "author", label: "Author Name", type: "text", select: true},
     {name: "pages", label: "Pages", type: "number", slotProps: {htmlInput:{min: 0}}}
 ]
 
@@ -47,8 +47,15 @@ const CreateBookInputField =
 
 const CreateUserInputField = 
 [
-    {name: "user", label: "Username", type:"text", select:false, slotProps: {}},
+    {name: "username", label: "Username", type:"text", select:false, slotProps: {}},
+    {name: "password", label: "Password", type:"password"},
     ...UserSearchField
 ]
 
-export {RegisterField, LoginField, ViewProfileField, BookSearchField, UserSearchField, CreateBookInputField, CreateUserInputField}
+const EditUserInputField =
+[
+    {name: "username", label: "Username", type:"text", select:false, slotProps: {}},
+    ...UserSearchField
+]
+
+export {RegisterField, LoginField, ViewProfileField, BookSearchField, UserSearchField, CreateBookInputField, CreateUserInputField, EditUserInputField}

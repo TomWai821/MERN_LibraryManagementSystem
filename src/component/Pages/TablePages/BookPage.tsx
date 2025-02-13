@@ -18,9 +18,9 @@ const isLoggedIn = IsLoggedIn();
 
 const BookData: BookDataInterface [] = 
 [
-    { name: "A", genre: "A", author: "A", publisher: "A", pages: "100", amount: "1" },
-    { name: "B", genre: "B", author: "B", publisher: "B", pages: "100", amount: "1" },
-    { name: "C", genre: "C", author: "C", publisher: "C", pages: "100", amount: "1" }
+    { bookname: "A", genre: "A", author: "A", publisher: "A", pages: "100", amount: "1" },
+    { bookname: "B", genre: "B", author: "B", publisher: "B", pages: "100", amount: "1" },
+    { bookname: "C", genre: "C", author: "C", publisher: "C", pages: "100", amount: "1" }
 ];
 
 const SetTitle = isAdmin ? "Manage Books Record": "View Books";
@@ -52,7 +52,7 @@ const BookPage:FC = () =>
                             (
                                 <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                     <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                    <ContentTableCell>{data.name}</ContentTableCell>
+                                    <ContentTableCell>{data.bookname}</ContentTableCell>
                                     <ContentTableCell>{data.genre}</ContentTableCell>
                                     <ContentTableCell>{data.author}</ContentTableCell>
                                     <ContentTableCell>{data.publisher}</ContentTableCell>

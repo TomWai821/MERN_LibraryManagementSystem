@@ -1,16 +1,16 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
 import { CreateBookInputField } from '../../../Maps/TextFieldsMaps';
-import { BookDataInterface } from '../../../Model/TablePageModel';
+import { BookDataInterface, CreateModalInterface } from '../../../Model/TablePageModel';
 import ModalTemplate from '../../Templates/ModalTemplate';
 import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
 import { useModal } from '../../../Context/ModalContext';
 import CreateBookConfirmModal from '../Confirmation/Book/CreateBookConfirmModal';
 
-const CreateBookModal: FC<BookDataInterface> = ({...defaultData}) => 
+const CreateBookModal: FC<CreateModalInterface> = ({...bookData}) => 
 {
-    const { name, genre, publisher, author, pages, amount } = defaultData;
-    const [ book, setBook ] = useState<BookDataInterface>({ name: name, genre: genre, publisher: publisher, author: author, pages: pages, amount: amount });
+    const { bookname, genre, publisher, author, pages, amount } = bookData as BookDataInterface;
+    const [ book, setBook ] = useState<BookDataInterface>({ bookname: bookname, genre: genre, publisher: publisher, author: author, pages: pages, amount: amount });
     const { handleOpen } = useModal();
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
@@ -20,7 +20,7 @@ const CreateBookModal: FC<BookDataInterface> = ({...defaultData}) =>
 
     const onClick = () => 
     {
-        handleOpen(<CreateBookConfirmModal defaultData={book} />);
+        handleOpen(<CreateBookConfirmModal bookData={book}/>);
     }
 
     return (

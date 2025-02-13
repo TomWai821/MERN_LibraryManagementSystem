@@ -45,10 +45,15 @@ const ModalTitleSyntax =
     marginBottom: '5px' 
 }
 
+const ModalRemarkSyntax = 
+{
+    fontWeight: 'bold'
+}
+
 const ModalSubTitleSyntax = 
 {
-    fontSize: '18px', 
-    fontWeight: 'bold'
+    fontSize: '18px',
+    ...ModalRemarkSyntax
 }
 
 const ModalBodySyntax = 
@@ -60,4 +65,4 @@ const ModalBodySyntax =
 
 const CreateModalSyntax = {width: '400px'}
 
-export {ViewProfileButton, buttonFontColor, DeleteButton, ItemToCenter, PageItemToCenter, NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSubTitleSyntax, ModalSyntax, CreateModalSyntax, ModalBodySyntax}
+export {ViewProfileButton, buttonFontColor, DeleteButton, ItemToCenter, PageItemToCenter, NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSubTitleSyntax, ModalSyntax, ModalRemarkSyntax, CreateModalSyntax, ModalBodySyntax}

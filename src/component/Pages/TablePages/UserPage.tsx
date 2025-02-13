@@ -14,9 +14,9 @@ const isAdmin:boolean = (role === "Admin");
 
 const UserData: UserDataInterface [] = 
 [
-    {name: "A", email: "ABC@gmail.com", role: "User", status: "Normal", gender: "Male"},
-    {name: "B", email: "DEF@gmail.com", role: "User", status: "Normal", gender: "Female"},
-    {name: "C", email: "GHI@gmail.com", role: "User", status: "Normal", gender: "Male"},
+    {username: "A", email: "ABC@gmail.com", role: "User", status: "Normal", gender: "Male"},
+    {username: "B", email: "DEF@gmail.com", role: "User", status: "Normal", gender: "Female"},
+    {username: "C", email: "GHI@gmail.com", role: "User", status: "Normal", gender: "Male"},
 ];
 
 const UserPage:FC = () =>
@@ -54,7 +54,7 @@ const UserPage:FC = () =>
                             (
                                 <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                     <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                    <ContentTableCell>{data.name}</ContentTableCell>
+                                    <ContentTableCell>{data.username}</ContentTableCell>
                                     <ContentTableCell>{data.email}</ContentTableCell>
                                     <ContentTableCell>{data.role}</ContentTableCell>
                                     <ContentTableCell>{data.status}</ContentTableCell>

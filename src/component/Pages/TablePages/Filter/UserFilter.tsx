@@ -5,29 +5,29 @@ import { Box, Button, Card, IconButton, TextField, Typography } from "@mui/mater
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
-import { UserDataInterface, UserFilterInterface } from "../../../../Model/TablePageModel";
+import { FilterInterface, UserDataInterface } from "../../../../Model/TablePageModel";
 import { UserSearchField } from "../../../../Maps/TextFieldsMaps";
 
 import { useModal } from "../../../../Context/ModalContext";
 import CreateUserModal from "../../../Modal/User/CreateUserModal";
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
 
-const UserFilter:FC<UserFilterInterface> = ({isAdmin}) => 
+const UserFilter:FC<FilterInterface> = ({isAdmin}) => 
 {
-    const [searchUser, setsearchUser] = useState({name: "", email:"", role:"", status:"", gender:""});
+    const [searchUser, setsearchUser] = useState({username: "", email:"", role:"", status:"", gender:""});
     const [optionVisiable, setOptionVisiable] = useState(false);
-    
-    const toggleCardVisibility = () => 
-    {
-        setOptionVisiable((prev) => !prev);
-    };
+
+    const {handleOpen} = useModal();
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
         setsearchUser({...searchUser, [event.target.name] : event.target.value})
     }
-
-    const {handleOpen} = useModal();
+    
+    const toggleCardVisibility = () => 
+    {
+        setOptionVisiable((prev) => !prev);
+    };
 
     const openCreateUserModal = () => 
     {
@@ -37,7 +37,7 @@ const UserFilter:FC<UserFilterInterface> = ({isAdmin}) =>
     return(
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{...ItemToCenter, paddingBottom: '25px', alignItems: 'center'}}>
-                <TextField label={"Username"} value={searchUser.name} size="small" sx={{width: '75%', marginRight: '10px'}}/>
+                <TextField label={"Username"} value={searchUser.username} name="username" size="small" onChange={onChange} sx={{width: '75%'}}/>
                 <IconButton onClick={toggleCardVisibility}>
                     {optionVisiable ? <ArrowDropUpIcon/> : <ArrowDropDownIcon/>}
                 </IconButton>

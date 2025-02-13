@@ -6,9 +6,9 @@ import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../
 import DeleteTypography from '../../../UIFragment/Typography/DeleteTypography';
 import ModalTemplate from '../../../Templates/ModalTemplate';
 
-const DeleteBookModal:FC<BookDataInterface> = ({...defaultData}) => 
-{   
-    const { name, genre, publisher, author, pages, amount } = defaultData;
+const DeleteBookModal:FC<BookDataInterface> = ({...bookData}) => 
+{  
+    const { bookname, genre, publisher, author, pages, amount } = bookData;
 
     const onClick = () => 
     {
@@ -18,8 +18,8 @@ const DeleteBookModal:FC<BookDataInterface> = ({...defaultData}) =>
     return(
         <ModalTemplate title={"Delete Book Record Confirmation"} cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
-                <Typography sx={ModalSubTitleSyntax}>Do you want to delete this account?</Typography>
-                <Typography>Book Name:{name}</Typography>
+                <Typography sx={ModalSubTitleSyntax}>Do you want to delete this book record?</Typography>
+                <Typography>Book Name:{bookname}</Typography>
                 <Typography>Book Genre:{genre}</Typography>
                 <Typography>Publisher Name:{publisher}</Typography>
                 <Typography>Author Name:{author}</Typography>

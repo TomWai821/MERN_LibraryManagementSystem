@@ -5,7 +5,7 @@ interface FilterInterface
 
 interface BookSearchInterface
 {
-    name:string;
+    bookname:string;
     genre:string;
     author:string;
     publisher:string;
@@ -19,11 +19,16 @@ interface BookDataInterface extends BookSearchInterface
 
 interface UserDataInterface
 {
-    name:string;
+    username:string;
     email:string;
     role:string;
     status:string;
     gender:string;
+}
+
+interface CreateUserInterface extends UserDataInterface
+{
+    password:string;
 }
 
 
@@ -34,24 +39,16 @@ interface ActionTableCellInterface
     isAdmin: boolean
 }
 
-interface BookFilterInterface extends FilterInterface
+interface CreateModalInterface
 {
-
+    bookData?: UserDataInterface | BookDataInterface;
 }
 
-interface UserFilterInterface extends FilterInterface
+interface EditModalInterface
 {
-    
+    editData: UserDataInterface | BookDataInterface;
+    compareData: UserDataInterface | BookDataInterface;
 }
 
-interface ConfirmInterface
-{
-    defaultData: BookDataInterface;
-}
 
-interface EditConfirmInterface extends ConfirmInterface
-{
-    editData: BookDataInterface;
-}
-
-export type {BookSearchInterface, BookDataInterface, UserDataInterface, ActionTableCellInterface, BookFilterInterface, UserFilterInterface, ConfirmInterface, EditConfirmInterface}
+export type {BookSearchInterface, BookDataInterface, UserDataInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface}

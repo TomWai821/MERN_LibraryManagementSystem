@@ -10,11 +10,11 @@ import { useModal } from "../../../../Context/ModalContext";
 import CreateBookModal from "../../../Modal/Book/CreateBookModal";
 
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
-import { BookDataInterface, BookFilterInterface } from "../../../../Model/TablePageModel";
+import { BookDataInterface, FilterInterface } from "../../../../Model/TablePageModel";
 
-const BookFilter: FC<BookFilterInterface> = ({ isAdmin }) => 
+const BookFilter: FC<FilterInterface> = ({ isAdmin }) => 
 {
-    const [searchBook, setSearchBook] = useState<BookDataInterface>({ name: "", genre: "", publisher: "", author: "", pages: "", amount: "" });
+    const [searchBook, setSearchBook] = useState<BookDataInterface>({ bookname: "", genre: "", publisher: "", author: "", pages: "", amount: "" });
     const [optionVisiable, setOptionVisiable] = useState(false);
     const { handleOpen } = useModal();
 
@@ -30,13 +30,13 @@ const BookFilter: FC<BookFilterInterface> = ({ isAdmin }) =>
 
     const openCreateBookModal = () => 
     {
-        handleOpen(<CreateBookModal amount={""} name={""} genre={""} author={""} publisher={""} pages={""} />);
+        handleOpen(<CreateBookModal />);
     };
 
     return (
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{ ...ItemToCenter, paddingBottom: '25px', alignItems: 'center' }}>
-                <TextField label={"Book Name"} value={searchBook.name} name="name" id="name" onChange={onChange} size="small" sx={{ width: '75%' }} />
+                <TextField label={"Book Name"} value={searchBook.bookname} name="name" id="name" onChange={onChange} size="small" sx={{ width: '75%' }} />
                 <IconButton onClick={toggleCardVisibility}>
                     {optionVisiable ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                 </IconButton>

@@ -54,7 +54,7 @@ const UserFilter:FC<UserFilterInterface> = ({isAdmin}) =>
                     {UserSearchField.map((field, index) => 
                         (
                             <TextField key={index} label={field.label} name={field.name} value={searchUser[field.name as keyof UserDataInterface]} 
-                                type={field.type} size="small" onChange={onChange}/>
+                                type={field.type} size="small" onChange={onChange} select={field.select}/>
                         ))
                     }
                 </Box>

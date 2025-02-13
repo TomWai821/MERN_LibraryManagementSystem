@@ -47,7 +47,11 @@ interface UserFilterInterface extends FilterInterface
 interface ConfirmInterface
 {
     defaultData: BookDataInterface;
-    editData?: BookDataInterface;
 }
 
-export type {BookSearchInterface, BookDataInterface, UserDataInterface, ActionTableCellInterface, BookFilterInterface, UserFilterInterface, ConfirmInterface}
+interface EditConfirmInterface extends ConfirmInterface
+{
+    editData: BookDataInterface;
+}
+
+export type {BookSearchInterface, BookDataInterface, UserDataInterface, ActionTableCellInterface, BookFilterInterface, UserFilterInterface, ConfirmInterface, EditConfirmInterface}

@@ -4,7 +4,7 @@ import { Box, TextField, Button } from '@mui/material';
 import { useModal } from '../../../Context/ModalContext';
 import { BookDataInterface } from '../../../Model/TablePageModel';
 import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
-import { CreateTableInputField } from '../../../Maps/TextFieldsMaps';
+import { CreateBookInputField } from '../../../Maps/TextFieldsMaps';
 import EditBookRecordConfirmModal from '../Confirmation/Book/EditBookConfirmModal';
 import ModalTemplate from '../../Templates/ModalTemplate';
 
@@ -25,10 +25,10 @@ const EditBookModal:FC<BookDataInterface> = ({...defaultData}) =>
     }
 
     return(
-        <ModalTemplate title={"Edit Book Record"} CancelButtonName={"Exit"}>
+        <ModalTemplate title={"Edit Book Record"} cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
             {
-                CreateTableInputField.map((field, index) => 
+                CreateBookInputField.map((field, index) => 
                     (
                         <TextField key={index} label={field.label} name={field.name} 
                                 type={field.type} size="small" value={book[field.name as keyof BookDataInterface]} onChange={onChange} select={field.select} slotProps={field.slotProps} required/>

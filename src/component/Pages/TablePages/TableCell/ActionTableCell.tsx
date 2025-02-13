@@ -19,8 +19,11 @@ import { ActionTableCellInterface, BookDataInterface, UserDataInterface } from "
 
 import { DeleteButton } from "../../../../Maps/FormatSyntaxMaps";
 
-const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information, isAdmin }) => {
+const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information, isAdmin }) => 
+{
     const { handleOpen } = useModal();
+
+    
 
     const openEditModal = () => {
         switch (TableName) 

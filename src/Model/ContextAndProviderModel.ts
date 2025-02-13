@@ -31,7 +31,8 @@ interface ModalContextProps
 interface ModalTemplateProps extends ChildProps
 {
     title: string;
-    CancelButtonName: string;
+    cancelButtonName: string;
+    cancelButtonEvent?: () => void;
 }
 
 export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps}

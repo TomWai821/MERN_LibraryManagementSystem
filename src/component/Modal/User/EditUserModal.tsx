@@ -6,6 +6,7 @@ import { UserDataInterface } from '../../../Model/TablePageModel';
 import { useModal } from '../../../Context/ModalContext';
 import ModalTemplate from '../../Templates/ModalTemplate';
 import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
+import { Button } from '@mui/material';
 
 const EditUserModal:FC<UserDataInterface> = ({...defaultData}) => 
 {
@@ -13,8 +14,11 @@ const EditUserModal:FC<UserDataInterface> = ({...defaultData}) =>
     const modalContext = useModal();
     
     return(
-        <ModalTemplate title={"Edit User Record"} CancelButtonName={"Exit"}>
-            <Box id="modal-description" sx={ModalBodySyntax}></Box>
+        <ModalTemplate title={"Edit User Record"} cancelButtonName={"Exit"}>
+            <Box id="modal-description" sx={ModalBodySyntax}>
+
+            </Box>
+            <Button variant='contained'>Edit</Button>
         </ModalTemplate>
     );
 }

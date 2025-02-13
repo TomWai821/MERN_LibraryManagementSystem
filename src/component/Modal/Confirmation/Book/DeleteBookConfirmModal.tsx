@@ -2,8 +2,8 @@ import { FC } from 'react'
 
 import { Box, Button,  Typography} from '@mui/material';
 import { BookDataInterface } from '../../../../Model/TablePageModel';
-import { DeleteButton, ModalBodySyntax } from '../../../../Maps/FormatSyntaxMaps';
-import DeleteTypography from '../../DeleteTypography';
+import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
+import DeleteTypography from '../../../UIFragment/Typography/DeleteTypography';
 import ModalTemplate from '../../../Templates/ModalTemplate';
 
 const DeleteBookModal:FC<BookDataInterface> = ({...defaultData}) => 
@@ -16,9 +16,9 @@ const DeleteBookModal:FC<BookDataInterface> = ({...defaultData}) =>
     }
         
     return(
-        <ModalTemplate title={"Delete Book Record Confirmation"} CancelButtonName={"Exit"}>
+        <ModalTemplate title={"Delete Book Record Confirmation"} cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
-                <Typography>Do you want to delete this account?</Typography>
+                <Typography sx={ModalSubTitleSyntax}>Do you want to delete this account?</Typography>
                 <Typography>Book Name:{name}</Typography>
                 <Typography>Book Genre:{genre}</Typography>
                 <Typography>Publisher Name:{publisher}</Typography>
@@ -28,7 +28,8 @@ const DeleteBookModal:FC<BookDataInterface> = ({...defaultData}) =>
             </Box>
 
             <DeleteTypography/>
-            <Button variant='contained' sx={{...DeleteButton}} onClick={onClick}>Delete</Button>    
+            <Button variant='contained' sx={{...DeleteButton}} onClick={onClick}>Yes</Button>
+              
         </ModalTemplate>
     );
 }

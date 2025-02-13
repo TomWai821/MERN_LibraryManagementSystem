@@ -33,16 +33,22 @@ const BookSearchField =
 const UserSearchField = 
 [
     {name: "email", label: "Email", type: "email"},
-    {name: "role", label: "Role", type: "text"},
-    {name: "status", label: "Status", type: "text"},
-    {name: "gender", label: "Gender", type: "text"}
+    {name: "role", label: "Role", type: "text", select: true},
+    {name: "status", label: "Status", type: "text", select: true},
+    {name: "gender", label: "Gender", type: "text", select: true}
 ]
 
-const CreateTableInputField = 
+const CreateBookInputField = 
 [
     {name: "name", label: "Book Name", type:"text", select:false, slotProps: {}},
     ...BookSearchField,
     {name: "amount", label: "Book Amount", type:"number", slotProps: {htmlInput:{min: 0}}}
 ]
 
-export {RegisterField, LoginField, ViewProfileField, BookSearchField, UserSearchField, CreateTableInputField}
+const CreateUserInputField = 
+[
+    {name: "user", label: "Username", type:"text", select:false, slotProps: {}},
+    ...UserSearchField
+]
+
+export {RegisterField, LoginField, ViewProfileField, BookSearchField, UserSearchField, CreateBookInputField, CreateUserInputField}

@@ -37,7 +37,7 @@ const LoginController = async (email:String, password:String, stayLogin:boolean)
 
 const RegisterController = async (email:string, username:string, password:string, birthDay:string, gender:string): Promise<any> => 
 {
-    const user = {email, username, password, birthDay, gender, role: 'User', status: 'Normal'};
+    const user = {email, username, password, birthDay, gender};
 
     try
     {

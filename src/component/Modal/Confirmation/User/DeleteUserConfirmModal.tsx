@@ -5,7 +5,7 @@ import { UserDataInterface } from '../../../../Model/TablePageModel';
 import { useModal } from '../../../../Context/ModalContext';
 import ModalTemplate from '../../../Templates/ModalTemplate';
 import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
-import DeleteTypography from '../../DeleteTypography';
+import DeleteTypography from '../../../UIFragment/Typography/DeleteTypography';
 
 const DeleteUserConfirmModal:FC<UserDataInterface> = ({...userData}) => 
 {

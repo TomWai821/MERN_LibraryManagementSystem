@@ -8,7 +8,7 @@ import { ValidateField } from '../../Controller/ValidateController'
 import { RegisterField } from '../../Maps/TextFieldsMaps'
 import { RegisterModel } from '../../Model/InputFieldModel';
 
-import { AlertContext } from '../../Context/SnackBarContext';
+import { AlertContext } from '../../Context/AlertContext';
 import { PageItemToCenter, PageTitleSyntax } from '../../Maps/FormatSyntaxMaps';
 import { GetCurrentDate } from '../../Controller/OtherController';
 
@@ -18,8 +18,6 @@ const RegisterPage = () =>
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errors, setErrors] = useState({email: "", username: "", password: ""});
     const [helperTexts, setHelperText] = useState({email: "", username: "", password: ""});
-
-    const alertContext = useContext(AlertContext);
 
     const handleRegister = async (event: FormEvent) => 
     {

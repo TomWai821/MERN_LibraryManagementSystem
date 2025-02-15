@@ -6,6 +6,7 @@ import { handleLogout } from "../Controller/UserController/UserOtherController";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import PersonIcon from '@mui/icons-material/Person'
 import BlockIcon from '@mui/icons-material/Block'
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
@@ -21,6 +22,7 @@ const adminPage =
 [
     {name: 'Book Management', clickEvent: () => ChangePage("./viewBook"), icon: <MenuBookIcon/>},
     {name: 'User Management', clickEvent: () => ChangePage("./viewUser"), icon: <PersonIcon/>},
+    {name: 'Definition Management', clickEvent: () => {}, icon:<BookmarkBorderIcon/>},
     {name: 'View BanList', clickEvent: () => ChangePage("./banList"), icon: <BlockIcon/>}
 ];
 

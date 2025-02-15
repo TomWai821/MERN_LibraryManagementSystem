@@ -8,5 +8,4 @@ const genreSchema = new mongoose.Schema<GenreInterface>
     }
 )
 
-const Book = mongoose.model<GenreInterface>('book', genreSchema);
-export default Book;
+const Genre = mongoose.model<GenreInterface>('Genre', genreSchema);

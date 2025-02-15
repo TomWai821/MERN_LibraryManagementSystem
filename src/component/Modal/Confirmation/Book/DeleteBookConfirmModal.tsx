@@ -3,8 +3,9 @@ import { FC } from 'react'
 import { Box, Button,  Typography} from '@mui/material';
 import { BookDataInterface } from '../../../../Model/TablePageModel';
 import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
-import DeleteTypography from '../../../UIFragment/Typography/DeleteTypography';
+
 import ModalTemplate from '../../../Templates/ModalTemplate';
+import DeleteTypography from '../../../UIFragment/Typography/DeleteTypography';
 
 const DeleteBookModal:FC<BookDataInterface> = ({...bookData}) => 
 {  

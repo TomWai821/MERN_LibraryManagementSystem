@@ -29,11 +29,6 @@ export const FetchUser = async (req: AuthRequest, res: Response, next: NextFunct
         if(authToken)
         {
             const data = await jwtVerify(authToken);
-
-            if(!data)
-            {
-                return res.status(401).send({ error: "Invalid token!" });
-            }
             req.user = data.user;
         }
 

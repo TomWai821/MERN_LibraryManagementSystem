@@ -1,123 +1,126 @@
 import { Request, Response } from 'express';
-import { UserMethod, DataType } from '../enum/enum'
-import User from '../schema/user';
-import { CreateUserInterface, LoginInterface, UserInterface, ChangeDataInterface } from '../model/requestInterface';
+import { CreateUserInterface, LoginInterface, ChangeDataInterface } from '../model/requestInterface';
 import { jwtSign, bcryptHash, comparePassword } from './hashing'
+import UserService from '../schema/user';
 import { AuthRequest } from './middleware';
+import { UserInterface } from '../model/dbInterface';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {
-    const { email, username, password, gender, birthDay, role, status}: CreateUserInterface = req.body;
+    const { email, username, password, gender, birthDay, role, status }: CreateUserInterface = req.body;
     let success = false;
 
     try
     {
-        const userByEmail = await UserUtils('find', { email }) as UserInterface;
-        const userByName = await UserUtils('find', { username }) as UserInterface; 
+        const userByEmail = await UserService.FindUser({email});
 
-        if (userByEmail || userByName) 
-        { 
-            return res.status(400).json({ error: 'User already exists' }); 
-        } 
+        if(userByEmail)
+        {
+            return res.status(400).json({success, error: "Email already in use"});
+        }
 
+        const userByName = await UserService.FindUser({username});
+
+        if(userByName)
+        {
+            return res.status(400).json({success, error: "username already in use"});
+        }
+        
+        // Hash password with bcrypt after validate email and username
         const hashedPassword = await bcryptHash(password); 
 
-        const newUser = await UserUtils('create', 
-            { 
-                email: email, 
-                username: username, 
-                password: hashedPassword, 
-                gender: gender, 
-                birthDay: birthDay, 
-                role: role, 
-                status: status
-            }
-        ) as UserInterface; 
+        // Create a new user after hashing the password
+        const newUser = await UserService.CreateUser({ email, username, password: hashedPassword, gender, birthDay, role, status});
         
+        // Get user id after create the user and Transfer user id as authToken with jsonWebToken
         const data = { user: { _id: newUser._id } }; 
         const authToken = await jwtSign(data); 
         success = true; 
+
         res.json({ success, authToken })
     }
     catch (error) 
     { 
-        console.error(error); 
         res.status(500).json({ success, error: 'Internal Server Error!' });
     }
 }
 
-export const UserLogin = async(req: Request, res:Response) =>
+
+export const UserLogin = async (req: Request, res: Response) =>
 {
-    const {email, password}: LoginInterface = req.body;
+    const { email, password }: LoginInterface = req.body;
     let success = false;
-    try
+    
+    try 
     {
-        const user = await UserUtils("find", {email}) as UserInterface;
-
-        if(!user)
+      const user = await UserService.FindUser({ email });
+  
+        if (!user) 
         {
-            return res.status(400).json({ error: email + "Invalid Credentials" });
+            return res.status(400).json({ error: 'Invalid email address' });
         }
-
-        if(user.status == "Banned")
+  
+        if (user.status === 'Banned') 
         {
-            return res.status(401).json( { error: "This user was banned" });
+            return res.status(401).json({ error: 'This user was banned' });
         }
-
+  
         const compare = await comparePassword(password, user.password);
-
-        if(!compare)
+  
+        if (!compare) 
         {
-            return res.status(400).json({ error: " compare Invalid Credentials" });
+            return res.status(400).json({ error: 'Invalid password' });
         }
-
-        const data = { user:{ _id:user._id } };
+  
+        const data = { user: { _id: user._id } };
         const name = user.username;
         const role = user.role;
-
-        const authToken:string = await jwtSign(data);
+    
+        const authToken: string = await jwtSign(data);
         success = true;
-        res.json({success, name, role, authToken});
-    }
-    catch(error)
+        res.json({ success, name, role, authToken });
+    } 
+    catch (error) 
     {
-        res.status(500).json({success, error: 'Internal Server Error!'});
+        res.status(500).json({ success, error: 'Internal Server Error!' });
     }
-}
+  };
 
 export const GetUserData = async(req: AuthRequest, res:Response) => 
 {
-    let userId = "";
-
-    if(req.user?._id != null)
-    {
-        userId = req.user?._id;
-    
-        if(!userId)
-        {
-            return res.status(401).json({error: "Invalid auth Token!"});
-        }
-    }
+    let success = false;
+    const userId = req.user?._id;
+    const {username, email, status, role, gender} = req.body;
     
     try
     {
-        const foundUser = await UserUtils("get", userId) as UserInterface ;
-    
-        if(!foundUser)
+        let foundUser : UserInterface | UserInterface[] | null;
+
+        if(userId)
         {
-            return res.status(401).json({error: "Invalid auth Token!"});
+            foundUser = await UserService.FindUserByID(userId) as UserInterface;
+
+            if(!foundUser)
+            {
+                return res.status(401).json({error: "Invalid auth Token!"});
+            }
         }
+        else
+        {
+            foundUser = await UserService.GetUser();
+        }
+        
     
-        res.send(foundUser);
+        success = true;
+        res.send({success, foundUser});
     }
     catch(error)
     {
-        console.log(error);
         res.status(500).json({ error: "Internal Server Error!" });
     }
 }
 
-export const UserChangeData = async(req: AuthRequest, res:Response) => 
+export const ChangeUserData = async(req: AuthRequest, res:Response) => 
 {
     const {oldUsername, newUsername, oldPassword, newPassword}:ChangeDataInterface = req.body;
     let success = false;
@@ -130,7 +133,7 @@ export const UserChangeData = async(req: AuthRequest, res:Response) =>
 
     try
     {
-        const foundUser = await UserUtils("get", {userId}) as UserInterface;
+        const foundUser = await UserService.FindUserByID(userId);
         
         if(!foundUser)
         {
@@ -146,12 +149,12 @@ export const UserChangeData = async(req: AuthRequest, res:Response) =>
                 return res.status(401).json({error : "Password Incorrect!"});
             }
             const hashPassword = await bcryptHash(newPassword);
-            await changeData("password", userId, hashPassword);
+            await UserService.FindUserByIDAndUpdate(userId, {password: hashPassword});
         }
 
         if(oldUsername && newUsername)
         {
-            await changeData("username", userId, newUsername);
+            await UserService.FindUserByIDAndUpdate(userId, {username: newUsername});
         }
 
         success = true;
@@ -160,55 +163,6 @@ export const UserChangeData = async(req: AuthRequest, res:Response) =>
     }
     catch(error)
     {
-        console.log(error);
         res.status(500).json({ error: "Internal Server Error!"});
-    }
-}
-
-export const UserUtils = async (method:string, data: string | Record<string, any>) => 
-{
-    try
-    { 
-        switch(method)
-        {
-            case UserMethod.FIND:
-                if (typeof data === 'string') 
-                {
-                    throw new Error("Invalid data type for findOne");
-                }
-                return await User.findOne(data);
-            
-            case UserMethod.CREATE:
-                return await User.create(data);
-            
-            case UserMethod.GET: 
-                if(JSON.stringify(data) === '{}')
-                {
-                    return await User.find({});
-                }
-                return await User.findById(data).select("-createdAt -password");       
-
-            default:
-                return null;
-        }
-    }
-    catch(error)
-    {
-        return error;
-    } 
-}
-
-export const changeData = async(dataType:string, userId:string, newData:string) =>
-{
-    switch(dataType)
-    {
-        case DataType.PASSWORD:
-            return User.findByIdAndUpdate(userId, {dataType:newData});
-        
-        case DataType.NAME:
-            return User.findByIdAndUpdate(userId, {name:newData});
-        
-        default:
-            return null;
     }
 }

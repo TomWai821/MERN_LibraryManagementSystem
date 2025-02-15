@@ -11,13 +11,18 @@ interface UserInterface extends CreateUserInterface
 interface BookInterface
 {
     _id:Types.ObjectId;
-    name: string
+    bookname: string
     author:string;
     publisher:string;
     genre:string;
     page:number;
     description:string;
     createdAt:Date;
+}
+
+interface RoleInterface
+{
+    
 }
 
 interface GenreInterface

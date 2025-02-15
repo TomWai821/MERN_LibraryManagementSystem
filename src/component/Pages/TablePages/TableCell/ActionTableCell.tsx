@@ -19,7 +19,7 @@ import EditBookModal from "../../../Modal/Book/EditBookModal";
 import { ActionTableCellInterface, BookDataInterface, UserDataInterface } from "../../../../Model/TablePageModel";
 
 import { DeleteButton } from "../../../../Maps/FormatSyntaxMaps";
-import BanUserConfirmModal from "../../../Modal/Confirmation/User/BanUserConfirmModal";
+import BanUserModal from "../../../Modal/User/BanUserModal";
 
 const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information, isAdmin }) => 
 {
@@ -55,28 +55,28 @@ const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information,
 
     const openBannedModal = () => 
     {
-        handleOpen(<BanUserConfirmModal />);
+        handleOpen(<BanUserModal {...Information as UserDataInterface}/>);
     }
 
     return (
         isAdmin ?
             <TableCell sx={{marginLeft: '20px'}}>
                 <Tooltip title={"Edit"} arrow>
-                    <IconButton sx={{ "&:hover": { backgroundColor: 'gray' } }} onClick={openEditModal}>
+                    <IconButton sx={{ "&:hover": { backgroundColor: 'lightGray' } }} onClick={openEditModal}>
                         <EditIcon />
                     </IconButton>
                 </Tooltip>
 
                 <Tooltip title={"Delete"} arrow>
-                    <IconButton sx={{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'gray' } }} onClick={openDeleteModal}>
+                    <IconButton sx={{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } }} onClick={openDeleteModal}>
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip>
 
                 {
                     (TableName === "User") ? 
-                    <Tooltip title={"Banned"} arrow>
-                        <IconButton sx={{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'gray' } }} onClick={openBannedModal}>
+                    <Tooltip title={"Ban User"} arrow>
+                        <IconButton sx={{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } }} onClick={openBannedModal}>
                             <BlockIcon />
                         </IconButton>
                     </Tooltip>:<></>

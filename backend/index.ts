@@ -12,6 +12,7 @@ app.use(express.json())
 
 app.use('/api/user', require('./routes/user'));
 
-app.listen(PORT, () => { 
+app.listen(PORT, () => 
+{ 
     console.log(`Server listen to http://localhost:${PORT}`);
 })

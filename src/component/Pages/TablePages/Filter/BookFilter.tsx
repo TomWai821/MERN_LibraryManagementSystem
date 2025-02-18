@@ -40,9 +40,11 @@ const BookFilter: FC<FilterInterface> = ({ isAdmin }) =>
                 <IconButton onClick={toggleCardVisibility}>
                     {optionVisiable ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                 </IconButton>
-                <Button variant='contained'>Search</Button>
-                {isAdmin ?
-                    <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={openCreateBookModal}>Create Book</Button> : <></>
+                <Button variant='contained' sx={{marginLeft: '10px'}}>Search</Button>
+                {isAdmin && 
+                    (
+                        <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={openCreateBookModal}>Create Book</Button>
+                    )
                 }
             </Box>
 

@@ -91,18 +91,39 @@ export const GetUserData = async(req: AuthRequest, res:Response) =>
     let success = false;
     const userId = req.user?._id;
     const {username, email, status, role, gender} = req.body;
+    const {page, limit} = req.query;
     
     try
     {
         let foundUser : UserInterface | UserInterface[] | null;
+        const hasBodyParameter = username || email || status || role || gender;
 
-        if(userId)
+        if(hasBodyParameter)
+        {
+            if(userId)
+            {
+                return res.status(400).json({success, error: "authToken is invalid while input another value in json"});
+            }
+
+            const query = 
+            {
+                // options i = Case insensitivity(Just like sql query)
+                ...(username && {"username": {$regex: username, $options: "i"}}),
+                ...(email && {"email": {$regex: email, $options: "i"}}),
+                ...(status && {status}),
+                ...(role && {role}),
+                ...(gender && {gender}),
+            };
+
+            foundUser = await UserService.FindUserWithData(query);
+        }
+        else if(userId)
         {
             foundUser = await UserService.FindUserByID(userId) as UserInterface;
 
             if(!foundUser)
             {
-                return res.status(401).json({error: "Invalid auth Token!"});
+                return res.status(401).json({success, error: "Invalid auth Token!"});
             }
         }
         else

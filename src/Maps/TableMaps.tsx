@@ -1,4 +1,4 @@
-const BookTableHeader = [
+const BookRecordTableHeader = [
     {label:"No."}, 
     {label:"Book Name"}, 
     {label:"Genre"}, 
@@ -20,4 +20,18 @@ const UserTableHeader =
     {label:"Actions"}
 ]
 
-export {BookTableHeader, UserTableHeader}
+const BookTabLabel = 
+[
+    {label: "Book Record"},
+    {label: "Book Issued"},
+    {label: "Book Return"}
+]
+
+const UserTabLabel = 
+[
+    {label: 'All User'},
+    {label: 'Banned User'},
+    {label: 'Delete User'}
+]
+
+export {BookRecordTableHeader, UserTableHeader, BookTabLabel, UserTabLabel}

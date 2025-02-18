@@ -7,19 +7,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import BlockIcon from '@mui/icons-material/Block';
-
-import { useModal } from "../../../../Context/ModalContext";
-
-// Modals
-import DeleteBookModal from "../../../Modal/Confirmation/Book/DeleteBookConfirmModal";
-import DeleteUserConfirmModal from "../../../Modal/Confirmation/User/DeleteUserConfirmModal";
-import EditUserModal from "../../../Modal/User/EditUserModal";
-import EditBookModal from "../../../Modal/Book/EditBookModal";
-
-import { ActionTableCellInterface, BookDataInterface, UserDataInterface } from "../../../../Model/TablePageModel";
-
-import { DeleteButton } from "../../../../Maps/FormatSyntaxMaps";
-import BanUserModal from "../../../Modal/User/BanUserModal";
+import { ActionTableCellInterface, BookDataInterface, UserDataInterface } from "../../../Model/TablePageModel";
+import { useModal } from "../../../Context/ModalContext";
+import EditBookModal from "../../Modal/Book/EditBookModal";
+import DeleteBookModal from "../../Modal/Confirmation/Book/DeleteBookConfirmModal";
+import EditUserModal from "../../Modal/User/EditUserModal";
+import DeleteUserConfirmModal from "../../Modal/Confirmation/User/DeleteUserConfirmModal";
+import BanUserModal from "../../Modal/User/BanUserModal";
+import { DeleteButton } from "../../../Maps/FormatSyntaxMaps";
 
 const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information, isAdmin }) => 
 {

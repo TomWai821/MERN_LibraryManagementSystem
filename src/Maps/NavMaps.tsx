@@ -12,18 +12,22 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import StarIcon from '@mui/icons-material/Star';
 
+const externalUserPage = 
+[
+    {name: 'Books', clickEvent: () => ChangePage("./viewBook"), icon: <MenuBookIcon/>}
+];
+
 const userPage = 
 [
-    {name: 'Books', clickEvent: () => ChangePage("./viewBook"), icon: <MenuBookIcon/>},
-    {name: 'BanList', clickEvent: () => ChangePage("./banList"), icon: <BlockIcon/>}
+    ...externalUserPage,
+    {name: 'BanList', clickEvent: () => ChangePage("./viewUser"), icon: <BlockIcon/>}
 ];
 
 const adminPage = 
 [
     {name: 'Book Management', clickEvent: () => ChangePage("./viewBook"), icon: <MenuBookIcon/>},
     {name: 'User Management', clickEvent: () => ChangePage("./viewUser"), icon: <PersonIcon/>},
-    {name: 'Definition Management', clickEvent: () => {}, icon:<BookmarkBorderIcon/>},
-    {name: 'View BanList', clickEvent: () => ChangePage("./banList"), icon: <BlockIcon/>}
+    {name: 'Definition Management', clickEvent: () => {}, icon:<BookmarkBorderIcon/>}
 ];
 
 const settings =
@@ -34,4 +38,4 @@ const settings =
     { label: 'Logout', clickEvent: () => handleLogout(GetUsername()), icon: <ExitToAppIcon /> }
 ];
 
-export {userPage, adminPage, settings}
+export {externalUserPage, userPage, adminPage, settings}

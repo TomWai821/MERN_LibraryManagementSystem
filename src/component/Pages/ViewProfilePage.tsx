@@ -22,14 +22,15 @@ const ViewProfilePage = () =>
     const [Credentials, setCredentials] = useState<ViewProfileModel>({ email: "", gender: "", username: "",  newName: "", role: "", newPassword: ""});
     const {handleOpen} = useModal();
 
-    useEffect(() => {
+    useEffect(() => 
+    {
         const fetchUser = async () => 
         {
             const authToken = GetUserCookie("authToken") || sessionStorage.getItem("authToken");
 
             if (authToken) 
             {
-                try 
+                try
                 {
                     const userData = await FetchUserData(authToken);
                     if (userData) 
@@ -52,10 +53,10 @@ const ViewProfilePage = () =>
         setCredentials
         (
             {
-                username: userData.username || "", 
-                gender: userData.gender || "",
-                role: userData.role || "",
-                email: userData.email || "",
+                username: userData.foundUser.username || "", 
+                gender: userData.foundUser.gender || "",
+                role: userData.foundUser.role || "",
+                email: userData.foundUser.email || "",
                 newName: "",
                 newPassword: ""
             }

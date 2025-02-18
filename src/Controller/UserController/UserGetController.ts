@@ -9,7 +9,7 @@ const FetchUserData = async(authToken:string | null) =>
     {
         const headers: Record<string, string> = 
         {
-            'content-tupe': contentType
+            'content-type': contentType
         }
 
         if(authToken)

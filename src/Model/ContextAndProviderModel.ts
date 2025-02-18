@@ -35,4 +35,12 @@ interface ModalTemplateProps extends ChildProps
     cancelButtonEvent?: () => void;
 }
 
-export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps}
+
+
+interface TabPanelProps extends ChildProps
+{
+    index: number;
+    value: number;
+}
+
+export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, TabPanelProps}

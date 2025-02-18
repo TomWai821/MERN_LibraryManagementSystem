@@ -1,13 +1,13 @@
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import { Box, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 
 import { ChangePage, GetRole } from "../../../Controller/OtherController";
 import UserFilter from "./Filter/UserFilter";
-import { PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
-import { UserTableHeader } from "../../../Maps/TableMaps";
+import { ItemToCenter, PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
 import { UserDataInterface } from "../../../Model/TablePageModel";
-import ContentTableCell from "./TableCell/ContentTableCell";
-import ActionTableCell from "./TableCell/ActionTableCell";
+import CustomTab from "../../UIFragment/Tab/CustomTab";
+import { UserTabLabel } from "../../../Maps/TableMaps";
+import UserTabPanel from "./Tabs/UserTabPanel";
 
 const role = GetRole();
 const isAdmin:boolean = (role === "Admin");
@@ -19,53 +19,37 @@ const UserData: UserDataInterface [] =
     {username: "C", email: "GHI@gmail.com", role: "User", status: "Normal", gender: "Male"},
 ];
 
+const SetTitle = isAdmin ? "User Management Page": "View BanList";
+
 const UserPage:FC = () =>
 {
-    const [searchUser, setSearchUser] = useState();
+    const [value, setValue] = useState(0);
+
+    const changeValue = (newValue: number) =>
+    {
+        setValue(newValue);
+    }
 
     useEffect(() => 
     {
         if(!isAdmin)
         {
-            ChangePage("/");
+            setValue(1);
         }
     })
     
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
-            <Typography sx={{fontSize: '24px'}}>User Management Page</Typography>
+            <Typography sx={{fontSize: '24px'}}>{SetTitle}</Typography>
 
             <UserFilter isAdmin={isAdmin}/>
 
-            <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            {UserTableHeader.map((header, index) =>
-                                (
-                                    <TableCell key={index}>{header.label}</TableCell>
-                                ) 
-                            )}  
-                        </TableRow>
-                    </TableHead>
+            <CustomTab isAdmin={isAdmin} value={value} valueChange={changeValue} tabLabel={UserTabLabel}/>
 
-                    <TableBody>
-                        {UserData.map((data, index) => 
-                            (
-                                <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
-                                    <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                    <ContentTableCell>{data.username}</ContentTableCell>
-                                    <ContentTableCell>{data.email}</ContentTableCell>
-                                    <ContentTableCell>{data.role}</ContentTableCell>
-                                    <ContentTableCell>{data.status}</ContentTableCell>
-                                    <ContentTableCell>{data.gender}</ContentTableCell>
-                                    <ActionTableCell TableName={"User"} Information={data} isAdmin={isAdmin}/>
-                                </TableRow>
-                            )
-                        )}
-                    </TableBody>
-                </Table>
+            <TableContainer sx={{ marginTop: 5 }} component={Paper}>
+                <UserTabPanel value={value} isAdmin={isAdmin} userData={UserData}/>
             </TableContainer>
+            <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={10}/>
         </Box>
     );
 }

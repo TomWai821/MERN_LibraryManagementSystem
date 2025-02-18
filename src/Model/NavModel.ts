@@ -1,3 +1,5 @@
+import { MouseEvent, ReactElement } from "react";
+
 interface NavInterface
 {
     isLoggedIn: boolean,
@@ -24,7 +26,7 @@ interface MenuItemSyntaxInterface
 interface ProfileMenuInterface extends NavInterface
 {
     anchorElUser: HTMLElement | null;
-    handleUserMenu: (event: React.MouseEvent<HTMLElement>) => void;
+    handleUserMenu: (event: MouseEvent<HTMLElement>) => void;
     NavSyntax: NavSyntaxInterface;
     MenuItemSyntax: MenuItemSyntaxInterface;
 }
@@ -38,4 +40,9 @@ interface NavMenuInterface extends NavInterface
     MenuItemSyntax: MenuItemSyntaxInterface;
 }
 
-export type {NavSyntaxInterface, MenuItemSyntaxInterface, ProfileMenuInterface, NavMenuInterface}
+interface MenuItemInterface
+{
+    pages: { name: string, clickEvent:() => void, icon: ReactElement }[]
+}
+
+export type {NavSyntaxInterface, MenuItemSyntaxInterface, ProfileMenuInterface, NavMenuInterface, MenuItemInterface}

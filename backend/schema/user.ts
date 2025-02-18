@@ -39,13 +39,13 @@ class UserService
         }
     }
   
-    async GetUser(data?: Record<string, any> | string) 
+    async GetUser(data?: Record<string, any>) 
     {
         try 
         {
             if (typeof data == "string") 
             {
-                return await User.find({}).select(data);
+                return await User.find({});
             }
             return await User.find(data as Record<string, any>);
         }  
@@ -68,6 +68,25 @@ class UserService
         {
             return await User.findOne(data);
         } 
+        catch (error) 
+        {
+            if (error instanceof Error) 
+            {
+                throw new Error(error.message);
+            } 
+            else 
+            {
+                throw new Error('An unknown error occurred');
+            }
+        }
+    }
+
+    async FindUserWithData(data: Record<string, any>)
+    {
+        try
+        {
+            return await User.find(data);
+        }
         catch (error) 
         {
             if (error instanceof Error) 

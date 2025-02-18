@@ -1,3 +1,5 @@
+import { UserDataInterface } from "./TablePageModel";
+
 interface ResultInterface
 {
     authToken: string;
@@ -7,10 +9,8 @@ interface ResultInterface
 
 interface GetResultInterface
 {
-    username: string;
-    email: string;
-    gender: string;
-    role: string;
+    success:boolean;
+    foundUser: UserDataInterface;
 }
 
 export type {ResultInterface, GetResultInterface}

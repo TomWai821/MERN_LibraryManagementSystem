@@ -40,7 +40,7 @@ const UserSearchField =
 
 const CreateBookInputField = 
 [
-    {name: "name", label: "Book Name", type:"text", select:false, slotProps: {}},
+    {name: "bookname", label: "Book Name", type:"text", select:false, slotProps: {}},
     ...BookSearchField,
     {name: "amount", label: "Book Amount", type:"number", slotProps: {htmlInput:{min: 0}}}
 ]

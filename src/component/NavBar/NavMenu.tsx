@@ -2,10 +2,11 @@ import { Box, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material"
 
 import { FC } from "react";
 import { NavMenuInterface } from "../../Model/NavModel";
-import { adminPage, userPage } from '../../Maps/NavMaps'
+import { adminPage, externalUserPage, userPage } from '../../Maps/NavMaps'
+import CustomMenuItem from "../UIFragment/MenuItem/CustomMenuItem";
 
 
-const NavMenu:FC<NavMenuInterface> = ({isLoggedIn, role, AvatarSize, anchorElNav, handleNavMenu, NavSyntax, MenuItemSyntax}) => 
+const NavMenu:FC<NavMenuInterface> = ({isLoggedIn, role, AvatarSize, anchorElNav, handleNavMenu, NavSyntax}) => 
 {
     const SetNavName = (isLoggedIn && role === 'Admin') ? "Manage" : "View";
 
@@ -24,20 +25,9 @@ const NavMenu:FC<NavMenuInterface> = ({isLoggedIn, role, AvatarSize, anchorElNav
                     open={Boolean(anchorElNav)}
                     onClose={handleNavMenu}
                 >
-                {isLoggedIn && role === 'Admin' ?
-                    adminPage.map((page, index) => (
-                        <MenuItem key={index} sx={{MenuItemSyntax, NavSyntax}}>
-                            <ListItemIcon>{page.icon}</ListItemIcon>
-                            <Typography onClick={page.clickEvent} width={'100%'}>{page.name}</Typography>
-                         </MenuItem>
-                    ))
-                    :
-                    userPage.map((page, index) => (
-                        <MenuItem key={index} sx={{ MenuItemSyntax, NavSyntax }}>
-                            <ListItemIcon>{page.icon}</ListItemIcon>
-                            <Typography onClick={page.clickEvent} width={'100%'} >{page.name}</Typography>
-                        </MenuItem>
-                    ))
+                {!isLoggedIn ? 
+                    <CustomMenuItem pages={externalUserPage}/>:
+                    (role === 'Admin' ? <CustomMenuItem pages={adminPage}/>:<CustomMenuItem pages={userPage}/>)
                 }
                 </Menu>
         </Box>

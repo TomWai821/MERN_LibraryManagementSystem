@@ -1,16 +1,16 @@
-import { FC } from "react";
+import {  FC, useState } from "react";
 
-import { Box, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper, Table } from "@mui/material";
+import { Box, TableContainer, Typography, Paper, Pagination, Tabs } from "@mui/material";
 
 import { BookDataInterface } from "../../../Model/TablePageModel";
-import { BookTableHeader } from "../../../Maps/TableMaps";
 
 import { GetRole, IsLoggedIn } from "../../../Controller/OtherController";
 
 import BookFilter from "./Filter/BookFilter";
-import { PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
-import ActionTableCell from "./TableCell/ActionTableCell";
-import ContentTableCell from "./TableCell/ContentTableCell";
+import { ItemToCenter, PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
+import CustomTab from "../../UIFragment/Tab/CustomTab";
+import BookTabPanel from "./Tabs/BookTabPanel";
+import { BookTabLabel } from "../../../Maps/TableMaps";
 
 const role = GetRole();
 const isAdmin:boolean = (role === "Admin");
@@ -27,46 +27,25 @@ const SetTitle = isAdmin ? "Manage Books Record": "View Books";
 
 const BookPage:FC = () =>
 {
+    const [value, setValue] = useState(0);
+
+    const changeValue = (newValue: number) =>
+    {
+        setValue(newValue);
+    }
+     
     return( 
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <Typography sx={{fontSize: '24px'}}>{SetTitle}</Typography>
 
             <BookFilter isAdmin={isAdmin}/>
 
-            <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            {
-                                BookTableHeader.map((header, index)=>
-                                {
-                                    if (header.condition && !isLoggedIn) return null;
-                                    return <TableCell key={index}>{header.label}</TableCell>;
-                                })  
-                            }
-                        </TableRow>
-                    </TableHead>
+            <CustomTab isAdmin={isAdmin} value={value} valueChange={changeValue} tabLabel={BookTabLabel}/>
 
-                    <TableBody>
-                        {BookData.map((data, index) => 
-                            (
-                                <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
-                                    <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                    <ContentTableCell>{data.bookname}</ContentTableCell>
-                                    <ContentTableCell>{data.genre}</ContentTableCell>
-                                    <ContentTableCell>{data.author}</ContentTableCell>
-                                    <ContentTableCell>{data.publisher}</ContentTableCell>
-                                    <ContentTableCell>{data.pages}</ContentTableCell>
-                                    <ContentTableCell>{data.amount}</ContentTableCell>
-                                    {isLoggedIn ? 
-                                        <ActionTableCell TableName={"Book"} Information={data} isAdmin={isAdmin}/> : <></>
-                                    }
-                                </TableRow>
-                            )
-                        )}
-                    </TableBody>
-                </Table>
+            <TableContainer sx={{ marginTop: 5 }} component={Paper}>
+                <BookTabPanel value={value} isAdmin={isAdmin} isLoggedIn={isLoggedIn} bookData={BookData}/>
             </TableContainer>
+            <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={10}/>
         </Box>
     );
 }

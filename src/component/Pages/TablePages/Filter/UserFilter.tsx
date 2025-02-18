@@ -38,12 +38,18 @@ const UserFilter:FC<FilterInterface> = ({isAdmin}) =>
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{...ItemToCenter, paddingBottom: '25px', alignItems: 'center'}}>
                 <TextField label={"Username"} value={searchUser.username} name="username" size="small" onChange={onChange} sx={{width: '75%'}}/>
-                <IconButton onClick={toggleCardVisibility}>
-                    {optionVisiable ? <ArrowDropUpIcon/> : <ArrowDropDownIcon/>}
-                </IconButton>
-                <Button variant='contained'>Search</Button>
-                {isAdmin?
-                    <Button variant='contained' sx={{marginLeft: '10px'}} onClick={openCreateUserModal}>Create User</Button>: <></>
+                {isAdmin &&
+                    (
+                        <IconButton onClick={toggleCardVisibility}>
+                            {optionVisiable ? <ArrowDropUpIcon/> : <ArrowDropDownIcon/>}
+                        </IconButton>
+                    )
+                }
+                <Button variant='contained' sx={{marginLeft: '10px'}}>Search</Button>
+                {isAdmin &&
+                    (
+                        <Button variant='contained' sx={{marginLeft: '10px'}} onClick={openCreateUserModal}>Create User</Button>
+                    )
                 }
             </Box>
 

@@ -32,11 +32,10 @@ interface CreateUserInterface extends UserDataInterface
 }
 
 
-interface ActionTableCellInterface
+interface ActionTableCellInterface extends FilterInterface
 {
     TableName: string;
     Information: UserDataInterface | BookDataInterface;
-    isAdmin: boolean
 }
 
 interface CreateModalInterface
@@ -50,5 +49,29 @@ interface EditModalInterface
     compareData: UserDataInterface | BookDataInterface;
 }
 
+interface TableInterface extends FilterInterface
+{
+    isLoggedIn: boolean;
+}
 
-export type {BookSearchInterface, BookDataInterface, UserDataInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface}
+interface BookRecordTableInterface extends TableInterface
+{
+    value: number;
+    bookData: BookDataInterface[];
+}
+
+interface UserDataTableInterface extends FilterInterface
+{
+    value: number;
+    userData: UserDataInterface[];
+}
+
+interface TabInterface extends FilterInterface
+{
+    tabLabel: { label: string; }[];
+    value: number;
+    valueChange: (newValue: number) => void;
+}
+
+
+export type {BookSearchInterface, BookDataInterface, UserDataInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, BookRecordTableInterface, UserDataTableInterface, TabInterface}

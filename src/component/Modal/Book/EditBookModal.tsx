@@ -10,9 +10,9 @@ import ModalTemplate from '../../Templates/ModalTemplate';
 
 const EditBookModal:FC<EditModalInterface> = ({editData, compareData}) => 
 {
-    const { bookname, genre, publisher, author, pages, amount } = editData as BookDataInterface;
+    const { bookname, language, genre, publisher, author, pages, amount } = editData as BookDataInterface;
 
-    const [book, setBook] = useState<BookDataInterface>({bookname: bookname, genre: genre, publisher: publisher, author: author, pages: pages, amount: amount});
+    const [book, setBook] = useState<BookDataInterface>({bookname: bookname, language: language, genre: genre, publisher: publisher, author: author, pages: pages, amount: amount});
     const { handleOpen } = useModal();
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 

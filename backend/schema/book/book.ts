@@ -1,20 +1,22 @@
 import mongoose from 'mongoose';
-import { BookInterface } from '../model/dbInterface';
+import { BookInterface } from '../../model/bookSchemaInterface';
 
-const bookSchema = new mongoose.Schema<BookInterface>
+const BookSchema = new mongoose.Schema<BookInterface>
 (
     {
+        _id: { type: String, required: true},
         bookname: { type: String, required: true },
-        genre: { type: String, default: "General", require: true },
-        publisher: { type: String, required: true },
-        author: { type: String, required: true },
+        languageID: {type: mongoose.Schema.Types.ObjectId, ref:'Language', required: true },
+        genreID: { type: mongoose.Schema.Types.ObjectId, ref:'Genre', required: true },
+        publisherID: { type: mongoose.Schema.Types.ObjectId, ref:'Publisher', required: true },
+        authorID: { type: mongoose.Schema.Types.ObjectId, ref:'Publisher', required: true },
         page: { type: Number, required: true },
         description: {type: String },
         createdAt: { type: Date, default: Date.now }
     }
 )
 
-const Book = mongoose.model<BookInterface>('Book', bookSchema);
+const Book = mongoose.model<BookInterface>('Book', BookSchema);
 
 class BookService
 {

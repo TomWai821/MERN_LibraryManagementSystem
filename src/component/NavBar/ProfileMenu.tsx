@@ -30,6 +30,7 @@ const ProfileMenu:FC<ProfileMenuInterface> = ({isLoggedIn, role, AvatarSize, anc
 
                 </Box>
                 <Divider/>
+
                 {settings.map((setting) => (
                     <MenuItem key={setting.label} onClick={handleUserMenu} sx={{ MenuItemSyntax, NavSyntax }}>
                         <ListItemIcon>
@@ -38,6 +39,7 @@ const ProfileMenu:FC<ProfileMenuInterface> = ({isLoggedIn, role, AvatarSize, anc
                         <Typography onClick={setting.clickEvent} width={'100%'}>{setting.label}</Typography>
                     </MenuItem>
                 ))}
+                
             </Menu>
         </Box>
         :

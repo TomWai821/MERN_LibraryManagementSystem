@@ -1,6 +1,7 @@
 const BookRecordTableHeader = [
     {label:"No."}, 
     {label:"Book Name"}, 
+    {label:"Language"}, 
     {label:"Genre"}, 
     {label:"Publisher"}, 
     {label:"Author"}, 

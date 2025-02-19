@@ -1,11 +1,17 @@
-interface FilterInterface
+interface IsAdminInterface
 {
     isAdmin:boolean;
+}
+
+interface FilterInterface extends IsAdminInterface
+{
+    value:number;
 }
 
 interface BookSearchInterface
 {
     bookname:string;
+    language:string;
     genre:string;
     author:string;
     publisher:string;
@@ -32,7 +38,7 @@ interface CreateUserInterface extends UserDataInterface
 }
 
 
-interface ActionTableCellInterface extends FilterInterface
+interface ActionTableCellInterface extends IsAdminInterface
 {
     TableName: string;
     Information: UserDataInterface | BookDataInterface;
@@ -49,7 +55,7 @@ interface EditModalInterface
     compareData: UserDataInterface | BookDataInterface;
 }
 
-interface TableInterface extends FilterInterface
+interface TableInterface extends IsAdminInterface
 {
     isLoggedIn: boolean;
 }
@@ -60,13 +66,13 @@ interface BookRecordTableInterface extends TableInterface
     bookData: BookDataInterface[];
 }
 
-interface UserDataTableInterface extends FilterInterface
+interface UserDataTableInterface extends IsAdminInterface
 {
     value: number;
     userData: UserDataInterface[];
 }
 
-interface TabInterface extends FilterInterface
+interface TabInterface extends IsAdminInterface
 {
     tabLabel: { label: string; }[];
     value: number;

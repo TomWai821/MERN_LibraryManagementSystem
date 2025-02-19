@@ -1,7 +1,7 @@
 import { Response, Request, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 import { jwtVerify } from './hashing';
-import { UserInterface } from '../model/dbInterface';
+import { UserInterface } from '../model/userSchemaInterface';
 
 export interface AuthRequest extends Request
 {

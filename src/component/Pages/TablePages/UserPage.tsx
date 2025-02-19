@@ -42,7 +42,7 @@ const UserPage:FC = () =>
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <Typography sx={{fontSize: '24px'}}>{SetTitle}</Typography>
 
-            <UserFilter isAdmin={isAdmin}/>
+            <UserFilter isAdmin={isAdmin} value={value}/>
 
             <CustomTab isAdmin={isAdmin} value={value} valueChange={changeValue} tabLabel={UserTabLabel}/>
 

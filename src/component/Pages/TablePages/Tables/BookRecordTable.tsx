@@ -28,6 +28,7 @@ const BookRecordTable:FC<BookRecordTableInterface> = ({isLoggedIn, isAdmin, book
                         <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                             <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
                             <ContentTableCell>{data.bookname}</ContentTableCell>
+                            <ContentTableCell>{data.language}</ContentTableCell>
                             <ContentTableCell>{data.genre}</ContentTableCell>
                             <ContentTableCell>{data.author}</ContentTableCell>
                             <ContentTableCell>{data.publisher}</ContentTableCell>

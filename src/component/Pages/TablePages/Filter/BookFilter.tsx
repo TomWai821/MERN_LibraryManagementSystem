@@ -11,10 +11,11 @@ import CreateBookModal from "../../../Modal/Book/CreateBookModal";
 
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
 import { BookDataInterface, FilterInterface } from "../../../../Model/TablePageModel";
+import OptionFields from "./OptionField/OptionFields";
 
-const BookFilter: FC<FilterInterface> = ({ isAdmin }) => 
+const BookFilter: FC<FilterInterface> = ({ value, isAdmin }) => 
 {
-    const [searchBook, setSearchBook] = useState<BookDataInterface>({ bookname: "", genre: "", publisher: "", author: "", pages: "", amount: "" });
+    const [searchBook, setSearchBook] = useState<BookDataInterface>({ bookname: "", language: "", genre: "", publisher: "", author: "", pages: "", amount: "" });
     const [optionVisiable, setOptionVisiable] = useState(false);
     const { handleOpen } = useModal();
 
@@ -48,17 +49,7 @@ const BookFilter: FC<FilterInterface> = ({ isAdmin }) =>
                 }
             </Box>
 
-            {optionVisiable && (
-                <Card sx={{ padding: '15px' }}>
-                    <Typography>Options</Typography>
-                    <Box sx={{ padding: '15px 20px', display: 'grid', gap: '15px 50px', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
-                        {BookSearchField.map((field, index) => (
-                            <TextField key={index} label={field.label} name={field.name} value={searchBook[field.name as keyof BookDataInterface]}
-                                type={field.type} size="small" onChange={onChange} select={field.select} slotProps={field.slotProps ?? {}} />
-                        ))}
-                    </Box>
-                </Card>
-            )}
+            <OptionFields value={value} type={"Book"} optionVisiable={optionVisiable} onChange={onChange} searchData={searchBook}/>
         </Box>
     );
 }

@@ -9,8 +9,8 @@ import CreateBookConfirmModal from '../Confirmation/Book/CreateBookConfirmModal'
 
 const CreateBookModal: FC<CreateModalInterface> = ({...bookData}) => 
 {
-    const { bookname, genre, publisher, author, pages, amount } = bookData as BookDataInterface;
-    const [ book, setBook ] = useState<BookDataInterface>({ bookname: bookname, genre: genre, publisher: publisher, author: author, pages: pages, amount: amount });
+    const { bookname, language, genre, publisher, author, pages, amount } = bookData as BookDataInterface;
+    const [ book, setBook ] = useState<BookDataInterface>({ bookname: bookname, language: language, genre: genre, publisher: publisher, author: author, pages: pages, amount: amount });
     const { handleOpen } = useModal();
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 

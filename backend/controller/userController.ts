@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { CreateUserInterface, LoginInterface, ChangeDataInterface } from '../model/requestInterface';
 import { jwtSign, bcryptHash, comparePassword } from './hashing'
-import UserService from '../schema/user';
+import UserService from '../schema/user/user';
 import { AuthRequest } from './middleware';
-import { UserInterface } from '../model/dbInterface';
+import { UserInterface } from '../model/userSchemaInterface';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {

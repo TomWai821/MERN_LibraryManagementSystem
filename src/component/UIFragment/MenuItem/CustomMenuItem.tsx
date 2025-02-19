@@ -7,13 +7,13 @@ const CustomMenuItem:FC<MenuItemInterface> = ({pages}) =>
 {
     return(
         <Fragment>
-        {pages.map((page, index) => (
-                <MenuItem key={index} sx={{MenuItemSyntax, NavSyntax}}>
-                    <ListItemIcon>{page.icon}</ListItemIcon>
-                    <Typography onClick={page.clickEvent} width={'100%'}>{page.name}</Typography>
-                </MenuItem>
-            ))
-        }
+            {pages.map((page, index) => (
+                    <MenuItem key={index} sx={{MenuItemSyntax, NavSyntax}}>
+                        <ListItemIcon>{page.icon}</ListItemIcon>
+                        <Typography onClick={page.clickEvent} width={'100%'}>{page.name}</Typography>
+                    </MenuItem>
+                ))
+            }
         </Fragment>
     );
 }

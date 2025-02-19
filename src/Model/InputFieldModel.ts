@@ -1,3 +1,6 @@
+import { ChangeEvent } from "react";
+import { BookDataInterface, UserDataInterface } from "./TablePageModel";
+
 interface FirstRow 
 { 
     username: string; 
@@ -28,4 +31,12 @@ interface RegisterModel extends LoginModel
     birthDay: string;
 }
 
-export type {ViewProfileModel, LoginModel, RegisterModel}
+interface OptionFieldModel
+{
+    optionVisiable:boolean;
+    onChange:(event: ChangeEvent<HTMLInputElement>) => void
+    SearchField: { label: string; name: string; type: string; select?: boolean; slotProps?: object} [];
+    searchData: BookDataInterface | UserDataInterface;
+}
+
+export type {ViewProfileModel, LoginModel, RegisterModel, OptionFieldModel}

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Avatar, Box, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material"
 import { ProfileMenuInterface } from '../../Model/NavModel';
-import { settings } from '../../Maps/NavMaps';
+import { settings } from '../../Maps/MenuMaps';
 import { GetUsername } from '../../Controller/OtherController';
 
 const ProfileMenu:FC<ProfileMenuInterface> = ({isLoggedIn, role, AvatarSize, anchorElUser, handleUserMenu, NavSyntax, MenuItemSyntax}) => 

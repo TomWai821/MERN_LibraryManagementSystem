@@ -22,6 +22,12 @@ const ViewProfileField =
     {name: "newPassword", label: "New Password:", type: "password"}
 ]
 
+const BookMainSearchField = 
+[
+    {name:"language", label:"Book Name", syntax:{ width: '60%' } ,select: false},
+    {name:"language", label:"Language", syntax:{ width: '10%', marginLeft: '10px' } ,select: true}
+]
+
 const BookSearchField = 
 [
     {name: "genre", label: "Genre", type: "text", select: true},
@@ -59,4 +65,4 @@ const EditUserInputField =
     ...UserSearchField
 ]
 
-export {RegisterField, LoginField, ViewProfileField, BookSearchField, UserSearchField, CreateBookInputField, CreateUserInputField, EditUserInputField}
+export {RegisterField, LoginField, ViewProfileField, BookMainSearchField, BookSearchField, UserSearchField, CreateBookInputField, CreateUserInputField, EditUserInputField}

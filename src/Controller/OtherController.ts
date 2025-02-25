@@ -21,6 +21,11 @@ const GetRole = (): string | undefined =>
     return GetUserCookie("role") || sessionStorage.getItem("role") || undefined;
 }
 
+const IsAdmin = (role: string | undefined): boolean => 
+{
+    return role === "Admin";
+}
+
 const GetUsername = (): string | null =>
 {
     return GetUserCookie("username") || sessionStorage.getItem("username");
@@ -32,5 +37,4 @@ const GetCurrentDate = (): string =>
     return date.toISOString().split('T')[0]; 
 }
 
-
-export {ChangePage, IsLoggedIn, GetRole, GetUsername, GetCurrentDate}
+export {ChangePage, IsLoggedIn, GetRole, IsAdmin, GetUsername, GetCurrentDate}

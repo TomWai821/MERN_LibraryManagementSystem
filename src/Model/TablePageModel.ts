@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 interface IsAdminInterface
 {
     isAdmin:boolean;
@@ -76,8 +78,17 @@ interface TabInterface extends IsAdminInterface
 {
     tabLabel: { label: string; }[];
     value: number;
-    valueChange: (newValue: number) => void;
+    valueChange: (type:string ,newValue: number) => void;
+}
+
+interface OptionFieldsInterface
+{
+    value: number; 
+    type:string; 
+    optionVisiable:boolean; 
+    onChange:(event: ChangeEvent<HTMLInputElement>) => void;
+    searchData:any;
 }
 
 
-export type {BookSearchInterface, BookDataInterface, UserDataInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, BookRecordTableInterface, UserDataTableInterface, TabInterface}
+export type {BookSearchInterface, BookDataInterface, UserDataInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, BookRecordTableInterface, UserDataTableInterface, TabInterface, OptionFieldsInterface}

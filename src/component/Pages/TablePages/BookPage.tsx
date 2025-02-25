@@ -1,16 +1,16 @@
 import {  FC, useState } from "react";
 
-import { Box, TableContainer, Typography, Paper, Pagination, Tabs } from "@mui/material";
+import { Box, TableContainer, Typography, Paper, Pagination } from "@mui/material";
 
 import { BookDataInterface } from "../../../Model/TablePageModel";
 
 import { GetRole, IsLoggedIn } from "../../../Controller/OtherController";
 
 import BookFilter from "./Filter/BookFilter";
-import { ItemToCenter, PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
 import CustomTab from "../../UIFragment/Tab/CustomTab";
 import BookTabPanel from "./Tabs/BookTabPanel";
-import { BookTabLabel } from "../../../Maps/TableMaps";
+import { BookTabLabel, PaginationOption } from "../../../Maps/TableMaps";
+import { ItemToCenter, PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
 
 const role = GetRole();
 const isAdmin:boolean = (role === "Admin");
@@ -28,10 +28,23 @@ const SetTitle = isAdmin ? "Manage Books Record": "View Books";
 const BookPage:FC = () =>
 {
     const [value, setValue] = useState(0);
+    const [paginationValue, setPaginationValue] = useState(0);
 
-    const changeValue = (newValue: number) =>
+    const changeValue = (type:string, newValue: number) =>
     {
-        setValue(newValue);
+        switch(type)
+        {
+            case "Tab":
+                setValue(newValue);
+                break;
+
+            case "Pagination":
+                setPaginationValue(newValue);
+                break;
+            
+            default:
+                break;
+        }
     }
      
     return( 
@@ -45,7 +58,7 @@ const BookPage:FC = () =>
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
                 <BookTabPanel value={value} isAdmin={isAdmin} isLoggedIn={isLoggedIn} bookData={BookData}/>
             </TableContainer>
-            <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={10}/>
+            <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={PaginationOption[paginationValue]}/>
         </Box>
     );
 }

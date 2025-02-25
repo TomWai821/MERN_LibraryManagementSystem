@@ -35,4 +35,6 @@ const UserTabLabel =
     {label: 'Delete User'}
 ]
 
-export {BookRecordTableHeader, UserTableHeader, BookTabLabel, UserTabLabel}
+const PaginationOption = [10, 20, 50, 100];
+
+export {BookRecordTableHeader, UserTableHeader, BookTabLabel, UserTabLabel, PaginationOption}

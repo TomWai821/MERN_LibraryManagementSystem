@@ -1,16 +1,12 @@
 import { Box, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 
-import { ChangePage, GetRole } from "../../../Controller/OtherController";
 import UserFilter from "./Filter/UserFilter";
 import { ItemToCenter, PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
 import { UserDataInterface } from "../../../Model/TablePageModel";
 import CustomTab from "../../UIFragment/Tab/CustomTab";
 import { UserTabLabel } from "../../../Maps/TableMaps";
 import UserTabPanel from "./Tabs/UserTabPanel";
-
-const role = GetRole();
-const isAdmin:boolean = (role === "Admin");
 
 const UserData: UserDataInterface [] = 
 [
@@ -19,15 +15,23 @@ const UserData: UserDataInterface [] =
     {username: "C", email: "GHI@gmail.com", role: "User", status: "Normal", gender: "Male"},
 ];
 
-const SetTitle = isAdmin ? "User Management Page": "View BanList";
-
 const UserPage:FC = () =>
 {
     const [value, setValue] = useState(0);
+    const SetTitle = isAdmin ? "User Management Page": "View BanList";
 
-    const changeValue = (newValue: number) =>
+
+    const changeValue = (type:string, newValue: number) =>
     {
-        setValue(newValue);
+        switch(type)
+        {
+            case "Tab":
+                setValue(newValue);
+                break;
+            
+            default:
+                break;
+        }
     }
 
     useEffect(() => 

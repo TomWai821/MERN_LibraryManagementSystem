@@ -7,7 +7,8 @@ interface NavInterface
     AvatarSize: string;
 }
 
-interface NavSyntaxInterface {
+interface NavSyntaxInterface
+{
     fontSize?: number;
     transition?: string;
     bgcolor?: string;

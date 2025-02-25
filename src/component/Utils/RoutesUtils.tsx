@@ -6,6 +6,7 @@ import RegisterPage from "../Pages/RegisterPage"
 import BookPage from "../Pages/TablePages/BookPage"
 import UserPage from "../Pages/TablePages/UserPage"
 import ViewProfilePage from "../Pages/ViewProfilePage"
+import DefinitionPage from "../Pages/DefinationPage"
 
 const RoutesUtils = () => 
 {
@@ -17,6 +18,7 @@ const RoutesUtils = () =>
             <Route path="/profile" element={<ViewProfilePage/>}/>
             <Route path="/viewBook" element={<BookPage/>}/>
             <Route path="/viewUser" element={<UserPage/>}/>
+            <Route path="/defination" element={<DefinitionPage/>}/>
         </Routes>
     )
     

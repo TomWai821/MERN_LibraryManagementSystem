@@ -1,4 +1,4 @@
-import { Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs, TextField, Typography } from "@mui/material";
 import { ChangeEvent, FC } from "react";
 import { TabInterface } from "../../../Model/TablePageModel";
 
@@ -14,18 +14,31 @@ const CustomTab:FC<TabInterface> = ({tabLabel, isAdmin, value, valueChange}) =>
 {
     const handleChange = (event: ChangeEvent<{}>, newValue: number) => 
     {
-        valueChange(newValue);
+        valueChange("Tab", newValue);
     };
 
+    if(!isAdmin)
+    {
+        return null;
+    }
+
     return(
-        isAdmin? (
-        <Tabs value={value} onChange={handleChange}>
-            {tabLabel.map((tab, index) => 
-                (
-                    <Tab key={index} label={tab.label} {...getTabProps(index)}/>
-                ))
-            }
-        </Tabs>):<></>
+        isAdmin && (
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Tabs value={value} onChange={handleChange}>
+                    {tabLabel.map((tab, index) => 
+                        (
+                            <Tab key={index} label={tab.label} {...getTabProps(index)}/>
+                        ))
+                    }
+                </Tabs>
+
+                <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                    <Typography sx={{marginRight: '10px'}}>Show Rows</Typography>
+                    <TextField size="small" select/>
+                </Box>
+            </Box>
+        )
     );
 }
 

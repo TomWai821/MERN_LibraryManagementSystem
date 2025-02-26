@@ -6,9 +6,10 @@ import { adminPage, externalUserPage, userPage } from '../../Maps/MenuMaps'
 import CustomMenuItem from "../UIFragment/MenuItem/CustomMenuItem";
 
 
-const NavMenu:FC<NavMenuInterface> = ({isLoggedIn, role, AvatarSize, anchorElNav, handleNavMenu, NavSyntax}) => 
+const NavMenu:FC<NavMenuInterface> = ({isAdmin, isLoggedIn, role, AvatarSize, anchorElNav, handleNavMenu, NavSyntax}) => 
 {
-    const SetNavName = (isLoggedIn && role === 'Admin') ? "Manage" : "View";
+
+    const SetNavName = isAdmin ? "Manage" : "View";
 
     return(
         <Box sx={{ flexGrow: 1 }}>

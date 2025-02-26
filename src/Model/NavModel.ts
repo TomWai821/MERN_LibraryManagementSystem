@@ -1,9 +1,8 @@
 import { MouseEvent, ReactElement } from "react";
+import { PagesInterface } from "./TablePageModel";
 
-interface NavInterface
+interface NavInterface extends PagesInterface
 {
-    isLoggedIn: boolean,
-    role: string | undefined;
     AvatarSize: string;
 }
 

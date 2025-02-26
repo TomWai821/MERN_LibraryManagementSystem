@@ -1,32 +1,31 @@
-import { Types } from "mongoose";
+import { IDInterface } from "./userSchemaInterface";
 
-export interface LoginInterface
+interface LoginInterface
 {
     email:string;
     password:string;
 }
 
-export interface CreateUserInterface extends LoginInterface
+interface CreateUserInterface extends LoginInterface
 {
-    username:string;
-    gender:string,
-    birthDay:string,
-    role:string;
-    status:string;
+    username: string;
+    gender: string,
+    birthDay: string,
+    role: string;
+    status: string;
 }
 
-export interface ChangeDataInterface
+interface ChangeDataInterface extends IDInterface
 {
-    _id:Types.ObjectId;
-    oldUsername:string | null;
-    newUsername:string | null;
-    oldPassword:string | null;
-    newPassword:string | null;
+    oldUsername: string | null;
+    newUsername: string | null;
+    oldPassword: string | null;
+    newPassword: string | null;
 }
 
-export interface UserInterface extends CreateUserInterface
+interface UserInterface extends CreateUserInterface, IDInterface
 {
-    _id: Types.ObjectId;
-    createdAt:Date;
+    createdAt: Date;
 }
 
+export type {LoginInterface, CreateUserInterface, ChangeDataInterface, UserInterface}

@@ -8,7 +8,6 @@ import { ValidateField } from '../../Controller/ValidateController'
 import { RegisterField } from '../../Maps/TextFieldsMaps'
 import { RegisterModel } from '../../Model/InputFieldModel';
 
-import { AlertContext } from '../../Context/AlertContext';
 import { PageItemToCenter, PageTitleSyntax } from '../../Maps/FormatSyntaxMaps';
 import { GetCurrentDate } from '../../Controller/OtherController';
 

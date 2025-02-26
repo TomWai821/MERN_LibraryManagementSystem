@@ -18,7 +18,7 @@ const PageItemToCenter = {...ItemToCenter, marginTop: 5};
 const NavColor = { background: "#00796B", word: buttonFontColor, wordHover: "#B2DFDB" };
 const NavButtonTransition = "color 1s, background-color 1s";
 
-const NavSyntax: NavSyntaxInterface = { fontSize: 24, transition: NavButtonTransition, bgcolor: NavColor.background, color: NavColor.word, '&:hover': { color: NavColor.wordHover } };
+const NavSyntax: NavSyntaxInterface = { fontSize: 24, transition: NavButtonTransition, bgcolor: NavColor.background, color: buttonFontColor, '&:hover': { color: NavColor.wordHover } };
 const MenuItemSyntax = { margin: 0, padding: 0 };
 
 // For Avatar in Navbar

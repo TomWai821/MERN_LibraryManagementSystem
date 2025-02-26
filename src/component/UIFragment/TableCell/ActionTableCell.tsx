@@ -18,6 +18,7 @@ import { DeleteButton } from "../../../Maps/FormatSyntaxMaps";
 
 const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information, isAdmin }) => 
 {
+
     const { handleOpen } = useModal();
 
     const openEditModal = () => 

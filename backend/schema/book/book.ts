@@ -6,10 +6,10 @@ const BookSchema = new mongoose.Schema<BookInterface>
     {
         _id: { type: String, required: true},
         bookname: { type: String, required: true },
-        languageID: {type: mongoose.Schema.Types.ObjectId, ref:'Language', required: true },
+        languageID: { type: mongoose.Schema.Types.ObjectId, ref:'Language', required: true },
         genreID: { type: mongoose.Schema.Types.ObjectId, ref:'Genre', required: true },
         publisherID: { type: mongoose.Schema.Types.ObjectId, ref:'Publisher', required: true },
-        authorID: { type: mongoose.Schema.Types.ObjectId, ref:'Publisher', required: true },
+        authorID: { type: mongoose.Schema.Types.ObjectId, ref:'Author', required: true },
         page: { type: Number, required: true },
         description: {type: String },
         createdAt: { type: Date, default: Date.now }
@@ -141,7 +141,6 @@ class BookService
             {
                 throw new Error('An unknown error occurred');
             }
-            
         }
     }
 }

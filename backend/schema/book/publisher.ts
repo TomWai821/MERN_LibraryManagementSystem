@@ -4,10 +4,11 @@ import { PublisherInterface } from '../../model/bookSchemaInterface';
 const publisherSchema = new mongoose.Schema<PublisherInterface>
 (
     {
-        _id: { type: String, require: true },
-        publisher: {type: String, require:true},
-        address: { type: String, require:true },
-        phoneNumber: { type: String, require:true }
+        _id: { type: String, required: true },
+        publisher: { type: String, required: true },
+        address: { type: String, required: true },
+        phoneNumber: { type: String, required: true },
+        email: { type: String, required: true }
     }
 )
 

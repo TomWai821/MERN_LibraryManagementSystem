@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import { AppBar, Box, Button, Toolbar } from '@mui/material';
-
-import { IsLoggedIn, GetRole } from '../../Controller/OtherController';
 
 import { AvatarSize, MenuItemSyntax, NavColor, NavSyntax } from '../../Maps/FormatSyntaxMaps';
 
 import ProfileMenu from './ProfileMenu';
 import NavMenu from './NavMenu';
+import { PagesInterface } from '../../Model/TablePageModel';
 
-const isLoggedIn = IsLoggedIn();
-const role = GetRole();
-
-const NavBar = () => 
+const NavBar:FC<PagesInterface> = (loginData) => 
 {
+    const {isAdmin, isLoggedIn, role} = loginData;
+
     const [anchorElNav, setAnchorElNav] = useState<HTMLElement | null>(null);
     const [anchorElUser, setAnchorElUser] = useState<HTMLElement | null>(null);
 
@@ -34,11 +32,11 @@ const NavBar = () =>
                     <Button sx={{ fontSize: 32, marginRight: 3, bgcolor: NavColor.background, color: NavColor.word }} href="./">Library</Button>
                 </Box>
 
-                <NavMenu isLoggedIn={isLoggedIn} role={role} AvatarSize={AvatarSize} NavSyntax={NavSyntax} anchorElNav={anchorElNav} 
-                    MenuItemSyntax={MenuItemSyntax} handleNavMenu={handleNavMenu} />
+                <NavMenu isLoggedIn={isLoggedIn} role={role} AvatarSize={AvatarSize} NavSyntax={NavSyntax} anchorElNav={anchorElNav}
+                MenuItemSyntax={MenuItemSyntax} handleNavMenu={handleNavMenu} isAdmin={isAdmin} />
 
-                <ProfileMenu isLoggedIn={isLoggedIn} role={role} AvatarSize={AvatarSize} NavSyntax={NavSyntax} 
-                    MenuItemSyntax={MenuItemSyntax} anchorElUser={anchorElUser} handleUserMenu={handleUserMenu}/>
+                <ProfileMenu isLoggedIn={isLoggedIn} role={role} AvatarSize={AvatarSize} NavSyntax={NavSyntax}
+                MenuItemSyntax={MenuItemSyntax} anchorElUser={anchorElUser} handleUserMenu={handleUserMenu} isAdmin={isAdmin}/>
 
             </Toolbar>
         </AppBar>

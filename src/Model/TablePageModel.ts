@@ -5,6 +5,12 @@ interface IsAdminInterface
     isAdmin:boolean;
 }
 
+interface PagesInterface extends IsAdminInterface
+{
+    role: string | undefined;
+    isLoggedIn:boolean;
+}
+
 interface FilterInterface extends IsAdminInterface
 {
     value:number;
@@ -78,7 +84,9 @@ interface TabInterface extends IsAdminInterface
 {
     tabLabel: { label: string; }[];
     value: number;
+    paginationValue: number;
     valueChange: (type:string ,newValue: number) => void;
+    paginationOption: number[];
 }
 
 interface OptionFieldsInterface
@@ -91,4 +99,4 @@ interface OptionFieldsInterface
 }
 
 
-export type {BookSearchInterface, BookDataInterface, UserDataInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, BookRecordTableInterface, UserDataTableInterface, TabInterface, OptionFieldsInterface}
+export type {IsAdminInterface, PagesInterface, BookSearchInterface, BookDataInterface, UserDataInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, BookRecordTableInterface, UserDataTableInterface, TabInterface, OptionFieldsInterface}

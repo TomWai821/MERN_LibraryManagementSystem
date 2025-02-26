@@ -4,8 +4,9 @@ import { Box, Button, Modal, Typography } from "@mui/material";
 import { CreateModalSyntax, ModalSyntax, ModalTitleSyntax } from "../../Maps/FormatSyntaxMaps";
 import { useModal } from "../../Context/ModalContext";
 
-const ModalTemplate:FC <ModalTemplateProps> = ({children, title, cancelButtonName, cancelButtonEvent}) => 
+const ModalTemplate:FC <ModalTemplateProps> = (templateData) => 
 {
+    const {children, title, cancelButtonName, cancelButtonEvent} = templateData;
     const {open, handleClose} = useModal();
 
     const ButtonEvent = () =>

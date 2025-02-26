@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import { IDInterface } from "./userSchemaInterface";
 
-
 interface BookInterface extends IDInterface
 {
     bookname: string;
@@ -25,31 +24,39 @@ interface LanguageInterface extends IDInterface
     language:string;
 }
 
-interface PublisherInterface extends IDInterface
+interface ContractDataInterface
+{
+    phoneNumber:string;
+    email:string;
+}
+
+interface PublisherInterface extends IDInterface, ContractDataInterface
 {
     publisher:string;
     address:string;
-    phoneNumber:string;
 }
 
-interface AuthorInterface extends IDInterface
+interface AuthorInterface extends IDInterface, ContractDataInterface
 {
     author:string;
 }
 
 interface BookFavouriteInterface extends IDInterface
 {
-
+    bookID: mongoose.Schema.Types.ObjectId;
+    userID: mongoose.Schema.Types.ObjectId;
 }
 
-interface BookIssuedInterface extends IDInterface
+interface BookIssuedInterface extends IDInterface, BookFavouriteInterface
 {
-    
+    dueDate: Date;
+    issueDate: Date;
 }
 
 interface BookReturnInterface extends IDInterface
 {
-    
+    issueID: mongoose.Schema.Types.ObjectId;
+    returnDate: Date;
 }
 
 export { BookInterface, GenreInterface, LanguageInterface, PublisherInterface, AuthorInterface, BookFavouriteInterface, BookIssuedInterface, BookReturnInterface}

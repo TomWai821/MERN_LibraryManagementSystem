@@ -8,10 +8,11 @@ import NavNar from './component/NavBar/NavBar';
 import RoutesUtils from './component/Utils/RoutesUtils';
 import { Box } from '@mui/material';
 import { useModal } from './Context/ModalContext';
-import { GetRole } from './Controller/OtherController';
+import { GetRole, IsAdmin, IsLoggedIn } from './Controller/OtherController';
 
-const role = GetRole();
-const isAdmin:boolean = isAdmin(role);
+const role:string | undefined = GetRole();
+const isAdmin:boolean = IsAdmin(role);
+const isLoggedIn:boolean = IsLoggedIn();
 
 const App: React.FC = () => 
 {
@@ -19,9 +20,9 @@ const App: React.FC = () =>
     
     return (
         <Fragment>
-            <NavNar/>
+            <NavNar role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>
             <Box className="App">
-                <RoutesUtils/>
+                <RoutesUtils role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>
                 {content}
             </Box>
         </Fragment>

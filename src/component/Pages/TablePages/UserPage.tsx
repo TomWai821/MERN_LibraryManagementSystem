@@ -1,11 +1,11 @@
-import { Box, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import { Box, Pagination, Paper, TableContainer, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 
 import UserFilter from "./Filter/UserFilter";
 import { ItemToCenter, PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
-import { UserDataInterface } from "../../../Model/TablePageModel";
+import { PagesInterface, UserDataInterface } from "../../../Model/TablePageModel";
 import CustomTab from "../../UIFragment/Tab/CustomTab";
-import { UserTabLabel } from "../../../Maps/TableMaps";
+import { PaginationOption, UserTabLabel } from "../../../Maps/TableMaps";
 import UserTabPanel from "./Tabs/UserTabPanel";
 
 const UserData: UserDataInterface [] = 
@@ -15,11 +15,13 @@ const UserData: UserDataInterface [] =
     {username: "C", email: "GHI@gmail.com", role: "User", status: "Normal", gender: "Male"},
 ];
 
-const UserPage:FC = () =>
+const UserPage:FC<PagesInterface> = (loginData) =>
 {
-    const [value, setValue] = useState(0);
-    const SetTitle = isAdmin ? "User Management Page": "View BanList";
+    const {isAdmin} = loginData;
 
+    const [value, setValue] = useState(0);
+    const [paginationValue, setPaginationValue] = useState(0);
+    const SetTitle = isAdmin ? "User Management Page" : "View BanList";
 
     const changeValue = (type:string, newValue: number) =>
     {
@@ -48,7 +50,7 @@ const UserPage:FC = () =>
 
             <UserFilter isAdmin={isAdmin} value={value}/>
 
-            <CustomTab isAdmin={isAdmin} value={value} valueChange={changeValue} tabLabel={UserTabLabel}/>
+            <CustomTab isAdmin={isAdmin} value={value} valueChange={changeValue} paginationValue={paginationValue} tabLabel={UserTabLabel} paginationOption={PaginationOption}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
                 <UserTabPanel value={value} isAdmin={isAdmin} userData={UserData}/>

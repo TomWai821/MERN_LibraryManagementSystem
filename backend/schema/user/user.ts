@@ -4,13 +4,14 @@ import { UserInterface } from '../../model/userSchemaInterface';
 const UserSchema = new mongoose.Schema<UserInterface>
 (
     {
-        username: { type: String, require: true },
-        email: { type: String, require: true },
-        password: { type: String, require: true },
-        gender: { type: String, require: true },
-        birthDay: { type: String, require: true },
-        role: { type: String, require: true, default: 'User' },
-        status: { type: String, require: true, default: 'Normal' },
+        _id: {type: String, required: true},
+        username: { type: String, required: true },
+        email: { type: String, required: true },
+        password: { type: String, required: true },
+        genderID: { type: mongoose.Schema.Types.ObjectId, ref:'Gender',  required: true },
+        roleID: { type: mongoose.Schema.Types.ObjectId, ref:'Role', required: true, default: 'User' },
+        statusID: { type: mongoose.Schema.Types.ObjectId, ref:'Status', required: true, default: 'Normal' },
+        birthDay: { type: String, required: true },
         createdAt: { type: Date, default: Date.now }
     }
 );

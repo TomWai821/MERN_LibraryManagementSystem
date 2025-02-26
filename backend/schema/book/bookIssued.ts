@@ -8,7 +8,8 @@ const BookIssuedSchema = new mongoose.Schema<BookIssuedInterface>
         userID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
         bookID: { type: mongoose.Schema.Types.ObjectId, ref: 'Book',required: true },
         issueDate: { type:Date, required: true },
-        dueDate: { type:Date, required: true }
+        dueDate: { type:Date, required: true },
+        createdAt: { type: Date, default: Date.now, immutable: true }
     }
 )
 

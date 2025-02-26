@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema<UserInterface>
         roleID: { type: mongoose.Schema.Types.ObjectId, ref:'Role', required: true, default: 'User' },
         statusID: { type: mongoose.Schema.Types.ObjectId, ref:'Status', required: true, default: 'Normal' },
         birthDay: { type: String, required: true },
-        createdAt: { type: Date, default: Date.now }
+        createdAt: { type: Date, default: Date.now, immutable: true }
     }
 );
 

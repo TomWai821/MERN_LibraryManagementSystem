@@ -8,7 +8,8 @@ const publisherSchema = new mongoose.Schema<PublisherInterface>
         publisher: { type: String, required: true },
         address: { type: String, required: true },
         phoneNumber: { type: String, required: true },
-        email: { type: String, required: true }
+        email: { type: String, required: true },
+        createdAt: { type: Date, default: Date.now, immutable: true }
     }
 )
 

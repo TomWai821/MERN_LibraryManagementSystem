@@ -33,9 +33,9 @@ interface RegisterModel extends LoginModel
 
 interface OptionFieldModel
 {
-    optionVisiable:boolean;
+    optionVisiable: boolean;
     onChange:(event: ChangeEvent<HTMLInputElement>) => void
-    SearchField: { label: string; name: string; type: string; select?: boolean; slotProps?: object} [];
+    SearchField: { label: string; name: string; type: string; select?: boolean; slotProps?: object, options?: string[]} [];
     searchData: BookDataInterface | UserDataInterface;
 }
 

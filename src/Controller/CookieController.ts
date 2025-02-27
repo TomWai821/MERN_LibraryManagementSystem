@@ -1,4 +1,4 @@
-const SetUserCookie = (authToken:string, name:string, role:string, days:number, expires?:string) => 
+const SetUserCookie = (authToken:string, username:string, role:string, days:number, expires?:string) => 
 {
     if(!expires)
     {
@@ -11,7 +11,7 @@ const SetUserCookie = (authToken:string, name:string, role:string, days:number, 
             expires = ":expires=" + date.toUTCString();
         }
     }
-    document.cookie = "authToken="+ authToken + ";name=" + name +"; role=" + role + expires +";path=/" ;
+    document.cookie = "authToken="+ authToken + ";username=" + username +"; role=" + role + expires +";path=/" ;
 }
 
 const GetUserCookie = (name:string) => 

@@ -20,7 +20,7 @@ const UserPage:FC<PagesInterface> = (loginData) =>
     const {isAdmin} = loginData;
 
     const [value, setValue] = useState(0);
-    const [paginationValue, setPaginationValue] = useState(0);
+    const [paginationValue, setPaginationValue] = useState(10);
     const SetTitle = isAdmin ? "User Management Page" : "View BanList";
 
     const changeValue = (type:string, newValue: number) =>
@@ -29,6 +29,10 @@ const UserPage:FC<PagesInterface> = (loginData) =>
         {
             case "Tab":
                 setValue(newValue);
+                break;
+
+            case "Pagination":
+                setPaginationValue(newValue);
                 break;
             
             default:

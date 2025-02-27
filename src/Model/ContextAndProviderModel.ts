@@ -1,4 +1,5 @@
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
+import { FindUserInterface, UserDataInterface } from "./TablePageModel";
 
 interface ChildProps
 {
@@ -35,7 +36,12 @@ interface ModalTemplateProps extends ChildProps
     cancelButtonEvent?: () => void;
 }
 
-
+interface UserContextProps
+{
+    users: UserDataInterface[];
+    filter: FindUserInterface | undefined;
+    setFilter: Dispatch<SetStateAction<FindUserInterface | undefined>>;
+}
 
 interface TabPanelProps extends ChildProps
 {
@@ -43,4 +49,4 @@ interface TabPanelProps extends ChildProps
     value: number;
 }
 
-export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, TabPanelProps}
+export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, UserContextProps, TabPanelProps}

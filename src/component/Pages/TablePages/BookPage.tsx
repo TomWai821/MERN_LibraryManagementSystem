@@ -16,24 +16,6 @@ const BookData: BookDataInterface [] =
     { bookname: "A", language: "English", genre: "A", author: "A", publisher: "A", pages: "100", amount: "1" },
     { bookname: "B", language: "English", genre: "B", author: "B", publisher: "B", pages: "100", amount: "1" },
     { bookname: "C", language: "English", genre: "C", author: "C", publisher: "C", pages: "100", amount: "1" },
-    { bookname: "A", language: "English", genre: "A", author: "A", publisher: "A", pages: "100", amount: "1" },
-    { bookname: "B", language: "English", genre: "B", author: "B", publisher: "B", pages: "100", amount: "1" },
-    { bookname: "C", language: "English", genre: "C", author: "C", publisher: "C", pages: "100", amount: "1" },
-    { bookname: "A", language: "English", genre: "A", author: "A", publisher: "A", pages: "100", amount: "1" },
-    { bookname: "B", language: "English", genre: "B", author: "B", publisher: "B", pages: "100", amount: "1" },
-    { bookname: "C", language: "English", genre: "C", author: "C", publisher: "C", pages: "100", amount: "1" },
-    { bookname: "A", language: "English", genre: "A", author: "A", publisher: "A", pages: "100", amount: "1" },
-    { bookname: "B", language: "English", genre: "B", author: "B", publisher: "B", pages: "100", amount: "1" },
-    { bookname: "C", language: "English", genre: "C", author: "C", publisher: "C", pages: "100", amount: "1" },
-    { bookname: "A", language: "English", genre: "A", author: "A", publisher: "A", pages: "100", amount: "1" },
-    { bookname: "B", language: "English", genre: "B", author: "B", publisher: "B", pages: "100", amount: "1" },
-    { bookname: "C", language: "English", genre: "C", author: "C", publisher: "C", pages: "100", amount: "1" },
-    { bookname: "A", language: "English", genre: "A", author: "A", publisher: "A", pages: "100", amount: "1" },
-    { bookname: "B", language: "English", genre: "B", author: "B", publisher: "B", pages: "100", amount: "1" },
-    { bookname: "C", language: "English", genre: "C", author: "C", publisher: "C", pages: "100", amount: "1" },
-    { bookname: "A", language: "English", genre: "A", author: "A", publisher: "A", pages: "100", amount: "1" },
-    { bookname: "B", language: "English", genre: "B", author: "B", publisher: "B", pages: "100", amount: "1" },
-    { bookname: "C", language: "English", genre: "C", author: "C", publisher: "C", pages: "100", amount: "1" }
 ];
 
 const BookPage:FC<PagesInterface> = (loginData) =>

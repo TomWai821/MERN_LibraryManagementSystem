@@ -2,8 +2,13 @@ import { UserDataInterface } from "./TablePageModel";
 
 interface ResultInterface
 {
+    data: RegisterDataInterface;
+}
+
+interface RegisterDataInterface
+{
     authToken: string;
-    name: string;
+    username: string;
     role: string;
 }
 

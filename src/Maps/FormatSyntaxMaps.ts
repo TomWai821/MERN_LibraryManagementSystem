@@ -10,7 +10,13 @@ const buttonFontColor = "white";
 const DeleteButton = {color: buttonFontColor, backgroundColor: 'rgb(230, 0, 0)', '&:hover': {backgroundColor: 'rgb(210, 0, 0)'}}
 
 // For all items/tables
-const ItemToCenter = {display: 'flex', justifyContent: 'center'}
+const flex =  {display: 'flex' };
+
+const ItemToCenter = { ...flex, justifyContent: 'center' };
+
+const displayAsRow = { ...flex, flexDirection: 'row' };
+
+const displayAsColumn = {...flex, flexDirection: 'column'};
 
 const PageItemToCenter = {...ItemToCenter, marginTop: 5};
 
@@ -65,4 +71,4 @@ const ModalBodySyntax =
 
 const CreateModalSyntax = {width: '400px'}
 
-export {ViewProfileButton, buttonFontColor, DeleteButton, ItemToCenter, PageItemToCenter, NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSubTitleSyntax, ModalSyntax, ModalRemarkSyntax, CreateModalSyntax, ModalBodySyntax}
+export {ViewProfileButton, buttonFontColor, DeleteButton, ItemToCenter, displayAsRow, displayAsColumn, PageItemToCenter, NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSubTitleSyntax, ModalSyntax, ModalRemarkSyntax, CreateModalSyntax, ModalBodySyntax}

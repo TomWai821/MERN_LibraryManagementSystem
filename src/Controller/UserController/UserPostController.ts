@@ -63,6 +63,7 @@ const RegisterController = async (email:string, username:string, password:string
     }
     catch(error)
     {
+        console.log(error);
         return false;
     }
 }

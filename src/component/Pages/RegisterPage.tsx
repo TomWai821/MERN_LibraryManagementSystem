@@ -9,7 +9,8 @@ import { RegisterField } from '../../Maps/TextFieldsMaps'
 import { RegisterModel } from '../../Model/InputFieldModel';
 
 import { PageItemToCenter, PageTitleSyntax } from '../../Maps/FormatSyntaxMaps';
-import { GetCurrentDate } from '../../Controller/OtherController';
+import { ChangePage, GetCurrentDate } from '../../Controller/OtherController';
+import { AlertContext } from '../../Context/AlertContext';
 
 const RegisterPage = () => 
 {
@@ -18,11 +19,24 @@ const RegisterPage = () =>
     const [errors, setErrors] = useState({email: "", username: "", password: ""});
     const [helperTexts, setHelperText] = useState({email: "", username: "", password: ""});
 
+    const alertContext = useContext(AlertContext);
+
     const handleRegister = async (event: FormEvent) => 
     {
         event.preventDefault();
         setIsSubmitted(true);
-        await RegisterController(Credentials.email, Credentials.username, Credentials.password, Credentials.birthDay, Credentials.gender);
+        const success = await RegisterController(Credentials.email, Credentials.username, Credentials.password, Credentials.birthDay, Credentials.gender);
+        
+        if(alertContext && alertContext.setAlertConfig)
+        {
+            if (success) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: "Register Successfully!", open: true, onClose: () => alertContext.setAlertConfig(null)});
+                setTimeout(() => {ChangePage('/')}, 2000);
+                return;
+            }
+            alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to login!", open: true, onClose: () => alertContext.setAlertConfig(null)});
+        }
     }
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 

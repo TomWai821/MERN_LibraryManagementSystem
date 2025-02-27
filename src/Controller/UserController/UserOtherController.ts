@@ -17,14 +17,15 @@ const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =>
 {
     if(result)
     {
+        console.log(result.data)
         if(!stayLogin)
         {
-            sessionStorage.setItem("authToken", result.authToken);
-            sessionStorage.setItem("username", result.name);
-            sessionStorage.setItem("role", result.role);
+            sessionStorage.setItem("authToken", result.data.authToken);
+            sessionStorage.setItem("username", result.data.username);
+            sessionStorage.setItem("role", result.data.role);
             return;
         }
-        SetUserCookie(result.authToken, result.name, result.role , 30);
+        SetUserCookie(result.data.authToken, result.data.username, result.data.role , 30);
     }
 }
 

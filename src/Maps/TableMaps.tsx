@@ -37,4 +37,12 @@ const UserTabLabel =
 
 const PaginationOption = [10, 20, 50, 100];
 
-export {BookRecordTableHeader, UserTableHeader, BookTabLabel, UserTabLabel, PaginationOption}
+const EmptyOption = [""];
+
+const RoleOption = ["User", "Admin"];
+
+const StatusOption = ["Normal", "Banned", "Delete"];
+
+const GenderOption = ["Male", "Female"];
+
+export {BookRecordTableHeader, UserTableHeader, BookTabLabel, UserTabLabel, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption}

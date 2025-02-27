@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { CreateUserInterface, LoginInterface, ChangeDataInterface } from '../model/requestInterface';
 import { jwtSign, bcryptHash, comparePassword } from './hashing'
-import UserService from '../schema/user/user';
 import { AuthRequest } from './middleware';
 import { UserInterface } from '../model/userSchemaInterface';
+import { CreateUser, FindUser, FindUserByID, FindUserByIDAndUpdate, FindUserWithData, GetUser, GetUserCount } from '../schema/user/user';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {
@@ -12,39 +12,43 @@ export const UserRegister = async(req: Request, res: Response) =>
 
     try
     {
-        const userByEmail = await UserService.FindUser({email});
+        const user = await FindUser({ $or: [{ email }, { username }] });
 
-        if(userByEmail)
+        if(user)
         {
-            return res.status(400).json({success, error: "Email already in use"});
+            if(user.email === email)
+            {
+                return res.status(400).json({success, error: "Email already in use"});
+            }
+
+            if(user.username === username)
+            {
+                return res.status(400).json({success, error: "Username already in use"});
+            }
         }
 
-        const userByName = await UserService.FindUser({username});
-
-        if(userByName)
-        {
-            return res.status(400).json({success, error: "username already in use"});
-        }
+        // Get amount of player and integrate the value to custom ID
+        const userCount = await GetUserCount();
+        const customID = "User-" + (userCount + 1).toString();
         
         // Hash password with bcrypt after validate email and username
         const hashedPassword = await bcryptHash(password); 
 
         // Create a new user after hashing the password
-        const newUser = await UserService.CreateUser({ email, username, password: hashedPassword, gender, birthDay, role, status});
+        const newUser = await CreateUser({ _id:customID, email, username, password: hashedPassword, gender, role, status, birthDay});
         
         // Get user id after create the user and Transfer user id as authToken with jsonWebToken
         const data = { user: { _id: newUser._id } }; 
         const authToken = await jwtSign(data); 
         success = true; 
 
-        res.json({ success, authToken })
+        res.json({ success, message: "Register successfully!", data:{authToken, username, role: newUser.role} })
     }
     catch (error) 
     { 
         res.status(500).json({ success, error: 'Internal Server Error!' });
     }
 }
-
 
 export const UserLogin = async (req: Request, res: Response) =>
 {
@@ -53,14 +57,14 @@ export const UserLogin = async (req: Request, res: Response) =>
     
     try 
     {
-      const user = await UserService.FindUser({ email });
+      const user = await FindUser({ email });
   
         if (!user) 
         {
             return res.status(400).json({ error: 'Invalid email address' });
         }
   
-        if (user.status === 'Banned') 
+        if (user.status === "") 
         {
             return res.status(401).json({ error: 'This user was banned' });
         }
@@ -73,12 +77,12 @@ export const UserLogin = async (req: Request, res: Response) =>
         }
   
         const data = { user: { _id: user._id } };
-        const name = user.username;
+        const username = user.username;
         const role = user.role;
     
         const authToken: string = await jwtSign(data);
         success = true;
-        res.json({ success, name, role, authToken });
+        res.json({ success, message: "Login Successfully!" , data:{username, role, authToken} });
     } 
     catch (error) 
     {
@@ -115,11 +119,11 @@ export const GetUserData = async(req: AuthRequest, res:Response) =>
                 ...(gender && {gender}),
             };
 
-            foundUser = await UserService.FindUserWithData(query);
+            foundUser = await FindUserWithData(query);
         }
         else if(userId)
         {
-            foundUser = await UserService.FindUserByID(userId) as UserInterface;
+            foundUser = await FindUserByID(userId) as UserInterface;
 
             if(!foundUser)
             {
@@ -128,7 +132,7 @@ export const GetUserData = async(req: AuthRequest, res:Response) =>
         }
         else
         {
-            foundUser = await UserService.GetUser();
+            foundUser = await GetUser();
         }
         
     
@@ -154,7 +158,7 @@ export const ChangeUserData = async(req: AuthRequest, res:Response) =>
 
     try
     {
-        const foundUser = await UserService.FindUserByID(userId);
+        const foundUser = await FindUserByID(userId);
         
         if(!foundUser)
         {
@@ -170,12 +174,12 @@ export const ChangeUserData = async(req: AuthRequest, res:Response) =>
                 return res.status(401).json({error : "Password Incorrect!"});
             }
             const hashPassword = await bcryptHash(newPassword);
-            await UserService.FindUserByIDAndUpdate(userId, {password: hashPassword});
+            await FindUserByIDAndUpdate(userId, {password: hashPassword});
         }
 
         if(oldUsername && newUsername)
         {
-            await UserService.FindUserByIDAndUpdate(userId, {username: newUsername});
+            await FindUserByIDAndUpdate(userId, {username: newUsername});
         }
 
         success = true;

@@ -40,11 +40,16 @@ interface UserDataInterface
     gender:string;
 }
 
+interface FindUserInterface extends UserDataInterface
+{
+    startDate:string;
+    endDate:string;
+}
+
 interface CreateUserInterface extends UserDataInterface
 {
     password:string;
 }
-
 
 interface ActionTableCellInterface extends IsAdminInterface
 {
@@ -95,8 +100,8 @@ interface OptionFieldsInterface
     type:string; 
     optionVisiable:boolean; 
     onChange:(event: ChangeEvent<HTMLInputElement>) => void;
-    searchData:any;
+    searchData: any;
 }
 
 
-export type {IsAdminInterface, PagesInterface, BookSearchInterface, BookDataInterface, UserDataInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, BookRecordTableInterface, UserDataTableInterface, TabInterface, OptionFieldsInterface}
+export type {IsAdminInterface, PagesInterface, BookSearchInterface, BookDataInterface, UserDataInterface, FindUserInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, BookRecordTableInterface, UserDataTableInterface, TabInterface, OptionFieldsInterface}

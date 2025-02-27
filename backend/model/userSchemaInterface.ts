@@ -11,10 +11,11 @@ interface CreateAtInterface
     createdAt: Date;
 }
 
-interface UserInterface extends CreateUserInterface, IDInterface
+interface UserInterface extends IDInterface, CreateUserInterface
 {
-    status:string;
-    createdAt?:Date;
+    email: string;
+    password: string;
+    createdAt: Date;
 }
 
 interface RoleInterface extends IDInterface

@@ -1,18 +1,18 @@
 
 import { ChangeEvent, FC, useState } from "react";
-
-import { Box, Button, Card, IconButton, TextField, Typography } from "@mui/material";
+import { Box, Button, IconButton, MenuItem, TextField } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
-import { FilterInterface, UserDataInterface } from "../../../../Model/TablePageModel";
-import { UserSearchField } from "../../../../Maps/TextFieldsMaps";
+import { FilterInterface } from "../../../../Model/TablePageModel";
+import { UserOtherSearchField } from "../../../../Maps/TextFieldsMaps";
 
 import { useModal } from "../../../../Context/ModalContext";
 import CreateUserModal from "../../../Modal/User/CreateUserModal";
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
+import OptionFields from "./OptionField/OptionFields";
 
-const UserFilter:FC<FilterInterface> = ({isAdmin}) => 
+const UserFilter:FC<FilterInterface> = ({value, isAdmin}) => 
 {
     const [searchUser, setsearchUser] = useState({username: "", email:"", role:"", status:"", gender:""});
     const [optionVisiable, setOptionVisiable] = useState(false);
@@ -37,7 +37,21 @@ const UserFilter:FC<FilterInterface> = ({isAdmin}) =>
     return(
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{...ItemToCenter, paddingBottom: '25px', alignItems: 'center'}}>
-                <TextField label={"Username"} value={searchUser.username} name="username" size="small" onChange={onChange} sx={{width: '75%'}}/>
+                {value === 0 ? 
+                    <TextField label={"Username"} value={searchUser.username} name="username" size="small" onChange={onChange} sx={{width: '75%'}}/>:
+                    UserOtherSearchField.map((field, index) => (
+                        <TextField label={field.label} key={index} select={field.select} sx={{...field.syntax}} size="small">
+                            {
+                                field.select && field.options?.map((option, index) => 
+                                    (
+                                        <MenuItem key={index} value={option} sx={{height: '40px'}}>{option}</MenuItem>
+                                    )
+                                )
+                            }
+                        </TextField>
+                    ))
+                }
+                
                 {isAdmin &&
                     (
                         <IconButton onClick={toggleCardVisibility}>
@@ -46,26 +60,14 @@ const UserFilter:FC<FilterInterface> = ({isAdmin}) =>
                     )
                 }
                 <Button variant='contained' sx={{marginLeft: '10px'}}>Search</Button>
-                {isAdmin &&
+                {(isAdmin && value === 0) &&
                     (
                         <Button variant='contained' sx={{marginLeft: '10px'}} onClick={openCreateUserModal}>Create User</Button>
                     )
                 }
             </Box>
 
-            {optionVisiable && (
-            <Card sx={{ padding: '15px'}}>
-                <Typography>Options</Typography>
-                <Box sx={{ padding: '15px 20px', display: 'grid', gap: '15px 50px', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
-                    {UserSearchField.map((field, index) => 
-                        (
-                            <TextField key={index} label={field.label} name={field.name} value={searchUser[field.name as keyof UserDataInterface]} 
-                                type={field.type} size="small" onChange={onChange} select={field.select}/>
-                        ))
-                    }
-                </Box>
-            </Card>
-            )}
+            <OptionFields value={value} type={"User"} optionVisiable={optionVisiable} onChange={onChange} searchData={searchUser}/>
         </Box>
     );
 }

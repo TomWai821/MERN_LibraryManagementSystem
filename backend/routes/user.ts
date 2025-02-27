@@ -1,6 +1,6 @@
 import express from 'express';
 import { UserRegisterRules, UserLoginRules, UserChangeDataRules } from '../model/expressBodyRules'
-import { GetUserData, ChangeUserData, UserLogin, UserRegister } from '../controller/userController';
+import { ChangeUserData, GetUserData, UserLogin, UserRegister } from '../controller/userController';
 import { FetchUser, Validate } from '../controller/middleware';
 
 const router = express.Router();

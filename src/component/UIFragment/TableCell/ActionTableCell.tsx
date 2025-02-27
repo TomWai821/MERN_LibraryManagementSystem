@@ -80,7 +80,7 @@ const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information,
             </TableCell>
             :
             <TableCell sx={{marginLeft: '20px'}}>
-                <Tooltip title={"Booking"} arrow>
+                <Tooltip title={"Issue Book"} arrow>
                     <IconButton>
                         <EventAvailableIcon />
                     </IconButton>

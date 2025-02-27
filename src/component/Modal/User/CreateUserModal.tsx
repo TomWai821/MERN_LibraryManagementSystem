@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react'
 
-import { Box, Button, TextField } from '@mui/material'
+import { Box, Button, MenuItem, TextField } from '@mui/material'
 import { useModal } from '../../../Context/ModalContext';
 import ModalTemplate from '../../Templates/ModalTemplate';
 import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
@@ -28,9 +28,17 @@ const CreateUserModal:FC = ({}) =>
         <ModalTemplate title={"Create User Record"} cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
             {
-                CreateUserInputField.map((field, index) => (
+                CreateUserInputField.map((field, index) => 
+                (
                     <TextField key={index} label={field.label} name={field.name} value={user[field.name as keyof UserDataInterface]}
-                        type={field.type} size="small" onChange={onChange} select={field.select}/>
+                        type={field.type} size="small" onChange={onChange} select={field.select}>
+                        {
+                            field.select && field.options.map((option, index) => 
+                            (
+                                <MenuItem key={index} value={option}>{option}</MenuItem>
+                            ))
+                        }
+                    </TextField>
                 ))   
             }
             </Box>

@@ -5,7 +5,7 @@ import { EditModalInterface, UserDataInterface } from '../../../Model/TablePageM
 import { useModal } from '../../../Context/ModalContext';
 import ModalTemplate from '../../Templates/ModalTemplate';
 import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
-import { Button, TextField } from '@mui/material';
+import { Button, MenuItem, TextField } from '@mui/material';
 import { EditUserInputField } from '../../../Maps/TextFieldsMaps';
 import EditUserConfirmModal from '../Confirmation/User/EditUserConfirmModal';
 
@@ -33,7 +33,14 @@ const EditUserModal:FC<EditModalInterface> = ({editData, compareData}) =>
                 {
                     EditUserInputField.map((field, index) => (
                         <TextField key={index} label={field.label} name={field.name} value={user[field.name as keyof UserDataInterface]}
-                            type={field.type} size="small" onChange={onChange} select={field.select}/>
+                            type={field.type} size="small" onChange={onChange} select={field.select}>
+                            {
+                                field.select && field.options.map((option, index) => 
+                                (
+                                    <MenuItem key={index} value={option}>{option}</MenuItem>
+                                ))  
+                            }
+                        </TextField>
                     ))   
                 }
             </Box>

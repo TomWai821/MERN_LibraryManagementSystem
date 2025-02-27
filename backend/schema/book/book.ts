@@ -10,9 +10,9 @@ const BookSchema = new mongoose.Schema<BookInterface>
         genreID: { type: mongoose.Schema.Types.ObjectId, ref:'Genre', required: true },
         publisherID: { type: mongoose.Schema.Types.ObjectId, ref:'Publisher', required: true },
         authorID: { type: mongoose.Schema.Types.ObjectId, ref:'Author', required: true },
-        page: { type: Number, required: true },
-        description: {type: String },
-        createdAt: { type: Date, default: Date.now }
+        page: { type: Number, required: true, min: 1 },
+        description: { type: String, default: '' },
+        createdAt: { type: Date, default: Date.now, immutable: true }
     }
 )
 

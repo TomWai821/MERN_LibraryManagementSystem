@@ -29,7 +29,9 @@ const CreateBookModal: FC<CreateModalInterface> = ({...bookData}) =>
                 {
                     CreateBookInputField.map((field, index) => (
                         <TextField key={index} label={field.label} name={field.name} value={book[field.name as keyof BookDataInterface]}
-                            type={field.type} size="small" onChange={onChange} select={field.select} slotProps={field.slotProps} />
+                            type={field.type} size="small" onChange={onChange} select={field.select} slotProps={field.slotProps}>
+                        
+                        </TextField>
                     ))
                 }
             </Box>

@@ -1,6 +1,7 @@
 import { Box, MenuItem, Tab, Tabs, TextField, Typography } from "@mui/material";
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, Fragment } from "react";
 import { TabInterface } from "../../../Model/TablePageModel";
+import { displayAsRow } from "../../../Maps/FormatSyntaxMaps";
 
 const getTabProps = (index: number) => 
 {
@@ -26,23 +27,20 @@ const CustomTab:FC<TabInterface> = (TabData) =>
         valueChange("Pagination", selectedValue);
     }
 
-    if(!isAdmin)
-    {
-        return null;
-    }
-
     return(
-        isAdmin && (
-            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Tabs value={value} onChange={handleTabChange}>
-                    {tabLabel.map((tab, index) => 
-                        (
-                            <Tab key={index} label={tab.label} {...getTabProps(index)}/>
-                        ))
-                    }
-                </Tabs>
+        <Fragment>
+            <Box sx={{ ...displayAsRow, width: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
+                {isAdmin && (
+                    <Tabs value={value} onChange={handleTabChange}>
+                        {tabLabel.map((tab, index) => 
+                            (
+                                <Tab key={index} label={tab.label} {...getTabProps(index)}/>
+                            ))
+                        }
+                    </Tabs>
+                )}
 
-                <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                <Box sx={{...displayAsRow, alignItems: 'center', marginLeft: 'auto'}}>
                     <Typography sx={{marginRight: '10px'}}>Show Rows</Typography>
                     <TextField size="small" value={paginationValue} onChange={handlePaginationChange} select>
                         {
@@ -55,7 +53,7 @@ const CustomTab:FC<TabInterface> = (TabData) =>
                     </TextField>
                 </Box>
             </Box>
-        )
+        </Fragment>
     );
 }
 

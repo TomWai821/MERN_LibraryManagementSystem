@@ -1,4 +1,4 @@
-import {  FC, useState } from "react";
+import {  ChangeEvent, FC, useState } from "react";
 
 import { Box, TableContainer, Typography, Paper, Pagination } from "@mui/material";
 
@@ -21,11 +21,17 @@ const BookData: BookDataInterface [] =
 const BookPage:FC<PagesInterface> = (loginData) =>
 {
     const {isLoggedIn, isAdmin} = loginData;
+    const SetTitle:string = isAdmin ? "Manage Books Record": "View Books";
 
+    const [searchBook, setSearchBook] = useState<BookDataInterface>({ bookname: "", language: "", genre: "", publisher: "", author: "", pages: "", amount: "" });
     const [value, setValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
     const count:number = Math.ceil(BookData.length / paginationValue);
-    const SetTitle:string = isAdmin ? "Manage Books Record": "View Books";
+
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => 
+    {
+        setSearchBook({ ...searchBook, [event.target.name]: event.target.value });
+    }
 
     const changeValue = (type:string, newValue: number) =>
     {
@@ -48,7 +54,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <Typography sx={{fontSize: '24px'}}>{SetTitle}</Typography>
 
-            <BookFilter isAdmin={isAdmin} value={value}/>
+            <BookFilter isAdmin={isAdmin} value={value} onChange={onChange} searchData={searchBook}/>
 
             <CustomTab isAdmin={isAdmin} value={value} paginationValue={paginationValue} valueChange={changeValue} tabLabel={BookTabLabel} paginationOption={PaginationOption}/>
 

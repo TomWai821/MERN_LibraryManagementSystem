@@ -13,9 +13,11 @@ import { BookDataInterface, BookSearchInterface, FilterInterface } from "../../.
 import OptionFields from "./OptionField/OptionFields";
 import { BookMainSearchField } from "../../../../Maps/TextFieldsMaps";
 
-const BookFilter: FC<FilterInterface> = ({ value, isAdmin }) => 
+const BookFilter: FC<FilterInterface> = (filterData) => 
 {
-    const [searchBook, setSearchBook] = useState<BookDataInterface>({ bookname: "", language: "", genre: "", publisher: "", author: "", pages: "", amount: "" });
+    const {value, isAdmin, onChange, searchData} = filterData;
+    const bookData = searchData as BookDataInterface;
+
     const [optionVisiable, setOptionVisiable] = useState(false);
     const [actionMenu, openActionMenu] = useState<HTMLElement | null>(null);
     const { handleOpen } = useModal();
@@ -37,11 +39,6 @@ const BookFilter: FC<FilterInterface> = ({ value, isAdmin }) =>
         openActionMenu(actionMenu ? null : event?.currentTarget);
     };
 
-    const onChange = (event: ChangeEvent<HTMLInputElement>) => 
-    {
-        setSearchBook({ ...searchBook, [event.target.name]: event.target.value });
-    }
-
     return (
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{ ...ItemToCenter, paddingBottom: '25px', alignItems: 'center' }}>
@@ -49,7 +46,7 @@ const BookFilter: FC<FilterInterface> = ({ value, isAdmin }) =>
                     BookMainSearchField.map((searchField, index) => 
                     (
                         <Fragment key={index}>
-                            <TextField label={searchField.label} name={searchField.name} value={searchBook[searchField.name as keyof BookSearchInterface]} onChange={onChange} size="small" sx={searchField.syntax} select={searchField.select}/>
+                            <TextField label={searchField.label} name={searchField.name} value={bookData[searchField.name as keyof BookSearchInterface]} onChange={onChange} size="small" sx={searchField.syntax} select={searchField.select}/>
                         </Fragment>
                     ))
                 }
@@ -76,7 +73,7 @@ const BookFilter: FC<FilterInterface> = ({ value, isAdmin }) =>
                 }
             </Box>
 
-            <OptionFields value={value} type={"Book"} optionVisiable={optionVisiable} onChange={onChange} searchData={searchBook}/>
+            <OptionFields value={value} type={"Book"} optionVisiable={optionVisiable} onChange={onChange} searchData={searchData}/>
         </Box>
     );
 }

@@ -18,4 +18,10 @@ interface GetResultInterface
     foundUser: UserDataInterface;
 }
 
-export type {ResultInterface, GetResultInterface}
+interface GetUserResultInterface
+{
+    success:boolean;
+    foundUser: UserDataInterface[];
+}
+
+export type {ResultInterface, GetResultInterface, GetUserResultInterface}

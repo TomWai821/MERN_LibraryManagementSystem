@@ -14,6 +14,8 @@ interface PagesInterface extends IsAdminInterface
 interface FilterInterface extends IsAdminInterface
 {
     value:number;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    searchData: UserDataInterface | BookSearchInterface;
 }
 
 interface BookSearchInterface
@@ -42,8 +44,8 @@ interface UserDataInterface
 
 interface FindUserInterface extends UserDataInterface
 {
-    startDate:string;
-    endDate:string;
+    startDate:Date;
+    dueDate:Date;
 }
 
 interface CreateUserInterface extends UserDataInterface

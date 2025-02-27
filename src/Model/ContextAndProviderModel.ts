@@ -41,6 +41,10 @@ interface UserContextProps
     users: UserDataInterface[];
     filter: FindUserInterface | undefined;
     setFilter: Dispatch<SetStateAction<FindUserInterface | undefined>>;
+    page: number;
+    setPage: Dispatch<SetStateAction<number>>;
+    amount: number;
+    setAmount: Dispatch<SetStateAction<number>>;
 }
 
 interface TabPanelProps extends ChildProps

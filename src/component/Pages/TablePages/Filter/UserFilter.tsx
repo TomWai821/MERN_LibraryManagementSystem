@@ -1,10 +1,10 @@
 
-import { ChangeEvent, FC, useState } from "react";
+import { FC, useState } from "react";
 import { Box, Button, IconButton, MenuItem, TextField } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
-import { FilterInterface } from "../../../../Model/TablePageModel";
+import { FilterInterface, UserDataInterface } from "../../../../Model/TablePageModel";
 import { UserOtherSearchField } from "../../../../Maps/TextFieldsMaps";
 
 import { useModal } from "../../../../Context/ModalContext";
@@ -12,17 +12,13 @@ import CreateUserModal from "../../../Modal/User/CreateUserModal";
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
 import OptionFields from "./OptionField/OptionFields";
 
-const UserFilter:FC<FilterInterface> = ({value, isAdmin}) => 
+const UserFilter:FC<FilterInterface> = (filterData) => 
 {
-    const [searchUser, setsearchUser] = useState({username: "", email:"", role:"", status:"", gender:""});
+    const {value, isAdmin, onChange, searchData} = filterData;
+    const userData = searchData as UserDataInterface;
+
     const [optionVisiable, setOptionVisiable] = useState(false);
-
     const {handleOpen} = useModal();
-
-    const onChange = (event: ChangeEvent<HTMLInputElement>) => 
-    {
-        setsearchUser({...searchUser, [event.target.name] : event.target.value})
-    }
     
     const toggleCardVisibility = () => 
     {
@@ -38,7 +34,7 @@ const UserFilter:FC<FilterInterface> = ({value, isAdmin}) =>
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{...ItemToCenter, paddingBottom: '25px', alignItems: 'center'}}>
                 {value === 0 ? 
-                    <TextField label={"Username"} value={searchUser.username} name="username" size="small" onChange={onChange} sx={{width: '75%'}}/>:
+                    <TextField label={"Username"} value={userData.username} name="username" size="small" onChange={onChange} sx={{width: '75%'}}/>:
                     UserOtherSearchField.map((field, index) => (
                         <TextField label={field.label} key={index} select={field.select} sx={{...field.syntax}} size="small">
                             {
@@ -67,7 +63,7 @@ const UserFilter:FC<FilterInterface> = ({value, isAdmin}) =>
                 }
             </Box>
 
-            <OptionFields value={value} type={"User"} optionVisiable={optionVisiable} onChange={onChange} searchData={searchUser}/>
+            <OptionFields value={value} type={"User"} optionVisiable={optionVisiable} onChange={onChange} searchData={searchData}/>
         </Box>
     );
 }

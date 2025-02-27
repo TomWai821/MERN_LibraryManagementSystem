@@ -1,5 +1,5 @@
 // React Components
-import React from 'react'
+import React, { Fragment } from 'react'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
 // MUI components
@@ -16,6 +16,7 @@ import { GetUserCookie } from '../../Controller/CookieController'
 import { DeleteButton, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../Maps/FormatSyntaxMaps'
 import { useModal } from '../../Context/ModalContext'
 import DeleteProfileConfirmModal from '../Modal/Confirmation/Profile/DeleteProfileComfirmModal'
+import { UserDataInterface } from '../../Model/TablePageModel'
 
 const ViewProfilePage = () => 
 {
@@ -50,13 +51,15 @@ const ViewProfilePage = () =>
 
     const updateCredentials = (userData: GetResultInterface) =>
     {
+        const foundUser = Array.isArray(userData.foundUser) ? userData.foundUser[0] : userData.foundUser as UserDataInterface;
+
         setCredentials
         (
             {
-                username: userData.foundUser.username || "", 
-                gender: userData.foundUser.gender || "",
-                role: userData.foundUser.role || "",
-                email: userData.foundUser.email || "",
+                username: foundUser.username || "", 
+                gender: foundUser.gender || "",
+                role: foundUser.role || "",
+                email: foundUser.email || "",
                 newName: "",
                 newPassword: ""
             }
@@ -87,7 +90,7 @@ const ViewProfilePage = () =>
                     {
                         ViewProfileField.map((field, index) =>
                         (
-                            <React.Fragment key={index}>
+                            <Fragment key={index}>
                                 <TextField 
                                     sx={{ minWidth: '100px',  maxWidth: '500px'}}
                                     name={field.name}
@@ -98,7 +101,7 @@ const ViewProfilePage = () =>
                                     onChange={onChange} 
                                     disabled={field.disable}
                                 />
-                            </React.Fragment>
+                            </Fragment>
                         ))
                     }
                     </Box>

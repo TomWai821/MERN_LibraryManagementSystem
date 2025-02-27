@@ -1,5 +1,5 @@
 import { Box, Pagination, Paper, TableContainer, Typography } from "@mui/material";
-import { FC, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 
 import UserFilter from "./Filter/UserFilter";
 import { ItemToCenter, PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
@@ -18,10 +18,17 @@ const UserData: UserDataInterface [] =
 const UserPage:FC<PagesInterface> = (loginData) =>
 {
     const {isAdmin} = loginData;
+    const SetTitle = isAdmin ? "User Management Page" : "View BanList";
 
+    const [searchUser, setsearchUser] = useState({username: "", email:"", role:"", status:"", gender:"", startDate: "", dueDate: ""});
     const [value, setValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
-    const SetTitle = isAdmin ? "User Management Page" : "View BanList";
+    const count:number = Math.ceil(UserData.length / paginationValue);
+
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => 
+    {
+        setsearchUser({...searchUser, [event.target.name] : event.target.value})
+    }
 
     const changeValue = (type:string, newValue: number) =>
     {
@@ -52,14 +59,14 @@ const UserPage:FC<PagesInterface> = (loginData) =>
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <Typography sx={{fontSize: '24px'}}>{SetTitle}</Typography>
 
-            <UserFilter isAdmin={isAdmin} value={value}/>
+            <UserFilter isAdmin={isAdmin} value={value} onChange={onChange} searchData={searchUser}/>
 
             <CustomTab isAdmin={isAdmin} value={value} valueChange={changeValue} paginationValue={paginationValue} tabLabel={UserTabLabel} paginationOption={PaginationOption}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
                 <UserTabPanel value={value} isAdmin={isAdmin} userData={UserData}/>
             </TableContainer>
-            <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={10}/>
+            <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={count}/>
         </Box>
     );
 }

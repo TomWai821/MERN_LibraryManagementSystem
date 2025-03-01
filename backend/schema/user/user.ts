@@ -88,11 +88,31 @@ export const FindUser = async (data: Record<string, any>) =>
         }
     }
 }
-export const FindUserWithData = async (data: Record<string, any>) =>
+
+export const FindUserWithData = async (tableName:string, data: Record<string, any>, page: string, amount: string, userId: string) =>
 {
     try
     {
-        return await User.find(data);
+        const pageAsNumber = parseInt(page);
+        const amountAsNumber = parseInt(amount);
+        const pipeline: Record<string,any>[] = [];
+
+        data._id = { $ne: userId };
+        
+        switch(tableName)
+        {
+            case "BannedUser":
+                return await User.find(data).limit(pageAsNumber).skip(amountAsNumber);
+
+            case "DeleteUser":
+                return await User.find(data).limit(pageAsNumber).skip(amountAsNumber);
+
+            case "AllUser":
+                return await User.find(data).limit(pageAsNumber).skip(amountAsNumber);
+            
+            default:
+                return await User.find(data);
+        }
     }
     catch (error) 
     {

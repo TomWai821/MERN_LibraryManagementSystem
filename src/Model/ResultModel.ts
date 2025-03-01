@@ -15,13 +15,12 @@ interface RegisterDataInterface
 interface GetResultInterface
 {
     success:boolean;
-    foundUser: UserDataInterface;
+    foundUser: UserResultDataInterface | UserResultDataInterface[];
 }
 
-interface GetUserResultInterface
+interface UserResultDataInterface extends UserDataInterface
 {
-    success:boolean;
-    foundUser: UserDataInterface[];
+    _id:string;
 }
 
-export type {ResultInterface, GetResultInterface, GetUserResultInterface}
+export type {ResultInterface, GetResultInterface, UserResultDataInterface}

@@ -8,12 +8,13 @@ import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
 import { Button, MenuItem, TextField } from '@mui/material';
 import { EditUserInputField } from '../../../Maps/TextFieldsMaps';
 import EditUserConfirmModal from '../Confirmation/User/EditUserConfirmModal';
+import { UserResultDataInterface } from '../../../Model/ResultModel';
 
 const EditUserModal:FC<EditModalInterface> = ({editData, compareData}) => 
 {
-    const {username, email, role, status, gender} = editData as UserDataInterface;
+    const {_id, username, email, role, status, gender} = editData as UserResultDataInterface;
 
-    const [user, setUser] = useState({username: username, email:email, role:role, status:status, gender:gender});
+    const [user, setUser] = useState<UserResultDataInterface>({_id: _id, username: username, email:email, role:role, status:status, gender:gender});
 
     const {handleOpen} = useModal();
 
@@ -24,7 +25,8 @@ const EditUserModal:FC<EditModalInterface> = ({editData, compareData}) =>
 
     const openConfirmModal = () => 
     {
-        handleOpen(<EditUserConfirmModal editData={user} compareData={compareData}/>);
+        console.log(user._id)
+        handleOpen(<EditUserConfirmModal editData={user} compareData={compareData} />);
     }
     
     return(

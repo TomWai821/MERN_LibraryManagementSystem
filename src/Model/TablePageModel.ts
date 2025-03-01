@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { UserResultDataInterface } from "./ResultModel";
 
 interface IsAdminInterface
 {
@@ -16,6 +17,7 @@ interface FilterInterface extends IsAdminInterface
     value:number;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     searchData: UserDataInterface | BookSearchInterface;
+    Search: () => void;
 }
 
 interface BookSearchInterface
@@ -42,10 +44,15 @@ interface UserDataInterface
     gender:string;
 }
 
-interface FindUserInterface extends UserDataInterface
+interface FindUserDateInterface extends UserDataInterface
 {
     startDate:Date;
     dueDate:Date;
+}
+
+interface FindUserInterface extends FindUserDateInterface
+{
+    tableName?:string;
 }
 
 interface CreateUserInterface extends UserDataInterface
@@ -66,8 +73,8 @@ interface CreateModalInterface
 
 interface EditModalInterface
 {
-    editData: UserDataInterface | BookDataInterface;
-    compareData: UserDataInterface | BookDataInterface;
+    editData: UserResultDataInterface | BookDataInterface;
+    compareData: UserResultDataInterface | BookDataInterface;
 }
 
 interface TableInterface extends IsAdminInterface
@@ -84,7 +91,7 @@ interface BookRecordTableInterface extends TableInterface
 interface UserDataTableInterface extends IsAdminInterface
 {
     value: number;
-    userData: UserDataInterface[];
+    userData: UserResultDataInterface[];
 }
 
 interface TabInterface extends IsAdminInterface

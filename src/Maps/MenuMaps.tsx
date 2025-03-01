@@ -1,4 +1,4 @@
-import { ChangePage, GetUsername } from "../Controller/OtherController";
+import { ChangePage, GetData } from "../Controller/OtherController";
 
 import { handleLogout } from "../Controller/UserController/UserOtherController";
 
@@ -36,7 +36,7 @@ const settings =
     { label: 'View Profile', clickEvent: () => ChangePage("/profile"), icon: <AccountCircleIcon /> },
     { label: 'Issue Record', clickEvent: () => ChangePage(""), icon: <AssignmentIcon /> },
     { label: 'Favourite', clickEvent: () => ChangePage(""), icon: <StarIcon/>},
-    { label: 'Logout', clickEvent: () => handleLogout(GetUsername()), icon: <ExitToAppIcon /> }
+    { label: 'Logout', clickEvent: () => handleLogout(GetData("username") as string | null), icon: <ExitToAppIcon /> }
 ];
 
 export {externalUserPage, userPage, adminPage, settings}

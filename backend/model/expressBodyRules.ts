@@ -22,3 +22,12 @@ export const UserChangeDataRules =
     body("oldPassword").optional().isString(),
     body("newPassword").optional().isString()
 ]
+
+export const UserModifyDataRules = 
+[
+    body("email").isEmail().withMessage("Invalid Email Address"), 
+    body("username").notEmpty().withMessage("Username is required").isLength({min: 3}).withMessage("Password require at least 3 characters"),
+    body("gender").notEmpty().withMessage("Gender is required"),
+    body("role").notEmpty().withMessage("Role is required"),
+    body("status").notEmpty().withMessage("Status is required"),
+]

@@ -35,6 +35,8 @@ const UserTabLabel =
     {label: 'Delete User'}
 ]
 
+const UserDataTableName = ["AllUser", "BannedUser", "DeleteUser"];
+
 const PaginationOption = [10, 20, 50, 100];
 
 const EmptyOption = [""];
@@ -45,4 +47,10 @@ const StatusOption = ["Normal", "Banned", "Delete"];
 
 const GenderOption = ["Male", "Female"];
 
-export {BookRecordTableHeader, UserTableHeader, BookTabLabel, UserTabLabel, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption}
+const RoleFilterOption = [...RoleOption, ...EmptyOption];
+
+const StatusFilterOption = [...StatusOption, ...EmptyOption];
+
+const GenderFilterOption = [...GenderOption, ...EmptyOption];
+
+export {BookRecordTableHeader, UserTableHeader, BookTabLabel, UserTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption}

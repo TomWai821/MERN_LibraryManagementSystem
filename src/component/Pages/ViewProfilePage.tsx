@@ -56,7 +56,7 @@ const ViewProfilePage = () =>
         setCredentials
         (
             {
-                username: foundUser.username || "", 
+                username: foundUser.username|| "", 
                 gender: foundUser.gender || "",
                 role: foundUser.role || "",
                 email: foundUser.email || "",

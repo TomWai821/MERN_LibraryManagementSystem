@@ -16,25 +16,35 @@ const IsLoggedIn = () =>
     return false;
 }
 
-const GetRole = (): string | undefined => 
+const GetData = (data:string): string | undefined | null=> 
 {
-    return GetUserCookie("role") || sessionStorage.getItem("role") || undefined;
+    switch(data)
+    {
+        case "authToken":
+            return GetUserCookie("authToken") || sessionStorage.getItem("authToken") || undefined;
+        
+        case "role":
+            return GetUserCookie("role") || sessionStorage.getItem("role") || undefined;
+
+        case "username":
+            return GetUserCookie("username") || sessionStorage.getItem("username") || undefined;
+    }   
 }
+
 
 const IsAdmin = (role: string | undefined): boolean => 
 {
     return role === "Admin";
 }
 
-const GetUsername = (): string | null =>
-{
-    return GetUserCookie("username") || sessionStorage.getItem("username");
-};
-
-const GetCurrentDate = (): string => 
+const GetCurrentDate = (toString:boolean): Date | string => 
 { 
-    const date = new Date(); 
-    return date.toISOString().split('T')[0]; 
+    const date = new Date();
+    if(toString)
+    {
+        return date.toISOString().split('T')[0] as string; 
+    }
+    return date as Date;
 }
 
-export {ChangePage, IsLoggedIn, GetRole, IsAdmin, GetUsername, GetCurrentDate}
+export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate}

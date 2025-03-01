@@ -24,4 +24,13 @@ interface ChangeDataInterface extends IDInterface
     newPassword: string | null;
 }
 
-export type {LoginInterface, CreateUserInterface, ChangeDataInterface}
+interface ModifyUserDataInterface
+{
+    username: string;
+    email: string;
+    gender: string;
+    role: string;
+    status:string;
+}
+
+export type {LoginInterface, CreateUserInterface, ChangeDataInterface, ModifyUserDataInterface}

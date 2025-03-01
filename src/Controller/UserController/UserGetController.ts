@@ -8,7 +8,11 @@ const BuildQuery = (params:Record<string, number | string | Date | undefined>) =
     let queryParams = new URLSearchParams();
     for(const key in params)
     {
-        if(params[key] instanceof Date)
+        if (params[key] === undefined || params[key] === null || params[key] === "" || key.trim() === "") 
+        {
+            continue; 
+        }
+        else if(params[key] instanceof Date)
         {
             queryParams.append(key, (params[key] as Date).toISOString());
         }
@@ -21,7 +25,7 @@ const BuildQuery = (params:Record<string, number | string | Date | undefined>) =
     return queryParams.toString();
 }
 
-const FetchUserData = async(authToken?:string, page?:number, amount?: number, username?: string, email?: string , role?: string , status?: string , gender?: string, startDate?:Date, dueDate?: Date) => 
+const FetchUserData = async(tableName?: string, authToken?:string, page?:number, amount?: number, username?: string, email?: string , role?: string , status?: string, gender?: string, startDate?:Date, dueDate?: Date) => 
 {
     try
     {
@@ -35,10 +39,10 @@ const FetchUserData = async(authToken?:string, page?:number, amount?: number, us
             headers['authToken'] = authToken;
         }
 
-        let queryParams = BuildQuery({page, amount, username, email, role, status, gender, startDate, dueDate});
+        let queryParams = BuildQuery({username, email, role, status, gender, startDate, dueDate, page, amount});
 
         const queryString = queryParams.toString();
-        const url = `${localhost}/userData${queryString ? `?${queryString}` : ''}`
+        const url = `${localhost}/userData/tableName=${queryString ? `${tableName}?${queryString}` : `${tableName}`}`;
 
         const response = await fetch(url,
             {

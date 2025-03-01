@@ -14,7 +14,7 @@ import { AlertContext } from '../../Context/AlertContext';
 
 const RegisterPage = () => 
 {
-    const [Credentials, setCredentials] = useState({email: "", username: "", password: "", birthDay: GetCurrentDate(), gender: "Male"});
+    const [Credentials, setCredentials] = useState({email: "", username: "", password: "", birthDay: GetCurrentDate(true) as string, gender: "Male"});
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errors, setErrors] = useState({email: "", username: "", password: ""});
     const [helperTexts, setHelperText] = useState({email: "", username: "", password: ""});

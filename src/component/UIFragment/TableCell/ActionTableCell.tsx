@@ -15,6 +15,7 @@ import EditUserModal from "../../Modal/User/EditUserModal";
 import DeleteUserConfirmModal from "../../Modal/Confirmation/User/DeleteUserConfirmModal";
 import BanUserModal from "../../Modal/User/BanUserModal";
 import { DeleteButton } from "../../../Maps/FormatSyntaxMaps";
+import { UserResultDataInterface } from "../../../Model/ResultModel";
 
 const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information, isAdmin }) => 
 {
@@ -30,7 +31,7 @@ const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information,
                 handleOpen(<EditBookModal editData={bookData} compareData={bookData}  />);
                 break;
             case "User":
-                const userData = Information as UserDataInterface;
+                const userData = Information as UserResultDataInterface;
                 handleOpen(<EditUserModal editData={userData} compareData={userData}/>);
                 break;
         }
@@ -63,7 +64,7 @@ const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information,
                     </IconButton>
                 </Tooltip>
 
-                <Tooltip title={"Delete"} arrow>
+                <Tooltip title={"Delete (Actual)"} arrow>
                     <IconButton sx={{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } }} onClick={openDeleteModal}>
                         <DeleteIcon />
                     </IconButton>

@@ -5,11 +5,15 @@ import { useModal } from "../../../../Context/ModalContext";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 import EditUserModal from "../../User/EditUserModal";
+import { useUserContext } from "../../../../Context/userContext";
+import { UserResultDataInterface } from "../../../../Model/ResultModel";
 
 const EditUserConfirmModal:FC<EditModalInterface> = ({editData, compareData}) => 
 {
-    const [differences, setDifferences] = useState<JSX.Element[]>([]);
-    const {handleOpen} = useModal();
+    const [differences, setDifferences] = useState<string[]>([]);
+
+    const {handleOpen, handleClose} = useModal();
+    const {editUserData} = useUserContext();
 
     useEffect(() => 
     {
@@ -19,36 +23,34 @@ const EditUserConfirmModal:FC<EditModalInterface> = ({editData, compareData}) =>
 
     const generateChangeTypography = (editData: UserDataInterface, compareData: UserDataInterface) => 
     {
-        const differences = [];
+        const newDifferences: string[] = [];
+
         for (const key in editData) 
         {
             if (editData[key as keyof UserDataInterface] !== compareData[key as keyof UserDataInterface]) 
             {
-                differences.push(
-                    <Typography key={key}>
-                            {`- ${key}: ${compareData[key as keyof UserDataInterface]} -> ${editData[key as keyof UserDataInterface]}`}
-                    </Typography>
-                );
+                const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
+                newDifferences.push(`${capitalizedKey}: ${compareData[key as keyof UserDataInterface]} -> ${editData[key as keyof UserDataInterface]}`);
             }
         }
-    
-        if(differences.length == 0)
-        {
-            differences.push(<Typography>- Nothing Change</Typography>);
-        }
-    
-        setDifferences(differences);
-     }
+
+        setDifferences(newDifferences);
+    }
 
     const returnEditUserModal = () =>
     {
         setDifferences([]);
-        handleOpen(<EditUserModal editData={editData} compareData={compareData}/>);
+        handleOpen(<EditUserModal editData={editData} compareData={compareData} />);
     }
 
     const onClick = () => 
     {
-
+        handleClose();
+        if(differences.length > 0)
+        {
+            const CompareData = compareData as UserResultDataInterface;
+            editUserData(CompareData._id, editData as UserDataInterface);
+        }
     }
 
     return(
@@ -56,13 +58,20 @@ const EditUserConfirmModal:FC<EditModalInterface> = ({editData, compareData}) =>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>Do you want to edit this book record?</Typography>
                 <Typography sx={ModalRemarkSyntax}>Changes:</Typography>
-                {differences}
+                {
+                    differences.length > 0 ? differences.map((difference, index) => 
+                        (
+                            <Typography key={index}>{difference}</Typography>
+                        )
+                    )
+                    :<Typography>- "Nothing Changed"</Typography>
+                }
+
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
             </Box>
             <Button variant='contained' onClick={onClick}>Yes</Button>
         </ModalTemplate>
     );
-        
 }
 
-export default EditUserConfirmModal
+export default EditUserConfirmModal;

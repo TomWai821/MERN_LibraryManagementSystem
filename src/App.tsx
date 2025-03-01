@@ -8,9 +8,9 @@ import NavNar from './component/NavBar/NavBar';
 import RoutesUtils from './component/Utils/RoutesUtils';
 import { Box } from '@mui/material';
 import { useModal } from './Context/ModalContext';
-import { GetRole, IsAdmin, IsLoggedIn } from './Controller/OtherController';
+import { GetData, IsAdmin, IsLoggedIn } from './Controller/OtherController';
 
-const role:string | undefined = GetRole();
+const role = GetData("role") as string | undefined;
 const isAdmin:boolean = IsAdmin(role);
 const isLoggedIn:boolean = IsLoggedIn();
 

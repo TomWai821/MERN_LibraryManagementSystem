@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
-import { CreateUserInterface, LoginInterface, ChangeDataInterface } from '../model/requestInterface';
+import { CreateUserInterface, LoginInterface, ChangeDataInterface, ModifyUserDataInterface } from '../model/requestInterface';
 import { jwtSign, bcryptHash, comparePassword } from './hashing'
 import { AuthRequest } from './middleware';
 import { UserInterface } from '../model/userSchemaInterface';
 import { CreateUser, FindUser, FindUserByID, FindUserByIDAndUpdate, FindUserWithData, GetUser, GetUserCount } from '../schema/user/user';
+import mongoose, { ObjectId } from 'mongoose';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {
@@ -88,47 +89,43 @@ export const UserLogin = async (req: Request, res: Response) =>
     {
         res.status(500).json({ success, error: 'Internal Server Error!' });
     }
-  };
+};
 
 export const GetUserData = async(req: AuthRequest, res:Response) => 
 {
     let success = false;
     const userId = req.user?._id;
-    const {username, email, status, role, gender} = req.body;
-    const {page, limit} = req.query;
+    const tableName = req.params.tableName;
+    const {username, email, status, role, gender, page, amount} = req.query;
     
     try
     {
         let foundUser : UserInterface | UserInterface[] | null;
-        const hasBodyParameter = username || email || status || role || gender;
+        const hasBodyParameter = username || email || status || role || gender|| page || amount;
 
-        if(hasBodyParameter)
+        if(userId)
         {
-            if(userId)
+            if(!hasBodyParameter)
             {
-                return res.status(400).json({success, error: "authToken is invalid while input another value in json"});
+                foundUser = await FindUserByID(userId) as UserInterface;
+    
+                if(!foundUser)
+                {
+                    return res.status(401).json({success, error: "Invalid auth Token!"});
+                }
             }
 
             const query = 
             {
                 // options i = Case insensitivity(Just like sql query)
-                ...(username && {"username": {$regex: username, $options: "i"}}),
+                ...(username && {"username": {$regex: username}}),
                 ...(email && {"email": {$regex: email, $options: "i"}}),
                 ...(status && {status}),
                 ...(role && {role}),
                 ...(gender && {gender}),
             };
 
-            foundUser = await FindUserWithData(query);
-        }
-        else if(userId)
-        {
-            foundUser = await FindUserByID(userId) as UserInterface;
-
-            if(!foundUser)
-            {
-                return res.status(401).json({success, error: "Invalid auth Token!"});
-            }
+            foundUser = await FindUserWithData(tableName, query, amount as string, page as string, userId.toString());
         }
         else
         {
@@ -184,10 +181,89 @@ export const ChangeUserData = async(req: AuthRequest, res:Response) =>
 
         success = true;
         res.json({success, message: "Change data successfully!"});
-
     }
     catch(error)
     {
         res.status(500).json({ error: "Internal Server Error!"});
     }
 }
+
+export const ModifyUserData = async (req: AuthRequest, res: Response) => 
+{
+    const { username, email, gender, role, status }: ModifyUserDataInterface = req.body;
+    const userId = req.params.id as unknown as ObjectId;
+    const adminID = req.user?._id;
+    let success = false;
+
+    if (!adminID) 
+    {
+        return res.status(401).json({ error: "Invalid auth Token!" });
+    }
+
+    try 
+    {
+        const foundUser = await FindUserByID(userId);
+        
+        if (!foundUser) 
+        {
+            return res.status(401).json({ error: "Cannot found this account!" });
+        }
+
+        const updateData: Record<string, any> = {};
+        if (username && username !== foundUser.username) 
+        {
+            const existingUserByUsername = await FindUser({ username });
+
+            if (existingUserByUsername) 
+            {
+                return res.status(400).json({ error: "Username already in use" });
+            }
+            updateData.username = username;
+        }
+
+        if (email && email !== foundUser.email) 
+        {
+            const existingUserByEmail = await FindUser({ email });
+
+            if (existingUserByEmail) 
+            {
+                return res.status(400).json({ error: "Email already in use" });
+            }
+            updateData.email = email;
+        }
+
+        if (gender && gender !== foundUser.gender) 
+        {
+            updateData.gender = gender;
+        }
+
+        if (role && role !== foundUser.role) 
+        {
+            updateData.role = role;
+        }
+
+        if (status && status !== foundUser.status) 
+        {
+            updateData.status = status;
+        }
+
+        if (Object.keys(updateData).length === 0) 
+        {
+            return res.status(400).json({ error: "No changes detected." });
+        }
+
+        const modifyData = await FindUserByIDAndUpdate(userId, updateData);
+
+        if (!modifyData) 
+        {
+            return res.status(401).json({ error: "Failed to update data!" });
+        }
+
+        success = true;
+        res.json({ success, message: "Data updated successfully!" });
+    } 
+    catch (error) 
+    {
+        res.status(500).json({ error: "Internal Server Error!" });
+    }
+};

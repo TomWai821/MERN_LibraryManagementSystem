@@ -1,5 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { FindUserInterface, UserDataInterface } from "./TablePageModel";
+import { UserResultDataInterface } from "./ResultModel";
 
 interface ChildProps
 {
@@ -38,13 +39,13 @@ interface ModalTemplateProps extends ChildProps
 
 interface UserContextProps
 {
-    users: UserDataInterface[];
-    filter: FindUserInterface | undefined;
-    setFilter: Dispatch<SetStateAction<FindUserInterface | undefined>>;
+    users: UserResultDataInterface[];
     page: number;
     setPage: Dispatch<SetStateAction<number>>;
     amount: number;
     setAmount: Dispatch<SetStateAction<number>>;
+    fetchUser: (authToken:string, tableName:string, UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
+    editUserData: (_id:string ,data: UserDataInterface) => void;
 }
 
 interface TabPanelProps extends ChildProps

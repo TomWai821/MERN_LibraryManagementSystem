@@ -10,7 +10,6 @@ import DeleteTypography from '../../../UIFragment/Typography/DeleteTypography';
 const DeleteUserConfirmModal:FC<UserDataInterface> = ({...userData}) => 
 {
     const {username, email, role, gender} = userData;
-    const modalContext = useModal();
     
     return(
         <ModalTemplate title={"Delete User Record"} cancelButtonName={"No"}>

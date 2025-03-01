@@ -14,7 +14,7 @@ import OptionFields from "./OptionField/OptionFields";
 
 const UserFilter:FC<FilterInterface> = (filterData) => 
 {
-    const {value, isAdmin, onChange, searchData} = filterData;
+    const {value, isAdmin, onChange, searchData, Search} = filterData;
     const userData = searchData as UserDataInterface;
 
     const [optionVisiable, setOptionVisiable] = useState(false);
@@ -36,7 +36,7 @@ const UserFilter:FC<FilterInterface> = (filterData) =>
                 {value === 0 ? 
                     <TextField label={"Username"} value={userData.username} name="username" size="small" onChange={onChange} sx={{width: '75%'}}/>:
                     UserOtherSearchField.map((field, index) => (
-                        <TextField label={field.label} key={index} select={field.select} sx={{...field.syntax}} size="small">
+                        <TextField label={field.label} key={index} name={field.name} select={field.select} onChange={onChange} sx={{...field.syntax}} size="small">
                             {
                                 field.select && field.options?.map((option, index) => 
                                     (
@@ -55,7 +55,7 @@ const UserFilter:FC<FilterInterface> = (filterData) =>
                         </IconButton>
                     )
                 }
-                <Button variant='contained' sx={{marginLeft: '10px'}}>Search</Button>
+                <Button variant='contained' sx={{marginLeft: '10px'}} onClick={Search}>Search</Button>
                 {(isAdmin && value === 0) &&
                     (
                         <Button variant='contained' sx={{marginLeft: '10px'}} onClick={openCreateUserModal}>Create User</Button>

@@ -54,7 +54,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <Typography sx={{fontSize: '24px'}}>{SetTitle}</Typography>
 
-            <BookFilter isAdmin={isAdmin} value={value} onChange={onChange} searchData={searchBook}/>
+            <BookFilter isAdmin={isAdmin} value={value} onChange={onChange} searchData={searchBook} Search={() => {}}/>
 
             <CustomTab isAdmin={isAdmin} value={value} paginationValue={paginationValue} valueChange={changeValue} tabLabel={BookTabLabel} paginationOption={PaginationOption}/>
 

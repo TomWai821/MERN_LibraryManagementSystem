@@ -1,4 +1,4 @@
-import { GenderOption, RoleOption, StatusOption } from "./TableMaps";
+import { GenderFilterOption, GenderOption, RoleFilterOption, RoleOption, StatusFilterOption, StatusOption } from "./TableMaps";
 
 const RegisterField = 
 [
@@ -44,17 +44,18 @@ const BookSearchField =
     {name: "pages", label: "Pages", type: "number", slotProps: {htmlInput:{min: 0}}}
 ]
 
+// For user filter
 const UserSearchField = 
 [
     {name: "email", label: "Email", type: "email"},
-    {name: "gender", label: "Gender", type: "text", select: true, options: GenderOption}
+    {name: "gender", label: "Gender", type: "text", select: true, options: GenderFilterOption}
 ]
 
 const AllUserSearchField = 
 [
     ...UserSearchField,
-    {name: "role", label: "Role", type: "text", select: true, options: RoleOption},
-    {name: "status", label: "Status", type: "text", select: true, options: StatusOption}
+    {name: "role", label: "Role", type: "text", select: true, options: RoleFilterOption},
+    {name: "status", label: "Status", type: "text", select: true, options: StatusFilterOption}
 ]
 
 const OtherUserSearchField = 
@@ -64,28 +65,36 @@ const OtherUserSearchField =
     {name: "dueDate", label: "Due Date", type: "date"},
 ]
 
-const CreateBookInputField = 
+// For user modal
+const UserFieldForModal = 
 [
-    {name: "bookname", label: "Book Name", type:"text", select:false, slotProps: {}},
-    {name: "language", label: "Language", type:"text", select:false, slotProps: {}},
-    ...BookSearchField,
-    {name: "amount", label: "Book Amount", type:"number", slotProps: {htmlInput:{min: 1}}}
+    {name: "email", label: "Email", type: "email"},
+    {name: "gender", label: "Gender", type: "text", select: true, options: GenderOption}
 ]
 
 const CreateUserInputField = 
 [
     {name: "username", label: "Username", type:"text", select:false, slotProps: {}, options: []},
     {name: "password", label: "Password", type:"password"},
-    ...UserSearchField,
+    ...UserFieldForModal,
     {name: "role", label: "Role", type: "text", select: true, options: RoleOption}
 ]
 
 const EditUserInputField =
 [
     {name: "username", label: "Username", type:"text", select:false, slotProps: {}, options: []},
-    ...UserSearchField,
+    ...UserFieldForModal,
     {name: "role", label: "Role", type: "text", select: true, options: RoleOption},
     {name: "status", label: "Status", type: "text", select: true, options: StatusOption}
+]
+
+// For book filter
+const CreateBookInputField = 
+[
+    {name: "bookname", label: "Book Name", type:"text", select:false, slotProps: {}},
+    {name: "language", label: "Language", type:"text", select:false, slotProps: {}},
+    ...BookSearchField,
+    {name: "amount", label: "Book Amount", type:"number", slotProps: {htmlInput:{min: 1}}}
 ]
 
 export {RegisterField, LoginField, ViewProfileField, BookMainSearchField, UserOtherSearchField, BookSearchField, AllUserSearchField, OtherUserSearchField, CreateBookInputField, CreateUserInputField, EditUserInputField}

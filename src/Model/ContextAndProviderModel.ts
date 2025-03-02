@@ -46,6 +46,7 @@ interface UserContextProps
     setAmount: Dispatch<SetStateAction<number>>;
     fetchUser: (authToken:string, tableName:string, UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
     editUserData: (_id:string ,data: UserDataInterface) => void;
+    changeUserstatus: (id:string, status:string, duration:number, description:string) => void;
 }
 
 interface TabPanelProps extends ChildProps

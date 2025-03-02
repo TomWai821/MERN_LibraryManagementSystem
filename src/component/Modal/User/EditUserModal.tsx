@@ -20,12 +20,12 @@ const EditUserModal:FC<EditModalInterface> = ({editData, compareData}) =>
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
-        setUser({...user, [event.target.name] : event.target.value})
+        const {name, value} = event.target;
+        setUser({...user, [name] : value})
     }
 
     const openConfirmModal = () => 
     {
-        console.log(user._id)
         handleOpen(<EditUserConfirmModal editData={user} compareData={compareData} />);
     }
     

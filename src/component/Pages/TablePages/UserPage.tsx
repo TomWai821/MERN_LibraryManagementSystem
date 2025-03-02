@@ -20,13 +20,13 @@ const UserPage:FC<PagesInterface> = (loginData) =>
     const [searchUserData, setSearchUserData] = useState(
         { 
             user: { username: "", email:"", role:"", status:"", gender:"" },
-            date: { startDate: GetCurrentDate(false) as Date, dueDate: GetCurrentDate(false) as Date } 
+            date: { startDate: GetCurrentDate("Date") as Date, dueDate: GetCurrentDate("Date") as Date } 
         }
     );
 
     // Reset data while tab is change
     const defaultSearchUser = {username: "", email:"", role:"", status:"", gender:""};
-    const defaultsearchUserDate = {startDate: GetCurrentDate(false) as Date, dueDate: GetCurrentDate(false) as Date};
+    const defaultsearchUserDate = {startDate: GetCurrentDate("Date") as Date, dueDate: GetCurrentDate("Date") as Date};
 
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
@@ -43,15 +43,13 @@ const UserPage:FC<PagesInterface> = (loginData) =>
         
             setPage(count);
             setAmount(paginationValue);
-        },
-        [count, paginationValue]
+        },[count, paginationValue]
     );
 
     const SearchUser = useCallback(() => 
         {
             fetchUser(GetData("authToken") as string, UserDataTableName[tabValue], searchUserData.user, searchUserData.date);
-        },
-        [searchUserData.user, searchUserData.date]
+        },[searchUserData.user, searchUserData.date]
     )
 
     const changeValue = useCallback((type:string, newValue: number) =>
@@ -69,8 +67,7 @@ const UserPage:FC<PagesInterface> = (loginData) =>
                 default:
                     break;
             }
-        },
-        []
+        },[]
     )
 
     useEffect(() => 
@@ -79,16 +76,14 @@ const UserPage:FC<PagesInterface> = (loginData) =>
             { 
                 setTabValue(1); 
             }
-        },
-        [isAdmin]
+        },[isAdmin]
     )
 
     useEffect(() => 
         {
             // Reset while value change
             setSearchUserData({user:defaultSearchUser, date:defaultsearchUserDate});
-        },
-        [tabValue]
+        },[tabValue]
     )
     
     return(

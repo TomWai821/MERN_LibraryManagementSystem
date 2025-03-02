@@ -37,14 +37,30 @@ const IsAdmin = (role: string | undefined): boolean =>
     return role === "Admin";
 }
 
-const GetCurrentDate = (toString:boolean): Date | string => 
+const GetCurrentDate = (type:string): Date | string => 
 { 
     const date = new Date();
-    if(toString)
+    switch(type)
     {
-        return date.toISOString().split('T')[0] as string; 
+        case "String":
+            return date.toISOString().split('T')[0] as string; 
+
+        case "Date":
+            return date as Date;
+        
+        default:
+            return `Invalid type: ${type}`;
     }
-    return date as Date;
+
 }
 
-export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate}
+const CalculateDueDate = (duration:number): Date => 
+{
+    const currentDate = new Date();
+    let dueDate = new Date(currentDate);
+    dueDate.setDate(currentDate.getDate() + duration);
+
+    return dueDate;
+}
+
+export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate, CalculateDueDate}

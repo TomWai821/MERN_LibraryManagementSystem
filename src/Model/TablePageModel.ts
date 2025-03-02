@@ -112,5 +112,12 @@ interface OptionFieldsInterface
     searchData: any;
 }
 
+interface BanModalInterface
+{
+    _id:string;
+    username:string;
+    durationOption?:number;
+    description?:string;
+}
 
-export type {IsAdminInterface, PagesInterface, BookSearchInterface, BookDataInterface, UserDataInterface, FindUserInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, BookRecordTableInterface, UserDataTableInterface, TabInterface, OptionFieldsInterface}
+export type {IsAdminInterface, PagesInterface, BookSearchInterface, BookDataInterface, UserDataInterface, FindUserInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, BookRecordTableInterface, UserDataTableInterface, TabInterface, OptionFieldsInterface, BanModalInterface}

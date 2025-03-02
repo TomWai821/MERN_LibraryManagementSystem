@@ -52,7 +52,7 @@ const ActionTableCell: FC<ActionTableCellInterface> = ({ TableName, Information,
 
     const openBannedModal = () => 
     {
-        handleOpen(<BanUserModal {...Information as UserDataInterface}/>);
+        handleOpen(<BanUserModal {...Information as UserResultDataInterface}/>);
     }
 
     return (

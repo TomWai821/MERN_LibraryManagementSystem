@@ -169,7 +169,7 @@ export const FindUserByIDAndUpdate = async (userID: ObjectId, data: Record<strin
     }
 }
 
-export const FindUserByIDAndDelete = async (userID: string) =>
+export const FindUserByIDAndDelete = async (userID: ObjectId) =>
 {
     try 
     {

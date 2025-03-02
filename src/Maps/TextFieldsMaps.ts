@@ -84,8 +84,7 @@ const EditUserInputField =
 [
     {name: "username", label: "Username", type:"text", select:false, slotProps: {}, options: []},
     ...UserFieldForModal,
-    {name: "role", label: "Role", type: "text", select: true, options: RoleOption},
-    {name: "status", label: "Status", type: "text", select: true, options: StatusOption}
+    {name: "role", label: "Role", type: "text", select: true, options: RoleOption}
 ]
 
 // For book filter
@@ -97,4 +96,13 @@ const CreateBookInputField =
     {name: "amount", label: "Book Amount", type:"number", slotProps: {htmlInput:{min: 1}}}
 ]
 
-export {RegisterField, LoginField, ViewProfileField, BookMainSearchField, UserOtherSearchField, BookSearchField, AllUserSearchField, OtherUserSearchField, CreateBookInputField, CreateUserInputField, EditUserInputField}
+// For banList
+const dateOption = 
+[
+    {label:'30 days', value: 30}, 
+    {label:'60 days', value: 60}, 
+    {label:'365 days', value: 365}, 
+    {label:'Forever', value: Infinity}
+];
+
+export {RegisterField, LoginField, ViewProfileField, BookMainSearchField, UserOtherSearchField, BookSearchField, AllUserSearchField, OtherUserSearchField, CreateBookInputField, CreateUserInputField, EditUserInputField, dateOption}

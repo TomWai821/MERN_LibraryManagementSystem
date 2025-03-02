@@ -1,6 +1,3 @@
-import mongoose from "mongoose";
-import { IDInterface } from "./userSchemaInterface";
-
 interface LoginInterface
 {
     email:string;
@@ -16,21 +13,16 @@ interface CreateUserInterface extends LoginInterface
     status: string;
 }
 
-interface ChangeDataInterface extends IDInterface
-{
-    oldUsername: string | null;
-    newUsername: string | null;
-    oldPassword: string | null;
-    newPassword: string | null;
-}
-
 interface ModifyUserDataInterface
 {
     username: string;
     email: string;
     gender: string;
     role: string;
-    status:string;
+    status: string;
+    description: string;
+    startDate: Date;
+    dueDate: Date;
 }
 
-export type {LoginInterface, CreateUserInterface, ChangeDataInterface, ModifyUserDataInterface}
+export type {LoginInterface, CreateUserInterface, ModifyUserDataInterface}

@@ -14,7 +14,7 @@ import { AlertContext } from '../../Context/AlertContext';
 
 const RegisterPage = () => 
 {
-    const [Credentials, setCredentials] = useState({email: "", username: "", password: "", birthDay: GetCurrentDate(true) as string, gender: "Male"});
+    const [Credentials, setCredentials] = useState({email: "", username: "", password: "", birthDay: GetCurrentDate("String") as string, gender: "Male"});
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errors, setErrors] = useState({email: "", username: "", password: ""});
     const [helperTexts, setHelperText] = useState({email: "", username: "", password: ""});
@@ -64,7 +64,7 @@ const RegisterPage = () =>
                                         type={field.type} 
                                         value={Credentials[field.name as keyof RegisterModel]}
                                         helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
-                                        error={isSubmitted && errors[field.name as keyof typeof errors] != ""} 
+                                        error={isSubmitted && errors[field.name as keyof typeof errors] !== ""} 
                                         onChange={onChange} 
                                         size="small" 
                                         required/>

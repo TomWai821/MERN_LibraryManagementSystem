@@ -1,33 +1,46 @@
 import { Box, Button, MenuItem, TextField, Typography } from "@mui/material"
 import ModalTemplate from "../../Templates/ModalTemplate"
 import { DeleteButton, ModalBodySyntax } from "../../../Maps/FormatSyntaxMaps"
-import { FC, useState } from "react";
-import { UserDataInterface } from "../../../Model/TablePageModel";
+import { ChangeEvent, FC, useState } from "react";
+import { BanModalInterface } from "../../../Model/TablePageModel";
+import { useModal } from "../../../Context/ModalContext";
+import BanUserConfirmModal from "../Confirmation/User/BanUserConfirmModal";
+import { dateOption } from "../../../Maps/TextFieldsMaps";
 
-const BanUserModal:FC<UserDataInterface> = ({...userData}) => 
+const BanUserModal:FC<BanModalInterface> = ({...userData}) => 
 {
-    const {username, email, role, status, gender} = userData as UserDataInterface;
-    const [banData, setBanData] = useState({duration: "30 days", description: ""});
+    const { _id, username, durationOption, description} = userData as BanModalInterface;
+    const [banData, setBanData] = useState({durationOption: durationOption, description: description});
+    const {handleOpen} = useModal();
 
-    const dateOption = ['30 days', '60 days', '365 days', 'Forever'];
+    const onChange = (event:ChangeEvent<HTMLInputElement>) => 
+    {
+        const {name, value} = event.target;
+        setBanData({...banData, [name] : value});
+    }
+
+    const onClick = () => 
+    {
+        handleOpen(<BanUserConfirmModal _id={_id} username={username} durationOption={banData.durationOption} description={banData.description}/>)
+    }
 
     return(
         <ModalTemplate title={"Ban User"} cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
-                <Typography>Username:{username}</Typography>
+                <Typography>Username: {username}</Typography>
 
-                <TextField size="small" name={banData.duration} label={"duration"} select>
+                <TextField size="small" name="durationOption" label={"duration"} onChange={onChange} value={banData.durationOption} select>
                     {
                         dateOption.map((option, index) => 
                             (
-                                <MenuItem key={index} value={option}>{option}</MenuItem>
+                                <MenuItem key={index} value={index}>{option.label}</MenuItem>
                             )
                         )
                     }
                 </TextField>
-                <TextField size="small" rows={5} name={banData.description} label={"description"} multiline/>
+                <TextField size="small" rows={5} name="description" onChange={onChange} label={"description"} value={banData.description} multiline/>
             </Box>
-            <Button sx={DeleteButton}>Ban</Button>
+            <Button sx={DeleteButton} onClick={onClick}>Ban</Button>
         </ModalTemplate>
     )
 }

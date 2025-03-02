@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
-import { CreateUserInterface, LoginInterface, ChangeDataInterface, ModifyUserDataInterface } from '../model/requestInterface';
+import { CreateUserInterface, LoginInterface, ModifyUserDataInterface } from '../model/requestInterface';
 import { jwtSign, bcryptHash, comparePassword } from './hashing'
 import { AuthRequest } from './middleware';
 import { UserInterface } from '../model/userSchemaInterface';
-import { CreateUser, FindUser, FindUserByID, FindUserByIDAndUpdate, FindUserWithData, GetUser, GetUserCount } from '../schema/user/user';
-import mongoose, { ObjectId } from 'mongoose';
+import { CreateUser, FindUser, FindUserByID, FindUserByIDAndDelete, FindUserByIDAndUpdate, FindUserWithData, GetUser, GetUserCount } from '../schema/user/user';
+import { ObjectId } from 'mongoose';
+import { CreateBanList, GetBanListCount } from '../schema/user/banList';
+import { CreateDeleteList } from '../schema/user/deleteList';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {
@@ -142,55 +144,9 @@ export const GetUserData = async(req: AuthRequest, res:Response) =>
     }
 }
 
-export const ChangeUserData = async(req: AuthRequest, res:Response) => 
-{
-    const {oldUsername, newUsername, oldPassword, newPassword}:ChangeDataInterface = req.body;
-    let success = false;
-    const userId = req.user?._id;
-
-    if(!userId)
-    {
-        return res.status(401).json({error: "Invalid auth Token!"});
-    }
-
-    try
-    {
-        const foundUser = await FindUserByID(userId);
-        
-        if(!foundUser)
-        {
-            return res.status(401).json({error : "Cannot found this account!"});
-        }
-
-        if(oldPassword && newPassword)
-        {
-            const compare = await comparePassword(oldPassword, foundUser.password);
-
-            if(!compare)
-            {
-                return res.status(401).json({error : "Password Incorrect!"});
-            }
-            const hashPassword = await bcryptHash(newPassword);
-            await FindUserByIDAndUpdate(userId, {password: hashPassword});
-        }
-
-        if(oldUsername && newUsername)
-        {
-            await FindUserByIDAndUpdate(userId, {username: newUsername});
-        }
-
-        success = true;
-        res.json({success, message: "Change data successfully!"});
-    }
-    catch(error)
-    {
-        res.status(500).json({ error: "Internal Server Error!"});
-    }
-}
-
 export const ModifyUserData = async (req: AuthRequest, res: Response) => 
 {
-    const { username, email, gender, role, status }: ModifyUserDataInterface = req.body;
+    const { username, email, gender, role, status, description, startDate, dueDate }: ModifyUserDataInterface = req.body;
     const userId = req.params.id as unknown as ObjectId;
     const adminID = req.user?._id;
     let success = false;
@@ -206,10 +162,11 @@ export const ModifyUserData = async (req: AuthRequest, res: Response) =>
         
         if (!foundUser) 
         {
-            return res.status(401).json({ error: "Cannot found this account!" });
+            return res.status(404).json({ error: "Cannot found this account!" });
         }
 
         const updateData: Record<string, any> = {};
+
         if (username && username !== foundUser.username) 
         {
             const existingUserByUsername = await FindUser({ username });
@@ -242,12 +199,7 @@ export const ModifyUserData = async (req: AuthRequest, res: Response) =>
             updateData.role = role;
         }
 
-        if (status && status !== foundUser.status) 
-        {
-            updateData.status = status;
-        }
-
-        if (Object.keys(updateData).length === 0) 
+        if (Object.keys(updateData).length === 0 && !status) 
         {
             return res.status(400).json({ error: "No changes detected." });
         }
@@ -259,11 +211,79 @@ export const ModifyUserData = async (req: AuthRequest, res: Response) =>
             return res.status(401).json({ error: "Failed to update data!" });
         }
 
+        if(modifyData && (status !== foundUser.status))
+        {
+            const changeStatus = await ChangeStatus(userId, status, description, startDate, dueDate);
+            const modifyStatus = await FindUserByIDAndUpdate(userId, {status});      
+            
+            if(!changeStatus || !modifyStatus)
+            {
+                res.status(200).json("Failed to Change Status!");
+            }
+        }
+
         success = true;
         res.json({ success, message: "Data updated successfully!" });
     } 
     catch (error) 
     {
+        console.log(error);
         res.status(500).json({ error: "Internal Server Error!" });
     }
 };
+
+export const ChangeStatus = async (userId:ObjectId, status:string, description:string, startDate:Date, dueDate:Date) => 
+{
+    
+    switch(status)
+    {
+        case "Banned":
+            const banListCount = await GetBanListCount() + 1;
+            const customBanListID = "BanList-" + banListCount.toString();
+            return await CreateBanList({_id:customBanListID, userID: userId, description, startDate, dueDate});
+
+        case "Delete":
+            const deleteListCount = await GetBanListCount() + 1;
+            const customDeleteListID = "DeleteList-" + deleteListCount.toString();
+            return await CreateDeleteList({_id:customDeleteListID, userID: userId, startDate, dueDate});
+        
+        default:
+            return new Error(`Invalid status: ${status}`);
+    }
+}
+
+export const DeleteUser = async (req: AuthRequest, res: Response) => 
+{
+    const userId = req.params.id as unknown as ObjectId;
+    const adminID = req.user?._id;
+    let success = false;
+
+    if (!adminID) 
+    {
+        return res.status(401).json({ error: "Invalid auth Token!" });
+    }
+
+    try 
+    {
+        const foundUser = await FindUserByID(userId);
+        
+        if (!foundUser) 
+        {
+            return res.status(404).json({ error: "Cannot found this account!" });
+        }
+
+        const deleteUser = await FindUserByIDAndDelete(userId);
+
+        if(!deleteUser)
+        {
+            return res.status(401).json({ error: "Failed to delete user!" });
+        }
+
+        success = true;
+        res.json({ success, message: "Delete user successfully!" });
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}

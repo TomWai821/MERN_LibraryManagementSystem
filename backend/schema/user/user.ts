@@ -1,5 +1,6 @@
 import mongoose, { ObjectId } from 'mongoose';
 import { UserInterface } from '../../model/userSchemaInterface';
+import { printError } from '../../controller/Utils';
 
 const UserSchema = new mongoose.Schema<UserInterface>
 (
@@ -99,6 +100,7 @@ export const FindUserWithData = async (tableName:string, data: Record<string, an
     }
 }
 
+// Local variable(For get banned user data)
 const GetUsersWithBannedDetails = async (data: any, itemAmountPerPage: number, skipItems: number) => 
 {
     return await User.aggregate(
@@ -119,6 +121,7 @@ const GetUsersWithBannedDetails = async (data: any, itemAmountPerPage: number, s
     );
 }
 
+// Local variable(For get delete user data)
 const GetUsersWithDeleteDetails = async (data: any, itemAmountPerPage: number, skipItems: number) => 
 {
     return await User.aggregate(
@@ -126,9 +129,9 @@ const GetUsersWithDeleteDetails = async (data: any, itemAmountPerPage: number, s
             { $match: data }, 
             {
                 $lookup: {
-                    from: 'deletelists',  // the table name does user want to joins
-                    localField: '_id',  // the local column name does want to compare with joins table column
-                    foreignField: 'userID',  // the another table column name does user want to compare with local column name
+                    from: 'deletelists',  // the table name user want to joins
+                    localField: '_id',  // the local column name user want to compare with join table column
+                    foreignField: 'userID',  // the another table column name user want to compare with local column name
                     as: 'deleteDetails'  
                 }
             },
@@ -175,18 +178,6 @@ export const FindUserByIDAndDelete = async (userID: ObjectId) =>
     } 
     catch (error) 
     {
-       printError(error);
-    }
-}
-
-export const printError = async (error:any) => 
-{
-    if (error instanceof Error) 
-    {
-        throw new Error(error.message);
-    } 
-    else 
-    {
-        throw new Error('An unknown error occurred');
+        printError(error);
     }
 }

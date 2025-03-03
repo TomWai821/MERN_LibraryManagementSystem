@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { GenreInterface } from '../../model/bookSchemaInterface';
+import { printError } from '../../controller/Utils';
 
 const GenreSchema = new mongoose.Schema<GenreInterface>
 (
@@ -12,131 +13,83 @@ const GenreSchema = new mongoose.Schema<GenreInterface>
 
 const Genre = mongoose.model<GenreInterface>('Genre', GenreSchema);
 
-class GenreService
+export const CreateGenre = async (data:Record<string, any>) =>
 {
-    async CreateGenre(data:Record<string, any>)
+    try
     {
-        try
-        {
-            const genre = await Genre.create(data);
-            return genre;
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
+        return await Genre.create(data);
     }
-
-    async GetGenre (data?:Record<string, any>)
+    catch(error)
     {
-        try
-        {
-            if(!data)
-            {
-                return await Genre.find({});
-            }
-            return await Genre.find(data);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
-    
-    };
-        
-    async FindGenre (data: Record<string, any>)
-    {
-        try
-        {
-            return await Genre.findOne(data);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
-    }
-
-    async FindGenreByID (genre: string, select?: Record<string, any>)
-    {
-        try
-        {
-            if(select)
-            {
-                return await Genre.findById(genre).select(select);
-            }
-            return await Genre.findById(genre);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
-    }
-
-    async FindGenreByIDAndUpdate (genre: string, data: Record<string, any>)
-    {
-        try
-        {
-            return await Genre.findByIdAndUpdate(genre, data);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
-    }
-
-    async FindGenreByIDAndDelete (genre: string, data: Record<string, any>)
-    {
-        try
-        {
-            return await Genre.findByIdAndDelete(genre, data);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
+        printError(error);
     }
 }
 
-export default new GenreService();
+export const GetGenre = async (data?:Record<string, any>) =>
+{
+    try
+    {
+        if(!data)
+        {
+            return await Genre.find({});
+        }
+        return await Genre.find(data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+
+};
+        
+export const FindGenre = async (data: Record<string, any>) =>
+{
+    try
+    {
+        return await Genre.findOne(data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}
+
+export const FindGenreByID = async (genre: string, select?: Record<string, any>) =>
+{
+    try
+    {
+        if(select)
+        {
+            return await Genre.findById(genre).select(select);
+        }
+        return await Genre.findById(genre);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}
+
+export const FindGenreByIDAndUpdate  = async (genre: string, data: Record<string, any>) =>
+{
+    try
+    {
+        return await Genre.findByIdAndUpdate(genre, data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}
+
+export const FindGenreByIDAndDelete = async (genre: string, data: Record<string, any>) =>
+{
+    try
+    {
+        return await Genre.findByIdAndDelete(genre, data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}

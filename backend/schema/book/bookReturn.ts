@@ -5,7 +5,7 @@ const BookReturnSchema = new mongoose.Schema<BookReturnInterface>
 (   
     {
         _id: { type: String, required: true },
-        issueID: { type: mongoose.Schema.Types.ObjectId, required: true },
+        issueID: { type: String, required: true },
         returnDate: { type: Date, required: true },
         createdAt: { type: Date, default: Date.now, immutable: true }
     }

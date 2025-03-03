@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { LanguageInterface } from '../../model/bookSchemaInterface';
+import { printError } from '../../controller/Utils';
 
 const languageSchema = new mongoose.Schema<LanguageInterface>
 (
@@ -12,131 +13,83 @@ const languageSchema = new mongoose.Schema<LanguageInterface>
 
 const Language = mongoose.model<LanguageInterface>('Language', languageSchema);
 
-class LanguageService
+export const CreateLanguage = async (data:Record<string, any>) => 
 {
-    async CreateLanguage(data:Record<string, any>)
+    try
     {
-        try
-        {
-            const language = await Language.create(data);
-            return language;
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
+        return await Language.create(data);
     }
-
-    async GetLanguage (data?:Record<string, any>)
+    catch(error)
     {
-        try
-        {
-            if(!data)
-            {
-                return await Language.find({});
-            }
-            return await Language.find(data);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
-    
-    };
-        
-    async FindLanguage (data: Record<string, any>)
-    {
-        try
-        {
-            return await Language.findOne(data);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
-    }
-
-    async FindLanguageByID (language: string, select?: Record<string, any>)
-    {
-        try
-        {
-            if(select)
-            {
-                return await Language.findById(language).select(select);
-            }
-            return await Language.findById(language);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
-    }
-
-    async FindLanguageByIDAndUpdate (language: string, data: Record<string, any>)
-    {
-        try
-        {
-            return await Language.findByIdAndUpdate(language, data);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
-    }
-
-    async FindLanguageByIDAndDelete (language: string, data: Record<string, any>)
-    {
-        try
-        {
-            return await Language.findByIdAndDelete(language, data);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
+        printError(error);
     }
 }
 
-export default new LanguageService();
+export const GetLanguage = async (data?:Record<string, any>) =>
+{
+    try
+    {
+        if(!data)
+        {
+            return await Language.find({});
+        }
+        return await Language.find(data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+
+};
+        
+export const FindLanguage = async (data: Record<string, any>) => 
+{
+    try
+    {
+        return await Language.findOne(data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}
+
+export const FindLanguageByID = async (language: string, select?: Record<string, any>) => 
+{
+    try
+    {
+        if(select)
+        {
+            return await Language.findById(language).select(select);
+        }
+        return await Language.findById(language);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}
+
+export const FindLanguageByIDAndUpdate = async (language: string, data: Record<string, any>) => 
+{
+    try
+    {
+        return await Language.findByIdAndUpdate(language, data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}
+
+export const FindLanguageByIDAndDelete = async (language: string, data: Record<string, any>) =>
+{
+    try
+    {
+        return await Language.findByIdAndDelete(language, data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}

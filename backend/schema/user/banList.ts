@@ -1,5 +1,6 @@
 import mongoose, { ObjectId } from "mongoose";
 import { BanListInterface } from "../../model/userSchemaInterface";
+import { printError } from "../../controller/Utils";
 
 const BanListSchema = new mongoose.Schema<BanListInterface>
 (
@@ -15,7 +16,7 @@ const BanListSchema = new mongoose.Schema<BanListInterface>
 
 const BanList = mongoose.model<BanListInterface>('BanList', BanListSchema);
 
-export const CreateBanList = async (data: Record<string, any>) =>
+const CreateBanList = async (data: Record<string, any>) =>
 {
     try 
     {
@@ -24,18 +25,11 @@ export const CreateBanList = async (data: Record<string, any>) =>
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
-export const GetBanList = async (data?: Record<string, any>) =>
+const GetBanList = async (data?: Record<string, any>) =>
 {
     try 
     {
@@ -47,18 +41,11 @@ export const GetBanList = async (data?: Record<string, any>) =>
     }  
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
-export const GetBanListCount = async (roleID?: string) => 
+const GetBanListCount = async (roleID?: string) => 
 {
     if(roleID)
     {
@@ -67,7 +54,7 @@ export const GetBanListCount = async (roleID?: string) =>
     return await BanList.countDocuments();
 }
 
-export const FindBanList = async (data: Record<string, any>) =>
+const FindBanList = async (data: Record<string, any>) =>
 {
     try 
     {
@@ -75,18 +62,11 @@ export const FindBanList = async (data: Record<string, any>) =>
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
-export const FindBanListByID = async (banListID: ObjectId, select?: Record<string, any>) =>
+const FindBanListByID = async (banListID: ObjectId, select?: Record<string, any>) =>
 {
     try 
     {
@@ -98,18 +78,11 @@ export const FindBanListByID = async (banListID: ObjectId, select?: Record<strin
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
-export const FindBanListByIDAndUpdate = async (banListID: ObjectId, data: Record<string, any>) =>
+const FindBanListByIDAndUpdate = async (banListID: ObjectId, data: Record<string, any>) =>
 {
     try 
     {
@@ -117,18 +90,11 @@ export const FindBanListByIDAndUpdate = async (banListID: ObjectId, data: Record
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
-export const FindBanListByIDAndDelete = async (banListID: ObjectId) =>
+const FindBanListByIDAndDelete = async (banListID: ObjectId) =>
 {
     try 
     {
@@ -136,13 +102,8 @@ export const FindBanListByIDAndDelete = async (banListID: ObjectId) =>
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
+
+export {CreateBanList, GetBanList, GetBanListCount, FindBanList, FindBanListByID, FindBanListByIDAndUpdate, FindBanListByIDAndDelete}

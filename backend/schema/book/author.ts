@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { AuthorInterface } from '../../model/bookSchemaInterface';
+import { printError } from '../../controller/Utils';
 
 const AuthorSchema = new mongoose.Schema<AuthorInterface>
 (
@@ -18,19 +19,11 @@ export const CreateAuthor = async (data:Record<string, any>) =>
 {
     try
     {
-        const author = await Author.create(data);
-        return author;
+        return await Author.create(data);
     }
     catch(error)
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
@@ -46,14 +39,7 @@ export const GetAuthor = async (data?:Record<string, any>) =>
     }
     catch(error)
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 
 };
@@ -66,14 +52,7 @@ export const FindAuthor = async (data: Record<string, any>) =>
     }
     catch(error)
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
@@ -89,14 +68,7 @@ export const FindAuthorByID = async (author: string, select?: Record<string, any
     }
     catch(error)
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
@@ -108,14 +80,7 @@ export const FindAuthorByIDAndUpdate = async (author: string, data: Record<strin
     }
     catch(error)
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
@@ -127,13 +92,6 @@ export const FindAuthorByIDAndDelete = async (author: string, data: Record<strin
     }
     catch(error)
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }

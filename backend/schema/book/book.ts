@@ -1,15 +1,16 @@
 import mongoose from 'mongoose';
 import { BookInterface } from '../../model/bookSchemaInterface';
+import { printError } from '../../controller/Utils';
 
 const BookSchema = new mongoose.Schema<BookInterface>
 (
     {
         _id: { type: String, required: true},
         bookname: { type: String, required: true },
-        languageID: { type: mongoose.Schema.Types.ObjectId, ref:'Language', required: true },
-        genreID: { type: mongoose.Schema.Types.ObjectId, ref:'Genre', required: true },
-        publisherID: { type: mongoose.Schema.Types.ObjectId, ref:'Publisher', required: true },
-        authorID: { type: mongoose.Schema.Types.ObjectId, ref:'Author', required: true },
+        languageID: { type: String, ref:'Language', required: true },
+        genreID: { type: String, ref:'Genre', required: true },
+        publisherID: { type: String, ref:'Publisher', required: true },
+        authorID: { type: String, ref:'Author', required: true },
         page: { type: Number, required: true, min: 1 },
         description: { type: String, default: '' },
         createdAt: { type: Date, default: Date.now, immutable: true }
@@ -18,131 +19,83 @@ const BookSchema = new mongoose.Schema<BookInterface>
 
 const Book = mongoose.model<BookInterface>('Book', BookSchema);
 
-class BookService
+export const CreateBook = async (data:Record<string, any>) =>
 {
-    async CreateBook(data:Record<string, any>)
+    try
     {
-        try
-        {
-            const book = await Book.create(data);
-            return book;
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
+        return await Book.create(data);
     }
-
-    async GetBook (data?:Record<string, any>)
+    catch(error)
     {
-        try
-        {
-            if(!data)
-            {
-                return await Book.find({});
-            }
-            return await Book.find(data);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
-    
-    };
-        
-    async FindBook (data: Record<string, any>)
-    {
-        try
-        {
-            return await Book.findOne(data);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
-    }
-
-    async FindBookByID (book: string, select?: Record<string, any>)
-    {
-        try
-        {
-            if(select)
-            {
-                return await Book.findById(book).select(select);
-            }
-            return await Book.findById(book);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
-    }
-
-    async FindBookByIDAndUpdate (book: string, data: Record<string, any>)
-    {
-        try
-        {
-            return await Book.findByIdAndUpdate(book, data);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
-    }
-
-    async FindBookByIDAndDelete (book: string, data: Record<string, any>)
-    {
-        try
-        {
-            return await Book.findByIdAndDelete(book, data);
-        }
-        catch(error)
-        {
-            if (error instanceof Error) 
-            {
-                throw new Error(error.message);
-            } 
-            else 
-            {
-                throw new Error('An unknown error occurred');
-            }
-        }
+        printError(error);
     }
 }
 
-export default new BookService();
+export const GetBook = async (data?:Record<string, any>) =>
+{
+    try
+    {
+        if(!data)
+        {
+            return await Book.find({});
+        }
+        return await Book.find(data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+
+};
+        
+export const FindBook = async (data: Record<string, any>) => 
+{
+    try
+    {
+        return await Book.findOne(data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}
+
+export const FindBookByID = async (book: string, select?: Record<string, any>) => 
+{
+    try
+    {
+        if(select)
+        {
+            return await Book.findById(book).select(select);
+        }
+        return await Book.findById(book);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}
+
+export const FindBookByIDAndUpdate = async (book: string, data: Record<string, any>) => 
+{
+    try
+    {
+        return await Book.findByIdAndUpdate(book, data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}
+
+export const FindBookByIDAndDelete = async (book: string, data: Record<string, any>) =>
+{
+    try
+    {
+        return await Book.findByIdAndDelete(book, data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}

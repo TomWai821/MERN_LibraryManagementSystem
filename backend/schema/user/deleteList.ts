@@ -1,5 +1,6 @@
 import mongoose, { ObjectId } from "mongoose";
 import { DeleteListInterface } from "../../model/userSchemaInterface";
+import { printError } from "../../controller/Utils";
 
 const DeleteListSchema = new mongoose.Schema<DeleteListInterface>
 (
@@ -14,7 +15,7 @@ const DeleteListSchema = new mongoose.Schema<DeleteListInterface>
 
 const DeleteList = mongoose.model<DeleteListInterface>('DeleteList', DeleteListSchema);
 
-export const CreateDeleteList = async (data: Record<string, any>) =>
+const CreateDeleteList = async (data: Record<string, any>) =>
 {
     try 
     {
@@ -23,18 +24,11 @@ export const CreateDeleteList = async (data: Record<string, any>) =>
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
-export const GetDeleteList = async (data?: Record<string, any>) =>
+const GetDeleteList = async (data?: Record<string, any>) =>
 {
     try 
     {
@@ -46,18 +40,11 @@ export const GetDeleteList = async (data?: Record<string, any>) =>
     }  
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
-export const GetDeleteListCount = async (roleID?: string) => 
+const GetDeleteListCount = async (roleID?: string) => 
 {
     if(roleID)
     {
@@ -66,7 +53,7 @@ export const GetDeleteListCount = async (roleID?: string) =>
     return await DeleteList.countDocuments();
 }
 
-export const FindDeleteList = async (data: Record<string, any>) =>
+const FindDeleteList = async (data: Record<string, any>) =>
 {
     try 
     {
@@ -74,18 +61,11 @@ export const FindDeleteList = async (data: Record<string, any>) =>
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
-export const FindDeleteListByID = async (deleteListID: ObjectId, select?: Record<string, any>) =>
+const FindDeleteListByID = async (deleteListID: ObjectId, select?: Record<string, any>) =>
 {
     try 
     {
@@ -97,18 +77,11 @@ export const FindDeleteListByID = async (deleteListID: ObjectId, select?: Record
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
-export const FindDeleteListByIDAndUpdate = async (deleteListID: ObjectId, data: Record<string, any>) =>
+const FindDeleteListByIDAndUpdate = async (deleteListID: ObjectId, data: Record<string, any>) =>
 {
     try 
     {
@@ -116,18 +89,11 @@ export const FindDeleteListByIDAndUpdate = async (deleteListID: ObjectId, data: 
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
-export const FindDeleteListByIDAndDelete = async (deleteListID: ObjectId) =>
+const FindDeleteListByIDAndDelete = async (deleteListID: ObjectId) =>
 {
     try 
     {
@@ -135,13 +101,8 @@ export const FindDeleteListByIDAndDelete = async (deleteListID: ObjectId) =>
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
+
+export {CreateDeleteList, GetDeleteList, GetDeleteListCount, FindDeleteList, FindDeleteListByID, FindDeleteListByIDAndUpdate, FindDeleteListByIDAndDelete}

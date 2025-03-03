@@ -4,13 +4,13 @@ import { ProfileMenuInterface } from '../../Model/NavModel';
 import { settings } from '../../Maps/MenuMaps';
 import { GetData } from '../../Controller/OtherController';
 
-const ProfileMenu:FC<ProfileMenuInterface> = ({isLoggedIn, role, AvatarSize, anchorElUser, handleUserMenu, NavSyntax, MenuItemSyntax}) => 
+const ProfileMenu:FC<ProfileMenuInterface> = ({isLoggedIn, role, avatarUrl, AvatarSize, anchorElUser, handleUserMenu, NavSyntax, MenuItemSyntax}) => 
 {
     return(
         isLoggedIn ?
         <Box>
             <IconButton onClick={handleUserMenu}>
-                <Avatar alt="" src="/static/images/avatar/2.jpg" sx={{ width: AvatarSize, height: AvatarSize }} />
+                <Avatar src={avatarUrl} sx={{ width: AvatarSize, height: AvatarSize }} />
             </IconButton>
             <Menu
                 sx={{ mt: AvatarSize }}
@@ -22,13 +22,13 @@ const ProfileMenu:FC<ProfileMenuInterface> = ({isLoggedIn, role, AvatarSize, anc
                 onClose={handleUserMenu}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', padding: '10px 0 10px 0' }}>
-                    <Avatar alt="" src="/static/images/avatar/2.jpg" sx={{ width: AvatarSize, height: AvatarSize, margin: '0 5px 0 10px' }} />
-                    <Box sx={{ display: 'block', flexDirection: 'column', marginLeft: '10px' }}>
-                        <Typography sx={{ fontWeight: 'bold' }}>{GetData("username")}</Typography>
+                    <Avatar alt="" src={avatarUrl} sx={{ width: AvatarSize, height: AvatarSize, margin: '0 5px 0 10px' }} />
+                    <Box sx={{ display: 'block', flexDirection: 'column', marginRight: '20%' }}>
+                        <Typography sx={{ fontWeight: 'bold'}}>{GetData("username")}</Typography>
                         <Typography>{role}</Typography>
                     </Box>
-
                 </Box>
+                
                 <Divider/>
 
                 {settings.map((setting) => (

@@ -45,7 +45,7 @@ interface UserContextProps
     amount: number;
     setAmount: Dispatch<SetStateAction<number>>;
     fetchUser: (authToken:string, tableName:string, UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
-    editUserData: (_id:string ,data: UserDataInterface) => void;
+    editUserData: (_id:string, username: string, email: string, gender: string, role: string) => void;
     changeUserstatus: (id:string, status:string, duration:number, description:string) => void;
 }
 

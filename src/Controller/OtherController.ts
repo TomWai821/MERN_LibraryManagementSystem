@@ -28,6 +28,12 @@ const GetData = (data:string): string | undefined | null=>
 
         case "username":
             return GetUserCookie("username") || sessionStorage.getItem("username") || undefined;
+        
+        case "avatarUrl":
+            return GetUserCookie("avatarUrl") || sessionStorage.getItem("avatarUrl") || undefined;
+
+        case "status":
+            return GetUserCookie("status") || sessionStorage.getItem("status") || undefined;
     }   
 }
 

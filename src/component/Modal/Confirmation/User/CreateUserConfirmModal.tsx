@@ -9,8 +9,6 @@ const CreateUserConfirmModal:FC<CreateUserInterface> = ({...userData}) =>
 {
     const {username, email, password, role, gender} = userData;
 
-    const {handleOpen} = useModal();
-
     return(
         <ModalTemplate title={"Delete Account Confirmation"} cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>

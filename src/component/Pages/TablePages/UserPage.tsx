@@ -19,7 +19,7 @@ const UserPage:FC<PagesInterface> = (loginData) =>
 
     const [searchUserData, setSearchUserData] = useState(
         { 
-            user: { username: "", email:"", role:"", status:"", gender:"" },
+            user: { username: "", email: "", role: "", status: "", gender: "" },
             date: { startDate: GetCurrentDate("Date") as Date, dueDate: GetCurrentDate("Date") as Date } 
         }
     );
@@ -31,8 +31,9 @@ const UserPage:FC<PagesInterface> = (loginData) =>
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
 
-    // useMemo could avoid unnecessary calculation
-    const count:number = useMemo(() => Math.ceil(users.length / paginationValue), [users.length, paginationValue]);
+    // useMemo could avoid unnecessary 
+    const pages:number = useMemo(() => Math.ceil(users.length / paginationValue), [users.length, paginationValue]);
+    const count:number = useMemo(() => Math.min(1, pages), [pages]);
 
     // useCallback could avoid unnecessary re-rendering
     const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => 
@@ -41,7 +42,7 @@ const UserPage:FC<PagesInterface> = (loginData) =>
         
             setSearchUserData((prevState) => ({ ...prevState, user:{...prevState.user ,[name]: value } }));
         
-            setPage(count);
+            setPage(count - 1);
             setAmount(paginationValue);
         },[count, paginationValue]
     );
@@ -97,7 +98,7 @@ const UserPage:FC<PagesInterface> = (loginData) =>
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
                 <UserTabPanel value={tabValue} isAdmin={isAdmin} userData={users}/>
             </TableContainer>
-            <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={count}/>
+            <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={pages}/>
         </Box>
     );
 }

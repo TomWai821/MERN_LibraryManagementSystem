@@ -10,6 +10,8 @@ interface RegisterDataInterface
     authToken: string;
     username: string;
     role: string;
+    avatarUrl:string;
+    status: string;
 }
 
 interface GetResultInterface

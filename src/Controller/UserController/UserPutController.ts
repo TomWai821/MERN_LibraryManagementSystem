@@ -4,62 +4,50 @@ import { GetData } from "../OtherController";
 const contentType:string = 'application/json';
 const localhost:string = 'http://localhost:5000/api/user';
 
-const ModifyUserDataController = async(id:string, data:UserDataInterface) => 
+const fetchData = async (url: string, data: any) => 
 {
-    try
+    try 
     {
+        console.log(data);
+        const response = await fetch(url, 
+        {
+            method: 'PUT',
+            headers: 
+            { 
+                'content-type': contentType, 
+                'authToken': GetData("authToken") as string 
+            },
+            body: JSON.stringify(data)
+        });
 
-        const url = `${localhost}/modifyData/id=${id}`;
-        const response = await fetch(url,
-            {
-                method: 'PUT',
-                headers: { 
-                    'content-type': contentType, 
-                    'authToken': GetData("authToken") as string
-                },
-                body: JSON.stringify(data)
-            }
-        );
-
-        if(response.ok)
+        if (response.ok) 
         {
             const result = await response.json();
             return result;
-        }
-    }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
-
-const ModifyStatusController = async (id:string, status:string, startDate:Date, dueDate:Date, description:string) => 
-{
-    const data = {status, startDate, dueDate, description};
-    try
-    {
-        const url = `${localhost}/modifyData/id=${id}`;
-        const response = await fetch(url,
-            {
-                method: 'PUT',
-                headers: { 
-                    'content-type': contentType, 
-                    'authToken': GetData("authToken") as string
-                },
-                body: JSON.stringify(data)
-            }
-        )
-
-        if(response.ok)
+        } 
+        else 
         {
-            const result = await response.json();
-            return result;
+            const errorResult = await response.json();
+            throw new Error(errorResult.error || 'Something went wrong');
         }
-    }
-    catch(error)
-    {
+    } catch (error) {
         console.log(error);
     }
-}
+};
 
-export {ModifyUserDataController, ModifyStatusController}
+const ModifyUserDataController = async (id: string, username:string, email:string, gender:string, role:string) => 
+{
+    const data = { username, email, gender, role };
+    const url = `${localhost}/modifyData/id=${id}`;
+    console.log(data);
+    return await fetchData(url, data);
+};
+
+const ModifyStatusController = async (id: string, status: string, startDate: Date, dueDate: Date, description: string) => 
+{
+    const data = { status, startDate, dueDate, description };
+    const url = `${localhost}/modifyData/id=${id}`;
+    return await fetchData(url, data);
+};
+
+export { ModifyUserDataController, ModifyStatusController };

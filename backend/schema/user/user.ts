@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema<UserInterface>
         role: { type: String, required: true, default: 'User' },
         status: { type: String, required: true, default: 'Normal' },
         birthDay: { type: String, required: true },
+        avatarUrl: { type:String, required: true },
         createdAt: { type: Date, default: Date.now, immutable: true }
     }
 );
@@ -27,14 +28,7 @@ export const CreateUser = async (data: Record<string, any>) =>
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
@@ -50,14 +44,7 @@ export const GetUser = async (data?: Record<string, any>) =>
     }  
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
@@ -78,53 +65,78 @@ export const FindUser = async (data: Record<string, any>) =>
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
-export const FindUserWithData = async (tableName:string, data: Record<string, any>, page: string, amount: string, userId: string) =>
+export const FindUserWithData = async (tableName:string, data: Record<string, any>, page: number, amount: number, userId: string) =>
 {
     try
     {
-        const pageAsNumber = parseInt(page);
-        const amountAsNumber = parseInt(amount);
-        const pipeline: Record<string,any>[] = [];
+        // for skip document => 0 = skip 0 document, and page = select from which amount (e.g. skipItem = 0, amount = 10, then will get 0 - 10 items)
+        const skipItems = page * amount;
 
         data._id = { $ne: userId };
         
         switch(tableName)
         {
             case "BannedUser":
-                return await User.find(data).limit(pageAsNumber).skip(amountAsNumber);
+                return await GetUsersWithBannedDetails(data, amount, skipItems);
 
             case "DeleteUser":
-                return await User.find(data).limit(pageAsNumber).skip(amountAsNumber);
+                return await GetUsersWithDeleteDetails(data, amount, skipItems);
 
             case "AllUser":
-                return await User.find(data).limit(pageAsNumber).skip(amountAsNumber);
+                return await User.find(data).limit(amount).skip(skipItems);
             
             default:
-                return await User.find(data);
+                return await User.findOne(data);
         }
     }
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
+}
+
+const GetUsersWithBannedDetails = async (data: any, itemAmountPerPage: number, skipItems: number) => 
+{
+    return await User.aggregate(
+        [
+            { $match: data }, 
+            {
+                $lookup: {
+                    from: 'banlists',  // the table name does user want to joins
+                    localField: '_id',  // the local column name does want to compare with joins table column
+                    foreignField: 'userID',  // the another table column name does user want to compare with local column name
+                    as: 'bannedDetails'  
+                }
+            },
+            { $unwind: '$bannedDetails' },  
+            { $skip: skipItems },  
+            { $limit: itemAmountPerPage }  
+        ]
+    );
+}
+
+const GetUsersWithDeleteDetails = async (data: any, itemAmountPerPage: number, skipItems: number) => 
+{
+    return await User.aggregate(
+        [
+            { $match: data }, 
+            {
+                $lookup: {
+                    from: 'deletelists',  // the table name does user want to joins
+                    localField: '_id',  // the local column name does want to compare with joins table column
+                    foreignField: 'userID',  // the another table column name does user want to compare with local column name
+                    as: 'deleteDetails'  
+                }
+            },
+            { $unwind: '$deleteDetails' },  
+            { $skip: skipItems },  
+            { $limit: itemAmountPerPage }  
+        ]
+    );
 }
 
 export const FindUserByID = async (userID: ObjectId, select?: Record<string, any>) =>
@@ -139,14 +151,7 @@ export const FindUserByID = async (userID: ObjectId, select?: Record<string, any
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
@@ -158,14 +163,7 @@ export const FindUserByIDAndUpdate = async (userID: ObjectId, data: Record<strin
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+        printError(error);
     }
 }
 
@@ -177,13 +175,18 @@ export const FindUserByIDAndDelete = async (userID: ObjectId) =>
     } 
     catch (error) 
     {
-        if (error instanceof Error) 
-        {
-            throw new Error(error.message);
-        } 
-        else 
-        {
-            throw new Error('An unknown error occurred');
-        }
+       printError(error);
+    }
+}
+
+export const printError = async (error:any) => 
+{
+    if (error instanceof Error) 
+    {
+        throw new Error(error.message);
+    } 
+    else 
+    {
+        throw new Error('An unknown error occurred');
     }
 }

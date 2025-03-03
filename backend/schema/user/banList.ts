@@ -7,7 +7,7 @@ const BanListSchema = new mongoose.Schema<BanListInterface>
         _id: { type: String, required: true },
         userID: { type: String, ref:'User', required: true },
         description: { type: String, required: true },
-        startDate: { type: Date, required: true },
+        startDate: { type: Date, required: true, immutable: true },
         dueDate: { type: Date, required: true },
         createdAt: { type: Date, default: Date.now, immutable: true }
     }

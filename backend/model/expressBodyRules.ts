@@ -15,14 +15,6 @@ export const UserLoginRules =
     body("password").notEmpty().withMessage("Password is required")
 ]
 
-export const UserChangeDataRules = 
-[
-    body("oldUsername").optional().isString(),
-    body("newUsername").optional().isString(),
-    body("oldPassword").optional().isString(),
-    body("newPassword").optional().isString()
-]
-
 export const UserModifyDataRules = 
 [
     body("email").isEmail().withMessage("Invalid Email Address"), 
@@ -30,4 +22,6 @@ export const UserModifyDataRules =
     body("gender").notEmpty().withMessage("Gender is required"),
     body("role").notEmpty().withMessage("Role is required"),
     body("status").notEmpty().withMessage("Status is required"),
+    body("startDate").optional().isDate(),
+    body("dueDate").optional().isDate()
 ]

@@ -23,9 +23,11 @@ const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =>
             sessionStorage.setItem("authToken", result.data.authToken);
             sessionStorage.setItem("username", result.data.username);
             sessionStorage.setItem("role", result.data.role);
+            sessionStorage.setItem("status", result.data.status);
+            sessionStorage.setItem("avatarUrl", result.data.avatarUrl)
             return;
         }
-        SetUserCookie(result.data.authToken, result.data.username, result.data.role , 30);
+        SetUserCookie(result.data.authToken, result.data.username, result.data.role , result.data.avatarUrl, result.data.status,30);
     }
 }
 

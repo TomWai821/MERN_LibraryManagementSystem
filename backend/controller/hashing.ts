@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { AuthRequest } from './middleware';
+import { AuthRequest } from '../model/requestInterface';
 
 const JWT_SECRET:string = "Wh@t@ver"
 

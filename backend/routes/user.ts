@@ -1,17 +1,20 @@
 import express from 'express';
-import { UserRegisterRules, UserLoginRules, UserChangeDataRules } from '../model/expressBodyRules'
+import { UserRegisterRules, UserLoginRules, UserModifyDataRules } from '../model/expressBodyRules'
 import { DeleteUser, GetUserData, ModifyUserData, UserLogin, UserRegister } from '../controller/userController';
-import { FetchUser, Validate } from '../controller/middleware';
+import { AdminAuthIdValidation, FetchUser } from '../controller/middleware/authMiddleware';
+import { FoundUser, UserLoginDataValidation, UserRegisterDataValidation } from '../controller/middleware/userMiddleware';
+import { BuildQueryAndGetData } from '../controller/middleware/userGetDataMiddleware';
+import { BuildUpdateData } from '../controller/middleware/userUpdateDataMiddleware';
 
 const router = express.Router();
 
-router.get('/userData/tableName=:tableName', FetchUser, GetUserData);
+router.get('/userData/tableName=:tableName', FetchUser, BuildQueryAndGetData, GetUserData);
 
-router.post('/register', UserRegisterRules, Validate, UserRegister);
-router.post('/login', UserLoginRules, Validate, UserLogin);
+router.post('/register', UserRegisterRules, UserRegisterDataValidation, UserRegister);
+router.post('/login', UserLoginRules, UserLoginDataValidation, UserLogin);
 
-router.put('/modifyData/id=:id', FetchUser, ModifyUserData);
+router.put('/modifyData/id=:id', UserModifyDataRules, FetchUser, AdminAuthIdValidation, FoundUser, BuildUpdateData, ModifyUserData);
 
-router.delete('/remove/id=:id', FetchUser, DeleteUser);
+router.delete('/remove/id=:id', FetchUser, AdminAuthIdValidation, FoundUser, DeleteUser);
 
 module.exports = router;

@@ -12,7 +12,7 @@ import { FC } from "react"
 
 const RoutesUtils:FC<PagesInterface> = (loginData) => 
 {
-    const {role, isLoggedIn, isAdmin} = loginData;
+    const {role, isLoggedIn, isAdmin, avatarUrl, status} = loginData;
 
     return(
         <Routes>
@@ -20,9 +20,9 @@ const RoutesUtils:FC<PagesInterface> = (loginData) =>
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/register" element={<RegisterPage/>}/>
             <Route path="/profile" element={<ViewProfilePage/>}/>
-            <Route path="/viewBook" element={<BookPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>}/>
-            <Route path="/viewUser" element={<UserPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>}/>
-            <Route path="/defination" element={<DefinitionPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>}/>
+            <Route path="/viewBook" element={<BookPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
+            <Route path="/viewUser" element={<UserPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
+            <Route path="/defination" element={<DefinitionPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
         </Routes>
     )
     

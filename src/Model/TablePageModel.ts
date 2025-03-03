@@ -9,7 +9,9 @@ interface IsAdminInterface
 interface PagesInterface extends IsAdminInterface
 {
     role: string | undefined;
-    isLoggedIn:boolean;
+    isLoggedIn: boolean;
+    avatarUrl: string | undefined;
+    status: string | undefined;
 }
 
 interface FilterInterface extends IsAdminInterface

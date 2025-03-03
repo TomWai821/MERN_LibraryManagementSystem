@@ -10,7 +10,7 @@ import { PagesInterface } from '../../Model/TablePageModel';
 
 const NavBar:FC<PagesInterface> = (loginData) => 
 {
-    const {isAdmin, isLoggedIn, role} = loginData;
+    const {isAdmin, isLoggedIn, role, avatarUrl, status} = loginData;
 
     const [anchorElNav, setAnchorElNav] = useState<HTMLElement | null>(null);
     const [anchorElUser, setAnchorElUser] = useState<HTMLElement | null>(null);
@@ -33,10 +33,10 @@ const NavBar:FC<PagesInterface> = (loginData) =>
                 </Box>
 
                 <NavMenu isLoggedIn={isLoggedIn} role={role} AvatarSize={AvatarSize} NavSyntax={NavSyntax} anchorElNav={anchorElNav}
-                MenuItemSyntax={MenuItemSyntax} handleNavMenu={handleNavMenu} isAdmin={isAdmin} />
+                MenuItemSyntax={MenuItemSyntax} handleNavMenu={handleNavMenu} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status} />
 
                 <ProfileMenu isLoggedIn={isLoggedIn} role={role} AvatarSize={AvatarSize} NavSyntax={NavSyntax}
-                MenuItemSyntax={MenuItemSyntax} anchorElUser={anchorElUser} handleUserMenu={handleUserMenu} isAdmin={isAdmin}/>
+                MenuItemSyntax={MenuItemSyntax} anchorElUser={anchorElUser} handleUserMenu={handleUserMenu} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>
 
             </Toolbar>
         </AppBar>

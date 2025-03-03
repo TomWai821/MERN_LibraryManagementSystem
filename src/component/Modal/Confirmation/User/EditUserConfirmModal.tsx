@@ -49,7 +49,8 @@ const EditUserConfirmModal:FC<EditModalInterface> = ({editData, compareData}) =>
         if(differences.length > 0)
         {
             const CompareData = compareData as UserResultDataInterface;
-            editUserData(CompareData._id, editData as UserDataInterface);
+            const EditData = editData as UserDataInterface;
+            editUserData(CompareData._id, EditData.username, EditData.email, EditData.gender, EditData.role);
         }
     }
 

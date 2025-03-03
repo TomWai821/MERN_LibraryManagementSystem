@@ -19,6 +19,7 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
     const fetchUser = useCallback(async (authToken:string, tableName:string, UserData: UserDataInterface | undefined) => 
     {
         const {username, email, role, status, gender} = UserData as FindUserInterface;
+        console.log(username);
         try
         {
             const result : GetResultInterface | undefined = await FetchUserData(tableName, authToken, page, amount, username, email, role, status, gender);
@@ -51,9 +52,9 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[page, amount])
 
-    const editUserData = useCallback(async (_id: string, data:UserDataInterface) => 
+    const editUserData = useCallback(async (_id: string, username:string, email:string, gender:string, role:string) => 
     {
-        const result : GetResultInterface | undefined = await ModifyUserDataController(_id, data);
+        const result : GetResultInterface | undefined = await ModifyUserDataController(_id, username, email, gender, role);
 
         try
         {

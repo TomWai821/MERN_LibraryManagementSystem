@@ -11,6 +11,9 @@ import { useModal } from './Context/ModalContext';
 import { GetData, IsAdmin, IsLoggedIn } from './Controller/OtherController';
 
 const role = GetData("role") as string | undefined;
+const avatarUrl = GetData("avatarUrl") as string | undefined;
+const status = GetData("status") as string | undefined;
+const username = GetData("username") as string | undefined;
 const isAdmin:boolean = IsAdmin(role);
 const isLoggedIn:boolean = IsLoggedIn();
 
@@ -20,9 +23,9 @@ const App: React.FC = () =>
     
     return (
         <Fragment>
-            <NavNar role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>
+            <NavNar role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>
             <Box className="App">
-                <RoutesUtils role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>
+                <RoutesUtils role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>
                 {content}
             </Box>
         </Fragment>

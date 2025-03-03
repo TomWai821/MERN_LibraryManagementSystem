@@ -1,3 +1,6 @@
+import { UserInterface } from "./userSchemaInterface";
+import { Request } from 'express'
+
 interface LoginInterface
 {
     email:string;
@@ -11,6 +14,7 @@ interface CreateUserInterface extends LoginInterface
     role: string;
     birthDay: string;
     status: string;
+    avatarUrl: string;
 }
 
 interface ModifyUserDataInterface
@@ -25,4 +29,11 @@ interface ModifyUserDataInterface
     dueDate: Date;
 }
 
-export type {LoginInterface, CreateUserInterface, ModifyUserDataInterface}
+interface AuthRequest extends Request
+{
+    user?: UserInterface;
+    foundUser?: UserInterface | UserInterface[] | null;
+    updateData?: Record<string, any> | null;
+}
+
+export type {LoginInterface, CreateUserInterface, ModifyUserDataInterface, AuthRequest}

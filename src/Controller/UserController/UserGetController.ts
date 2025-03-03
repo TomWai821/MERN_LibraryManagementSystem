@@ -43,6 +43,7 @@ const FetchUserData = async(tableName?: string, authToken?:string, page?:number,
 
         const queryString = queryParams.toString();
         const url = `${localhost}/userData/tableName=${queryString ? `${tableName}?${queryString}` : `${tableName}`}`;
+        console.log(url);
 
         const response = await fetch(url,
             {

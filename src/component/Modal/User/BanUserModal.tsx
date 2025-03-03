@@ -10,7 +10,7 @@ import { dateOption } from "../../../Maps/TextFieldsMaps";
 const BanUserModal:FC<BanModalInterface> = ({...userData}) => 
 {
     const { _id, username, durationOption, description} = userData as BanModalInterface;
-    const [banData, setBanData] = useState({durationOption: durationOption, description: description});
+    const [banData, setBanData] = useState({durationOption: durationOption ?? 0, description: description});
     const {handleOpen} = useModal();
 
     const onChange = (event:ChangeEvent<HTMLInputElement>) => 

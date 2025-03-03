@@ -11,7 +11,7 @@ const CreateUserConfirmModal = ({...userData}) =>
     const birthDayToString = birthDay.toString();
  
     const { handleOpen, handleClose } = useModal();
-    const {createUser} = useUserContext();
+    const { createUser } = useUserContext();
 
     const returnCreateUserModal = () => 
     {
@@ -21,7 +21,7 @@ const CreateUserConfirmModal = ({...userData}) =>
     const registerUser = () => 
     {
         handleClose();
-        createUser(username, email, password, role, gender, birthDay);
+        createUser("UserManagementPanel", username, email, password, role, gender, birthDay);
     }
 
     return(

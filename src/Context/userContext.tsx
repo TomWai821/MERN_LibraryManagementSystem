@@ -66,9 +66,9 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[authToken, page, amount])
 
-    const createUser = useCallback(async (username:string, email:string, password:string, role:string, gender:string, birthDay:string) => 
+    const createUser = useCallback(async (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string) => 
     {
-        const result : GetResultInterface | undefined = await RegisterController(username, email, password, birthDay, gender, role);
+        const result = await RegisterController(registerPosition, username, email, password, role, gender, birthDay);
         try
         {
             if(result)
@@ -80,7 +80,7 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
         {
             console.log(error);
         }
-    },[fetchAllUser])
+    },[fetchAllUser, page, amount])
 
     const editUserData = useCallback(async (_id: string, username:string, email:string, gender:string, role:string) => 
     {

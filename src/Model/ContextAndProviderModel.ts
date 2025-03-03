@@ -46,7 +46,7 @@ interface UserContextProps
     setAmount: React.Dispatch<React.SetStateAction<number>>;
     fetchUser: (tableName: string, UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
     fetchAllUser: (page:number, amount:number) => void;
-    createUser: (username:string, email:string, password:string, role:string, gender:string, birthDay:string) => void;
+    createUser: (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string) => void;
     editUserData: (_id:string, username: string, email: string, gender: string, role: string) => void;
     changeUserstatus: (id:string, status:string, duration:number, description:string) => void;
 }

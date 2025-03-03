@@ -11,6 +11,7 @@ import { RegisterModel } from '../../Model/InputFieldModel';
 import { PageItemToCenter, PageTitleSyntax } from '../../Maps/FormatSyntaxMaps';
 import { ChangePage, GetCurrentDate } from '../../Controller/OtherController';
 import { AlertContext } from '../../Context/AlertContext';
+import { useUserContext } from '../../Context/userContext';
 
 const RegisterPage = () => 
 {
@@ -18,6 +19,7 @@ const RegisterPage = () =>
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errors, setErrors] = useState({email: "", username: "", password: ""});
     const [helperTexts, setHelperText] = useState({email: "", username: "", password: ""});
+    const {createUser} = useUserContext();
 
     const alertContext = useContext(AlertContext);
 
@@ -25,7 +27,7 @@ const RegisterPage = () =>
     {
         event.preventDefault();
         setIsSubmitted(true);
-        const success = await RegisterController(Credentials.email, Credentials.username, Credentials.password, "User", Credentials.birthDay, Credentials.gender);
+        const success = await RegisterController("RegisterPanel", Credentials.username, Credentials.email, Credentials.password, "User", Credentials.gender, Credentials.birthDay,);
         
         if(alertContext && alertContext.setAlertConfig)
         {

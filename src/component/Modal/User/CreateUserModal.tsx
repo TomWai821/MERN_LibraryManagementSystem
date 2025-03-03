@@ -11,7 +11,7 @@ import { GetCurrentDate } from '../../../Controller/OtherController';
 
 const CreateUserModal:FC = ({}) => 
 {
-    const [user, setUser] = useState({username: "", password: "", email:"", role:"", status:"", gender:"", birthDay: GetCurrentDate("String") as Date});
+    const [user, setUser] = useState({username: "", password: "", email: "", role: "User", status: "", gender: "Male", birthDay: GetCurrentDate("String") as Date});
 
     const {handleOpen} = useModal();
 

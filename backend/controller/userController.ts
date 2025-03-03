@@ -20,13 +20,18 @@ export const UserRegister = async(req: Request, res: Response) =>
     
         // Create a new user after hashing the password
         const newUser = await CreateUser({ _id:customID, email, username, password: hashedPassword, gender, role, status, birthDay, avatarUrl});
+
+        if(!newUser)
+        {
+            return res.status(400).json({success, error: "Failed to create User"});
+        }
         
         // Get user id after create the user and Transfer user id as authToken with jsonWebToken
         const data = { user: { _id: newUser?._id } }; 
         const authToken = await jwtSign(data); 
         success = true; 
     
-        res.json({ success, message: "Register successfully!", data:{authToken, username, status: newUser?.status, role: newUser?.role, avatarUrl: avatarUrl} })
+        res.json({ success, message: "Register successfully!", data:{authToken, username, status: newUser.status, role: newUser.role, avatarUrl: avatarUrl} })
     }
     catch (error) 
     { 

@@ -60,6 +60,7 @@ interface FindUserInterface extends FindUserDateInterface
 interface CreateUserInterface extends UserDataInterface
 {
     password:string;
+    birthDay:Date;
 }
 
 interface ActionTableCellInterface extends IsAdminInterface

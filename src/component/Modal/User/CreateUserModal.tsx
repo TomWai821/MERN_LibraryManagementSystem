@@ -7,10 +7,11 @@ import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
 import { CreateUserInputField } from '../../../Maps/TextFieldsMaps';
 import { UserDataInterface } from '../../../Model/TablePageModel';
 import CreateUserConfirmModal from '../Confirmation/User/CreateUserConfirmModal';
+import { GetCurrentDate } from '../../../Controller/OtherController';
 
 const CreateUserModal:FC = ({}) => 
 {
-    const [user, setUser] = useState({username: "", password: "", email:"", role:"", status:"", gender:""});
+    const [user, setUser] = useState({username: "", password: "", email:"", role:"", status:"", gender:"", birthDay: GetCurrentDate("String") as Date});
 
     const {handleOpen} = useModal();
 

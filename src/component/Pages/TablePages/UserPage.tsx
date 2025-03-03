@@ -8,11 +8,11 @@ import CustomTab from "../../UIFragment/Tab/CustomTab";
 import { PaginationOption, UserDataTableName, UserTabLabel } from "../../../Maps/TableMaps";
 import UserTabPanel from "./Tabs/UserTabPanel";
 import { useUserContext } from "../../../Context/userContext";
-import { GetCurrentDate, GetData } from "../../../Controller/OtherController";
+import { GetCurrentDate } from "../../../Controller/OtherController";
 
 const UserPage:FC<PagesInterface> = (loginData) =>
 {
-    const {setPage, setAmount, users, fetchUser} = useUserContext();
+    const {AllUser, fetchUser, setPage, setAmount} = useUserContext();
 
     const {isAdmin} = loginData;
     const SetTitle = isAdmin ? "User Management Page" : "View BanList";
@@ -32,8 +32,8 @@ const UserPage:FC<PagesInterface> = (loginData) =>
     const [paginationValue, setPaginationValue] = useState(10);
 
     // useMemo could avoid unnecessary 
-    const pages:number = useMemo(() => Math.ceil(users.length / paginationValue), [users.length, paginationValue]);
-    const count:number = useMemo(() => Math.min(1, pages), [pages]);
+    const pages:number = useMemo(() => Math.ceil(AllUser.length / paginationValue), [AllUser.length, paginationValue]);
+    const pagesForBackend:number = useMemo(() => Math.max(0, pages), [pages]);
 
     // useCallback could avoid unnecessary re-rendering
     const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => 
@@ -42,14 +42,14 @@ const UserPage:FC<PagesInterface> = (loginData) =>
         
             setSearchUserData((prevState) => ({ ...prevState, user:{...prevState.user ,[name]: value } }));
         
-            setPage(count - 1);
+            setPage(pagesForBackend);
             setAmount(paginationValue);
-        },[count, paginationValue]
+        },[pagesForBackend, paginationValue]
     );
 
     const SearchUser = useCallback(() => 
         {
-            fetchUser(GetData("authToken") as string, UserDataTableName[tabValue], searchUserData.user, searchUserData.date);
+            fetchUser(UserDataTableName[tabValue], searchUserData.user, searchUserData.date);
         },[searchUserData.user, searchUserData.date]
     )
 
@@ -96,7 +96,7 @@ const UserPage:FC<PagesInterface> = (loginData) =>
             <CustomTab isAdmin={isAdmin} value={tabValue} valueChange={changeValue} paginationValue={paginationValue} tabLabel={UserTabLabel} paginationOption={PaginationOption}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-                <UserTabPanel value={tabValue} isAdmin={isAdmin} userData={users}/>
+                <UserTabPanel value={tabValue} isAdmin={isAdmin} userData={AllUser}/>
             </TableContainer>
             <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={pages}/>
         </Box>

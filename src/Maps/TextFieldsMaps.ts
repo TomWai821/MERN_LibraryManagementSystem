@@ -77,7 +77,8 @@ const CreateUserInputField =
     {name: "username", label: "Username", type:"text", select:false, slotProps: {}, options: []},
     {name: "password", label: "Password", type:"password"},
     ...UserFieldForModal,
-    {name: "role", label: "Role", type: "text", select: true, options: RoleOption}
+    {name: "role", label: "Role", type: "text", select: true, options: RoleOption},
+    {name: "birthDay", label: "Birthday", type: "date", select:false, options: []}
 ]
 
 const EditUserInputField =

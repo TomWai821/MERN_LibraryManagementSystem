@@ -39,12 +39,14 @@ interface ModalTemplateProps extends ChildProps
 
 interface UserContextProps
 {
-    users: UserResultDataInterface[];
-    page: number;
-    setPage: Dispatch<SetStateAction<number>>;
-    amount: number;
-    setAmount: Dispatch<SetStateAction<number>>;
-    fetchUser: (authToken:string, tableName:string, UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
+    AllUser: UserResultDataInterface[];
+    BannedUser: UserResultDataInterface[];
+    DeleteUser: UserResultDataInterface[];
+    setPage: React.Dispatch<React.SetStateAction<number>>;
+    setAmount: React.Dispatch<React.SetStateAction<number>>;
+    fetchUser: (tableName: string, UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
+    fetchAllUser: (page:number, amount:number) => void;
+    createUser: (username:string, email:string, password:string, role:string, gender:string, birthDay:string) => void;
     editUserData: (_id:string, username: string, email: string, gender: string, role: string) => void;
     changeUserstatus: (id:string, status:string, duration:number, description:string) => void;
 }

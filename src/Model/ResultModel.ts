@@ -23,6 +23,23 @@ interface GetResultInterface
 interface UserResultDataInterface extends UserDataInterface
 {
     _id:string;
+    bannedDetails?: BannedDetailsInterface;
+    deleteDetails?: DeleteDetailsInterface;
+}
+
+interface BannedDetailsInterface
+{
+    _id:string;
+    description:string;
+    startDate: Date;
+    dueDate: Date;
+}
+
+interface DeleteDetailsInterface
+{
+    _id:string;
+    startDate: Date;
+    dueDate: Date;
 }
 
 export type {ResultInterface, GetResultInterface, UserResultDataInterface}

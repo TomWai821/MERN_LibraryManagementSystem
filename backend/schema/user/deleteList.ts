@@ -15,7 +15,7 @@ const DeleteListSchema = new mongoose.Schema<DeleteListInterface>
 
 const DeleteList = mongoose.model<DeleteListInterface>('DeleteList', DeleteListSchema);
 
-const CreateDeleteList = async (data: Record<string, any>) =>
+export const CreateDeleteList = async (data: Record<string, any>) =>
 {
     try 
     {
@@ -28,7 +28,7 @@ const CreateDeleteList = async (data: Record<string, any>) =>
     }
 }
 
-const GetDeleteList = async (data?: Record<string, any>) =>
+export const GetDeleteList = async (data?: Record<string, any>) =>
 {
     try 
     {
@@ -44,7 +44,7 @@ const GetDeleteList = async (data?: Record<string, any>) =>
     }
 }
 
-const GetDeleteListCount = async (roleID?: string) => 
+export const GetDeleteListCount = async (roleID?: string) => 
 {
     if(roleID)
     {
@@ -53,7 +53,7 @@ const GetDeleteListCount = async (roleID?: string) =>
     return await DeleteList.countDocuments();
 }
 
-const FindDeleteList = async (data: Record<string, any>) =>
+export const FindDeleteList = async (data: Record<string, any>) =>
 {
     try 
     {
@@ -65,7 +65,7 @@ const FindDeleteList = async (data: Record<string, any>) =>
     }
 }
 
-const FindDeleteListByID = async (deleteListID: ObjectId, select?: Record<string, any>) =>
+export const FindDeleteListByID = async (deleteListID: ObjectId, select?: Record<string, any>) =>
 {
     try 
     {
@@ -81,7 +81,7 @@ const FindDeleteListByID = async (deleteListID: ObjectId, select?: Record<string
     }
 }
 
-const FindDeleteListByIDAndUpdate = async (deleteListID: ObjectId, data: Record<string, any>) =>
+export const FindDeleteListByIDAndUpdate = async (deleteListID: ObjectId, data: Record<string, any>) =>
 {
     try 
     {
@@ -93,7 +93,7 @@ const FindDeleteListByIDAndUpdate = async (deleteListID: ObjectId, data: Record<
     }
 }
 
-const FindDeleteListByIDAndDelete = async (deleteListID: ObjectId) =>
+export const FindDeleteListByIDAndDelete = async (deleteListID: ObjectId) =>
 {
     try 
     {
@@ -104,5 +104,3 @@ const FindDeleteListByIDAndDelete = async (deleteListID: ObjectId) =>
         printError(error);
     }
 }
-
-export {CreateDeleteList, GetDeleteList, GetDeleteListCount, FindDeleteList, FindDeleteListByID, FindDeleteListByIDAndUpdate, FindDeleteListByIDAndDelete}

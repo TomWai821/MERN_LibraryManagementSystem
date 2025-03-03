@@ -35,12 +35,12 @@ const LoginController = async (email:String, password:String, stayLogin:boolean)
     }
 }
 
-const RegisterController = async (email:string, username:string, password:string, birthDay:string, gender:string): Promise<any> => 
+const RegisterController = async (username:string, email:string, password:string, role:string, gender:string, birthDay:string): Promise<any> => 
 {
     const initals = (username.split(' ').map((word) => word[0].toUpperCase())).slice(0, 2);
     const avatarUrl = `https://via.placeholer.com/150?text=${initals}`
 
-    const user = {email, username, password, birthDay, gender, avatarUrl};
+    const user = {email, username, password, birthDay, gender, avatarUrl, role};
 
     try
     {

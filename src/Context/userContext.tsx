@@ -4,53 +4,83 @@ import { ChildProps, UserContextProps } from "../Model/ContextAndProviderModel";
 import { FetchUserData } from "../Controller/UserController/UserGetController";
 import { GetResultInterface, UserResultDataInterface } from "../Model/ResultModel";
 import { CalculateDueDate, GetCurrentDate, GetData } from "../Controller/OtherController";
-import { UserDataTableName } from "../Maps/TableMaps";
 import { ModifyStatusController, ModifyUserDataController } from "../Controller/UserController/UserPutController";
+import { RegisterController } from "../Controller/UserController/UserPostController";
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider: FC<ChildProps> = ({ children }) =>
 {
-    const [users, setUsers] = useState<UserResultDataInterface[]>([]);
+    const [AllUser, setAllUser] = useState<UserResultDataInterface[]>([]);
+    const [BannedUser, setBannedUser] = useState<UserResultDataInterface[]>([]);
+    const [DeleteUser, setDeleteUser] = useState<UserResultDataInterface[]>([]);
 
     const [page, setPage] = useState<number>(0);
     const [amount, setAmount] = useState<number>(10);
 
-    const fetchUser = useCallback(async (authToken:string, tableName:string, UserData: UserDataInterface | undefined) => 
+    const authToken = GetData("authToken") as string;
+
+    const fetchUser = useCallback(async (tableName: string, UserData: UserDataInterface | undefined) => 
     {
         const {username, email, role, status, gender} = UserData as FindUserInterface;
-        console.log(username);
         try
         {
             const result : GetResultInterface | undefined = await FetchUserData(tableName, authToken, page, amount, username, email, role, status, gender);
             if(result && Array.isArray(result.foundUser))
             {
-                setUsers(result.foundUser);
+                setAllUser(result.foundUser);
             }
         }
         catch(error)
         {
             console.log(error);
         }
-    },[page, amount])
+    },[authToken])
 
-    const fetchAllUser = useCallback(async (page: number) => 
+    const fetchAllUser = useCallback(async () => 
     {
-        const tableName = UserDataTableName[page];
-        const authToken = GetData("authToken") as string;
-        const result : GetResultInterface | undefined = await FetchUserData(tableName, authToken, page, amount);
+        const resultForAllUser : GetResultInterface | undefined = await FetchUserData("AllUser", authToken, page, amount);
+        const resultForBannedUser: GetResultInterface | undefined = await FetchUserData("BannedUser", authToken, page, amount);
+        const resultForDeleteUser: GetResultInterface | undefined = await FetchUserData("DeleteUser", authToken, page, amount);
+
         try
         {
-            if(result && Array.isArray(result.foundUser))
+            if(resultForAllUser && Array.isArray(resultForAllUser.foundUser))
             {
-                setUsers(result.foundUser);
+                setAllUser(resultForAllUser.foundUser);
+            }
+
+            if(resultForBannedUser && Array.isArray(resultForBannedUser.foundUser))
+            {
+                setBannedUser(resultForBannedUser.foundUser);
+            }
+
+            if(resultForDeleteUser && Array.isArray(resultForDeleteUser.foundUser))
+            {
+                setDeleteUser(resultForDeleteUser.foundUser)
             }
         }
         catch(error)
         {
             console.log(error);
         }
-    },[page, amount])
+    },[authToken, page, amount])
+
+    const createUser = useCallback(async (username:string, email:string, password:string, role:string, gender:string, birthDay:string) => 
+    {
+        const result : GetResultInterface | undefined = await RegisterController(username, email, password, birthDay, gender, role);
+        try
+        {
+            if(result)
+            {
+                fetchAllUser();
+            }
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
+    },[fetchAllUser])
 
     const editUserData = useCallback(async (_id: string, username:string, email:string, gender:string, role:string) => 
     {
@@ -60,14 +90,14 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
         {
             if(result)
             {
-                fetchAllUser(page);
+                fetchAllUser();
             }
         }
         catch(error)
         {
             console.log(error);
         }
-    },[fetchAllUser, page])
+    },[fetchAllUser])
 
     const changeUserstatus = useCallback(async (_id:string, status:string, duration:number, description:string) => 
     {
@@ -77,27 +107,27 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
         console.log(dueDate);
         const result : GetResultInterface | undefined = await ModifyStatusController(_id, status, startDate, dueDate, description);
 
-
         try
         {
             if(result)
             {
-                fetchAllUser(page);
+                fetchAllUser();
             }
         }
         catch(error)
         {
             console.log(error);
         }
-    },[fetchAllUser, page])
+    },[fetchAllUser]);
 
     useEffect(() => 
-    {
-        fetchAllUser(page);
-    },[page, amount])
+        {
+            fetchAllUser();
+        }, [fetchAllUser, page, amount]
+    )
 
     return (
-        <UserContext.Provider value={{ users, page, setPage, amount, setAmount, fetchUser, editUserData, changeUserstatus }}>
+        <UserContext.Provider value={{ setPage, setAmount, AllUser, BannedUser, DeleteUser, fetchUser, fetchAllUser, createUser, editUserData, changeUserstatus }}>
             {children}
         </UserContext.Provider>
     );

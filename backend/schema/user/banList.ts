@@ -16,7 +16,7 @@ const BanListSchema = new mongoose.Schema<BanListInterface>
 
 const BanList = mongoose.model<BanListInterface>('BanList', BanListSchema);
 
-const CreateBanList = async (data: Record<string, any>) =>
+export const CreateBanList = async (data: Record<string, any>) =>
 {
     try 
     {
@@ -29,7 +29,7 @@ const CreateBanList = async (data: Record<string, any>) =>
     }
 }
 
-const GetBanList = async (data?: Record<string, any>) =>
+export const GetBanList = async (data?: Record<string, any>) =>
 {
     try 
     {
@@ -45,7 +45,7 @@ const GetBanList = async (data?: Record<string, any>) =>
     }
 }
 
-const GetBanListCount = async (roleID?: string) => 
+export const GetBanListCount = async (roleID?: string) => 
 {
     if(roleID)
     {
@@ -54,7 +54,7 @@ const GetBanListCount = async (roleID?: string) =>
     return await BanList.countDocuments();
 }
 
-const FindBanList = async (data: Record<string, any>) =>
+export const FindBanList = async (data: Record<string, any>) =>
 {
     try 
     {
@@ -66,7 +66,7 @@ const FindBanList = async (data: Record<string, any>) =>
     }
 }
 
-const FindBanListByID = async (banListID: ObjectId, select?: Record<string, any>) =>
+export const FindBanListByID = async (banListID: ObjectId, select?: Record<string, any>) =>
 {
     try 
     {
@@ -82,7 +82,7 @@ const FindBanListByID = async (banListID: ObjectId, select?: Record<string, any>
     }
 }
 
-const FindBanListByIDAndUpdate = async (banListID: ObjectId, data: Record<string, any>) =>
+export const FindBanListByIDAndUpdate = async (banListID: ObjectId, data: Record<string, any>) =>
 {
     try 
     {
@@ -94,7 +94,7 @@ const FindBanListByIDAndUpdate = async (banListID: ObjectId, data: Record<string
     }
 }
 
-const FindBanListByIDAndDelete = async (banListID: ObjectId) =>
+export const FindBanListByIDAndDelete = async (banListID: ObjectId) =>
 {
     try 
     {
@@ -105,5 +105,3 @@ const FindBanListByIDAndDelete = async (banListID: ObjectId) =>
         printError(error);
     }
 }
-
-export {CreateBanList, GetBanList, GetBanListCount, FindBanList, FindBanListByID, FindBanListByIDAndUpdate, FindBanListByIDAndDelete}

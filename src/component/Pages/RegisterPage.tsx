@@ -25,7 +25,7 @@ const RegisterPage = () =>
     {
         event.preventDefault();
         setIsSubmitted(true);
-        const success = await RegisterController(Credentials.email, Credentials.username, Credentials.password, Credentials.birthDay, Credentials.gender);
+        const success = await RegisterController(Credentials.email, Credentials.username, Credentials.password, "User", Credentials.birthDay, Credentials.gender);
         
         if(alertContext && alertContext.setAlertConfig)
         {

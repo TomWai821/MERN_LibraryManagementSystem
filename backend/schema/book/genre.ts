@@ -54,15 +54,15 @@ export const FindGenre = async (data: Record<string, any>) =>
     }
 }
 
-export const FindGenreByID = async (genre: string, select?: Record<string, any>) =>
+export const FindGenreByID = async (genreId: string, select?: Record<string, any>) =>
 {
     try
     {
         if(select)
         {
-            return await Genre.findById(genre).select(select);
+            return await Genre.findById(genreId).select(select);
         }
-        return await Genre.findById(genre);
+        return await Genre.findById(genreId);
     }
     catch(error)
     {
@@ -70,11 +70,11 @@ export const FindGenreByID = async (genre: string, select?: Record<string, any>)
     }
 }
 
-export const FindGenreByIDAndUpdate  = async (genre: string, data: Record<string, any>) =>
+export const FindGenreByIDAndUpdate  = async (genreId: string, data: Record<string, any>) =>
 {
     try
     {
-        return await Genre.findByIdAndUpdate(genre, data);
+        return await Genre.findByIdAndUpdate(genreId, data);
     }
     catch(error)
     {
@@ -82,11 +82,11 @@ export const FindGenreByIDAndUpdate  = async (genre: string, data: Record<string
     }
 }
 
-export const FindGenreByIDAndDelete = async (genre: string, data: Record<string, any>) =>
+export const FindGenreByIDAndDelete = async (genreId: string, data: Record<string, any>) =>
 {
     try
     {
-        return await Genre.findByIdAndDelete(genre, data);
+        return await Genre.findByIdAndDelete(genreId, data);
     }
     catch(error)
     {

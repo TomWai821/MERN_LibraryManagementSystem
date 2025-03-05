@@ -84,7 +84,7 @@ export const AllUserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[fetchAllUser])
 
-    const changeUserStatus = useCallback(async (_id:string, status:string, duration:number, description:string) => 
+    const changeUserStatus = useCallback(async (_id:string, status:string, duration:number, description?:string) => 
     {
         const startDate = GetCurrentDate("Date") as Date;
         const dueDate = CalculateDueDate(duration);

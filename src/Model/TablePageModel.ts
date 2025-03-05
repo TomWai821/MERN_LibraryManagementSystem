@@ -65,19 +65,26 @@ interface CreateUserInterface extends UserDataInterface
 
 interface ActionTableCellInterface extends IsAdminInterface
 {
+    value: number;
     TableName: string;
-    Information: UserDataInterface | BookDataInterface;
+    Information: UserResultDataInterface | BookDataInterface;
 }
 
 interface CreateModalInterface
 {
-    bookData?: UserDataInterface | BookDataInterface;
+    data?: UserResultDataInterface | BookDataInterface;
 }
 
 interface EditModalInterface
 {
     editData: UserResultDataInterface | BookDataInterface;
     compareData: UserResultDataInterface | BookDataInterface;
+}
+
+interface DeleteModalInterface extends UserDataInterface
+{
+    _id:string;
+    value:number;
 }
 
 interface TableInterface extends IsAdminInterface
@@ -124,4 +131,4 @@ interface BanModalInterface
     description?:string;
 }
 
-export type {IsAdminInterface, PagesInterface, BookSearchInterface, BookDataInterface, UserDataInterface, FindUserInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, BookRecordTableInterface, UserDataTableInterface, TabInterface, OptionFieldsInterface, BanModalInterface}
+export type {IsAdminInterface, PagesInterface, BookSearchInterface, BookDataInterface, UserDataInterface, FindUserInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, DeleteModalInterface, BookRecordTableInterface, UserDataTableInterface, TabInterface, OptionFieldsInterface, BanModalInterface}

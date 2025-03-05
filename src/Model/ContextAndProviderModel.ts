@@ -44,7 +44,7 @@ interface AllUserContextProps
     fetchUser: (UserData: UserDataInterface | undefined) => Promise<void>;
     createUser: (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string) => void;
     editUserData: (_id:string, username: string, email: string, gender: string, role: string) => void;
-    changeUserStatus: (id:string, status:string, duration:number, description:string) => void;
+    changeUserStatus: (id:string, status:string, duration:number, description?:string) => void;
 }
 
 interface BannedUserContextProps

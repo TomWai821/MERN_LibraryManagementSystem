@@ -44,9 +44,7 @@ const AllUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userData, 
                                 <ContentTableCell>{data.role}</ContentTableCell>
                                 <ContentTableCell>{data.status}</ContentTableCell>
                                 <ContentTableCell>{data.gender}</ContentTableCell>
-                                {isAdmin ? 
-                                    <ActionTableCell TableName={"User"} Information={data} isAdmin={isAdmin}/> : <></>
-                                }
+                                {isAdmin && (<ActionTableCell value={value} TableName={"User"} Information={data} isAdmin={isAdmin}/>)}
                             </TableRow>
                         )
                     )}

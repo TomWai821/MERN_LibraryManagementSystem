@@ -5,7 +5,6 @@ import { BannedUserTableHeader } from "../../../../Maps/TableMaps";
 import { FC, Fragment, useState } from "react";
 import { UserDataTableInterface } from "../../../../Model/TablePageModel";
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
-import { TransferDateToString } from "../../../../Controller/OtherController";
 
 const BannedUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userData, paginationValue}) => 
 {
@@ -41,14 +40,10 @@ const BannedUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userDat
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                 <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
                                 <ContentTableCell>{data.username}</ContentTableCell>
-                                <ContentTableCell>{data.email}</ContentTableCell>
                                 <ContentTableCell>{data.role}</ContentTableCell>
                                 <ContentTableCell>{data.gender}</ContentTableCell>
-                                <ContentTableCell>{TransferDateToString(data.bannedDetails?.startDate)}</ContentTableCell>
-                                <ContentTableCell>{TransferDateToString(data.bannedDetails?.dueDate)}</ContentTableCell>
-                                {isAdmin ? 
-                                    <ActionTableCell TableName={"User"} Information={data} isAdmin={isAdmin}/> : <></>
-                                }
+                                <ContentTableCell>{data.bannedDetails?.description}</ContentTableCell>
+                                {isAdmin && (<ActionTableCell value={value} TableName={"User"} Information={data} isAdmin={isAdmin}/>)}
                             </TableRow>
                         )
                     )}

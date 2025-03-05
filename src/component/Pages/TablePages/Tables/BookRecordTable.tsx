@@ -34,9 +34,7 @@ const BookRecordTable:FC<BookRecordTableInterface> = ({isLoggedIn, isAdmin, book
                             <ContentTableCell>{data.publisher}</ContentTableCell>
                             <ContentTableCell>{data.pages}</ContentTableCell>
                             <ContentTableCell>{data.amount}</ContentTableCell>
-                            {isLoggedIn ? 
-                                <ActionTableCell TableName={"Book"} Information={data} isAdmin={isAdmin}/> : <></>
-                            }
+                            {isLoggedIn && (<ActionTableCell TableName={"Book"} Information={data} isAdmin={isAdmin} value={0}/>)}
                         </TableRow>
                     )
                 )}

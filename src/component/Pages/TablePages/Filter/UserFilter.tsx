@@ -5,7 +5,6 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 import { FilterInterface, UserDataInterface } from "../../../../Model/TablePageModel";
-import { UserOtherSearchField } from "../../../../Maps/TextFieldsMaps";
 
 import { useModal } from "../../../../Context/ModalContext";
 import CreateUserModal from "../../../Modal/User/CreateUserModal";
@@ -33,21 +32,8 @@ const UserFilter:FC<FilterInterface> = (filterData) =>
     return(
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{...ItemToCenter, paddingBottom: '25px', alignItems: 'center'}}>
-                {value === 0 ? 
-                    <TextField label={"Username"} value={userData.username} name="username" size="small" onChange={onChange} sx={{width: '75%'}}/>:
-                    UserOtherSearchField.map((field, index) => (
-                        <TextField label={field.label} key={index} name={field.name} select={field.select} onChange={onChange} sx={{...field.syntax}} size="small">
-                            {
-                                field.select && field.options?.map((option, index) => 
-                                    (
-                                        <MenuItem key={index} value={option} sx={{height: '40px'}}>{option}</MenuItem>
-                                    )
-                                )
-                            }
-                        </TextField>
-                    ))
-                }
-                
+                <TextField label={"Username"} value={userData.username} name="username" size="small" onChange={onChange} sx={{width: '75%'}}/>
+
                 {isAdmin &&
                     (
                         <IconButton onClick={toggleCardVisibility}>

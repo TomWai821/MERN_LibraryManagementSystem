@@ -20,7 +20,7 @@ const CreateBookModal: FC<CreateModalInterface> = ({...bookData}) =>
 
     const onClick = () => 
     {
-        handleOpen(<CreateBookConfirmModal bookData={book}/>);
+        handleOpen(<CreateBookConfirmModal data={book}/>);
     }
 
     return (

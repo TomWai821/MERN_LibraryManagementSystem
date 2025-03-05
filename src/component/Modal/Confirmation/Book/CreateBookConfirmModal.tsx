@@ -6,7 +6,7 @@ import { BookDataInterface, CreateModalInterface } from "../../../../Model/Table
 import { useModal } from "../../../../Context/ModalContext"
 import CreateBookModal from "../../Book/CreateBookModal"
 
-const CreateBookConfirmModal:FC<CreateModalInterface> = ({bookData}) => 
+const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) => 
 {
     const {bookname, genre, publisher, author, pages, amount} = bookData as BookDataInterface;
 
@@ -14,7 +14,7 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({bookData}) =>
 
     const backToCreateModal = () => 
     {
-        handleOpen(<CreateBookModal bookData={bookData} />);
+        handleOpen(<CreateBookModal data={bookData as BookDataInterface} />);
     }
 
     return(

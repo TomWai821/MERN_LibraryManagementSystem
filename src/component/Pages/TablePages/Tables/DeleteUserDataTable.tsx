@@ -5,6 +5,7 @@ import { DeleteUserTableHeader } from "../../../../Maps/TableMaps";
 import { FC, Fragment, useState } from "react";
 import { UserDataTableInterface } from "../../../../Model/TablePageModel";
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
+import { TransferDateToString } from "../../../../Controller/OtherController";
 
 const DeleteUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userData, paginationValue}) => 
 {
@@ -17,7 +18,8 @@ const DeleteUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userDat
 
     const paginatedData = userData.slice(startIndex, endIndex);
 
-    const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => {
+    const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => 
+    {
         setPage(newPage);
     };
 
@@ -42,11 +44,10 @@ const DeleteUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userDat
                                 <ContentTableCell>{data.username}</ContentTableCell>
                                 <ContentTableCell>{data.email}</ContentTableCell>
                                 <ContentTableCell>{data.role}</ContentTableCell>
-                                <ContentTableCell>{data.status}</ContentTableCell>
                                 <ContentTableCell>{data.gender}</ContentTableCell>
-                                {isAdmin ? 
-                                    <ActionTableCell TableName={"User"} Information={data} isAdmin={isAdmin}/> : <></>
-                                }
+                                <ContentTableCell>{TransferDateToString(data.deleteDetails?.startDate)}</ContentTableCell>
+                                <ContentTableCell>{TransferDateToString(data.deleteDetails?.dueDate)}</ContentTableCell>
+                                {isAdmin && (<ActionTableCell value={value} TableName={"User"} Information={data} isAdmin={isAdmin}/>)}
                             </TableRow>
                         )
                     )}

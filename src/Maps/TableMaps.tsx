@@ -25,11 +25,9 @@ const BannedUserTableHeader =
 [
     {label:"No."},
     {label:"Username"},
-    {label:"Email"},
     {label:"Role"},
     {label:"Gender"},
-    {label:"Start Date"},
-    {label:"Due Date"},
+    {label:"Description"},
     {label:"Actions"}
 ]
 

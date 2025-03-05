@@ -30,12 +30,6 @@ const BookMainSearchField =
     {name:"language", label:"Language", syntax:{ width: '10%', marginLeft: '10px' }, select: true}
 ]
 
-const UserOtherSearchField = 
-[
-    {name:"username", label:"UserName", syntax:{ width: '60%' }, select: false},
-    {name:"role", label:"Role", syntax:{ width: '10%', marginLeft: '10px' }, select: true, options: RoleOption}
-]
-
 const BookSearchField = 
 [
     {name: "genre", label: "Genre", type: "text", select: true},
@@ -60,9 +54,10 @@ const AllUserSearchField =
 
 const OtherUserSearchField = 
 [
-    ...UserSearchField,
-    {name: "startDate", label: "Start Date", type: "date"},
-    {name: "dueDate", label: "Due Date", type: "date"},
+    {name: "role", label:"Role", type:"text", syntax:{ width: '10%', marginLeft: '10px' }, select: true, options: RoleFilterOption},
+    {name: "gender", label: "Gender", type: "text", select: true, options: GenderFilterOption},
+    {name: "startDate", label: "Start Date", type: "date", options:[]},
+    {name: "dueDate", label: "Due Date", type: "date", options:[]},
 ]
 
 // For user modal
@@ -106,4 +101,4 @@ const dateOption =
     {label:'Forever', value: Infinity}
 ];
 
-export {RegisterField, LoginField, ViewProfileField, BookMainSearchField, UserOtherSearchField, BookSearchField, AllUserSearchField, OtherUserSearchField, CreateBookInputField, CreateUserInputField, EditUserInputField, dateOption}
+export {RegisterField, LoginField, ViewProfileField, BookMainSearchField, BookSearchField, AllUserSearchField, OtherUserSearchField, CreateBookInputField, CreateUserInputField, EditUserInputField, dateOption}

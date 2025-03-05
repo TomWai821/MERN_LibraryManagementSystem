@@ -5,7 +5,7 @@ import { useModal } from "../../../../Context/ModalContext";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 import EditUserModal from "../../User/EditUserModal";
-import { useUserContext } from "../../../../Context/userContext";
+import { useAllUserContext } from "../../../../Context/User/AllUserContext";
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
 
 const EditUserConfirmModal:FC<EditModalInterface> = ({editData, compareData}) => 
@@ -13,7 +13,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = ({editData, compareData}) =>
     const [differences, setDifferences] = useState<string[]>([]);
 
     const {handleOpen, handleClose} = useModal();
-    const {editUserData} = useUserContext();
+    const {editUserData} = useAllUserContext();
 
     useEffect(() => 
     {

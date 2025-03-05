@@ -12,6 +12,7 @@ import { PageItemToCenter, PageTitleSyntax } from '../../Maps/FormatSyntaxMaps';
 import { ValidateField } from '../../Controller/ValidateController'
 import { LoginController } from '../../Controller/UserController/UserPostController';
 import { ChangePage } from '../../Controller/OtherController';
+import { GetResultInterface } from '../../Model/ResultModel';
 
 const LoginPage = () => 
 {
@@ -25,19 +26,21 @@ const LoginPage = () =>
     const handleLogin = async (e: FormEvent) => 
     {
         e.preventDefault();
-        const success = await LoginController(credentials.email, credentials.password, credentials.stayLogin);
+        const response: boolean = await LoginController(credentials.email, credentials.password, credentials.stayLogin);
         setIsSubmitted(true);
-
+    
         if(alertContext && alertContext.setAlertConfig)
         {
-            if (success) 
+            if (response) 
             {
                 alertContext.setAlertConfig({ AlertType: "success", Message: "Login Successfully!", open: true, onClose: () => alertContext.setAlertConfig(null)});
                 setTimeout(() => {ChangePage('/')}, 2000);
                 return;
             }
             alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to login!", open: true, onClose: () => alertContext.setAlertConfig(null)});
+
         }
+
     };
     
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 

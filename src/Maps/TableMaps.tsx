@@ -10,7 +10,7 @@ const BookRecordTableHeader = [
     {label:"Actions", condition:"isLoggedIn"}
 ];
 
-const UserTableHeader = 
+const AllUserTableHeader = 
 [
     {label:"No."},
     {label:"Username"},
@@ -18,6 +18,30 @@ const UserTableHeader =
     {label:"Role"},
     {label:"Status"},
     {label:"Gender"},
+    {label:"Actions"}
+]
+
+const BannedUserTableHeader = 
+[
+    {label:"No."},
+    {label:"Username"},
+    {label:"Email"},
+    {label:"Role"},
+    {label:"Gender"},
+    {label:"Start Date"},
+    {label:"Due Date"},
+    {label:"Actions"}
+]
+
+const DeleteUserTableHeader = 
+[
+    {label:"No."},
+    {label:"Username"},
+    {label:"Email"},
+    {label:"Role"},
+    {label:"Gender"},
+    {label:"Start Date"},
+    {label:"Due Date"},
     {label:"Actions"}
 ]
 
@@ -53,4 +77,4 @@ const StatusFilterOption = [...StatusOption, ...EmptyOption];
 
 const GenderFilterOption = [...GenderOption, ...EmptyOption];
 
-export {BookRecordTableHeader, UserTableHeader, BookTabLabel, UserTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption}
+export {BookRecordTableHeader, AllUserTableHeader, BannedUserTableHeader, DeleteUserTableHeader, BookTabLabel, UserTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption}

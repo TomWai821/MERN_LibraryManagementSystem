@@ -2,8 +2,8 @@ import { NextFunction, Response } from "express";
 import { AuthRequest } from "../../model/requestInterface";
 import { FindUser } from "../../schema/user/user";
 import { ObjectId } from "mongoose";
-import { CreateBanList, GetBanListCount } from "../../schema/user/banList";
-import { CreateDeleteList, GetDeleteListCount } from "../../schema/user/deleteList";
+import { CreateBanList, FindBanList, FindBanListByID } from "../../schema/user/banList";
+import { CreateDeleteList, FindDeleteList } from "../../schema/user/deleteList";
 import { UserInterface } from "../../model/userSchemaInterface";
 
 // For user update(Require login)
@@ -48,15 +48,16 @@ export const BuildUpdateData = async (req: AuthRequest, res:Response, next:NextF
 
     if(status !== foundUser.status)
     {
-        const changeStatus = await ChangeStatus(foundUser._id, status, description, startDate, dueDate);    
-        
+        const changeStatus = await ChangeStatus(foundUser._id, status, description, startDate, dueDate);     
+
         if(!changeStatus)
         {
             return res.status(200).json({ sucess: false, error:"Failed to Change Status!"});
         }
+        updateData.status = status;
     }
 
-    if (Object.keys(updateData).length === 0 && !status) 
+    if (Object.keys(updateData).length === 0) 
     {
         return res.status(400).json({ success: false, error: "No changes detected" });
     }
@@ -70,9 +71,21 @@ const ChangeStatus = async (userId:ObjectId, status:string, description: string,
     switch(status)
     {
         case "Banned":
+            const findUserInBanList = await FindBanList({userId: userId as ObjectId});
+
+            if(findUserInBanList)
+            {
+                return false;
+            }
             return await HandleBanStatus(userId, description, startDate, dueDate);
 
         case "Delete":
+            const findUserInDeleteList = await FindDeleteList({userId: userId as ObjectId});
+
+            if(findUserInDeleteList)
+            {
+                return false;
+            }
            return await HandleDeleteStatus(userId, startDate, dueDate);
 
         case "Normal":
@@ -85,16 +98,12 @@ const ChangeStatus = async (userId:ObjectId, status:string, description: string,
 
 const HandleBanStatus = async (userId:ObjectId, description: string, startDate: Date, dueDate: Date) => 
 {
-    const banListCount = await GetBanListCount() + 1;
-    const customBanListID = `BanList-${banListCount}`;
-    const createBanList = await CreateBanList({_id:customBanListID, userID: userId, description, startDate, dueDate});
+    const createBanList = await CreateBanList({userID: userId, description, startDate, dueDate});
     return createBanList;
 }
 
 const HandleDeleteStatus = async (userId:ObjectId, startDate: Date, dueDate: Date) => 
 {
-    const deleteListCount = await GetDeleteListCount() + 1;
-    const customDeleteListID = `DeleteList-${deleteListCount}`;
-    const createDeleteList = await CreateDeleteList({_id:customDeleteListID, userID: userId, startDate, dueDate});
+    const createDeleteList = await CreateDeleteList({userID: userId, startDate, dueDate});
     return createDeleteList;
 }

@@ -6,13 +6,13 @@ import { FC } from "react";
 import { useModal } from "../../../../Context/ModalContext";
 import BanUserModal from "../../User/BanUserModal";
 import { dateOption } from "../../../../Maps/TextFieldsMaps";
-import { useUserContext } from "../../../../Context/userContext";
+import { useAllUserContext } from "../../../../Context/User/AllUserContext";
 
 const BanUserConfirmModal:FC<BanModalInterface> = (banData) => 
 {
     const { _id, username, durationOption, description } = banData;
     const {handleOpen, handleClose} = useModal();
-    const {changeUserstatus} = useUserContext();
+    const {changeUserStatus} = useAllUserContext();
 
     const returnBanUserModal = () => 
     {
@@ -23,7 +23,7 @@ const BanUserConfirmModal:FC<BanModalInterface> = (banData) =>
     const BanUser = (_id:string, duration:number, description:string) => 
     {
         handleClose();
-        changeUserstatus(_id, "Banned", duration, description);
+        changeUserStatus(_id, "Banned", duration, description);
     }
 
     return(

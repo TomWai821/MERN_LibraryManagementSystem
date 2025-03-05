@@ -1,5 +1,5 @@
-import { ResultInterface } from '../../Model/ResultModel';
-import {SetUserCookie, DeleteUserCookie} from '../CookieController'
+import { ResultInterface, UserResultDataInterface } from '../../Model/ResultModel';
+import { SetUserCookie, DeleteUserCookie } from '../CookieController'
 
 const mainPage:string = 'http://localhost:3000/';
 
@@ -15,19 +15,19 @@ const handleLogout = async(username: string | null) =>
 
 const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =>
 {
-    if(result)
+    const userData = result.data;
+    if(userData)
     {
-        console.log(result.data)
         if(!stayLogin)
         {
-            sessionStorage.setItem("authToken", result.data.authToken);
-            sessionStorage.setItem("username", result.data.username);
-            sessionStorage.setItem("role", result.data.role);
-            sessionStorage.setItem("status", result.data.status);
-            sessionStorage.setItem("avatarUrl", result.data.avatarUrl)
+            sessionStorage.setItem("authToken", userData.authToken as string);
+            sessionStorage.setItem("username", userData.username);
+            sessionStorage.setItem("role", userData.role);
+            sessionStorage.setItem("status", userData.status);
+            sessionStorage.setItem("avatarUrl", userData.avatarUrl as string)
             return;
         }
-        SetUserCookie(result.data.authToken, result.data.username, result.data.role , result.data.avatarUrl, result.data.status,30);
+        SetUserCookie(userData.authToken  as string, userData.username, userData.role , userData.status, userData.avatarUrl as string, 30);
     }
 }
 

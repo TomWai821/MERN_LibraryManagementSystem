@@ -25,7 +25,7 @@ const BuildQuery = (params:Record<string, number | string | Date | undefined>) =
     return queryParams.toString();
 }
 
-const FetchUserData = async(tableName?: string, authToken?:string, page?:number, amount?: number, username?: string, email?: string , role?: string , status?: string, gender?: string, startDate?:Date, dueDate?: Date) => 
+const FetchUserData = async(tableName?: string, authToken?:string,  username?: string, email?: string , role?: string , status?: string, gender?: string, startDate?:Date, dueDate?: Date) => 
 {
     try
     {
@@ -39,7 +39,7 @@ const FetchUserData = async(tableName?: string, authToken?:string, page?:number,
             headers['authToken'] = authToken;
         }
 
-        let queryParams = BuildQuery({username, email, role, status, gender, startDate, dueDate, page, amount});
+        let queryParams = BuildQuery({username, email, role, status, gender, startDate, dueDate});
 
         const queryString = queryParams.toString();
         const url = `${localhost}/userData/tableName=${queryString ? `${tableName}?${queryString}` : `${tableName}`}`;

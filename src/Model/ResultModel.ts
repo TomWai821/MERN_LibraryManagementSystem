@@ -17,12 +17,14 @@ interface RegisterDataInterface
 interface GetResultInterface
 {
     success:boolean;
+    authtoken?:string;
     foundUser: UserResultDataInterface | UserResultDataInterface[];
 }
 
 interface UserResultDataInterface extends UserDataInterface
 {
     _id:string;
+    avatarUrl?:string;
     bannedDetails?: BannedDetailsInterface;
     deleteDetails?: DeleteDetailsInterface;
 }
@@ -42,4 +44,4 @@ interface DeleteDetailsInterface
     dueDate: Date;
 }
 
-export type {ResultInterface, GetResultInterface, UserResultDataInterface}
+export type {ResultInterface, GetResultInterface, UserResultDataInterface, BannedDetailsInterface, DeleteDetailsInterface}

@@ -94,7 +94,8 @@ interface BookRecordTableInterface extends TableInterface
 interface UserDataTableInterface extends IsAdminInterface
 {
     value: number;
-    userData: UserResultDataInterface[];
+    userData: UserResultDataInterface[][];
+    paginationValue: number;
 }
 
 interface TabInterface extends IsAdminInterface

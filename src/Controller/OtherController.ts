@@ -69,4 +69,11 @@ const CalculateDueDate = (duration:number): Date =>
     return dueDate;
 }
 
-export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate, CalculateDueDate}
+const TransferDateToString = (date: Date | undefined):string => 
+{
+
+    if (!date) return "N/A";
+    return new Date(date).toLocaleDateString('en-US'); // Customize locale
+}
+
+export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate, CalculateDueDate, TransferDateToString}

@@ -3,7 +3,7 @@ import { useModal } from '../../../../Context/ModalContext';
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
 import ModalTemplate from '../../../Templates/ModalTemplate';
 import CreateUserModal from "../../User/CreateUserModal";
-import { useUserContext } from "../../../../Context/userContext";
+import { useAllUserContext } from "../../../../Context/User/AllUserContext";
 
 const CreateUserConfirmModal = ({...userData}) => 
 {
@@ -11,7 +11,7 @@ const CreateUserConfirmModal = ({...userData}) =>
     const birthDayToString = birthDay.toString();
  
     const { handleOpen, handleClose } = useModal();
-    const { createUser } = useUserContext();
+    const { createUser } = useAllUserContext();
 
     const returnCreateUserModal = () => 
     {

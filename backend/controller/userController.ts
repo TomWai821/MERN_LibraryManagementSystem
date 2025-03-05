@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { AuthRequest, CreateUserInterface } from '../model/requestInterface';
 import { jwtSign, bcryptHash } from './hashing'
 import { UserInterface } from '../model/userSchemaInterface';
-import { CreateUser, FindUserByIDAndDelete, FindUserByIDAndUpdate,  GetUserCount } from '../schema/user/user';
+import { CreateUser, FindUserByIDAndDelete, FindUserByIDAndUpdate } from '../schema/user/user';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {
@@ -10,16 +10,12 @@ export const UserRegister = async(req: Request, res: Response) =>
     let success = false;
 
     try
-    {
-        // Get amount of player and integrate the value to custom ID
-        const userCount = await GetUserCount();
-        const customID = "User-" + (userCount + 1).toString();
-        
+    {   
         // Hash password with bcrypt after validate email and username
         const hashedPassword = await bcryptHash(password); 
     
         // Create a new user after hashing the password
-        const newUser = await CreateUser({ _id:customID, email, username, password: hashedPassword, gender, role, status, birthDay, avatarUrl});
+        const newUser = await CreateUser({ email, username, password: hashedPassword, gender, role, status, birthDay, avatarUrl});
 
         if(!newUser)
         {
@@ -83,7 +79,7 @@ export const ModifyUserData = async (req: AuthRequest, res: Response) =>
 
     try 
     {
-        const modifyData = await FindUserByIDAndUpdate(foundUser._id, updateData);  
+        const modifyData = await FindUserByIDAndUpdate(foundUser._id, updateData); 
 
         if(!modifyData)
         {

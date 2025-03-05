@@ -7,14 +7,19 @@ import { PagesInterface } from "../../../Model/TablePageModel";
 import CustomTab from "../../UIFragment/Tab/CustomTab";
 import { PaginationOption, UserDataTableName, UserTabLabel } from "../../../Maps/TableMaps";
 import UserTabPanel from "./Tabs/UserTabPanel";
-import { useUserContext } from "../../../Context/userContext";
 import { GetCurrentDate } from "../../../Controller/OtherController";
+import { useAllUserContext } from "../../../Context/User/AllUserContext";
+import { useBannedUserContext } from "../../../Context/User/BannedUserContext";
+import { useDeleteUserContext } from "../../../Context/User/DeleteUserContext";
 
 const UserPage:FC<PagesInterface> = (loginData) =>
 {
-    const {AllUser, fetchUser, setPage, setAmount} = useUserContext();
+    const { AllUser, fetchUser } = useAllUserContext();
+    const { BannedUser, fetchBannedUser } = useBannedUserContext();
+    const { DeleteUser, fetchDeleteUser } = useDeleteUserContext();
 
-    const {isAdmin} = loginData;
+    const UserData = [AllUser, BannedUser, DeleteUser];
+    const { isAdmin } = loginData;
     const SetTitle = isAdmin ? "User Management Page" : "View BanList";
 
     const [searchUserData, setSearchUserData] = useState(
@@ -31,25 +36,33 @@ const UserPage:FC<PagesInterface> = (loginData) =>
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
 
-    // useMemo could avoid unnecessary 
-    const pages:number = useMemo(() => Math.ceil(AllUser.length / paginationValue), [AllUser.length, paginationValue]);
-    const pagesForBackend:number = useMemo(() => Math.max(0, pages), [pages]);
-
     // useCallback could avoid unnecessary re-rendering
     const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => 
         {
             const { name, value } = event.target;
         
             setSearchUserData((prevState) => ({ ...prevState, user:{...prevState.user ,[name]: value } }));
-        
-            setPage(pagesForBackend);
-            setAmount(paginationValue);
-        },[pagesForBackend, paginationValue]
+
+        },[paginationValue]
     );
 
     const SearchUser = useCallback(() => 
         {
-            fetchUser(UserDataTableName[tabValue], searchUserData.user, searchUserData.date);
+            switch(tabValue)
+            {
+                case 0:
+                    fetchUser(searchUserData.user);
+                    break;
+
+                case 1:
+                    fetchBannedUser(searchUserData.user, searchUserData.date);
+                    break;
+
+                case 2:
+                    fetchDeleteUser(searchUserData.user, searchUserData.date);
+                    break;
+            }
+            
         },[searchUserData.user, searchUserData.date]
     )
 
@@ -96,9 +109,8 @@ const UserPage:FC<PagesInterface> = (loginData) =>
             <CustomTab isAdmin={isAdmin} value={tabValue} valueChange={changeValue} paginationValue={paginationValue} tabLabel={UserTabLabel} paginationOption={PaginationOption}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-                <UserTabPanel value={tabValue} isAdmin={isAdmin} userData={AllUser}/>
+                <UserTabPanel value={tabValue} isAdmin={isAdmin} userData={UserData} paginationValue={paginationValue}/>
             </TableContainer>
-            <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={pages}/>
         </Box>
     );
 }

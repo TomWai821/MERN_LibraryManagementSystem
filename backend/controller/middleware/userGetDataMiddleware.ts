@@ -22,7 +22,7 @@ export const BuildQueryAndGetData = async (req: AuthRequest, res: Response, next
         } 
         else 
         {
-            foundUser = await fetchUserData(userId.toString(), tableName, queryParams);
+            foundUser = await fetchUserData(userId, tableName, queryParams);
         }
     } 
     else 
@@ -44,11 +44,10 @@ const validateAndGetUserByID = async (userId: ObjectId) =>
     return user;
 };
 
-const fetchUserData = async (userId: string, tableName: string, queryParams: any) => 
+const fetchUserData = async (userId: ObjectId, tableName: string, queryParams: any) => 
 {
-    const { page, amount } = queryParams;
     const query = buildQuery(queryParams);
-    return await FindUserWithData(tableName, query, parseInt(page), parseInt(amount), userId.toString());
+    return await FindUserWithData(tableName, query, userId);
 };
 
 const buildQuery = (queryParams: any) => 

@@ -5,21 +5,27 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { AlertProvider } from './Context/AlertContext';
 import { ModalProvider } from './Context/ModalContext';
-import { UserProvider } from './Context/userContext';
+import { AllUserProvider } from './Context/User/AllUserContext';
+import { BannedUserProvider } from './Context/User/BannedUserContext';
+import { DeleteUserProvider } from './Context/User/DeleteUserContext';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
-  <UserProvider>
-      <AlertProvider>
-          <ModalProvider>
-              <BrowserRouter>
-                  <App />
-              </BrowserRouter>
-          </ModalProvider>
-      </AlertProvider>
-  </UserProvider>
+    <AllUserProvider>
+        <DeleteUserProvider>
+            <BannedUserProvider>
+                <AlertProvider>
+                    <ModalProvider>
+                        <BrowserRouter>
+                            <App />
+                        </BrowserRouter>
+                    </ModalProvider>
+                </AlertProvider>
+            </BannedUserProvider>
+        </DeleteUserProvider>
+    </AllUserProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,4 +1,4 @@
-import { ResultInterface } from "../../Model/ResultModel"
+import { GetResultInterface, ResultInterface } from "../../Model/ResultModel"
 import { handleSuccess } from "./UserOtherController";
 
 const contentType:string = 'application/json';
@@ -22,23 +22,19 @@ const LoginController = async (email:String, password:String, stayLogin:boolean)
         {
             const result: ResultInterface = await response.json();
             handleSuccess(result, stayLogin);
-            return true;
         }
-        else
-        {
-            return false;
-        }
+        return response.ok;
     }
     catch(error)
     {
-        return false;
+        console.log(error);
     }
 }
 
 const RegisterController = async (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string): Promise<any> => 
 {
     const initals = (username.split(' ').map((word) => word[0].toUpperCase())).slice(0, 2);
-    const avatarUrl = `https://via.placeholer.com/150?text=${initals}`
+    const avatarUrl = `https://via.placeholder.com/150?text=${initals}`
 
     const user = {username, email, password, gender, role, avatarUrl, birthDay};
 
@@ -56,18 +52,12 @@ const RegisterController = async (registerPosition:string, username:string, emai
         {
             const result: ResultInterface = await response.json();
             handleSuccess(result, false);
-            return true;
         }
-        else
-        {
-            return false;
-        }
-        
+        return response.ok;
     }
     catch(error)
     {
         console.log(error);
-        return false;
     }
 }
 

@@ -5,7 +5,6 @@ import { printError } from '../../controller/Utils';
 const UserSchema = new mongoose.Schema<UserInterface>
 (
     {
-        _id: {type: String, required: true},
         username: { type: String, required: true },
         email: { type: String, required: true },
         password: { type: String, required: true },
@@ -70,25 +69,22 @@ export const FindUser = async (data: Record<string, any>) =>
     }
 }
 
-export const FindUserWithData = async (tableName:string, data: Record<string, any>, page: number, amount: number, userId: string) =>
+export const FindUserWithData = async (tableName:string, data: Record<string, any>, userId: ObjectId) =>
 {
     try
     {
-        // for skip document => 0 = skip 0 document, and page = select from which amount (e.g. skipItem = 0, amount = 10, then will get 0 - 10 items)
-        const skipItems = page * amount;
-
         data._id = { $ne: userId };
         
         switch(tableName)
         {
             case "BannedUser":
-                return await GetUsersWithBannedDetails(data, amount, skipItems);
+                return await GetUsersWithBannedDetails(data);
 
             case "DeleteUser":
-                return await GetUsersWithDeleteDetails(data, amount, skipItems);
+                return await GetUsersWithDeleteDetails(data);
 
             case "AllUser":
-                return await User.find(data).limit(amount).skip(skipItems);
+                return await User.find(data);
             
             default:
                 return await User.findOne(data);
@@ -101,7 +97,7 @@ export const FindUserWithData = async (tableName:string, data: Record<string, an
 }
 
 // Local variable(For get banned user data)
-const GetUsersWithBannedDetails = async (data: any, itemAmountPerPage: number, skipItems: number) => 
+const GetUsersWithBannedDetails = async (data: any) => 
 {
     return await User.aggregate(
         [
@@ -114,15 +110,13 @@ const GetUsersWithBannedDetails = async (data: any, itemAmountPerPage: number, s
                     as: 'bannedDetails'  
                 }
             },
-            { $unwind: '$bannedDetails' },  
-            { $skip: skipItems },  
-            { $limit: itemAmountPerPage }  
+            { $unwind: '$bannedDetails' }
         ]
     );
 }
 
 // Local variable(For get delete user data)
-const GetUsersWithDeleteDetails = async (data: any, itemAmountPerPage: number, skipItems: number) => 
+const GetUsersWithDeleteDetails = async (data: any) => 
 {
     return await User.aggregate(
         [
@@ -135,9 +129,7 @@ const GetUsersWithDeleteDetails = async (data: any, itemAmountPerPage: number, s
                     as: 'deleteDetails'  
                 }
             },
-            { $unwind: '$deleteDetails' },  
-            { $skip: skipItems },  
-            { $limit: itemAmountPerPage }  
+            { $unwind: '$deleteDetails' },   
         ]
     );
 }

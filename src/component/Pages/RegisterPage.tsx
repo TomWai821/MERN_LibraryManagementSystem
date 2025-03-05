@@ -11,7 +11,7 @@ import { RegisterModel } from '../../Model/InputFieldModel';
 import { PageItemToCenter, PageTitleSyntax } from '../../Maps/FormatSyntaxMaps';
 import { ChangePage, GetCurrentDate } from '../../Controller/OtherController';
 import { AlertContext } from '../../Context/AlertContext';
-import { useUserContext } from '../../Context/userContext';
+import { GetResultInterface } from '../../Model/ResultModel';
 
 const RegisterPage = () => 
 {
@@ -19,7 +19,6 @@ const RegisterPage = () =>
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errors, setErrors] = useState({email: "", username: "", password: ""});
     const [helperTexts, setHelperText] = useState({email: "", username: "", password: ""});
-    const {createUser} = useUserContext();
 
     const alertContext = useContext(AlertContext);
 
@@ -27,17 +26,19 @@ const RegisterPage = () =>
     {
         event.preventDefault();
         setIsSubmitted(true);
-        const success = await RegisterController("RegisterPanel", Credentials.username, Credentials.email, Credentials.password, "User", Credentials.gender, Credentials.birthDay,);
-        
+        const response: boolean = await RegisterController("RegisterPanel", Credentials.username, Credentials.email, Credentials.password, "User", Credentials.gender, Credentials.birthDay);
+
         if(alertContext && alertContext.setAlertConfig)
         {
-            if (success) 
+            if (response) 
             {
                 alertContext.setAlertConfig({ AlertType: "success", Message: "Register Successfully!", open: true, onClose: () => alertContext.setAlertConfig(null)});
                 setTimeout(() => {ChangePage('/')}, 2000);
-                return;
             }
-            alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to login!", open: true, onClose: () => alertContext.setAlertConfig(null)});
+            else
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to login!", open: true, onClose: () => alertContext.setAlertConfig(null)});
+            }
         }
     }
 

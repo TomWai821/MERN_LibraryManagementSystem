@@ -1,4 +1,3 @@
-import { UserDataInterface } from "../../Model/TablePageModel";
 import { GetData } from "../OtherController";
 
 const contentType:string = 'application/json';
@@ -43,7 +42,7 @@ const ModifyUserDataController = async (id: string, username:string, email:strin
     return await fetchData(url, data);
 };
 
-const ModifyStatusController = async (id: string, status: string, startDate: Date, dueDate: Date, description: string) => 
+const ModifyStatusController = async (id: string, status: string, startDate?: Date, dueDate?: Date, description?: string) => 
 {
     const data = { status, startDate, dueDate, description };
     const url = `${localhost}/modifyData/id=${id}`;

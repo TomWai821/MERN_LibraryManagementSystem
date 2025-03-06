@@ -61,8 +61,8 @@ interface DeleteUserContextProps
     DeleteUser: UserResultDataInterface[];
     fetchAllDeleteUser: () => Promise<void>;
     fetchDeleteUser: (UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
-    editDeleteUserData: (_id:string, username: string, email: string, gender: string, role: string) => void;
     changeDeleteUserStatus: (id:string, status:string) => void;
+    actualDeleteUser: (id:string) => void;
 }
 
 interface TabPanelProps extends ChildProps

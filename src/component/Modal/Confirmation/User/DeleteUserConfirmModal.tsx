@@ -7,22 +7,30 @@ import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../
 import DeleteTypography from '../../../UIFragment/Typography/DeleteTypography';
 import { useAllUserContext } from '../../../../Context/User/AllUserContext';
 import { useModal } from '../../../../Context/ModalContext';
+import { useDeleteUserContext } from '../../../../Context/User/DeleteUserContext';
 
 const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) => 
 {
-    const {value, _id, username, email, role, gender} = userData;
-    const {changeUserStatus} = useAllUserContext();
+    const {value, _id, username, email, role, gender, status} = userData;
+    const {changeUserStatus, fetchAllUser} = useAllUserContext();
+    const {actualDeleteUser} = useDeleteUserContext();
     const {handleClose} = useModal();
 
-    const DeleteUserAction = () => 
+    const DeleteUserAction = (): void => 
     {
         switch(value)
         {
             case 0:
-                changeUserStatus(_id, "Delete", 30);
+                if(status !== "Delete")
+                {
+                    changeUserStatus(_id, "Delete", 30);    
+                }
                 handleClose();
+                fetchAllUser();
                 break;
             case 2:
+                actualDeleteUser(_id);
+                handleClose();
                 break
         }
     }

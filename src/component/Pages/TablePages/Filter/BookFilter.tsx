@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, Fragment, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { Box, Button, IconButton, Menu, MenuItem, TextField, Typography } from "@mui/material";
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -10,7 +10,7 @@ import CreateBookModal from "../../../Modal/Book/CreateBookModal";
 
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
 import { BookDataInterface, BookSearchInterface, FilterInterface } from "../../../../Model/TablePageModel";
-import OptionFields from "./OptionField/OptionFields";
+import OptionFields from "../../../Manager/OptionFieldsManager";
 import { BookMainSearchField } from "../../../../Maps/TextFieldsMaps";
 
 const BookFilter: FC<FilterInterface> = (filterData) => 

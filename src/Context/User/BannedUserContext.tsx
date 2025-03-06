@@ -52,7 +52,7 @@ export const BannedUserProvider: FC<ChildProps> = ({ children }) =>
 
     const editBannedUserData = useCallback(async (_id: string, username:string, email:string, gender:string, role:string) => 
     {
-        const result : GetResultInterface | undefined = await ModifyUserDataController(_id, username, email, gender, role);
+        const result : GetResultInterface | undefined = await ModifyUserDataController(authToken, _id, username, email, gender, role);
 
         try
         {
@@ -71,7 +71,7 @@ export const BannedUserProvider: FC<ChildProps> = ({ children }) =>
     {
         const startDate = GetCurrentDate("Date") as Date;
         const dueDate = CalculateDueDate(duration);
-        const result : GetResultInterface | undefined = await ModifyStatusController(_id, status, startDate, dueDate, description);
+        const result : GetResultInterface | undefined = await ModifyStatusController(authToken, _id, status, startDate, dueDate, description);
 
         try
         {

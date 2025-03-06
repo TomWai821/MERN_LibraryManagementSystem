@@ -20,8 +20,8 @@ const CreateUserConfirmModal = ({...userData}) =>
 
     const registerUser = () => 
     {
-        handleClose();
         createUser("UserManagementPanel", username, email, password, role, gender, birthDay);
+        handleClose();
     }
 
     return(

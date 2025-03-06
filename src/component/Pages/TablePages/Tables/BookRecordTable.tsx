@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
 import { BookRecordTableHeader } from "../../../../Maps/TableMaps";
 import { FC } from "react";
 import { BookRecordTableInterface } from "../../../../Model/TablePageModel";
-import ActionTableCell from "../../../UIFragment/TableCell/ActionTableCell";
+import ActionTableCell from "../../../Manager/ActionTableCellManager";
 import ContentTableCell from "../../../UIFragment/TableCell/ContentTableCell";
 
 const BookRecordTable:FC<BookRecordTableInterface> = ({isLoggedIn, isAdmin, bookData}) => 

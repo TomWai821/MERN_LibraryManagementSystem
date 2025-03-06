@@ -2,7 +2,7 @@ import { NextFunction, Response } from "express";
 import { AuthRequest } from "../../model/requestInterface";
 import { FindUser } from "../../schema/user/user";
 import { ObjectId } from "mongoose";
-import { CreateBanList, FindBanList, FindBanListByID } from "../../schema/user/banList";
+import { CreateBanList, FindBanList, FindBanListByIDAndDelete } from "../../schema/user/banList";
 import { CreateDeleteList, FindDeleteList } from "../../schema/user/deleteList";
 import { UserInterface } from "../../model/userSchemaInterface";
 
@@ -90,7 +90,7 @@ const ChangeStatus = async (userId:ObjectId, status:string, description: string,
 
         case "Normal":
             return true;
-
+            
         default:
             return new Error(`Invalid status: ${status}`);
     }

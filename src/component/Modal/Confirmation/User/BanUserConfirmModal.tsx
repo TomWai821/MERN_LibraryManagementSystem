@@ -7,12 +7,14 @@ import { useModal } from "../../../../Context/ModalContext";
 import BanUserModal from "../../User/BanUserModal";
 import { dateOption } from "../../../../Maps/TextFieldsMaps";
 import { useAllUserContext } from "../../../../Context/User/AllUserContext";
+import { useBannedUserContext } from "../../../../Context/User/BannedUserContext";
 
 const BanUserConfirmModal:FC<BanModalInterface> = (banData) => 
 {
     const { _id, username, durationOption, description } = banData;
     const {handleOpen, handleClose} = useModal();
-    const {changeUserStatus} = useAllUserContext();
+    const {changeUserStatus, fetchAllUser} = useAllUserContext();
+    const {fetchAllBannedUser} = useBannedUserContext();
 
     const returnBanUserModal = () => 
     {
@@ -22,8 +24,10 @@ const BanUserConfirmModal:FC<BanModalInterface> = (banData) =>
 
     const BanUser = (_id:string, duration:number, description:string) => 
     {
-        handleClose();
         changeUserStatus(_id, "Banned", duration, description);
+        fetchAllBannedUser();
+        fetchAllUser();
+        handleClose();
     }
 
     return(

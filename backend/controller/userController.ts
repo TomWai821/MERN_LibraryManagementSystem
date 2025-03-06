@@ -97,16 +97,16 @@ export const ModifyUserData = async (req: AuthRequest, res: Response) =>
 
 export const DeleteUser = async (req: AuthRequest, res: Response) => 
 {
-    const { userId } = req.body;
+    const foundUser = req.foundUser as UserInterface;
     let success = false;
 
     try 
     {
-        const deleteUser = await FindUserByIDAndDelete(userId);
+        const deleteUser = await FindUserByIDAndDelete(foundUser._id);
 
         if(!deleteUser)
         {
-            return res.status(401).json({ error: "Failed to delete user!" });
+            return res.status(401).json({ error: "Failed to delete user!", userID: foundUser._id });
         }
 
         success = true;

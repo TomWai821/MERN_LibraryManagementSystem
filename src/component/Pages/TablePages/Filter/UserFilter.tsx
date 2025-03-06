@@ -9,7 +9,7 @@ import { FilterInterface, UserDataInterface } from "../../../../Model/TablePageM
 import { useModal } from "../../../../Context/ModalContext";
 import CreateUserModal from "../../../Modal/User/CreateUserModal";
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
-import OptionFields from "./OptionField/OptionFields";
+import OptionFields from "../../../Manager/OptionFieldsManager";
 
 const UserFilter:FC<FilterInterface> = (filterData) => 
 {

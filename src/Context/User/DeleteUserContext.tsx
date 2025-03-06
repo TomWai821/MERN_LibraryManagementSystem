@@ -4,7 +4,8 @@ import { ChildProps, DeleteUserContextProps } from "../../Model/ContextAndProvid
 import { FetchUserData } from "../../Controller/UserController/UserGetController";
 import { GetResultInterface, UserResultDataInterface } from "../../Model/ResultModel";
 import { GetData } from "../../Controller/OtherController";
-import { ModifyStatusController, ModifyUserDataController } from "../../Controller/UserController/UserPutController";
+import { ModifyStatusController } from "../../Controller/UserController/UserPutController";
+import { DeleteUserController } from "../../Controller/UserController/UserDeleteController";
 
 const DeleteUserContext = createContext<DeleteUserContextProps | undefined>(undefined);
 
@@ -50,26 +51,9 @@ export const DeleteUserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[authToken])
 
-    const editDeleteUserData = useCallback(async (_id: string, username:string, email:string, gender:string, role:string) => 
-    {
-        const result : GetResultInterface | undefined = await ModifyUserDataController(_id, username, email, gender, role);
-
-        try
-        {
-            if(result)
-            {
-                fetchAllDeleteUser();
-            }
-        }
-        catch(error)
-        {
-            console.log(error);
-        }
-    },[fetchAllDeleteUser])
-
     const changeDeleteUserStatus = useCallback(async (_id:string, status:string) => 
     {
-        const result : GetResultInterface | undefined = await ModifyStatusController(_id, status);
+        const result : GetResultInterface | undefined = await ModifyStatusController(authToken, _id, status);
 
         try
         {
@@ -84,6 +68,24 @@ export const DeleteUserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[fetchAllDeleteUser]);
 
+    const actualDeleteUser = useCallback(async(_id:string) => 
+        {
+            const result : GetResultInterface | undefined = await DeleteUserController(authToken, _id);
+
+            try
+            {
+                if(result)
+                {
+                    fetchAllDeleteUser();
+                }
+            }
+            catch(error)
+            {
+                console.log(error);
+            }
+        },[fetchAllDeleteUser]
+    )
+
     useEffect(() => 
         {
             fetchAllDeleteUser();
@@ -91,7 +93,7 @@ export const DeleteUserProvider: FC<ChildProps> = ({ children }) =>
     )
 
     return (
-        <DeleteUserContext.Provider value={{ DeleteUser, fetchAllDeleteUser, fetchDeleteUser, editDeleteUserData, changeDeleteUserStatus }}>
+        <DeleteUserContext.Provider value={{ DeleteUser, fetchAllDeleteUser, fetchDeleteUser,  changeDeleteUserStatus, actualDeleteUser }}>
             {children}
         </DeleteUserContext.Provider>
     );

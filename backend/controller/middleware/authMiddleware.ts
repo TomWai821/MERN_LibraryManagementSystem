@@ -18,7 +18,7 @@ export const FetchUser = async (req: AuthRequest, res: Response, next: NextFunct
     } 
     catch (error) 
     {
-        return res.status(401).send({ error: "Please authenticate using a valid token" });
+        return res.status(401).send({ success: false, error: "Please authenticate using a valid token" });
     }
 };
 
@@ -28,7 +28,7 @@ export const AdminAuthIdValidation = (req: AuthRequest, res: Response, next: Nex
 
     if (!adminID) 
     {
-        return res.status(401).json({ error: "Invalid auth Token!" });
+        return res.status(401).json({ success: false, error: "Invalid auth Token!" });
     }
 
     next();

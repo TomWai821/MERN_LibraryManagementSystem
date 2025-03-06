@@ -1,10 +1,10 @@
-import SearchOptionField from "../../../../UIFragment/Card/SearchOptionField";
-import { BookSearchField, AllUserSearchField, OtherUserSearchField } from "../../../../../Maps/TextFieldsMaps";
+import SearchOptionField from "../UIFragment/Card/SearchOptionField";
+import { BookSearchField, AllUserSearchField, OtherUserSearchField } from "../../Maps/TextFieldsMaps";
 import { FC } from "react";
-import { OptionFieldsInterface } from "../../../../../Model/TablePageModel";
+import { OptionFieldsInterface } from "../../Model/TablePageModel";
 
 
-const OptionFields:FC<OptionFieldsInterface> = (searchOptionFieldData) => 
+const OptionFieldsManager:FC<OptionFieldsInterface> = (searchOptionFieldData) => 
 {
     const {value, type, optionVisiable, onChange, searchData} = searchOptionFieldData;
 
@@ -33,4 +33,4 @@ const OptionFields:FC<OptionFieldsInterface> = (searchOptionFieldData) =>
     }
 }
 
-export default OptionFields;
+export default OptionFieldsManager;

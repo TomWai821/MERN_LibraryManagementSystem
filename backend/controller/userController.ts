@@ -133,7 +133,7 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
                 return res.status(200).json({ success, error:"Invalid Delete List ID!"});
             }
 
-            const UpdateDeleteList = await FindDeleteListByIDAndUpdate(deleteListID, {status:statusForDeleteList});
+            const UpdateDeleteList = await FindDeleteListByIDAndUpdate(deleteListID as ObjectId, {status:statusForDeleteList});
 
             if(!UpdateDeleteList)
             {
@@ -165,7 +165,7 @@ export const DeleteUser = async (req: AuthRequest, res: Response) =>
 {
     const foundUser = req.foundUser as UserInterface;
     const bodyData =  req.body as BodyInterfaceForDelete;
-    const banListID = bodyData.banListId as unknown as ObjectId;
+    const deleteListID = bodyData.banListId as unknown as ObjectId;
     let success = false;
 
     try 
@@ -177,7 +177,7 @@ export const DeleteUser = async (req: AuthRequest, res: Response) =>
             return res.status(401).json({ success, error: "Failed to delete user!" });
         }
 
-        const changeBannedListStatus = await FindBanListByIDAndUpdate(banListID, {status:bodyData.status})
+        const changeBannedListStatus = await FindBanListByIDAndUpdate(deleteListID as ObjectId, {status:bodyData.status})
 
         if(!changeBannedListStatus)
         {

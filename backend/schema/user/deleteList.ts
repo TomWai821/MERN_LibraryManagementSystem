@@ -22,6 +22,7 @@ export const CreateDeleteList = async (data: Record<string, any>) =>
     try 
     {
         const banList = await DeleteList.create(data);
+        console.log("hi");
         return banList;
     } 
     catch (error) 

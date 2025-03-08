@@ -88,7 +88,7 @@ export const AllUserProvider: FC<ChildProps> = ({ children }) =>
     {
         const startDate = GetCurrentDate("Date") as Date;
         const dueDate = CalculateDueDate(duration);
-        const result : GetResultInterface | undefined = await ModifyStatusController(authToken, userId, status, undefined, startDate, dueDate, description);
+        const result : GetResultInterface | undefined = await ModifyStatusController(authToken, userId, status, undefined, undefined, undefined, startDate, dueDate, description);
 
         try
         {

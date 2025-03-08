@@ -51,9 +51,26 @@ export const DeleteUserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[authToken])
 
-    const actualDeleteUser = useCallback(async(userId:string, banListID:string ,status:string) => 
+    const changeDeleteUserStatus = useCallback(async (userId:string, deleteListID:string) => 
         {
-            const result : GetResultInterface | undefined = await DeleteUserController(authToken, userId, banListID, status);
+            const result : GetResultInterface | undefined = await ModifyStatusController(authToken, userId, "Normal", undefined, "Undo", deleteListID);
+    
+            try
+            {
+                if(result)
+                {
+                    fetchAllDeleteUser();
+                }
+            }
+            catch(error)
+            {
+                console.log(error);
+            }
+        },[fetchAllDeleteUser]);
+
+    const actualDeleteUser = useCallback(async(userId:string, banListID:string) => 
+        {
+            const result : GetResultInterface | undefined = await DeleteUserController(authToken, userId, banListID, "Deleted");
 
             try
             {
@@ -76,7 +93,7 @@ export const DeleteUserProvider: FC<ChildProps> = ({ children }) =>
     )
 
     return (
-        <DeleteUserContext.Provider value={{ DeleteUser, fetchAllDeleteUser, fetchDeleteUser, actualDeleteUser }}>
+        <DeleteUserContext.Provider value={{ DeleteUser, fetchAllDeleteUser, fetchDeleteUser, changeDeleteUserStatus, actualDeleteUser }}>
             {children}
         </DeleteUserContext.Provider>
     );

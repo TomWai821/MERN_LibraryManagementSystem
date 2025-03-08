@@ -5,24 +5,34 @@ import { FC } from "react";
 import { DeleteModalInterface } from "../../../../Model/TablePageModel";
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 import { useBannedUserContext } from "../../../../Context/User/BannedUserContext";
+import { useModal } from "../../../../Context/ModalContext";
+import { useAllUserContext } from "../../../../Context/User/AllUserContext";
+import { useDeleteUserContext } from "../../../../Context/User/DeleteUserContext";
 
 const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) => 
 {
 
-    const { _id, value, username, email, role, gender, bannedDetails } = userData;
-    const { changeBannedUserStatus } = useBannedUserContext();
+    const { _id, value, username, email, role, gender, bannedDetails, deleteDetails } = userData;
+    const { changeBannedUserStatus, fetchAllBannedUser } = useBannedUserContext();
+    const { changeDeleteUserStatus } = useDeleteUserContext();
+    const { fetchAllUser } = useAllUserContext();
+    const { handleClose } = useModal();
 
-    const UnbanUser = () => 
+    const UndoActionForUser = () => 
     {
         switch(value)
         {
             case 1:
-                //changeBannedUserStatus();
+                changeBannedUserStatus(_id, bannedDetails?._id as string);
                 break;
             
             case 2:
+                changeDeleteUserStatus(_id, deleteDetails?._id as string, "Undo");
+                fetchAllBannedUser();
                 break;
         }
+        fetchAllUser();
+        handleClose();
     }
  
     const setTitle = () => 
@@ -61,7 +71,7 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
             </Box>
             
             <DeleteTypography/>
-            <Button variant='contained' onClick={() => {}}>Yes</Button>
+            <Button variant='contained' onClick={UndoActionForUser}>Yes</Button>
         </ModalTemplate>
     );
 }

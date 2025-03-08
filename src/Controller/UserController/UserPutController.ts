@@ -3,6 +3,7 @@ const localhost:string = 'http://localhost:5000/api/user';
 
 const fetchData = async (authToken:string, url: string, data: any) => 
 {
+    console.log(data);
     try 
     {
         const response = await fetch(url, 
@@ -26,7 +27,7 @@ const fetchData = async (authToken:string, url: string, data: any) =>
         else 
         {
             const errorResult = await response.json();
-            throw new Error(errorResult.error || 'Something went wrong');
+            throw new Error( await errorResult.text || 'Something went wrong');
         }
     } 
     catch (error) 
@@ -35,18 +36,36 @@ const fetchData = async (authToken:string, url: string, data: any) =>
     }
 };
 
-const ModifyUserDataController = async (authToken:string, id: string, username:string, email:string, gender:string, role:string) => 
+const ModifyUserDataController = async (authToken:string, userId: string, username:string, email:string, gender:string, role:string) => 
 {
     const data = { username, email, gender, role };
-    const url = `${localhost}/modifyData/id=${id}`;
+    const url = `${localhost}/modifyData/id=${userId}`;
     return await fetchData(authToken, url, data);
 };
 
-const ModifyStatusController = async (authToken:string, id: string, status: string, idInList?:string, startDate?: Date, dueDate?: Date, description?:string) => 
+const ModifyStatusController = async (authToken:string, userId: string, statusForUserList?: string, statusForBanList?:string, statusForDeleteList?:string, ListID?:string, startDate?: Date, dueDate?: Date, description?:string) => 
 {
-    const data = { _id:idInList, status, startDate, dueDate, description };
-    const url = `${localhost}/modifyData/id=${id}`;
-    return await fetchData(authToken, url, data);
+    let statusData = {};
+
+    if(statusForBanList || statusForDeleteList)
+    {
+        statusData = 
+        {
+            ...(statusForBanList && {banListID: ListID, statusForBanList, statusForUserList}),
+            ...(statusForDeleteList && {deleteListID: ListID, statusForDeleteList, statusForUserList})
+        }
+    }
+    
+    statusData = 
+    {
+        statusForUserList:statusForUserList,
+        startDate:startDate, 
+        dueDate:dueDate,
+        description:description
+    };
+    
+    const url = `${localhost}/modifyStatus/id=${userId}`;
+    return await fetchData(authToken, url, statusData);
 };
 
 export { ModifyUserDataController, ModifyStatusController };

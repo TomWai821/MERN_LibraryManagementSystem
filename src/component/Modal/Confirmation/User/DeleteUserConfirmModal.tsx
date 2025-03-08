@@ -33,7 +33,6 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
                 handleClose();
                 break;
         }
-
         fetchAllUser();
         fetchAllDeleteUser();
     }

@@ -16,7 +16,6 @@ const DeleteUserController = async(authToken:string, userId:string, banListId:st
             }
         )
 
-        console.log(response);
         if(response.ok)
         {
             const result = await response.json();

@@ -69,9 +69,9 @@ export const BannedUserProvider: FC<ChildProps> = ({ children }) =>
     },[fetchAllUser])
     */
 
-    const changeBannedUserStatus = useCallback(async (userId:string, bannedListID:string, status:string) => 
+    const changeBannedUserStatus = useCallback(async (userId:string, bannedListID:string) => 
     {
-        const result : GetResultInterface | undefined = await ModifyStatusController(authToken, userId, status, bannedListID);
+        const result : GetResultInterface | undefined = await ModifyStatusController(authToken, userId, "Normal", "Unbanned", undefined, bannedListID);
 
         try
         {

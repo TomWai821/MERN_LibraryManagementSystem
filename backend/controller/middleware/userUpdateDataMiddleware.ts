@@ -65,10 +65,10 @@ export const ChangeUserListStatus = async (userId:ObjectId, statusForUserList:st
 
     if(statusForUserList !== "Normal")
     {
-        await CreateStatusList(statusForUserList, userId as ObjectId, description, startDate, dueDate)
+        await CreateStatusList(statusForUserList, userId as ObjectId, description, startDate, dueDate);
     }
 
-    return await FindUserByIDAndUpdate(userId, {status: "Normal"});
+    return await FindUserByIDAndUpdate(userId, {status: statusForUserList});
 }
 
 const CreateStatusList = async (statusForUserList:string, userId:ObjectId, description: string, startDate: Date, dueDate: Date) => 
@@ -91,16 +91,25 @@ const CreateStatusList = async (statusForUserList:string, userId:ObjectId, descr
 
     if (!ListHandlers[statusForUserList]) 
     {
-        return new Error(`Invalid status: ${statusForUserList}`);
+        console.log(`Invalid status: ${statusForUserList}`);
     }
 
     const existingList = await find();
 
-    if (existingList) 
+    if (!existingList) 
     {
-        return false;
+        try
+        {
+            console.log("created");
+            return await create();
+        } 
+        catch (error) 
+        {
+            console.error("Error creating list:", error);
+            throw new Error("Failed to create list");
+        }
     }
 
-    return await create();
+    return false;
 }
 

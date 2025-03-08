@@ -13,6 +13,7 @@ import DeleteBookModal from "../../../../Modal/Confirmation/Book/DeleteBookConfi
 import BanUserModal from "../../../../Modal/User/BanUserModal";
 
 import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon } from '@mui/icons-material';
+import UndoUserActivityModal from "../../../../Modal/Confirmation/User/UndoUserActivityModal";
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
 {
@@ -50,19 +51,15 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         }
     }
 
-    const openUnDeleteModal = () => 
-    {
-
-    }
-
     const openBannedModal = () => 
     {
         handleOpen(<BanUserModal {...Information as UserResultDataInterface}/>);
     }
 
-    const openUnbanModal = () => 
+    const openUndoActionModal = () => 
     {
-
+        const userData = Information as UserResultDataInterface;
+        handleOpen(<UndoUserActivityModal value={value} {...userData}/>)
     }
     
     const UserActionTableCellForAdmin = 
@@ -74,10 +71,10 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         ],
         [
             {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />},
-            {title: "Unban User", syntax:{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } }, clickEvent:openUnbanModal , icon:<LockOpenIcon />},
+            {title: "Unban User", syntax:{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } }, clickEvent:openUndoActionModal , icon:<LockOpenIcon />},
         ],
         [
-            {title: "UnDelete user", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openUnDeleteModal, icon:<RestoreIcon />},
+            {title: "UnDelete user", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openUndoActionModal, icon:<RestoreIcon />},
             {title: "Delete(Actual)", syntax:{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } }, clickEvent:openDeleteModal, icon:<DeleteIcon />},
         ]
     ]

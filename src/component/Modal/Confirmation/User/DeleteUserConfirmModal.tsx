@@ -11,9 +11,9 @@ import { useDeleteUserContext } from '../../../../Context/User/DeleteUserContext
 
 const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) => 
 {
-    const {value, _id, username, email, role, gender, status} = userData;
+    const {value, _id, username, email, role, gender, status, bannedDetails} = userData;
     const {changeUserStatus, fetchAllUser} = useAllUserContext();
-    const {actualDeleteUser} = useDeleteUserContext();
+    const {actualDeleteUser, fetchAllDeleteUser} = useDeleteUserContext();
     const {handleClose} = useModal();
 
     const DeleteUserAction = (): void => 
@@ -23,31 +23,22 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
             case 0:
                 if(status !== "Delete")
                 {
-                    changeUserStatus(_id, "Delete", 30);    
+                    changeUserStatus(_id, "Delete", 30, "Admin-Request Deletion");   
                 }
                 handleClose();
-                fetchAllUser();
                 break;
+
             case 2:
-                actualDeleteUser(_id);
+                actualDeleteUser(_id, bannedDetails?._id as string, "Deleted");
                 handleClose();
-                break
+                break;
         }
+
+        fetchAllUser();
+        fetchAllDeleteUser();
     }
 
-    const SubTitle = () => 
-    {
-        switch(value)
-        {
-            case 0:
-                return "Do you want to move this account to delete list?";
-            
-            case 2:
-                return "Do you want to delete this account?";
-        }
-    }
-
-    const Title = () =>
+    const setTitle = () =>
     {
         switch(value)
         {
@@ -58,11 +49,23 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
                 return "Delete User Record";
         }
     }
+
+    const setSubTitle = () => 
+    {
+        switch(value)
+        {
+            case 0:
+                return "Do you want to move this account to delete list?";
+            
+            case 2:
+                return "Do you want to delete this account?";
+        }
+    }
     
     return(
-        <ModalTemplate title={Title() as string} cancelButtonName={"No"}>
+        <ModalTemplate title={setTitle() as string} cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
-                <Typography sx={ModalSubTitleSyntax}>{SubTitle()}</Typography>
+                <Typography sx={ModalSubTitleSyntax}>{setSubTitle()}</Typography>
                 <Typography>Username: {username}</Typography>
                 <Typography>Email: {email}</Typography>
                 <Typography>Role: {role}</Typography>

@@ -5,8 +5,7 @@ import { printError } from "../../controller/Utils";
 const BookReturnSchema = new mongoose.Schema<BookReturnInterface>
 (   
     {
-        _id: { type: String, required: true },
-        issueID: { type: String, required: true },
+        issueID: { type: mongoose.Types.ObjectId, required: true },
         returnDate: { type: Date, required: true },
         createdAt: { type: Date, default: Date.now, immutable: true }
     }

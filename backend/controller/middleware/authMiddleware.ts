@@ -2,7 +2,7 @@ import { NextFunction, Response } from "express";
 import { jwtVerify } from "../hashing";
 import { AuthRequest } from "../../model/requestInterface";
 
-export const FetchUser = async (req: AuthRequest, res: Response, next: NextFunction) => 
+export const FetchUserFromHeader = async (req: AuthRequest, res: Response, next: NextFunction) => 
 {
     try 
     {
@@ -22,11 +22,11 @@ export const FetchUser = async (req: AuthRequest, res: Response, next: NextFunct
     }
 };
 
-export const AdminAuthIdValidation = (req: AuthRequest, res: Response, next: NextFunction) => 
+export const AuthIdValidation = (req: AuthRequest, res: Response, next: NextFunction) => 
 {
-    const adminID = req.user?._id;
+    const userId = req.user?._id;
 
-    if (!adminID) 
+    if (!userId) 
     {
         return res.status(401).json({ success: false, error: "Invalid auth Token!" });
     }

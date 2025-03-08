@@ -5,8 +5,8 @@ import { printError } from '../../controller/Utils';
 const GenreSchema = new mongoose.Schema<GenreInterface>
 (
     {
-        _id: { type: String, required: true },
         genre: { type: String, required: true },
+        shortName: { type:String, require: true },
         createdAt: { type: Date, default: Date.now, immutable: true }
     }
 )

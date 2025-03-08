@@ -1,7 +1,7 @@
 const localhost:string = 'http://localhost:5000/api/user';
 const contentType:string = 'application/json';
 
-const DeleteUserController = async(authToken:string, userId:string) => 
+const DeleteUserController = async(authToken:string, userId:string, banListId:string, status:string) => 
 {
     try
     {
@@ -11,7 +11,8 @@ const DeleteUserController = async(authToken:string, userId:string) =>
                 headers: { 
                     'content-type': contentType,
                     'authToken': authToken
-                }
+                },
+                body:JSON.stringify({status, banListId})
             }
         )
 

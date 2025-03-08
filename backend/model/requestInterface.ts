@@ -36,4 +36,10 @@ interface AuthRequest extends Request
     updateData?: Record<string, any> | null;
 }
 
-export type {LoginInterface, CreateUserInterface, ModifyUserDataInterface, AuthRequest}
+interface BodyInterfaceForDelete
+{
+    status:string;
+    banListId:string;
+}
+
+export type {LoginInterface, CreateUserInterface, ModifyUserDataInterface, AuthRequest, BodyInterfaceForDelete}

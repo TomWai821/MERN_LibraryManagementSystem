@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { UserResultDataInterface } from "./ResultModel";
+import { BannedDetailsInterface, UserResultDataInterface } from "./ResultModel";
 
 interface IsAdminInterface
 {
@@ -81,7 +81,7 @@ interface EditModalInterface
     compareData: UserResultDataInterface | BookDataInterface;
 }
 
-interface DeleteModalInterface extends UserDataInterface
+interface DeleteModalInterface extends UserResultDataInterface
 {
     _id:string;
     value:number;

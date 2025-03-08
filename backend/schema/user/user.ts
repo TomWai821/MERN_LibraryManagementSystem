@@ -1,6 +1,8 @@
 import mongoose, { ObjectId } from 'mongoose';
 import { UserInterface } from '../../model/userSchemaInterface';
 import { printError } from '../../controller/Utils';
+import { userRole, userStatus } from '../../maps/userTypeMaps';
+
 
 const UserSchema = new mongoose.Schema<UserInterface>
 (
@@ -9,8 +11,8 @@ const UserSchema = new mongoose.Schema<UserInterface>
         email: { type: String, required: true },
         password: { type: String, required: true },
         gender: { type: String, required: true },
-        role: { type: String, required: true, default: 'User' },
-        status: { type: String, required: true, default: 'Normal' },
+        role: { type: String, required: true, default: 'User', enum: userRole },
+        status: { type: String, required: true, default: 'Normal', enum: userStatus },
         birthDay: { type: String, required: true },
         avatarUrl: { type:String, required: true },
         createdAt: { type: Date, default: Date.now, immutable: true }
@@ -84,10 +86,10 @@ export const FindUserWithData = async (tableName:string, data: Record<string, an
                 return await GetUsersWithDeleteDetails(data);
 
             case "AllUser":
-                return await User.find(data);
+                return await User.find(data).select("-password");
             
             default:
-                return await User.findOne(data);
+                return await User.findOne(data).select("-password");
         }
     }
     catch (error) 
@@ -107,10 +109,11 @@ const GetUsersWithBannedDetails = async (data: any) =>
                     from: 'banlists',  // the table name does user want to joins
                     localField: '_id',  // the local column name does want to compare with joins table column
                     foreignField: 'userID',  // the another table column name does user want to compare with local column name
-                    as: 'bannedDetails'  
+                    as: 'bannedDetails'
                 }
             },
-            { $unwind: '$bannedDetails' }
+            { $unwind: '$bannedDetails' },
+            { $project: { 'bannedDetails.password': 0  }}
         ]
     );
 }
@@ -129,7 +132,8 @@ const GetUsersWithDeleteDetails = async (data: any) =>
                     as: 'deleteDetails'  
                 }
             },
-            { $unwind: '$deleteDetails' },   
+            { $unwind: '$deleteDetails' },
+            { $project: { 'deleteDetails.password': 0  }}
         ]
     );
 }
@@ -142,7 +146,7 @@ export const FindUserByID = async (userID: ObjectId, select?: Record<string, any
         {
             return await User.findById(userID).select(select);
         }
-        return await User.findById(userID);
+        return await User.findById(userID).select("-password");
     } 
     catch (error) 
     {

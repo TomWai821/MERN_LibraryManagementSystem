@@ -50,9 +50,10 @@ export const BannedUserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[authToken])
 
-    const editBannedUserData = useCallback(async (_id: string, username:string, email:string, gender:string, role:string) => 
+    /*
+    const editUserData = useCallback(async (userId: string, bannedListID:string, duration:string, description:string) => 
     {
-        const result : GetResultInterface | undefined = await ModifyUserDataController(authToken, _id, username, email, gender, role);
+        const result : GetResultInterface | undefined = await ModifyUserDataController(authToken, userId, undefined, undefined);
 
         try
         {
@@ -65,13 +66,12 @@ export const BannedUserProvider: FC<ChildProps> = ({ children }) =>
         {
             console.log(error);
         }
-    },[fetchAllBannedUser])
+    },[fetchAllUser])
+    */
 
-    const changeBannedUserStatus = useCallback(async (_id:string, status:string, duration:number, description:string) => 
+    const changeBannedUserStatus = useCallback(async (userId:string, bannedListID:string, status:string) => 
     {
-        const startDate = GetCurrentDate("Date") as Date;
-        const dueDate = CalculateDueDate(duration);
-        const result : GetResultInterface | undefined = await ModifyStatusController(authToken, _id, status, startDate, dueDate, description);
+        const result : GetResultInterface | undefined = await ModifyStatusController(authToken, userId, status, bannedListID);
 
         try
         {
@@ -93,7 +93,7 @@ export const BannedUserProvider: FC<ChildProps> = ({ children }) =>
     )
 
     return (
-        <BannedUserContext.Provider value={{ BannedUser, fetchAllBannedUser, fetchBannedUser, editBannedUserData, changeBannedUserStatus }}>
+        <BannedUserContext.Provider value={{ BannedUser, fetchAllBannedUser, fetchBannedUser, changeBannedUserStatus }}>
             {children}
         </BannedUserContext.Provider>
     );

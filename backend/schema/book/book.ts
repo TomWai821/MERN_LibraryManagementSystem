@@ -5,12 +5,11 @@ import { printError } from '../../controller/Utils';
 const BookSchema = new mongoose.Schema<BookInterface>
 (
     {
-        _id: { type: String, required: true},
         bookname: { type: String, required: true },
-        languageID: { type: String, ref:'Language', required: true },
-        genreID: { type: String, ref:'Genre', required: true },
-        publisherID: { type: String, ref:'Publisher', required: true },
-        authorID: { type: String, ref:'Author', required: true },
+        languageID: { type: mongoose.Types.ObjectId, ref:'Language', required: true },
+        genreID: { type: mongoose.Types.ObjectId, ref:'Genre', required: true },
+        publisherID: { type: mongoose.Types.ObjectId, ref:'Publisher', required: true },
+        authorID: { type: mongoose.Types.ObjectId, ref:'Author', required: true },
         page: { type: Number, required: true, min: 1 },
         description: { type: String, default: '' },
         createdAt: { type: Date, default: Date.now, immutable: true }

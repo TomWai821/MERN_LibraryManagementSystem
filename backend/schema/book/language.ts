@@ -7,6 +7,7 @@ const languageSchema = new mongoose.Schema<LanguageInterface>
     {
         _id: { type: String, required: true },
         language: { type: String, required:true },
+        shortName: { type:String, require: true },
         createdAt: { type: Date, default: Date.now, immutable: true }
     }
 )

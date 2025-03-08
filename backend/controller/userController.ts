@@ -1,8 +1,12 @@
 import { Request, Response } from 'express';
-import { AuthRequest, CreateUserInterface } from '../model/requestInterface';
+import { AuthRequest, BodyInterfaceForDelete, CreateUserInterface } from '../model/requestInterface';
 import { jwtSign, bcryptHash } from './hashing'
 import { UserInterface } from '../model/userSchemaInterface';
 import { CreateUser, FindUserByIDAndDelete, FindUserByIDAndUpdate } from '../schema/user/user';
+import { FindBanListByID, FindBanListByIDAndUpdate } from '../schema/user/banList';
+import { ObjectId } from 'mongoose';
+import { FindDeleteListByID, FindDeleteListByIDAndUpdate } from '../schema/user/deleteList';
+import { ChangeUserListStatus } from './middleware/userUpdateDataMiddleware';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {
@@ -58,7 +62,7 @@ export const UserLogin = async (req: AuthRequest, res: Response) =>
     }
 };
 
-export const GetUserData = async (req: AuthRequest, res: Response) =>
+export const BuildGetUserDataMessage = async (req: AuthRequest, res: Response) =>
 {
     try 
     {
@@ -95,9 +99,73 @@ export const ModifyUserData = async (req: AuthRequest, res: Response) =>
     }
 };
 
+export const ChangeStatus = async (req:AuthRequest, res:Response) => 
+{
+    const { banListID, deleteListID, statusForUserList, statusForBanList, statusForDeleteList, description, startDate, dueDate} = req.body;
+    const foundUser = req.foundUser as UserInterface;
+    let success = false;
+
+    try
+    {
+        if(banListID)
+        {
+            const foundBannedList = await FindBanListByID(banListID);
+
+            if(!foundBannedList)
+            {
+                return res.status(200).json({ success, error:"Invalid Ban List ID!"});
+            }
+
+            const UpdateBannedList = await FindBanListByIDAndUpdate(banListID as ObjectId, {status:statusForBanList});
+
+            if(!UpdateBannedList)
+            {
+                return res.status(200).json({ success, error:"Failed to Banned List Status!"});
+            }
+        }
+
+        if(deleteListID)
+        {
+            const foundDeleteList = await FindDeleteListByID(deleteListID);
+
+            if(!foundDeleteList)
+            {
+                return res.status(200).json({ success, error:"Invalid Delete List ID!"});
+            }
+
+            const UpdateDeleteList = await FindDeleteListByIDAndUpdate(deleteListID, {status:statusForDeleteList});
+
+            if(!UpdateDeleteList)
+            {
+                return res.status(200).json({ success, error:"Failed to Delete List Status!"});
+            }
+        }
+
+        if(statusForUserList !== foundUser.status)
+        {
+            const userId = foundUser._id as ObjectId;
+            const changeStatus = await ChangeUserListStatus(userId, statusForUserList, description, startDate, dueDate);
+
+            if(!changeStatus)
+            {
+                return res.status(200).json({ success, error:"Failed to Change Status!"});
+            }
+        }
+
+        success = true;
+        res.json({ success, message:"Change Status Successfully!"});
+    }
+    catch (error) 
+    {
+        res.status(500).json({ success, error: "Internal Server Error!" });
+    }
+}
+
 export const DeleteUser = async (req: AuthRequest, res: Response) => 
 {
     const foundUser = req.foundUser as UserInterface;
+    const bodyData =  req.body as BodyInterfaceForDelete;
+    const banListID = bodyData.banListId as unknown as ObjectId;
     let success = false;
 
     try 
@@ -106,7 +174,14 @@ export const DeleteUser = async (req: AuthRequest, res: Response) =>
 
         if(!deleteUser)
         {
-            return res.status(401).json({ error: "Failed to delete user!", userID: foundUser._id });
+            return res.status(401).json({ success, error: "Failed to delete user!" });
+        }
+
+        const changeBannedListStatus = await FindBanListByIDAndUpdate(banListID, {status:bodyData.status})
+
+        if(!changeBannedListStatus)
+        {
+            return res.status(401).json({ success, error: "Failed to change delete user status!"});
         }
 
         success = true;

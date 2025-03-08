@@ -1,18 +1,21 @@
 import mongoose, { ObjectId } from "mongoose";
-import { DeleteListInterface } from "../../model/userSchemaInterface";
+import { DeleteAndBannedListInterface } from "../../model/userSchemaInterface";
 import { printError } from "../../controller/Utils";
+import { userDeleteListDescription, userDeleteListStatus } from "../../maps/userTypeMaps";
 
-const DeleteListSchema = new mongoose.Schema<DeleteListInterface>
+const DeleteListSchema = new mongoose.Schema<DeleteAndBannedListInterface>
 (
     {
         userID: { type: mongoose.Types.ObjectId, ref:'User', required: true },
         startDate: { type: Date, required: true, immutable: true  },
         dueDate: { type: Date, required: true },
+        description: { type: String, required: true, enum: userDeleteListDescription },
+        status: { type: String, require: true, default:'Pending', enum: userDeleteListStatus },
         createdAt: { type: Date, default: Date.now, immutable: true }
     }
 )
 
-const DeleteList = mongoose.model<DeleteListInterface>('DeleteList', DeleteListSchema);
+const DeleteList = mongoose.model<DeleteAndBannedListInterface>('DeleteList', DeleteListSchema);
 
 export const CreateDeleteList = async (data: Record<string, any>) =>
 {

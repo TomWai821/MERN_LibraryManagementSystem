@@ -16,7 +16,7 @@ import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
 {
-    const { value, TableName, Information } = tableCellData;
+    const { value, TableName, Information} = tableCellData;
 
     const { handleOpen } = useModal();
 
@@ -42,8 +42,10 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
             case "Book":
                 handleOpen(<DeleteBookModal {...Information as BookDataInterface} />);
                 break;
+
             case "User":
-                handleOpen(<DeleteUserConfirmModal value={value} {...Information as UserResultDataInterface} />);
+                const userData = Information as UserResultDataInterface;
+                handleOpen(<DeleteUserConfirmModal value={value} {...userData} />);
                 break;
         }
     }

@@ -67,9 +67,9 @@ export const AllUserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[fetchAllUser])
 
-    const editUserData = useCallback(async (_id: string, username:string, email:string, gender:string, role:string) => 
+    const editUserData = useCallback(async (userId: string, username:string, email:string, gender:string, role:string) => 
     {
-        const result : GetResultInterface | undefined = await ModifyUserDataController(authToken, _id, username, email, gender, role);
+        const result : GetResultInterface | undefined = await ModifyUserDataController(authToken, userId, username, email, gender, role);
 
         try
         {
@@ -84,11 +84,11 @@ export const AllUserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[fetchAllUser])
 
-    const changeUserStatus = useCallback(async (_id:string, status:string, duration:number, description?:string) => 
+    const changeUserStatus = useCallback(async (userId:string, status:string, duration:number, description?:string) => 
     {
         const startDate = GetCurrentDate("Date") as Date;
         const dueDate = CalculateDueDate(duration);
-        const result : GetResultInterface | undefined = await ModifyStatusController(authToken, _id, status, startDate, dueDate, description);
+        const result : GetResultInterface | undefined = await ModifyStatusController(authToken, userId, status, undefined, startDate, dueDate, description);
 
         try
         {

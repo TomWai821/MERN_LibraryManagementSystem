@@ -15,11 +15,13 @@ interface BookInterface extends IDInterface, CreateAtInterface
 
 interface GenreInterface extends IDInterface, CreateAtInterface
 {
-    genre:string
+    genre:string,
+    shortName:string;
 }
 
 interface LanguageInterface extends IDInterface, CreateAtInterface
 {
+    shortName:string;
     language:string;
 }
 
@@ -50,6 +52,7 @@ interface BookIssuedInterface extends IDInterface, BookFavouriteInterface, Creat
 {
     dueDate: Date;
     issueDate: Date;
+    status: string;
 }
 
 interface BookReturnInterface extends IDInterface, CreateAtInterface

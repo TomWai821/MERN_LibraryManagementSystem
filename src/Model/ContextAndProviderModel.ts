@@ -43,8 +43,8 @@ interface AllUserContextProps
     fetchAllUser: () => Promise<void>;
     fetchUser: (UserData: UserDataInterface | undefined) => Promise<void>;
     createUser: (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string) => void;
-    editUserData: (_id:string, username: string, email: string, gender: string, role: string) => void;
-    changeUserStatus: (id:string, status:string, duration:number, description?:string) => void;
+    editUserData: (userId:string, username: string, email: string, gender: string, role: string) => void;
+    changeUserStatus: (userId:string, status:string, duration:number, description?:string) => void;
 }
 
 interface BannedUserContextProps
@@ -52,8 +52,8 @@ interface BannedUserContextProps
     BannedUser: UserResultDataInterface[];
     fetchAllBannedUser: () => Promise<void>;
     fetchBannedUser: (UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
-    editBannedUserData: (_id:string, username: string, email: string, gender: string, role: string) => void;
-    changeBannedUserStatus: (id:string, status:string, duration:number, description:string) => void;
+    //editBannedUserData: (userId:string, username: string, email: string, gender: string, role: string) => void;
+    changeBannedUserStatus: (userId:string, bannedListID:string, status:string) => void;
 }
 
 interface DeleteUserContextProps
@@ -61,8 +61,8 @@ interface DeleteUserContextProps
     DeleteUser: UserResultDataInterface[];
     fetchAllDeleteUser: () => Promise<void>;
     fetchDeleteUser: (UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
-    changeDeleteUserStatus: (id:string, status:string) => void;
-    actualDeleteUser: (id:string) => void;
+    //changeDeleteUserStatus: (userId:string, status:string) => void;
+    actualDeleteUser: (userId:string, deleteListID:string, status:string) => void;
 }
 
 interface TabPanelProps extends ChildProps

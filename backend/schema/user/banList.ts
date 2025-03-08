@@ -1,19 +1,21 @@
 import mongoose, { ObjectId } from "mongoose";
-import { BanListInterface } from "../../model/userSchemaInterface";
+import { DeleteAndBannedListInterface } from "../../model/userSchemaInterface";
 import { printError } from "../../controller/Utils";
+import { userBannedListStatus } from "../../maps/userTypeMaps";
 
-const BanListSchema = new mongoose.Schema<BanListInterface>
+const BanListSchema = new mongoose.Schema<DeleteAndBannedListInterface>
 (
     {
         userID: { type: mongoose.Types.ObjectId, ref:'User', required: true },
         description: { type: String, required: true },
         startDate: { type: Date, required: true, immutable: true },
         dueDate: { type: Date },
+        status: { type: String, require: true, default:'Banned', enum: userBannedListStatus },
         createdAt: { type: Date, default: Date.now, immutable: true }
     }
 )
 
-const BanList = mongoose.model<BanListInterface>('BanList', BanListSchema);
+const BanList = mongoose.model<DeleteAndBannedListInterface>('BanList', BanListSchema);
 
 export const CreateBanList = async (data: Record<string, any>) =>
 {

@@ -25,23 +25,18 @@ interface UserResultDataInterface extends UserDataInterface
 {
     _id:string;
     avatarUrl?:string;
-    bannedDetails?: BannedDetailsInterface;
-    deleteDetails?: DeleteDetailsInterface;
+    bannedDetails?: DetailsInterfaceForBannedAndDelete;
+    deleteDetails?: DetailsInterfaceForBannedAndDelete;
 }
 
-interface BannedDetailsInterface
+interface DetailsInterfaceForBannedAndDelete
 {
     _id:string;
     description:string;
     startDate: Date;
     dueDate: Date;
+    status:string;
 }
 
-interface DeleteDetailsInterface
-{
-    _id:string;
-    startDate: Date;
-    dueDate: Date;
-}
 
-export type {ResultInterface, GetResultInterface, UserResultDataInterface, BannedDetailsInterface, DeleteDetailsInterface}
+export type {ResultInterface, GetResultInterface, UserResultDataInterface, DetailsInterfaceForBannedAndDelete}

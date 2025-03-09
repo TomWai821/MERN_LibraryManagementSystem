@@ -8,8 +8,9 @@ import { BookDataInterface, EditModalInterface } from "../../../../Model/TablePa
 import EditBookModal from "../../Book/EditBookModal";
 import { useModal } from "../../../../Context/ModalContext";
 
-const EditBookConfirmModal:FC<EditModalInterface> = ({editData, compareData}) => 
+const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {  
+    const {value, editData, compareData} = editModalData;
     const [differences, setDifferences] = useState<JSX.Element[]>([]);
     const {handleOpen} = useModal();
 
@@ -44,7 +45,7 @@ const EditBookConfirmModal:FC<EditModalInterface> = ({editData, compareData}) =>
     const returnEditBookModal = () => 
     {
         setDifferences([]);
-        handleOpen(<EditBookModal editData={editData} compareData={compareData} />);
+        handleOpen(<EditBookModal editData={editData} compareData={compareData} value={value} />);
     }
     
     const onClick = () => 

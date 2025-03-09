@@ -8,8 +8,9 @@ import { CreateBookInputField } from '../../../Maps/TextFieldsMaps';
 import EditBookConfirmModal from '../Confirmation/Book/EditBookConfirmModal';
 import ModalTemplate from '../../Templates/ModalTemplate';
 
-const EditBookModal:FC<EditModalInterface> = ({editData, compareData}) => 
+const EditBookModal:FC<EditModalInterface> = (editModalData) => 
 {
+    const { value, editData, compareData } = editModalData;
     const { bookname, language, genre, publisher, author, pages, amount } = editData as BookDataInterface;
 
     const [book, setBook] = useState<BookDataInterface>({bookname: bookname, language: language, genre: genre, publisher: publisher, author: author, pages: pages, amount: amount});
@@ -22,7 +23,7 @@ const EditBookModal:FC<EditModalInterface> = ({editData, compareData}) =>
 
     const onClick = () => 
     {
-        handleOpen(<EditBookConfirmModal editData={book} compareData={compareData}/>);
+        handleOpen(<EditBookConfirmModal editData={book} compareData={compareData} value={value}/>);
     }
 
     return(

@@ -1,19 +1,24 @@
 import { Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import ContentTableCell from "../../../UIFragment/TableCell/ContentTableCell";
 import ActionTableCell from "../../../Manager/ActionTableCellManager";
-import { AllUserTableHeader } from "../../../../Maps/TableMaps";
-import { FC, Fragment, useEffect, useState } from "react";
+import { DeleteUserTableHeader } from "../../../../Maps/TableMaps";
+import { FC, Fragment, useState } from "react";
 import { UserDataTableInterface } from "../../../../Model/TablePageModel";
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
+import { TransferDateToString } from "../../../../Controller/OtherController";
 
-const AllUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userData, paginationValue}) => 
+const DeleteUserTable:FC<UserDataTableInterface> = (DataForDeleteUserTable) => 
 {
+    const {isAdmin, value, userData, paginationValue} = DataForDeleteUserTable;
+
     const currentTableData = userData[value];
     const [page, setPage] = useState<number>(1);
 
+    // For pagination slicing
     const startIndex = (page - 1) * paginationValue;
     const endIndex = startIndex + paginationValue;
 
+    // For pagination
     const paginatedData = currentTableData.slice(startIndex, endIndex);
     const count = Math.ceil(userData.length / paginationValue);
 
@@ -32,13 +37,13 @@ const AllUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userData, 
             getCountPage();
         }
     )
-    
+
     return(
         <Fragment>
             <Table>
                 <TableHead>
                     <TableRow>
-                        {AllUserTableHeader.map((header, index) =>
+                        {DeleteUserTableHeader.map((header, index) =>
                             (
                                 <TableCell key={index}>{header.label}</TableCell>
                             ) 
@@ -52,10 +57,11 @@ const AllUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userData, 
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                 <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
                                 <ContentTableCell>{data.username}</ContentTableCell>
-                                <ContentTableCell>{data.email}</ContentTableCell>
                                 <ContentTableCell>{data.role}</ContentTableCell>
-                                <ContentTableCell>{data.status}</ContentTableCell>
                                 <ContentTableCell>{data.gender}</ContentTableCell>
+                                <ContentTableCell>{TransferDateToString(data.deleteDetails?.startDate)}</ContentTableCell>
+                                <ContentTableCell>{TransferDateToString(data.deleteDetails?.dueDate)}</ContentTableCell>
+                                <ContentTableCell>{data.deleteDetails?.status}</ContentTableCell>
                                 {isAdmin && (<ActionTableCell value={value} TableName={"User"} Information={data} isAdmin={isAdmin}/>)}
                             </TableRow>
                         )
@@ -65,12 +71,12 @@ const AllUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userData, 
 
             <Pagination
                 sx={{ ...ItemToCenter, alignItems: "center", paddingTop: "10px" }}
-                count={getCountPage() as number}
-                page={page}
-                onChange={handlePageChange}
+                count={getCountPage() as number} // Total page count
+                page={page} // Current page number
+                onChange={handlePageChange} // On page change handler
             />
         </Fragment>
     );
 }
 
-export default AllUserDataTable
+export default DeleteUserTable

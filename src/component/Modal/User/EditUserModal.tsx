@@ -10,13 +10,13 @@ import { EditUserInputField } from '../../../Maps/TextFieldsMaps';
 import EditUserConfirmModal from '../Confirmation/User/EditUserConfirmModal';
 import { UserResultDataInterface } from '../../../Model/ResultModel';
 
-const EditUserModal:FC<EditModalInterface> = ({editData, compareData}) => 
+const EditUserModal:FC<EditModalInterface> = (editModalData) => 
 {
-    const {_id, username, email, role, status, gender} = editData as UserResultDataInterface;
-
-    const [user, setUser] = useState<UserResultDataInterface>({_id: _id, username: username, email:email, role:role, status:status, gender:gender});
-
+    const {value, editData, compareData} = editModalData;
     const {handleOpen} = useModal();
+    
+    const {_id, username, email, role, status, gender} = editData as UserResultDataInterface;
+    const [user, setUser] = useState<UserResultDataInterface>({_id: _id, username: username, email:email, role:role, status:status, gender:gender});
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
@@ -26,11 +26,26 @@ const EditUserModal:FC<EditModalInterface> = ({editData, compareData}) =>
 
     const openConfirmModal = () => 
     {
-        handleOpen(<EditUserConfirmModal editData={user} compareData={compareData} />);
+        handleOpen(<EditUserConfirmModal value={value} editData={user} compareData={compareData} />);
+    }
+
+    const setTitle = ():string => 
+    {
+        switch(value)
+        {
+            case 0:
+                return "Edit User Record";
+            
+            case 1:
+                return "Edit Ban Record";
+
+            default:
+                return "";
+        }
     }
     
     return(
-        <ModalTemplate title={"Edit User Record"} cancelButtonName={"Exit"}>
+        <ModalTemplate title={setTitle() as string} cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 {
                     EditUserInputField.map((field, index) => (

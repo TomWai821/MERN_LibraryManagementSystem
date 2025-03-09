@@ -14,7 +14,7 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
 
     const { _id, value, username, email, role, gender, bannedDetails, deleteDetails } = userData;
     const { changeBannedUserStatus, fetchAllBannedUser } = useBannedUserContext();
-    const { changeDeleteUserStatus } = useDeleteUserContext();
+    const { changeDeleteUserStatus, fetchAllDeleteUser } = useDeleteUserContext();
     const { fetchAllUser } = useAllUserContext();
     const { handleClose } = useModal();
 
@@ -24,11 +24,12 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
         {
             case 1:
                 changeBannedUserStatus(_id, bannedDetails?._id as string);
+                fetchAllBannedUser();
                 break;
             
             case 2:
                 changeDeleteUserStatus(_id, deleteDetails?._id as string, "Undo");
-                fetchAllBannedUser();
+                fetchAllDeleteUser();
                 break;
         }
         fetchAllUser();
@@ -37,32 +38,25 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
  
     const setTitle = () => 
     {
+        let Titles = {Title: "", subTitle: ""};
         switch(value)
         {
             case 1:
-                return "UnBan User Confirmation";
+                Titles.Title = "UnBan User Confirmation";
+                Titles.subTitle = "Do you want to unban this account?"
+                break;
             
             case 2:
-                return "UnDelete User Confirmation";
+                Titles.Title = "UnDelete User Confirmation";
+                Titles.subTitle = "Do you want to undelete this user?";
         }
-    }
-
-    const setSubTitle = () =>
-    {
-        switch(value)
-        {
-            case 1:
-                return "Do you want to unban this user?";
-            
-            case 2:
-                return "Do you want to undelete this user?";
-        }
+        return Titles;
     }
 
     return(
-        <ModalTemplate title={setTitle() as string} cancelButtonName={"No"}>
+        <ModalTemplate title={setTitle().Title} cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
-                <Typography sx={ModalSubTitleSyntax}>{setSubTitle()}</Typography>
+                <Typography sx={ModalSubTitleSyntax}>{setTitle().subTitle}</Typography>
                 <Typography>Username: {username}</Typography>
                 <Typography>Email: {email}</Typography>
                 <Typography>Role: {role}</Typography>

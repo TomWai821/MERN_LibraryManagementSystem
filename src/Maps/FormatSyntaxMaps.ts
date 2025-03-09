@@ -71,4 +71,7 @@ const ModalBodySyntax =
 
 const CreateModalSyntax = {width: '400px'}
 
-export {ViewProfileButton, buttonFontColor, DeleteButton, ItemToCenter, displayAsRow, displayAsColumn, PageItemToCenter, NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSubTitleSyntax, ModalSyntax, ModalRemarkSyntax, CreateModalSyntax, ModalBodySyntax}
+// For Action Table Cell
+const ImportantActionButtonSyntax = { color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } };
+
+export {ViewProfileButton, buttonFontColor, DeleteButton, ItemToCenter, displayAsRow, displayAsColumn, PageItemToCenter, NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSubTitleSyntax, ModalSyntax, ModalRemarkSyntax, CreateModalSyntax, ModalBodySyntax, ImportantActionButtonSyntax}

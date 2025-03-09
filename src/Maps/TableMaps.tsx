@@ -28,6 +28,7 @@ const BannedUserTableHeader =
     {label:"Role"},
     {label:"Gender"},
     {label:"Description"},
+    {label:"Status"},
     {label:"Actions"}
 ]
 
@@ -35,11 +36,11 @@ const DeleteUserTableHeader =
 [
     {label:"No."},
     {label:"Username"},
-    {label:"Email"},
     {label:"Role"},
     {label:"Gender"},
     {label:"Start Date"},
     {label:"Due Date"},
+    {label:"Status"},
     {label:"Actions"}
 ]
 

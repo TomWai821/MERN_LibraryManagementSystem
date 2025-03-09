@@ -1,4 +1,5 @@
-import { ResultInterface, UserResultDataInterface } from '../../Model/ResultModel';
+import { ImportantActionButtonSyntax } from '../../Maps/FormatSyntaxMaps';
+import { ResultInterface } from '../../Model/ResultModel';
 import { SetUserCookie, DeleteUserCookie } from '../CookieController'
 
 const mainPage:string = 'http://localhost:3000/';
@@ -13,6 +14,8 @@ const handleLogout = async(username: string | null) =>
     window.location.href = mainPage;
 }
 
+
+// For Register/Login
 const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =>
 {
     const userData = result.data;
@@ -31,4 +34,27 @@ const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =>
     }
 }
 
-export {handleLogout, handleSuccess}
+// For user status detect in Action TableCell for Admin
+const StatusDetectionForAllUser = (status: string) => 
+{
+    const isNormal = status === "Normal";
+
+    return {
+        delete: { disable: !isNormal },
+        banned: { disable: !isNormal },
+    }
+}
+
+const StatusDetectionForBannedUser = (status: string) => 
+{
+    const isBanned = status !== "Banned";
+    return isBanned;
+}
+
+const StatusDetectionForDeleteUser = (status: string) => 
+{
+    const isPending = status !== "Pending";
+    return isPending;
+}
+    
+export {handleLogout, handleSuccess, StatusDetectionForAllUser, StatusDetectionForBannedUser, StatusDetectionForDeleteUser}

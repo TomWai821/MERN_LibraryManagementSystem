@@ -45,24 +45,24 @@ const ModifyUserDataController = async (authToken:string, userId: string, userna
 
 const ModifyStatusController = async (authToken:string, userId: string, statusForUserList?: string, statusForBanList?:string, statusForDeleteList?:string, ListID?:string, startDate?: Date, dueDate?: Date, description?:string) => 
 {
-    let statusData = {};
-
-    if(statusForBanList || statusForDeleteList)
+    const statusDataConfig = 
     {
-        statusData = 
-        {
-            ...(statusForBanList && {banListID: ListID, statusForBanList, statusForUserList}),
-            ...(statusForDeleteList && {deleteListID: ListID, statusForDeleteList, statusForUserList})
-        }
+        ban: () => 
+        (
+            { banListID: ListID, statusForBanList, statusForUserList}
+        ),
+        delete: () => 
+        (
+            { deleteListID: ListID, statusForDeleteList, statusForUserList }
+        ),
+        default: () => 
+        (
+            { statusForUserList, startDate, dueDate, description }
+        ),
     }
-    
-    statusData = 
-    {
-        statusForUserList:statusForUserList,
-        startDate:startDate, 
-        dueDate:dueDate,
-        description:description
-    };
+
+    let statusType: keyof typeof statusDataConfig = statusForBanList ? "ban" : statusForDeleteList ? "delete" : "default";
+    let statusData = statusDataConfig[statusType]();
     
     const url = `${localhost}/modifyStatus/id=${userId}`;
     return await fetchData(authToken, url, statusData);

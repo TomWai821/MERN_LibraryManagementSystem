@@ -4,7 +4,7 @@ import { IconButton, TableCell, Tooltip } from "@mui/material";
 
 import { UserResultDataInterface } from "../../../../../Model/ResultModel";
 import { useModal } from "../../../../../Context/ModalContext";
-import { DeleteButton } from "../../../../../Maps/FormatSyntaxMaps";
+import { DeleteButton, ImportantActionButtonSyntax } from "../../../../../Maps/FormatSyntaxMaps";
 
 import EditUserModal from "../../../../Modal/User/EditUserModal";
 import EditBookModal from "../../../../Modal/Book/EditBookModal";
@@ -14,10 +14,12 @@ import BanUserModal from "../../../../Modal/User/BanUserModal";
 
 import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon } from '@mui/icons-material';
 import UndoUserActivityModal from "../../../../Modal/Confirmation/User/UndoUserActivityModal";
+import { StatusDetectionForAllUser, StatusDetectionForBannedUser, StatusDetectionForDeleteUser } from "../../../../../Controller/UserController/UserOtherController";
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
 {
     const { value, TableName, Information} = tableCellData;
+    const userData = Information as UserResultDataInterface;
 
     const { handleOpen } = useModal();
 
@@ -27,11 +29,11 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         {
             case "Book":
                 const bookData = Information as BookDataInterface;
-                handleOpen(<EditBookModal editData={bookData} compareData={bookData}  />);
+                handleOpen(<EditBookModal editData={bookData} compareData={bookData} value={value}  />);
                 break;
+                
             case "User":
-                const userData = Information as UserResultDataInterface;
-                handleOpen(<EditUserModal editData={userData} compareData={userData}/>);
+                handleOpen(<EditUserModal editData={userData} compareData={userData} value={value}/>);
                 break;
         }
     }
@@ -45,7 +47,6 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
                 break;
 
             case "User":
-                const userData = Information as UserResultDataInterface;
                 handleOpen(<DeleteUserConfirmModal value={value} {...userData} />);
                 break;
         }
@@ -58,7 +59,6 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
 
     const openUndoActionModal = () => 
     {
-        const userData = Information as UserResultDataInterface;
         handleOpen(<UndoUserActivityModal value={value} {...userData}/>)
     }
     
@@ -66,23 +66,23 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
     [
         [
             {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />},
-            {title: "Move To Delete List", syntax:{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } }, clickEvent:openDeleteModal, icon:<DeleteIcon />},
-            {title: "Ban User", syntax:{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } }, clickEvent:openBannedModal, icon:<BlockIcon />}
+            {title: "Move To Banned List" , syntax:ImportantActionButtonSyntax, clickEvent:openBannedModal, icon:<BlockIcon />, disable: StatusDetectionForAllUser(userData.status).banned.disable},
+            {title: "Move To Delete List", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />, disable: StatusDetectionForAllUser(userData.status).delete.disable}
         ],
         [
-            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />},
-            {title: "Unban User", syntax:{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } }, clickEvent:openUndoActionModal , icon:<LockOpenIcon />},
+            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />, disable:StatusDetectionForBannedUser(userData.bannedDetails?.status as string)},
+            {title: "Unban User", syntax:ImportantActionButtonSyntax, clickEvent:openUndoActionModal , icon:<LockOpenIcon />, disable:StatusDetectionForBannedUser(userData.bannedDetails?.status as string)},
         ],
         [
-            {title: "UnDelete user", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openUndoActionModal, icon:<RestoreIcon />},
-            {title: "Delete(Actual)", syntax:{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } }, clickEvent:openDeleteModal, icon:<DeleteIcon />},
+            {title: "UnDelete user", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openUndoActionModal, icon:<RestoreIcon />, disable:StatusDetectionForDeleteUser(userData.deleteDetails?.status as string)},
+            {title: "Delete(Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />, disable:StatusDetectionForDeleteUser(userData.deleteDetails?.status as string)},
         ]
     ]
 
     const BookActionTableCellForAdmin = 
     [
         {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openEditModal, icon:<EditIcon />},
-        {title: "Delete(Actual)", syntax:{ color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } }, clickEvent:openDeleteModal, icon:<DeleteIcon />},
+        {title: "Delete(Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
     ]
 
     let actionsToRender: any[] = [];
@@ -103,7 +103,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
                 actionsToRender.map((actions, index) => 
                 (
                     <Tooltip title={actions.title} key={index} arrow>
-                        <IconButton sx={actions.syntax} onClick={actions.clickEvent}>
+                        <IconButton sx={actions.syntax} onClick={actions.clickEvent} disabled={actions.disable}>
                             {actions.icon}
                         </IconButton>
                     </Tooltip>

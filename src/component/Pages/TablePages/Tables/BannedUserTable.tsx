@@ -6,8 +6,10 @@ import { FC, Fragment, useState } from "react";
 import { UserDataTableInterface } from "../../../../Model/TablePageModel";
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
 
-const BannedUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userData, paginationValue}) => 
+const BannedUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) => 
 {
+    const {isAdmin, value, userData, paginationValue} = DataForBannedUserTable;
+
     const currentTableData = userData[value];
     const [page, setPage] = useState<number>(1);
 
@@ -48,16 +50,22 @@ const BannedUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userDat
 
                 <TableBody>
                     {paginatedData.map((data, index) => 
-                        (
-                            <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
-                                <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                <ContentTableCell>{data.username}</ContentTableCell>
-                                <ContentTableCell>{data.role}</ContentTableCell>
-                                <ContentTableCell>{data.gender}</ContentTableCell>
-                                <ContentTableCell>{data.bannedDetails?.description}</ContentTableCell>
-                                {isAdmin && (<ActionTableCell value={value} TableName={"User"} Information={data} isAdmin={isAdmin}/>)}
-                            </TableRow>
-                        )
+                        {
+                            if(data.bannedDetails?.status === "Banned")
+                            {
+                                return(
+                                    <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
+                                        <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
+                                        <ContentTableCell>{data.username}</ContentTableCell>
+                                        <ContentTableCell>{data.role}</ContentTableCell>
+                                        <ContentTableCell>{data.gender}</ContentTableCell>
+                                        <ContentTableCell>{data.bannedDetails?.description}</ContentTableCell>
+                                        <ContentTableCell>{data.bannedDetails?.status}</ContentTableCell>
+                                        {isAdmin && (<ActionTableCell value={value} TableName={"User"} Information={data} isAdmin={isAdmin}/>)}
+                                    </TableRow>
+                                )
+                            }
+                        }
                     )}
                 </TableBody>
             </Table>
@@ -72,4 +80,4 @@ const BannedUserDataTable:FC<UserDataTableInterface> = ({isAdmin, value, userDat
     );
 }
 
-export default BannedUserDataTable
+export default BannedUserTable

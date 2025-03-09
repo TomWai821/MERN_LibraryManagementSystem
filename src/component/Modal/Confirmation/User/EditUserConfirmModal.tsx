@@ -8,19 +8,15 @@ import EditUserModal from "../../User/EditUserModal";
 import { useAllUserContext } from "../../../../Context/User/AllUserContext";
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
 
-const EditUserConfirmModal:FC<EditModalInterface> = ({editData, compareData}) => 
+const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {
+    const {value, editData, compareData} = editModalData;
     const [differences, setDifferences] = useState<string[]>([]);
 
     const {handleOpen, handleClose} = useModal();
     const {editUserData} = useAllUserContext();
 
-    useEffect(() => 
-    {
-        generateChangeTypography(editData as UserDataInterface, compareData as UserDataInterface);
-    },
-    [editData, compareData]);
-
+    // editData = use modify, compareData = vanilla one(Before change)
     const generateChangeTypography = (editData: UserDataInterface, compareData: UserDataInterface) => 
     {
         const newDifferences: string[] = [];
@@ -33,14 +29,13 @@ const EditUserConfirmModal:FC<EditModalInterface> = ({editData, compareData}) =>
                 newDifferences.push(`${capitalizedKey}: ${compareData[key as keyof UserDataInterface]} -> ${editData[key as keyof UserDataInterface]}`);
             }
         }
-
         setDifferences(newDifferences);
     }
 
     const returnEditUserModal = () =>
     {
         setDifferences([]);
-        handleOpen(<EditUserModal editData={editData} compareData={compareData} />);
+        handleOpen(<EditUserModal editData={editData} compareData={compareData} value={value} />);
     }
 
     const onClick = () => 
@@ -53,6 +48,12 @@ const EditUserConfirmModal:FC<EditModalInterface> = ({editData, compareData}) =>
         }
         handleClose();
     }
+
+    useEffect(() => 
+    {
+        generateChangeTypography(editData as UserDataInterface, compareData as UserDataInterface);
+    },
+    [editData, compareData]);
 
     return(
         <ModalTemplate title={"Edit Book Record Confirmation"} cancelButtonName={"No"} cancelButtonEvent={returnEditUserModal}>

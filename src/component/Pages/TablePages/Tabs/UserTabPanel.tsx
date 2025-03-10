@@ -14,6 +14,7 @@ import { UserDataTableInterface } from "../../../../Model/UserTableModel"
 const UserTabPanel:FC<UserDataTableInterface> = (userTableData) =>
 {
     const {value, isAdmin, userData, paginationValue} = userTableData
+    
     return(
         <Fragment>
             <CustomTabPanel index={0} value={value}>

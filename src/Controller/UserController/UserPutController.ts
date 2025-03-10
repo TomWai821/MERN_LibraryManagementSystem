@@ -43,6 +43,13 @@ const ModifyUserDataController = async (authToken:string, userId: string, userna
     return await fetchData(authToken, url, data);
 };
 
+const ModifyBanListDataController = async(authToken:string, banListID:string, dueDate:Date, description:string) => 
+{
+    const data = {banListID, dueDate, description}
+    const url = `${localhost}/modifyBanList`;
+    return await fetchData(authToken, url, data);
+}
+
 const ModifyStatusController = async (authToken:string, userId: string, statusForUserList?: string, statusForBanList?:string, statusForDeleteList?:string, ListID?:string, startDate?: Date, dueDate?: Date, description?:string) => 
 {
     const statusDataConfig = 
@@ -68,4 +75,4 @@ const ModifyStatusController = async (authToken:string, userId: string, statusFo
     return await fetchData(authToken, url, statusData);
 };
 
-export { ModifyUserDataController, ModifyStatusController };
+export { ModifyUserDataController, ModifyBanListDataController, ModifyStatusController };

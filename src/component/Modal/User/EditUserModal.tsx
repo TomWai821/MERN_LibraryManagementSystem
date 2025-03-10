@@ -40,24 +40,9 @@ const EditUserModal:FC<EditModalInterface> = (editModalData) =>
     {
         handleOpen(<EditUserConfirmModal value={value} editData={user} compareData={compareData} />);
     }
-
-    const setTitle = ():string => 
-    {
-        switch(value)
-        {
-            case 0:
-                return "Edit User Record";
-            
-            case 1:
-                return "Edit Ban Record";
-
-            default:
-                return "";
-        }
-    }
     
     return(
-        <ModalTemplate title={setTitle() as string} cancelButtonName={"Exit"}>
+        <ModalTemplate title={"Edit User Record"} cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 {
                     EditUserInputField.map((field, index) => (

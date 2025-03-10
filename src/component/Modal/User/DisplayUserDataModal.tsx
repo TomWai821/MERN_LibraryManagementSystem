@@ -6,9 +6,9 @@ import ModalTemplate from "../../Templates/ModalTemplate";
 import { DisplayDataModalInterface } from "../../../Model/ModelForModal";
 
 import { ModalBodySyntax } from "../../../Maps/FormatSyntaxMaps";
-import AllUserDataBody from "./DIsplayUserDataBody/AllUserDataBody";
-import BannedUserDataBody from "./DIsplayUserDataBody/BannedUserDataBody";
-import DeleteUserDataBody from "./DIsplayUserDataBody/DeleteUserDataBody";
+import AllUserDataBody from "./DisplayUserDataBody/AllUserDataBody";
+import BannedUserDataBody from "./DisplayUserDataBody/BannedUserDataBody";
+import DeleteUserDataBody from "./DisplayUserDataBody/DeleteUserDataBody";
 
 
 const DisplayUserDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 

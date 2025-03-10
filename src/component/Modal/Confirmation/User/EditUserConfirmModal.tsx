@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 
 // Context
@@ -6,7 +6,7 @@ import { useAllUserContext } from "../../../../Context/User/AllUserContext";
 import { useModal } from "../../../../Context/ModalContext";
 
 // Models
-import { UserResultDataInterface } from "../../../../Model/ResultModel";
+import { DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "../../../../Model/ResultModel";
 import { UserDataInterface } from "../../../../Model/UserTableModel";
 import { EditModalInterface } from "../../../../Model/ModelForModal";
 
@@ -19,6 +19,8 @@ import EditUserModal from "../../User/EditUserModal";
 // Data (CSS syntax)
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
+import EditBanUserModal from "../../User/EditBanUserModal";
+import { useBannedUserContext } from "../../../../Context/User/BannedUserContext";
 
 const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {
@@ -27,18 +29,32 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
 
     const {handleOpen, handleClose} = useModal();
     const {editUserData} = useAllUserContext();
+    const {editBannedUserData} = useBannedUserContext();
 
     // editData = use modify, compareData = vanilla one(Before change)
-    const generateChangeTypography = (editData: UserDataInterface, compareData: UserDataInterface) => 
+    const generateChangeTypography = (editData: UserDataInterface | DetailsInterfaceForBannedAndDelete, compareData: UserDataInterface | DetailsInterfaceForBannedAndDelete) => 
     {
         const newDifferences: string[] = [];
 
         for (const key in editData) 
         {
-            if (editData[key as keyof UserDataInterface] !== compareData[key as keyof UserDataInterface]) 
+            if (Object.prototype.hasOwnProperty.call(compareData, key) && Object.prototype.hasOwnProperty.call(editData, key)) 
             {
-                const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
-                newDifferences.push(`${capitalizedKey}: ${compareData[key as keyof UserDataInterface]} -> ${editData[key as keyof UserDataInterface]}`);
+                const editValue = (editData as any)[key];
+                const compareValue = (compareData as any)[key];
+
+                let formattedCompareValue = compareValue;
+
+                if (editValue instanceof Date) 
+                {
+                    formattedCompareValue = editValue.toISOString() 
+                }; 
+    
+                if (formattedCompareValue !== compareValue) 
+                {
+                    const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
+                    newDifferences.push(`${capitalizedKey}: ${compareValue} -> ${editValue}`);
+                }
             }
         }
         setDifferences(newDifferences);
@@ -47,28 +63,49 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
     const returnEditUserModal = () =>
     {
         setDifferences([]);
-        handleOpen(<EditUserModal editData={editData} compareData={compareData} value={value} />);
+        switch(value)
+        {
+            case 0:
+                handleOpen(<EditUserModal editData={editData} compareData={compareData} value={value} />);
+                break;
+            
+            case 1:
+                handleOpen(<EditBanUserModal editData={editData} compareData={compareData} value={value}/>);
+                break;
+        }
+        
     }
 
     const EditUserAction = () => 
     {
         if(differences.length > 0)
         {
-            const CompareData = compareData as UserResultDataInterface;
-            const EditData = editData as UserDataInterface;
-            editUserData(CompareData._id, EditData.username, EditData.email, EditData.gender, EditData.role);
+            switch(value)
+            {
+                case 0:
+                    const CompareData = compareData as UserResultDataInterface;
+                    const EditData = editData as UserDataInterface;
+                    editUserData(CompareData._id, EditData.username, EditData.email, EditData.gender, EditData.role);
+                    break;
+
+                case 1:
+                    const CompareBanUserData = compareData as DetailsInterfaceForBannedAndDelete;
+                    const EditBanUserData = editData as DetailsInterfaceForBannedAndDelete;
+                    editBannedUserData(CompareBanUserData._id, EditBanUserData.dueDate as Date, EditBanUserData.description);
+                    break;
+            }
         }
         handleClose();
     }
 
     useEffect(() => 
     {
-        generateChangeTypography(editData as UserDataInterface, compareData as UserDataInterface);
+        generateChangeTypography(editData as UserDataInterface | DetailsInterfaceForBannedAndDelete, compareData as UserDataInterface | DetailsInterfaceForBannedAndDelete);
     },
     [editData, compareData]);
 
     return(
-        <ModalTemplate title={"Edit Book Record Confirmation"} cancelButtonName={"No"} cancelButtonEvent={returnEditUserModal}>
+        <ModalTemplate title={"Edit User Record Confirmation"} cancelButtonName={"No"} cancelButtonEvent={returnEditUserModal}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>Do you want to edit this book record?</Typography>
                 <Typography sx={ModalRemarkSyntax}>Changes:</Typography>

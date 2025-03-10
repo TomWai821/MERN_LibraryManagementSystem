@@ -1,5 +1,5 @@
 import { BookDataInterface } from "./BookTableModel";
-import { UserResultDataInterface } from "./ResultModel";
+import { DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "./ResultModel";
 
 interface CreateModalInterface
 {
@@ -8,9 +8,9 @@ interface CreateModalInterface
 
 interface EditModalInterface
 {
-    value:number;
-    editData: UserResultDataInterface | BookDataInterface;
-    compareData: UserResultDataInterface | BookDataInterface;
+    value: number;
+    editData: UserResultDataInterface | DetailsInterfaceForBannedAndDelete | BookDataInterface;
+    compareData: UserResultDataInterface | DetailsInterfaceForBannedAndDelete | BookDataInterface;
 }
 
 interface BanModalInterface

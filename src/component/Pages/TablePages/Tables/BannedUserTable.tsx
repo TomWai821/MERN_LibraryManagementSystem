@@ -21,7 +21,7 @@ const BannedUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
     const TableName = "User";
 
     const currentTableData = userData[value];
-    const BannedData = isAdmin ? currentTableData : currentTableData.filter((data) => data.bannedDetails?.status === "Banned");
+    const BannedData = currentTableData.filter((data) => data.bannedDetails?.status === "Banned");
 
     const [page, setPage] = useState<number>(1);
 
@@ -29,7 +29,7 @@ const BannedUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
     const endIndex = startIndex + paginationValue;
 
     const paginatedData = BannedData.slice(startIndex, endIndex);
-    const count = Math.ceil(userData.length / paginationValue);
+    const count = Math.ceil(BannedData.length / paginationValue);
 
     const getCountPage = () : void | number => 
     {

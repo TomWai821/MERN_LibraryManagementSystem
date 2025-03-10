@@ -19,10 +19,11 @@ import UndoUserActivityModal from "../../../../Modal/Confirmation/User/UndoUserA
 // Model
 import { BookDataInterface } from "../../../../../Model/BookTableModel";
 import { ActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel"
-import { UserResultDataInterface } from "../../../../../Model/ResultModel";
+import { DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "../../../../../Model/ResultModel";
 
 // Data(CSS Syntax)
 import { ImportantActionButtonSyntax } from "../../../../../Maps/FormatSyntaxMaps";
+import EditBanUserModal from "../../../../Modal/User/EditBanUserModal";
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
 {
@@ -37,11 +38,11 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         {
             case "Book":
                 const bookData = Information as BookDataInterface;
-                handleOpen(<EditBookModal editData={bookData} compareData={bookData} value={value}  />);
+                handleOpen(<EditBookModal value={value} editData={bookData} compareData={bookData}/>);
                 break;
                 
             case "User":
-                handleOpen(<EditUserModal editData={userData} compareData={userData} value={value}/>);
+                handleOpen(<EditUserModal value={value} editData={userData} compareData={userData}/>);
                 break;
         }
     }
@@ -65,6 +66,12 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         handleOpen(<BanUserModal {...Information as UserResultDataInterface}/>);
     }
 
+    const openEditBanDataModal = () => 
+    {
+        const banData = userData.bannedDetails as DetailsInterfaceForBannedAndDelete;
+        handleOpen(<EditBanUserModal value={value} editData={banData} compareData={banData}/>)
+    } 
+
     const openUndoActionModal = () => 
     {
         handleOpen(<UndoUserActivityModal value={value} {...userData}/>)
@@ -78,7 +85,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
             {title: "Move To Delete List", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />, disable: StatusDetectionForAllUser(userData.status).delete.disable}
         ],
         [
-            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />, disable:StatusDetectionForBannedUser(userData.bannedDetails?.status as string)},
+            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditBanDataModal, icon:<EditIcon />, disable:StatusDetectionForBannedUser(userData.bannedDetails?.status as string)},
             {title: "Unban User", syntax:ImportantActionButtonSyntax, clickEvent:openUndoActionModal , icon:<LockOpenIcon />, disable:StatusDetectionForBannedUser(userData.bannedDetails?.status as string)},
         ],
         [

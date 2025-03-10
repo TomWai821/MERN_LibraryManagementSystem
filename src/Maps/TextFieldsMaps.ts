@@ -85,9 +85,9 @@ const EditUserInputField =
 
 const EditBanUserInputField = 
 [
-    {name: "startDate", label: "Start Date", type:"Date", select:false, slotProps: {}, options: []},
-    {name: "dueDate", label: "Due Date", type:"Date", select:false, slotProps: {}, options: []},
-    {name: "description", label: "Description", type:"String", select:false, slotProps: {}, options: []},
+    {name: "startDate", label: "Start Date", type:"Date", select:false, slotProps: {}, options: [], rows: 1, disable: true},
+    {name: "dueDate", label: "Due Date", type:"Date", select:false, slotProps: {}, options: [], rows: 1, disable: false},
+    {name: "description", label: "Description", type:"String", select:false, slotProps: {}, options: [], rows: 5, disable: false},
 ]
 
 // For book filter

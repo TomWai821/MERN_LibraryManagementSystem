@@ -53,7 +53,7 @@ interface BannedUserContextProps
     BannedUser: UserResultDataInterface[];
     fetchAllBannedUser: () => Promise<void>;
     fetchBannedUser: (UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
-    //editBannedUserData: (userId:string, duration:string, description?:string) => void;
+    editBannedUserData: (bannedListID: string, dueDate: Date, description: string) => void;
     changeBannedUserStatus: (userId:string, bannedListID:string) => void;
 }
 

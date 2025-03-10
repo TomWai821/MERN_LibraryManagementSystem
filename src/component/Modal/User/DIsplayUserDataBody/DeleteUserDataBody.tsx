@@ -21,7 +21,7 @@ const DeleteUserDataBody:FC<UserModalBody>  = (DeleteUserData) =>
                 data.status === "Pending" && 
                 (
                     <Fragment>
-                        <Typography>Due Date: {TransferDateToString(data.deleteDetails?.dueDate)}</Typography>
+                        <Typography>Due Date: {TransferDateToString(data.deleteDetails?.dueDate as Date)}</Typography>
                         <Typography>Count: {CountDuration(data.deleteDetails?.dueDate as Date)}</Typography>
                     </Fragment>
                 )

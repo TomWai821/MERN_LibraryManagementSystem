@@ -71,11 +71,16 @@ const CalculateDueDate = (duration:number): Date =>
     return dueDate;
 }
 
+const TransferDateToISOString = (date:Date):string => 
+{
+    return new Date(date).toISOString().split('T')[0];
+}
+
 const TransferDateToString = (date: Date | undefined):string => 
 {
 
     if (!date) return "N/A";
-    return new Date(date).toLocaleDateString('en-US'); // Customize locale
+    return new Date(date).toLocaleDateString('en-US'); 
 }
 
 const CalculateDuration = (startDate:Date, dueDate: Date | string) => 
@@ -115,4 +120,4 @@ const CountDuration = (dueDate: Date | string) =>
     return days.toLocaleString('en-US') + " Days ";
 }
 
-export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate, CalculateDueDate, TransferDateToString, CalculateDuration, CountDuration}
+export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate, CalculateDueDate, TransferDateToISOString, TransferDateToString, CalculateDuration, CountDuration}

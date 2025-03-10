@@ -34,8 +34,8 @@ interface DetailsInterfaceForBannedAndDelete
 {
     _id:string;
     description:string;
-    startDate: Date;
-    dueDate: Date;
+    startDate: Date | string;
+    dueDate: Date | string;
     status:string;
 }
 

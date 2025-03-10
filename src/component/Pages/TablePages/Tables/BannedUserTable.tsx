@@ -3,7 +3,7 @@ import { FC, Fragment, useState } from "react";
 import { Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 // UI Fragment and Manager
-import ContentTableCell from "../../../UIFragment/TableCell/ContentTableCell";
+import ContentTableCell from "../../../UIFragment/ContentTableCell";
 import ActionTableCell from "../../../Manager/ActionTableCellManager";
 
 // Model
@@ -12,11 +12,13 @@ import { UserDataTableInterface } from "../../../../Model/UserTableModel";
 // Data (CSS Syntax and table header)
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
 import { BannedUserTableHeader } from "../../../../Maps/TableMaps";
+import { CalculateDuration } from "../../../../Controller/OtherController";
 
 
 const BannedUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) => 
 {
     const {isAdmin, value, userData, paginationValue} = DataForBannedUserTable;
+    const TableName = "User";
 
     const currentTableData = userData[value];
     const BannedData = isAdmin ? currentTableData : currentTableData.filter((data) => data.bannedDetails?.status === "Banned");
@@ -61,20 +63,22 @@ const BannedUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
                 <TableBody>
                     {paginatedData.map((data, index) => 
                         {
-                            if(data.bannedDetails?.status === "Banned")
-                            {
-                                return(
-                                    <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
-                                        <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                        <ContentTableCell>{data.username}</ContentTableCell>
-                                        <ContentTableCell>{data.role}</ContentTableCell>
-                                        <ContentTableCell>{data.gender}</ContentTableCell>
-                                        <ContentTableCell>{data.bannedDetails?.description}</ContentTableCell>
-                                        <ContentTableCell>{data.bannedDetails?.status}</ContentTableCell>
-                                        {isAdmin && (<ActionTableCell value={value} TableName={"User"} Information={data} isAdmin={isAdmin}/>)}
-                                    </TableRow>
-                                )
-                            }
+                            return(
+                                <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
+                                    <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
+                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.username} </ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.role} </ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.bannedDetails?.description} </ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.bannedDetails?.status} </ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> 
+                                        {  
+                                            data.bannedDetails?.status === "Banned" ?
+                                            CalculateDuration(data.bannedDetails?.startDate as Date, data.bannedDetails?.dueDate as Date) : "N/A"
+                                        } 
+                                    </ContentTableCell>
+                                    {isAdmin && (<ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin}/>)}
+                                </TableRow>
+                            )
                         }
                     )}
                 </TableBody>

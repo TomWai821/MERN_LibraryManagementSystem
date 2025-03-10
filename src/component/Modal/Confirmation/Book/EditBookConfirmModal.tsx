@@ -4,15 +4,16 @@ import { Box, Button, Typography } from "@mui/material";
 // Template
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
-
-import { EditModalInterface } from "../../../../Model/TablePagesAndModalModel";
-import { BookDataInterface } from "../../../../Model/BookTableModel";
-
 // Context
 import { useModal } from "../../../../Context/ModalContext";
 
+// Model
+import { EditModalInterface } from "../../../../Model/ModelForModal";
+import { BookDataInterface } from "../../../../Model/BookTableModel";
+
 // Another Modal
 import EditBookModal from "../../Book/EditBookModal";
+
 // Data (CSS Syntax)
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 

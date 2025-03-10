@@ -3,7 +3,7 @@ import { Box,  Menu, Typography } from "@mui/material"
 import { FC } from "react";
 import { NavMenuInterface } from "../../Model/NavModel";
 import { adminPage, externalUserPage, userPage } from '../../Maps/MenuMaps'
-import CustomMenuItem from "../UIFragment/MenuItem/CustomMenuItem";
+import CustomMenuItem from "../UIFragment/CustomMenuItem";
 
 
 const NavMenu:FC<NavMenuInterface> = ({isAdmin, isLoggedIn, role, AvatarSize, anchorElNav, handleNavMenu, NavSyntax}) => 

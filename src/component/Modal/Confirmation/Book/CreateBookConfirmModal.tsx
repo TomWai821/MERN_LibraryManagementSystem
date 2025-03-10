@@ -8,11 +8,11 @@ import ModalTemplate from "../../../Templates/ModalTemplate"
 import { useModal } from "../../../../Context/ModalContext"
 
 // Model
-import { CreateModalInterface } from "../../../../Model/TablePagesAndModalModel"
 import { BookDataInterface } from "../../../../Model/BookTableModel"
 
 // Another Modal
 import CreateBookModal from "../../Book/CreateBookModal"
+import { CreateModalInterface } from "../../../../Model/ModelForModal"
 
 // Data(CSS Syntax)
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps"

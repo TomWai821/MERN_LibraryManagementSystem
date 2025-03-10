@@ -1,13 +1,25 @@
-import { Box,  Button, Typography } from "@mui/material";
-import ModalTemplate from "../../../Templates/ModalTemplate";
-import DeleteTypography from "../../../UIFragment/Typography/DeleteTypography";
+
 import { FC } from "react";
-import { DeleteModalInterface } from "../../../../Model/TablePagesAndModalModel";
-import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
+import { Box,  Typography } from "@mui/material";
+
+// Template
+import ModalTemplate from "../../../Templates/ModalTemplate";
+
+// UI Fragnemt
+import DeleteTypography from "../../../UIFragment/DeleteTypography";
+import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
+
+// Context
 import { useBannedUserContext } from "../../../../Context/User/BannedUserContext";
 import { useModal } from "../../../../Context/ModalContext";
 import { useAllUserContext } from "../../../../Context/User/AllUserContext";
 import { useDeleteUserContext } from "../../../../Context/User/DeleteUserContext";
+
+// Model
+import { DeleteModalInterface } from "../../../../Model/ModelForModal";
+
+// Data (CSS Syntax)
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 
 const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) => 
 {
@@ -18,7 +30,7 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
     const { fetchAllUser } = useAllUserContext();
     const { handleClose } = useModal();
 
-    const UndoActionForUser = () => 
+    const UndoUserAction = () => 
     {
         switch(value)
         {
@@ -65,7 +77,7 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
             </Box>
             
             <DeleteTypography/>
-            <Button variant='contained' onClick={UndoActionForUser}>Yes</Button>
+            <ModalConfirmButton clickEvent={UndoUserAction} name={"Yes"} buttonType={""}/>
         </ModalTemplate>
     );
 }

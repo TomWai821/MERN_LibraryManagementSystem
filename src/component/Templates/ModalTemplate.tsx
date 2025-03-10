@@ -26,7 +26,7 @@ const ModalTemplate:FC <ModalTemplateProps> = (templateData) =>
             <Box sx={{...ModalSyntax, ...CreateModalSyntax}}>
                 <Typography id="modal-title" sx={ModalTitleSyntax}>{title}</Typography>
                     {children}
-                <Button onClick={ButtonEvent} sx={{marginLeft: '10px'}}>{cancelButtonName}</Button>
+                <Button onClick={ButtonEvent}>{cancelButtonName}</Button>
             </Box>
         </Modal>
     );

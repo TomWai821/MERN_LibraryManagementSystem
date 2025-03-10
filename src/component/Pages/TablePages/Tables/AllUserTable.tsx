@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 // UI Fragment
-import ContentTableCell from "../../../UIFragment/TableCell/ContentTableCell";
+import ContentTableCell from "../../../UIFragment/ContentTableCell";
 import ActionTableCell from "../../../Manager/ActionTableCellManager";
 
 // Models
@@ -15,6 +15,7 @@ import { AllUserTableHeader } from "../../../../Maps/TableMaps";
 const AllUserTable:FC<UserDataTableInterface> = (DataForAllUserTable) => 
 {
     const {isAdmin, value, userData, paginationValue} = DataForAllUserTable;
+    const TableName = "User";
 
     const currentTableData = userData[value];
     const [page, setPage] = useState<number>(1);
@@ -59,12 +60,12 @@ const AllUserTable:FC<UserDataTableInterface> = (DataForAllUserTable) =>
                         (
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                 <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                <ContentTableCell>{data.username}</ContentTableCell>
-                                <ContentTableCell>{data.email}</ContentTableCell>
-                                <ContentTableCell>{data.role}</ContentTableCell>
-                                <ContentTableCell>{data.status}</ContentTableCell>
-                                <ContentTableCell>{data.gender}</ContentTableCell>
-                                {isAdmin && (<ActionTableCell value={value} TableName={"User"} Information={data} isAdmin={isAdmin}/>)}
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.username}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.email}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.role}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.status}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.gender}</ContentTableCell>
+                                {isAdmin && (<ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin}/>)}
                             </TableRow>
                         )
                     )}

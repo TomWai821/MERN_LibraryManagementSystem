@@ -3,7 +3,7 @@ import { Box, Button,  Typography} from '@mui/material';
 
 // Template
 import ModalTemplate from '../../../Templates/ModalTemplate';
-import DeleteTypography from '../../../UIFragment/Typography/DeleteTypography';
+import DeleteTypography from '../../../UIFragment/DeleteTypography';
 
 // Model
 import { BookDataInterface } from '../../../../Model/BookTableModel';

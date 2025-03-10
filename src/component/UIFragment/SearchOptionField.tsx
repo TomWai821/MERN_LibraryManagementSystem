@@ -1,7 +1,7 @@
 import { FC, Fragment } from "react"
 import { Box, Card, MenuItem, TextField, Typography } from "@mui/material"
 
-import { OptionFieldModel } from "../../../Model/InputFieldModel"
+import { OptionFieldModel } from "../../Model/InputFieldModel";
 
 const SearchOptionField:FC<OptionFieldModel> = ({...optionData}) =>
 {

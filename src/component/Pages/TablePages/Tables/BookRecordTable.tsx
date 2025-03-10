@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
 
 // UI Fragment and Manager
 import ActionTableCell from "../../../Manager/ActionTableCellManager";
-import ContentTableCell from "../../../UIFragment/TableCell/ContentTableCell";
+import ContentTableCell from "../../../UIFragment/ContentTableCell";
 
 // Model
 import { BookRecordTableInterface } from "../../../../Model/BookTableModel";
@@ -35,13 +35,17 @@ const BookRecordTable:FC<BookRecordTableInterface> = ({isLoggedIn, isAdmin, book
                     (
                         <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                             <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                            <ContentTableCell>{data.bookname}</ContentTableCell>
-                            <ContentTableCell>{data.language}</ContentTableCell>
-                            <ContentTableCell>{data.genre}</ContentTableCell>
-                            <ContentTableCell>{data.author}</ContentTableCell>
-                            <ContentTableCell>{data.publisher}</ContentTableCell>
-                            <ContentTableCell>{data.pages}</ContentTableCell>
-                            <ContentTableCell>{data.amount}</ContentTableCell>
+                            {
+                                /*
+                                    <ContentTableCell isAdmin={isAdmin} Information={currentTableData[value]}>{data.bookname}</ContentTableCell>
+                                    <ContentTableCell isAdmin={isAdmin} Information={currentTableData[value]}>{data.language}</ContentTableCell>
+                                    <ContentTableCell isAdmin={isAdmin} Information={currentTableData[value]}>{data.genre}</ContentTableCell>
+                                    <ContentTableCell isAdmin={isAdmin} Information={currentTableData[value]}>{data.author}</ContentTableCell>
+                                    <ContentTableCell isAdmin={isAdmin} Information={currentTableData[value]}>{data.publisher}</ContentTableCell>
+                                    <ContentTableCell isAdmin={isAdmin} Information={currentTableData[value]}>{data.pages}</ContentTableCell>
+                                    <ContentTableCell isAdmin={isAdmin} Information={currentTableData[value]}>{data.amount}</ContentTableCell>
+                                */
+                            }
                             {isLoggedIn && (<ActionTableCell TableName={"Book"} Information={data} isAdmin={isAdmin} value={0}/>)}
                         </TableRow>
                     )

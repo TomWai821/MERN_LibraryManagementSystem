@@ -8,7 +8,7 @@ import { useModal } from "../../../../Context/ModalContext";
 // Models
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
 import { UserDataInterface } from "../../../../Model/UserTableModel";
-import { EditModalInterface } from "../../../../Model/TablePagesAndModalModel";
+import { EditModalInterface } from "../../../../Model/ModelForModal";
 
 // Template for modal
 import ModalTemplate from "../../../Templates/ModalTemplate";
@@ -18,6 +18,7 @@ import EditUserModal from "../../User/EditUserModal";
 
 // Data (CSS syntax)
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
+import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 
 const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {
@@ -49,7 +50,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
         handleOpen(<EditUserModal editData={editData} compareData={compareData} value={value} />);
     }
 
-    const onClick = () => 
+    const EditUserAction = () => 
     {
         if(differences.length > 0)
         {
@@ -82,7 +83,8 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
 
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
             </Box>
-            <Button variant='contained' onClick={onClick}>Yes</Button>
+            
+            <ModalConfirmButton clickEvent={EditUserAction} name={"Yes"} buttonType={""}/>
         </ModalTemplate>
     );
 }

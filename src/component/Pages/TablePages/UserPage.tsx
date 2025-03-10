@@ -3,7 +3,7 @@ import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 
 // Another Component
 import UserFilter from "./Filter/UserFilter";
-import CustomTab from "../../UIFragment/Tab/CustomTab";
+import CustomTab from "../../UIFragment/CustomTab";
 import UserTabPanel from "./Tabs/UserTabPanel";
 
 // Another Useful Function

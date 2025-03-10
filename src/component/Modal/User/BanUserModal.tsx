@@ -1,11 +1,24 @@
-import { Box, Button, MenuItem, TextField, Typography } from "@mui/material"
-import ModalTemplate from "../../Templates/ModalTemplate"
-import { DeleteButton, ModalBodySyntax } from "../../../Maps/FormatSyntaxMaps"
 import { ChangeEvent, FC, useState } from "react";
-import { useModal } from "../../../Context/ModalContext";
+import { Box, MenuItem, TextField, Typography } from "@mui/material"
+
+// Template
+import ModalTemplate from "../../Templates/ModalTemplate"
+
+// UI Fragment
+import ModalConfirmButton from "../../UIFragment/ModalConfirmButton";
+
+// Another Modal
 import BanUserConfirmModal from "../Confirmation/User/BanUserConfirmModal";
+
+// Modals
+import { useModal } from "../../../Context/ModalContext";
+
+// Model
+import { BanModalInterface } from "../../../Model/ModelForModal";
+
+// Data (CSS Syntax and dropdown option)
+import { ModalBodySyntax } from "../../../Maps/FormatSyntaxMaps"
 import { dateOption } from "../../../Maps/TextFieldsMaps";
-import { BanModalInterface } from "../../../Model/UserTableModel";
 
 const BanUserModal:FC<BanModalInterface> = ({...userData}) => 
 {
@@ -19,7 +32,7 @@ const BanUserModal:FC<BanModalInterface> = ({...userData}) =>
         setBanData({...banData, [name] : value});
     }
 
-    const onClick = () => 
+    const OpenBanUserConfirmModal = () => 
     {
         handleOpen(<BanUserConfirmModal _id={_id} username={username} durationOption={banData.durationOption} description={banData.description}/>)
     }
@@ -40,7 +53,8 @@ const BanUserModal:FC<BanModalInterface> = ({...userData}) =>
                 </TextField>
                 <TextField size="small" rows={5} name="description" onChange={onChange} label={"description"} value={banData.description} multiline/>
             </Box>
-            <Button sx={DeleteButton} onClick={onClick}>Ban</Button>
+            
+            <ModalConfirmButton clickEvent={OpenBanUserConfirmModal} name={"Ban"} buttonType={"Important"}/>
         </ModalTemplate>
     )
 }

@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 // UI Fragment And Manager
-import ContentTableCell from "../../../UIFragment/TableCell/ContentTableCell";
+import ContentTableCell from "../../../UIFragment/ContentTableCell";
 import ActionTableCell from "../../../Manager/ActionTableCellManager";
 
 // Another useful function and model
@@ -16,6 +16,7 @@ import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
 const DeleteUserTable:FC<UserDataTableInterface> = (DataForDeleteUserTable) => 
 {
     const {isAdmin, value, userData, paginationValue} = DataForDeleteUserTable;
+    const TableName = "User";
 
     const currentTableData = userData[value];
     const [page, setPage] = useState<number>(1);
@@ -62,13 +63,13 @@ const DeleteUserTable:FC<UserDataTableInterface> = (DataForDeleteUserTable) =>
                         (
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                 <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                <ContentTableCell>{data.username}</ContentTableCell>
-                                <ContentTableCell>{data.role}</ContentTableCell>
-                                <ContentTableCell>{data.gender}</ContentTableCell>
-                                <ContentTableCell>{TransferDateToString(data.deleteDetails?.startDate)}</ContentTableCell>
-                                <ContentTableCell>{TransferDateToString(data.deleteDetails?.dueDate)}</ContentTableCell>
-                                <ContentTableCell>{data.deleteDetails?.status}</ContentTableCell>
-                                {isAdmin && (<ActionTableCell value={value} TableName={"User"} Information={data} isAdmin={isAdmin}/>)}
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data} >{data.username}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.role}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.gender}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{TransferDateToString(data.deleteDetails?.startDate)}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{TransferDateToString(data.deleteDetails?.dueDate)}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.deleteDetails?.status}</ContentTableCell>
+                                {isAdmin && (<ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin}/>)}
                             </TableRow>
                         )
                     )}

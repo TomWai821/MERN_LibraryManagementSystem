@@ -8,6 +8,7 @@ import { CreateUserInputField } from '../../../Maps/TextFieldsMaps';
 import CreateUserConfirmModal from '../Confirmation/User/CreateUserConfirmModal';
 import { GetCurrentDate } from '../../../Controller/OtherController';
 import { UserDataInterface } from '../../../Model/UserTableModel';
+import ModalConfirmButton from '../../UIFragment/ModalConfirmButton';
 
 const CreateUserModal:FC = ({}) => 
 {
@@ -43,7 +44,8 @@ const CreateUserModal:FC = ({}) =>
                 ))   
             }
             </Box>
-            <Button variant='contained' onClick={OpenConfirmModal}>Create</Button>
+            
+            <ModalConfirmButton clickEvent={OpenConfirmModal} name={"Create"} buttonType={""}/>
         </ModalTemplate>
     );
 }

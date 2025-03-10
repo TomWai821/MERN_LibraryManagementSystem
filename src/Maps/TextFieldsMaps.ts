@@ -83,6 +83,13 @@ const EditUserInputField =
     {name: "role", label: "Role", type: "text", select: true, options: RoleOption}
 ]
 
+const EditBanUserInputField = 
+[
+    {name: "startDate", label: "Start Date", type:"Date", select:false, slotProps: {}, options: []},
+    {name: "dueDate", label: "Due Date", type:"Date", select:false, slotProps: {}, options: []},
+    {name: "description", label: "Description", type:"String", select:false, slotProps: {}, options: []},
+]
+
 // For book filter
 const CreateBookInputField = 
 [
@@ -101,4 +108,4 @@ const dateOption =
     {label:'Forever', value: Infinity}
 ];
 
-export {RegisterField, LoginField, ViewProfileField, BookMainSearchField, BookSearchField, AllUserSearchField, OtherUserSearchField, CreateBookInputField, CreateUserInputField, EditUserInputField, dateOption}
+export {RegisterField, LoginField, ViewProfileField, BookMainSearchField, BookSearchField, AllUserSearchField, OtherUserSearchField, CreateUserInputField, EditUserInputField, EditBanUserInputField, CreateBookInputField, dateOption}

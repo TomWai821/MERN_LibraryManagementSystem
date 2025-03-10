@@ -1,5 +1,7 @@
 import { GetUserCookie } from "./CookieController";
 
+const MillionSecondsToDay = 1000 * 60 * 60 * 24;
+
 const ChangePage = (location: string) => 
 {
     window.location.href = location;
@@ -76,4 +78,41 @@ const TransferDateToString = (date: Date | undefined):string =>
     return new Date(date).toLocaleDateString('en-US'); // Customize locale
 }
 
-export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate, CalculateDueDate, TransferDateToString}
+const CalculateDuration = (startDate:Date, dueDate: Date | string) => 
+{
+    if(dueDate === "N/A")
+    {
+        return "Forever";
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(dueDate);
+
+    const durationInMilliseconds = end.getTime() - start.getTime();
+    const days = Math.floor(durationInMilliseconds / MillionSecondsToDay);
+
+    return days.toLocaleString('en-US') + " Days";
+}
+
+const CountDuration = (dueDate: Date | string) => 
+{
+    if(dueDate === "N/A")
+    {
+        return "N/A";
+    }
+
+    const currentDate = new Date();
+    const end = new Date(dueDate);
+
+    const durationInMilliseconds = end.getTime() - currentDate.getTime();
+    const days = Math.floor(durationInMilliseconds / MillionSecondsToDay);
+
+    if(days < 1)
+    {
+        return "Less than 1 Day";
+    }
+
+    return days.toLocaleString('en-US') + " Days ";
+}
+
+export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate, CalculateDueDate, TransferDateToString, CalculateDuration, CountDuration}

@@ -1,9 +1,9 @@
 import { FC } from "react";
-
 import { Typography } from "@mui/material"
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
-import { DeleteButton } from "../../../Maps/FormatSyntaxMaps";
+import { DeleteButton } from "../../Maps/FormatSyntaxMaps";
+
 
 
 const DeleteTypography:FC = () => 

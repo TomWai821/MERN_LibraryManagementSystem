@@ -3,7 +3,7 @@ import { Box, TableContainer, Typography, Paper, Pagination } from "@mui/materia
 
 // Another Component
 import BookFilter from "./Filter/BookFilter";
-import CustomTab from "../../UIFragment/Tab/CustomTab";
+import CustomTab from "../../UIFragment/CustomTab";
 import BookTabPanel from "./Tabs/BookTabPanel";
 
 // Model

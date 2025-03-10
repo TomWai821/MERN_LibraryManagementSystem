@@ -31,23 +31,6 @@ interface ActionTableCellInterface extends IsAdminInterface
     Information: UserResultDataInterface | BookDataInterface;
 }
 
-interface CreateModalInterface
-{
-    data?: UserResultDataInterface | BookDataInterface;
-}
-
-interface EditModalInterface
-{
-    value:number;
-    editData: UserResultDataInterface | BookDataInterface;
-    compareData: UserResultDataInterface | BookDataInterface;
-}
-
-interface DeleteModalInterface extends UserResultDataInterface
-{
-    _id:string;
-    value:number;
-}
 
 interface TableInterface extends IsAdminInterface
 {
@@ -72,5 +55,7 @@ interface OptionFieldsInterface
     searchData: any;
 }
 
-export type {IsAdminInterface, PagesInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, DeleteModalInterface, TableInterface, TabInterface, OptionFieldsInterface}
+
+
+export type {IsAdminInterface, PagesInterface, ActionTableCellInterface, FilterInterface, TableInterface, TabInterface, OptionFieldsInterface}
 

@@ -11,9 +11,8 @@ import EditBookConfirmModal from '../Confirmation/Book/EditBookConfirmModal';
 import { useModal } from '../../../Context/ModalContext';
 
 // Model
-import { EditModalInterface } from '../../../Model/TablePagesAndModalModel';
+import { EditModalInterface } from '../../../Model/ModelForModal';
 import { BookDataInterface } from '../../../Model/BookTableModel';
-
 
 // Data (CSS Syntax)
 import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';

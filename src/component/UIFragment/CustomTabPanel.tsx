@@ -1,6 +1,7 @@
 import { FC } from "react"
 import { Box } from "@mui/material"
-import { TabPanelProps } from "../../../Model/ContextAndProviderModel"
+
+import { TabPanelProps } from "../../Model/ContextAndProviderModel"
 
 const CustomTabPanel:FC<TabPanelProps> = ({children ,index, value}) => 
 {

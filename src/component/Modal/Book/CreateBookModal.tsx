@@ -12,7 +12,7 @@ import { useModal } from '../../../Context/ModalContext';
 
 // Models
 import { BookDataInterface } from '../../../Model/BookTableModel';
-import { CreateModalInterface } from '../../../Model/TablePagesAndModalModel';
+import { CreateModalInterface } from '../../../Model/ModelForModal';
 
 // Data (CSS Syntax and dropdown data)
 import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';

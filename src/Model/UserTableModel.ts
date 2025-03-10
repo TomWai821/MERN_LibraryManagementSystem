@@ -34,13 +34,4 @@ interface UserDataTableInterface extends IsAdminInterface
     paginationValue: number;
 }
 
-
-interface BanModalInterface
-{
-    _id:string;
-    username:string;
-    durationOption?:number;
-    description?:string;
-}
-
-export type {UserDataInterface, FindUserInterface, CreateUserInterface, UserDataTableInterface, BanModalInterface}
+export type {UserDataInterface, FindUserInterface, CreateUserInterface, UserDataTableInterface}

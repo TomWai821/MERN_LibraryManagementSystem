@@ -1,15 +1,26 @@
 import { ChangeEvent, FC, useState } from 'react'
+import { MenuItem, TextField, Box } from '@mui/material';
 
-import Box from '@mui/material/Box';
-import { EditModalInterface } from '../../../Model/TablePagesAndModalModel';
-import { useModal } from '../../../Context/ModalContext';
+// UI Fragment
+import ModalConfirmButton from '../../UIFragment/ModalConfirmButton';
+
+// Template
 import ModalTemplate from '../../Templates/ModalTemplate';
-import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
-import { Button, MenuItem, TextField } from '@mui/material';
-import { EditUserInputField } from '../../../Maps/TextFieldsMaps';
+
+// Another Modal
 import EditUserConfirmModal from '../Confirmation/User/EditUserConfirmModal';
+
+// Context
+import { useModal } from '../../../Context/ModalContext';
+
+// Models
 import { UserResultDataInterface } from '../../../Model/ResultModel';
 import { UserDataInterface } from '../../../Model/UserTableModel';
+import { EditModalInterface } from '../../../Model/ModelForModal';
+
+// Data (Dropdown option and CSS Syntax)
+import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
+import { EditUserInputField } from '../../../Maps/TextFieldsMaps';
 
 const EditUserModal:FC<EditModalInterface> = (editModalData) => 
 {
@@ -62,7 +73,8 @@ const EditUserModal:FC<EditModalInterface> = (editModalData) =>
                     ))   
                 }
             </Box>
-            <Button variant='contained' onClick={openConfirmModal}>Edit</Button>
+
+            <ModalConfirmButton clickEvent={openConfirmModal} name={"Edit"} buttonType={""}/>
         </ModalTemplate>
     );
 }

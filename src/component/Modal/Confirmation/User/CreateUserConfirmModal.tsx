@@ -1,8 +1,11 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useModal } from '../../../../Context/ModalContext';
 
 // Context
 import { useAllUserContext } from "../../../../Context/User/AllUserContext";
+
+// UI Fragment
+import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 
 // Template
 import ModalTemplate from '../../../Templates/ModalTemplate';
@@ -44,7 +47,8 @@ const CreateUserConfirmModal = ({...userData}) =>
                 <Typography>BirthDay: {birthDayToString}</Typography>
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
             </Box>
-            <Button variant="contained" onClick={registerUser}>Yes</Button>
+            
+            <ModalConfirmButton clickEvent={registerUser} name={"Yes"} buttonType={""}/>
         </ModalTemplate>
     );
 }

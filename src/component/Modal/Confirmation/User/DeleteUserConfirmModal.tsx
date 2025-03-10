@@ -2,7 +2,10 @@ import { FC } from 'react'
 import { Box, Button, Typography } from '@mui/material'
 
 // Models
-import { DeleteModalInterface } from '../../../../Model/TablePagesAndModalModel';
+import { DeleteModalInterface } from '../../../../Model/ModelForModal';
+
+// UI Fragment
+import DeleteTypography from '../../../UIFragment/DeleteTypography';
 
 // Context
 import { useModal } from '../../../../Context/ModalContext';
@@ -11,10 +14,11 @@ import { useAllUserContext } from '../../../../Context/User/AllUserContext';
 
 // Templates
 import ModalTemplate from '../../../Templates/ModalTemplate';
-import DeleteTypography from '../../../UIFragment/Typography/DeleteTypography';
 
 // Data (CSS syntax)
-import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
+import { ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
+import ModalConfirmButton from '../../../UIFragment/ModalConfirmButton';
+
 
 const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) => 
 {
@@ -79,7 +83,7 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
             </Box>
             
             <DeleteTypography/>
-            <Button variant='contained' sx={DeleteButton} onClick={DeleteUserAction}>Yes</Button>
+            <ModalConfirmButton clickEvent={DeleteUserAction} name={"Yes"} buttonType={"Important"}/>
         </ModalTemplate>
     );
 }

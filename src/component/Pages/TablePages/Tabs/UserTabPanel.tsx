@@ -1,7 +1,7 @@
 import { FC, Fragment } from "react"
 
 // Tabs
-import CustomTabPanel from "../../../UIFragment/TabPanel/CustomTabPanel"
+import CustomTabPanel from "../../../UIFragment/CustomTabPanel"
 
 // Another Component
 import AllUserTable from "../Tables/AllUserTable"

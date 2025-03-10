@@ -1,20 +1,25 @@
 import { FC } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+
+// UI Fragment
+import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 
 // Template
 import ModalTemplate from "../../../Templates/ModalTemplate";
+
+// Model
+import { BanModalInterface } from "../../../../Model/ModelForModal";
 
 // Context
 import { useModal } from "../../../../Context/ModalContext";
 import { useAllUserContext } from "../../../../Context/User/AllUserContext";
 import { useBannedUserContext } from "../../../../Context/User/BannedUserContext";
-import { BanModalInterface } from "../../../../Model/UserTableModel";
 
 // Another Modal
 import BanUserModal from "../../User/BanUserModal";
 
 // Data (CSS Syntax and dropdown data)
-import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 import { dateOption } from "../../../../Maps/TextFieldsMaps";
 
 const BanUserConfirmModal:FC<BanModalInterface> = (banData) => 
@@ -46,7 +51,7 @@ const BanUserConfirmModal:FC<BanModalInterface> = (banData) =>
                 <Typography>Description: {description}</Typography>
             </Box>
             
-            <Button onClick={() => BanUser(_id, dateOption[durationOption as number].value, description as string)} sx={{...DeleteButton}}>Yes</Button>
+            <ModalConfirmButton clickEvent={() => BanUser(_id, dateOption[durationOption as number].value, description as string)} name={"Yes"} buttonType={"Important"}/>
         </ModalTemplate>
     );
 }

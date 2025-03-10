@@ -37,6 +37,7 @@ interface ModalTemplateProps extends ChildProps
     cancelButtonEvent?: () => void;
 }
 
+// For Context
 interface AllUserContextProps
 {
     AllUser: UserResultDataInterface[];
@@ -65,10 +66,20 @@ interface DeleteUserContextProps
     actualDeleteUser: (userId:string, deleteListID:string, status:string) => void;
 }
 
+// For Tab Panel
 interface TabPanelProps extends ChildProps
 {
     index: number;
     value: number;
 }
 
-export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, AllUserContextProps, BannedUserContextProps, DeleteUserContextProps, TabPanelProps}
+// For ContentTableCell
+interface ContentTableCellProps extends ChildProps
+{
+    TableName: string;
+    value: number;
+    isAdmin: boolean;
+    Information: UserResultDataInterface;
+}
+
+export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, AllUserContextProps, BannedUserContextProps, DeleteUserContextProps, TabPanelProps, ContentTableCellProps}

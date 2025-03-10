@@ -2,16 +2,20 @@ import { FormEvent, ChangeEvent, useState, useContext } from 'react';
 
 import { MenuItem, Button, Card, CardContent, Typography, TextField, Box, FormControl } from '@mui/material'
 
+// Another Useful Function
 import { RegisterController } from '../../Controller/UserController/UserPostController';
 import { ValidateField } from '../../Controller/ValidateController'
+import { ChangePage, GetCurrentDate } from '../../Controller/OtherController';
 
-import { RegisterField } from '../../Maps/TextFieldsMaps'
+// Context
+import { AlertContext } from '../../Context/AlertContext';
+
+// Models
 import { RegisterModel } from '../../Model/InputFieldModel';
 
+// Data(CSS Syntax and dropdown option)
 import { PageItemToCenter, PageTitleSyntax } from '../../Maps/FormatSyntaxMaps';
-import { ChangePage, GetCurrentDate } from '../../Controller/OtherController';
-import { AlertContext } from '../../Context/AlertContext';
-import { GetResultInterface } from '../../Model/ResultModel';
+import { RegisterField } from '../../Maps/TextFieldsMaps'
 
 const RegisterPage = () => 
 {

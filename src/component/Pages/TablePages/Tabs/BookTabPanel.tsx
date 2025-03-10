@@ -1,8 +1,14 @@
-import { Fragment } from "react/jsx-runtime"
-import { FC } from "react"
-import BookRecordTable from "../Tables/BookRecordTable"
+import { FC, Fragment } from "react"
+
+// UI Fragment
 import CustomTabPanel from "../../../UIFragment/TabPanel/CustomTabPanel"
-import { BookRecordTableInterface } from "../../../../Model/TablePageModel"
+
+// Another Component
+import BookRecordTable from "../Tables/BookRecordTable"
+
+// Model
+import { BookRecordTableInterface } from "../../../../Model/BookTableModel"
+
 
 const BookTabPanel:FC<BookRecordTableInterface> = ({value, isAdmin, isLoggedIn, bookData}) =>
 {

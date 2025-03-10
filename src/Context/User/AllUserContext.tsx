@@ -1,11 +1,15 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
-import { FindUserInterface, UserDataInterface } from "../../Model/TablePageModel";
-import { ChildProps, AllUserContextProps } from "../../Model/ContextAndProviderModel";
+
+// Another Useful Function
 import { FetchUserData } from "../../Controller/UserController/UserGetController";
-import { GetResultInterface, UserResultDataInterface } from "../../Model/ResultModel";
 import { CalculateDueDate, GetCurrentDate, GetData } from "../../Controller/OtherController";
 import { ModifyStatusController, ModifyUserDataController } from "../../Controller/UserController/UserPutController";
 import { RegisterController } from "../../Controller/UserController/UserPostController";
+
+// Models
+import { GetResultInterface, UserResultDataInterface } from "../../Model/ResultModel";
+import { FindUserInterface, UserDataInterface } from "../../Model/UserTableModel";
+import { ChildProps, AllUserContextProps } from "../../Model/ContextAndProviderModel";
 
 const AllUserContext = createContext<AllUserContextProps | undefined>(undefined);
 

@@ -1,5 +1,7 @@
+import { FC } from "react"
 import { Routes, Route } from "react-router-dom"
 
+// Another Component
 import LoginPage from "../Pages/LoginPage"
 import MainPage from "../Pages/MainPage"
 import RegisterPage from "../Pages/RegisterPage"
@@ -7,8 +9,8 @@ import BookPage from "../Pages/TablePages/BookPage"
 import UserPage from "../Pages/TablePages/UserPage"
 import ViewProfilePage from "../Pages/ViewProfilePage"
 import DefinitionPage from "../Pages/DefinationPage"
-import { PagesInterface } from "../../Model/TablePageModel"
-import { FC } from "react"
+
+import { PagesInterface } from "../../Model/TablePagesAndModalModel"
 
 const RoutesUtils:FC<PagesInterface> = (loginData) => 
 {

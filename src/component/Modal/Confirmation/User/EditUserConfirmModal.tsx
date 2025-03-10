@@ -1,12 +1,23 @@
 import { Box, Button, Typography } from "@mui/material";
-import { EditModalInterface, UserDataInterface } from "../../../../Model/TablePageModel";
 import { FC, useEffect, useState } from "react";
-import { useModal } from "../../../../Context/ModalContext";
-import ModalTemplate from "../../../Templates/ModalTemplate";
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
-import EditUserModal from "../../User/EditUserModal";
+
+// Context
 import { useAllUserContext } from "../../../../Context/User/AllUserContext";
+import { useModal } from "../../../../Context/ModalContext";
+
+// Models
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
+import { UserDataInterface } from "../../../../Model/UserTableModel";
+import { EditModalInterface } from "../../../../Model/TablePagesAndModalModel";
+
+// Template for modal
+import ModalTemplate from "../../../Templates/ModalTemplate";
+
+// Another Modal
+import EditUserModal from "../../User/EditUserModal";
+
+// Data (CSS syntax)
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 
 const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {

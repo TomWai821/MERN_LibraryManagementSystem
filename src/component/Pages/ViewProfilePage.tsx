@@ -1,22 +1,25 @@
-// React Components
-import React, { Fragment } from 'react'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState, Fragment } from 'react'
 
-// MUI components
 import { Box, Button, Card, CardContent, TextField, Typography } from '@mui/material'
+
+// Context
+import { useModal } from '../../Context/ModalContext'
 
 // Models
 import { ViewProfileModel } from '../../Model/InputFieldModel'
 import { GetResultInterface } from '../../Model/ResultModel'
-import { ViewProfileField } from '../../Maps/TextFieldsMaps'
+import { UserDataInterface } from '../../Model/UserTableModel'
 
 // Controllers
 import { FetchUserData } from '../../Controller/UserController/UserGetController'
 import { GetUserCookie } from '../../Controller/CookieController'
-import { DeleteButton, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../Maps/FormatSyntaxMaps'
-import { useModal } from '../../Context/ModalContext'
+
+// Another Modal
 import DeleteProfileConfirmModal from '../Modal/Confirmation/Profile/DeleteProfileComfirmModal'
-import { UserDataInterface } from '../../Model/TablePageModel'
+
+// Data(CSS Syntax)
+import { DeleteButton, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../Maps/FormatSyntaxMaps'
+import { ViewProfileField } from '../../Maps/TextFieldsMaps'
 
 const ViewProfilePage = () => 
 {

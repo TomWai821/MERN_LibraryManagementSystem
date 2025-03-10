@@ -1,13 +1,20 @@
 import { FC } from 'react'
-
 import { Box, Button, Typography } from '@mui/material'
-import { DeleteModalInterface } from '../../../../Model/TablePageModel';
-import ModalTemplate from '../../../Templates/ModalTemplate';
-import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
-import DeleteTypography from '../../../UIFragment/Typography/DeleteTypography';
-import { useAllUserContext } from '../../../../Context/User/AllUserContext';
+
+// Models
+import { DeleteModalInterface } from '../../../../Model/TablePagesAndModalModel';
+
+// Context
 import { useModal } from '../../../../Context/ModalContext';
 import { useDeleteUserContext } from '../../../../Context/User/DeleteUserContext';
+import { useAllUserContext } from '../../../../Context/User/AllUserContext';
+
+// Templates
+import ModalTemplate from '../../../Templates/ModalTemplate';
+import DeleteTypography from '../../../UIFragment/Typography/DeleteTypography';
+
+// Data (CSS syntax)
+import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
 
 const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) => 
 {

@@ -1,11 +1,22 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
-import { CreateBookInputField } from '../../../Maps/TextFieldsMaps';
-import { BookDataInterface, CreateModalInterface } from '../../../Model/TablePageModel';
+
+// Template
 import ModalTemplate from '../../Templates/ModalTemplate';
-import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
-import { useModal } from '../../../Context/ModalContext';
+
+// Another Modal
 import CreateBookConfirmModal from '../Confirmation/Book/CreateBookConfirmModal';
+
+// Context
+import { useModal } from '../../../Context/ModalContext';
+
+// Models
+import { BookDataInterface } from '../../../Model/BookTableModel';
+import { CreateModalInterface } from '../../../Model/TablePagesAndModalModel';
+
+// Data (CSS Syntax and dropdown data)
+import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
+import { CreateBookInputField } from '../../../Maps/TextFieldsMaps';
 
 const CreateBookModal: FC<CreateModalInterface> = ({...bookData}) => 
 {

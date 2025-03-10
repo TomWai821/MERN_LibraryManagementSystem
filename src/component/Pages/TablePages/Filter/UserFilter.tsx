@@ -1,15 +1,23 @@
 
 import { FC, useState } from "react";
-import { Box, Button, IconButton, MenuItem, TextField } from "@mui/material";
+import { Box, Button, IconButton, TextField } from "@mui/material";
+
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
-import { FilterInterface, UserDataInterface } from "../../../../Model/TablePageModel";
-
-import { useModal } from "../../../../Context/ModalContext";
-import CreateUserModal from "../../../Modal/User/CreateUserModal";
-import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
 import OptionFields from "../../../Manager/OptionFieldsManager";
+
+// Context
+import { useModal } from "../../../../Context/ModalContext";
+
+import CreateUserModal from "../../../Modal/User/CreateUserModal";
+
+// Models
+import { FilterInterface } from "../../../../Model/TablePagesAndModalModel";
+import { UserDataInterface } from "../../../../Model/UserTableModel";
+
+// data (CSS Syntax)
+import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
 
 const UserFilter:FC<FilterInterface> = (filterData) => 
 {

@@ -1,10 +1,21 @@
-import { Box, Button, Typography } from "@mui/material"
-import ModalTemplate from "../../../Templates/ModalTemplate"
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps"
 import { FC } from "react"
-import { BookDataInterface, CreateModalInterface } from "../../../../Model/TablePageModel"
+import { Box, Button, Typography } from "@mui/material"
+
+// Template
+import ModalTemplate from "../../../Templates/ModalTemplate"
+
+// Context
 import { useModal } from "../../../../Context/ModalContext"
+
+// Model
+import { CreateModalInterface } from "../../../../Model/TablePagesAndModalModel"
+import { BookDataInterface } from "../../../../Model/BookTableModel"
+
+// Another Modal
 import CreateBookModal from "../../Book/CreateBookModal"
+
+// Data(CSS Syntax)
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps"
 
 const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) => 
 {

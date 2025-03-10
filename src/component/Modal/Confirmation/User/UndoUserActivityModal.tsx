@@ -2,7 +2,7 @@ import { Box,  Button, Typography } from "@mui/material";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 import DeleteTypography from "../../../UIFragment/Typography/DeleteTypography";
 import { FC } from "react";
-import { DeleteModalInterface } from "../../../../Model/TablePageModel";
+import { DeleteModalInterface } from "../../../../Model/TablePagesAndModalModel";
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 import { useBannedUserContext } from "../../../../Context/User/BannedUserContext";
 import { useModal } from "../../../../Context/ModalContext";

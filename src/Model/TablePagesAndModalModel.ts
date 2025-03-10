@@ -1,5 +1,7 @@
 import { ChangeEvent } from "react";
 import { UserResultDataInterface } from "./ResultModel";
+import { UserDataInterface } from "./UserTableModel";
+import { BookDataInterface, BookSearchInterface } from "./BookTableModel"
 
 interface IsAdminInterface
 {
@@ -20,47 +22,6 @@ interface FilterInterface extends IsAdminInterface
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     searchData: UserDataInterface | BookSearchInterface;
     Search: () => void;
-}
-
-interface BookSearchInterface
-{
-    bookname:string;
-    language:string;
-    genre:string;
-    author:string;
-    publisher:string;
-    pages:string;
-}
-
-interface BookDataInterface extends BookSearchInterface
-{
-    amount:string;
-}
-
-interface UserDataInterface
-{
-    username:string;
-    email:string;
-    role:string;
-    status:string;
-    gender:string;
-}
-
-interface FindUserDateInterface extends UserDataInterface
-{
-    startDate:Date;
-    dueDate:Date;
-}
-
-interface FindUserInterface extends FindUserDateInterface
-{
-    tableName?:string;
-}
-
-interface CreateUserInterface extends UserDataInterface
-{
-    password:string;
-    birthDay:Date;
 }
 
 interface ActionTableCellInterface extends IsAdminInterface
@@ -93,19 +54,6 @@ interface TableInterface extends IsAdminInterface
     isLoggedIn: boolean;
 }
 
-interface BookRecordTableInterface extends TableInterface
-{
-    value: number;
-    bookData: BookDataInterface[];
-}
-
-interface UserDataTableInterface extends IsAdminInterface
-{
-    value: number;
-    userData: UserResultDataInterface[][];
-    paginationValue: number;
-}
-
 interface TabInterface extends IsAdminInterface
 {
     tabLabel: { label: string; }[];
@@ -124,12 +72,5 @@ interface OptionFieldsInterface
     searchData: any;
 }
 
-interface BanModalInterface
-{
-    _id:string;
-    username:string;
-    durationOption?:number;
-    description?:string;
-}
+export type {IsAdminInterface, PagesInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, DeleteModalInterface, TableInterface, TabInterface, OptionFieldsInterface}
 
-export type {IsAdminInterface, PagesInterface, BookSearchInterface, BookDataInterface, UserDataInterface, FindUserInterface, CreateUserInterface, ActionTableCellInterface, FilterInterface, CreateModalInterface, EditModalInterface, DeleteModalInterface, BookRecordTableInterface, UserDataTableInterface, TabInterface, OptionFieldsInterface, BanModalInterface}

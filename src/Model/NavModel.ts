@@ -1,5 +1,5 @@
 import { MouseEvent, ReactElement } from "react";
-import { PagesInterface } from "./TablePageModel";
+import { PagesInterface } from "./TablePagesAndModalModel";
 
 interface NavInterface extends PagesInterface
 {

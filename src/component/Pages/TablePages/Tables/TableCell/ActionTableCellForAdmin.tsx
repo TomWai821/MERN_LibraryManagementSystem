@@ -1,20 +1,28 @@
-import { FC, Fragment } from "react"
-import { ActionTableCellInterface, BookDataInterface } from "../../../../../Model/TablePageModel"
+import { FC } from "react"
 import { IconButton, TableCell, Tooltip } from "@mui/material";
+import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon } from '@mui/icons-material';
 
-import { UserResultDataInterface } from "../../../../../Model/ResultModel";
+// Context
 import { useModal } from "../../../../../Context/ModalContext";
-import { DeleteButton, ImportantActionButtonSyntax } from "../../../../../Maps/FormatSyntaxMaps";
 
+// Useful function 
+import { StatusDetectionForAllUser, StatusDetectionForBannedUser, StatusDetectionForDeleteUser } from "../../../../../Controller/UserController/UserOtherController";
+
+// Another Modal
 import EditUserModal from "../../../../Modal/User/EditUserModal";
 import EditBookModal from "../../../../Modal/Book/EditBookModal";
 import DeleteUserConfirmModal from "../../../../Modal/Confirmation/User/DeleteUserConfirmModal";
 import DeleteBookModal from "../../../../Modal/Confirmation/Book/DeleteBookConfirmModal";
 import BanUserModal from "../../../../Modal/User/BanUserModal";
-
-import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon } from '@mui/icons-material';
 import UndoUserActivityModal from "../../../../Modal/Confirmation/User/UndoUserActivityModal";
-import { StatusDetectionForAllUser, StatusDetectionForBannedUser, StatusDetectionForDeleteUser } from "../../../../../Controller/UserController/UserOtherController";
+
+// Model
+import { BookDataInterface } from "../../../../../Model/BookTableModel";
+import { ActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel"
+import { UserResultDataInterface } from "../../../../../Model/ResultModel";
+
+// Data(CSS Syntax)
+import { ImportantActionButtonSyntax } from "../../../../../Maps/FormatSyntaxMaps";
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
 {

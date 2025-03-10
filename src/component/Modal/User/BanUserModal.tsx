@@ -2,10 +2,10 @@ import { Box, Button, MenuItem, TextField, Typography } from "@mui/material"
 import ModalTemplate from "../../Templates/ModalTemplate"
 import { DeleteButton, ModalBodySyntax } from "../../../Maps/FormatSyntaxMaps"
 import { ChangeEvent, FC, useState } from "react";
-import { BanModalInterface } from "../../../Model/TablePageModel";
 import { useModal } from "../../../Context/ModalContext";
 import BanUserConfirmModal from "../Confirmation/User/BanUserConfirmModal";
 import { dateOption } from "../../../Maps/TextFieldsMaps";
+import { BanModalInterface } from "../../../Model/UserTableModel";
 
 const BanUserModal:FC<BanModalInterface> = ({...userData}) => 
 {

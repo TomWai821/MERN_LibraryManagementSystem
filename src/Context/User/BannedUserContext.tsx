@@ -1,10 +1,14 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
-import { FindUserInterface, UserDataInterface } from "../../Model/TablePageModel";
-import { ChildProps, BannedUserContextProps } from "../../Model/ContextAndProviderModel";
-import { FetchUserData } from "../../Controller/UserController/UserGetController";
-import { GetResultInterface, UserResultDataInterface } from "../../Model/ResultModel";
+
+// Useful Function
 import { CalculateDueDate, GetCurrentDate, GetData } from "../../Controller/OtherController";
 import { ModifyStatusController, ModifyUserDataController } from "../../Controller/UserController/UserPutController";
+import { FetchUserData } from "../../Controller/UserController/UserGetController";
+
+// Models
+import { ChildProps, BannedUserContextProps } from "../../Model/ContextAndProviderModel";
+import { GetResultInterface, UserResultDataInterface } from "../../Model/ResultModel";
+import { FindUserInterface, UserDataInterface } from "../../Model/UserTableModel";
 
 const BannedUserContext = createContext<BannedUserContextProps | undefined>(undefined);
 

@@ -1,27 +1,37 @@
+import { FC, Fragment, useState } from "react";
+
 import { Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+
+// UI Fragment and Manager
 import ContentTableCell from "../../../UIFragment/TableCell/ContentTableCell";
 import ActionTableCell from "../../../Manager/ActionTableCellManager";
-import { BannedUserTableHeader } from "../../../../Maps/TableMaps";
-import { FC, Fragment, useState } from "react";
-import { UserDataTableInterface } from "../../../../Model/TablePageModel";
+
+// Model
+import { UserDataTableInterface } from "../../../../Model/UserTableModel";
+
+// Data (CSS Syntax and table header)
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
+import { BannedUserTableHeader } from "../../../../Maps/TableMaps";
+
 
 const BannedUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) => 
 {
     const {isAdmin, value, userData, paginationValue} = DataForBannedUserTable;
 
     const currentTableData = userData[value];
+    const BannedData = isAdmin ? currentTableData : currentTableData.filter((data) => data.bannedDetails?.status === "Banned");
+
     const [page, setPage] = useState<number>(1);
 
     const startIndex = (page - 1) * paginationValue;
     const endIndex = startIndex + paginationValue;
 
-    const paginatedData = currentTableData.slice(startIndex, endIndex);
+    const paginatedData = BannedData.slice(startIndex, endIndex);
     const count = Math.ceil(userData.length / paginationValue);
 
     const getCountPage = () : void | number => 
     {
-        return currentTableData.length > paginationValue ? count + 1 : count;
+        return BannedData.length > paginationValue ? count + 1 : count;
     }
 
     const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => 

@@ -1,8 +1,15 @@
-import { Box, Chip, Typography } from "@mui/material";
-import { PageItemToCenter } from "../../Maps/FormatSyntaxMaps";
 import { FC, useEffect } from "react";
-import { PagesInterface } from "../../Model/TablePageModel";
+import { Box, Chip, Typography } from "@mui/material";
+
+// Another useful function
 import { ChangePage } from "../../Controller/OtherController";
+
+// Model
+import { PagesInterface } from "../../Model/TablePagesAndModalModel";
+
+
+// Data (CSS Syntax)
+import { PageItemToCenter } from "../../Maps/FormatSyntaxMaps";
 
 const DefinitionPage:FC<PagesInterface>  = (loginData) => 
 {

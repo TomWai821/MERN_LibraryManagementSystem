@@ -1,11 +1,15 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
-import { FindUserInterface, UserDataInterface } from "../../Model/TablePageModel";
-import { ChildProps, DeleteUserContextProps } from "../../Model/ContextAndProviderModel";
-import { FetchUserData } from "../../Controller/UserController/UserGetController";
-import { GetResultInterface, UserResultDataInterface } from "../../Model/ResultModel";
+
+// Useful Function
 import { GetData } from "../../Controller/OtherController";
 import { ModifyStatusController } from "../../Controller/UserController/UserPutController";
 import { DeleteUserController } from "../../Controller/UserController/UserDeleteController";
+
+// Models
+import { FindUserInterface, UserDataInterface } from "../../Model/UserTableModel";
+import { ChildProps, DeleteUserContextProps } from "../../Model/ContextAndProviderModel";
+import { FetchUserData } from "../../Controller/UserController/UserGetController";
+import { GetResultInterface, UserResultDataInterface } from "../../Model/ResultModel";
 
 const DeleteUserContext = createContext<DeleteUserContextProps | undefined>(undefined);
 

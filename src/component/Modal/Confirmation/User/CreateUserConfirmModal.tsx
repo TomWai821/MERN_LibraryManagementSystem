@@ -1,9 +1,17 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useModal } from '../../../../Context/ModalContext';
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
-import ModalTemplate from '../../../Templates/ModalTemplate';
-import CreateUserModal from "../../User/CreateUserModal";
+
+// Context
 import { useAllUserContext } from "../../../../Context/User/AllUserContext";
+
+// Template
+import ModalTemplate from '../../../Templates/ModalTemplate';
+
+// Another Modal
+import CreateUserModal from "../../User/CreateUserModal";
+
+// Data (CSS Synxax)
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
 
 const CreateUserConfirmModal = ({...userData}) => 
 {

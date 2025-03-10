@@ -1,7 +1,7 @@
-import SearchOptionField from "../UIFragment/Card/SearchOptionField";
-import { BookSearchField, AllUserSearchField, OtherUserSearchField } from "../../Maps/TextFieldsMaps";
 import { FC } from "react";
-import { OptionFieldsInterface } from "../../Model/TablePageModel";
+import SearchOptionField from "../UIFragment/Card/SearchOptionField";
+import { OptionFieldsInterface } from "../../Model/TablePagesAndModalModel";
+import { BookSearchField, AllUserSearchField, OtherUserSearchField } from "../../Maps/TextFieldsMaps";
 
 
 const OptionFieldsManager:FC<OptionFieldsInterface> = (searchOptionFieldData) => 

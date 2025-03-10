@@ -1,16 +1,25 @@
-import { Box, Pagination, Paper, TableContainer, Typography } from "@mui/material";
-import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from "react";
+import { Box, Paper, TableContainer, Typography } from "@mui/material";
+import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 
+// Another Component
 import UserFilter from "./Filter/UserFilter";
-import { ItemToCenter, PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
-import { PagesInterface } from "../../../Model/TablePageModel";
 import CustomTab from "../../UIFragment/Tab/CustomTab";
-import { PaginationOption, UserDataTableName, UserTabLabel } from "../../../Maps/TableMaps";
 import UserTabPanel from "./Tabs/UserTabPanel";
+
+// Another Useful Function
 import { GetCurrentDate } from "../../../Controller/OtherController";
+
+// Model
+import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
+
+// Contexts
 import { useAllUserContext } from "../../../Context/User/AllUserContext";
 import { useBannedUserContext } from "../../../Context/User/BannedUserContext";
 import { useDeleteUserContext } from "../../../Context/User/DeleteUserContext";
+
+// Data (CSS Syntax and dropdown data)
+import { PaginationOption, UserTabLabel } from "../../../Maps/TableMaps";
+import { PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
 
 const UserPage:FC<PagesInterface> = (loginData) =>
 {

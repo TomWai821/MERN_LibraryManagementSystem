@@ -1,7 +1,9 @@
-import { ListItemIcon, MenuItem, Typography } from "@mui/material"
-import { MenuItemSyntax, NavSyntax } from "../../../Maps/FormatSyntaxMaps"
 import { FC, Fragment } from "react"
+import { ListItemIcon, MenuItem, Typography } from "@mui/material"
+
 import { MenuItemInterface } from "../../../Model/NavModel";
+
+import { MenuItemSyntax, NavSyntax } from "../../../Maps/FormatSyntaxMaps"
 
 const CustomMenuItem:FC<MenuItemInterface> = ({pages}) => 
 {

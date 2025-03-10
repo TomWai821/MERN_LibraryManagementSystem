@@ -1,11 +1,17 @@
+import { FC, Fragment, useState } from "react";
 import { Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+
+// UI Fragment And Manager
 import ContentTableCell from "../../../UIFragment/TableCell/ContentTableCell";
 import ActionTableCell from "../../../Manager/ActionTableCellManager";
-import { DeleteUserTableHeader } from "../../../../Maps/TableMaps";
-import { FC, Fragment, useState } from "react";
-import { UserDataTableInterface } from "../../../../Model/TablePageModel";
-import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
+
+// Another useful function and model
 import { TransferDateToString } from "../../../../Controller/OtherController";
+import { UserDataTableInterface } from "../../../../Model/UserTableModel";
+
+// Data (CSS Syntax and table header)
+import { DeleteUserTableHeader } from "../../../../Maps/TableMaps";
+import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
 
 const DeleteUserTable:FC<UserDataTableInterface> = (DataForDeleteUserTable) => 
 {

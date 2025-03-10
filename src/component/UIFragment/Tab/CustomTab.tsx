@@ -1,6 +1,8 @@
 import { Box, MenuItem, Tab, Tabs, TextField, Typography } from "@mui/material";
 import { ChangeEvent, FC, Fragment } from "react";
-import { TabInterface } from "../../../Model/TablePageModel";
+
+import { TabInterface } from "../../../Model/TablePagesAndModalModel";
+
 import { displayAsRow } from "../../../Maps/FormatSyntaxMaps";
 
 const getTabProps = (index: number) => 

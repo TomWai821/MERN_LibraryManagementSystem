@@ -1,18 +1,21 @@
 import { FormEvent, ChangeEvent, useState, useContext } from 'react';
 
 import { Box, Button, Card, CardContent, FormControl, TextField, Typography, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+
+// Models
+import { LoginModel } from '../../Model/InputFieldModel';
+
+// Context
 import { AlertContext } from '../../Context/AlertContext';
 
-import { LoginModel } from '../../Model/InputFieldModel';
-import { LoginField } from '../../Maps/TextFieldsMaps'
-
-// Model for css syntax
-import { PageItemToCenter, PageTitleSyntax } from '../../Maps/FormatSyntaxMaps';
-
+// Another Useful Function
 import { ValidateField } from '../../Controller/ValidateController'
 import { LoginController } from '../../Controller/UserController/UserPostController';
 import { ChangePage } from '../../Controller/OtherController';
-import { GetResultInterface } from '../../Model/ResultModel';
+
+// Data (CSS Syntax)
+import { PageItemToCenter, PageTitleSyntax } from '../../Maps/FormatSyntaxMaps';
+import { LoginField } from '../../Maps/TextFieldsMaps'
 
 const LoginPage = () => 
 {

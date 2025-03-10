@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react'
 
 import Box from '@mui/material/Box';
-import { EditModalInterface, UserDataInterface } from '../../../Model/TablePageModel';
+import { EditModalInterface } from '../../../Model/TablePagesAndModalModel';
 import { useModal } from '../../../Context/ModalContext';
 import ModalTemplate from '../../Templates/ModalTemplate';
 import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
@@ -9,6 +9,7 @@ import { Button, MenuItem, TextField } from '@mui/material';
 import { EditUserInputField } from '../../../Maps/TextFieldsMaps';
 import EditUserConfirmModal from '../Confirmation/User/EditUserConfirmModal';
 import { UserResultDataInterface } from '../../../Model/ResultModel';
+import { UserDataInterface } from '../../../Model/UserTableModel';
 
 const EditUserModal:FC<EditModalInterface> = (editModalData) => 
 {

@@ -1,12 +1,20 @@
 import { FC, useEffect, useState } from "react"
 import { Box, Button, Typography } from "@mui/material";
 
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
+// Template
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
-import { BookDataInterface, EditModalInterface } from "../../../../Model/TablePageModel";
-import EditBookModal from "../../Book/EditBookModal";
+
+import { EditModalInterface } from "../../../../Model/TablePagesAndModalModel";
+import { BookDataInterface } from "../../../../Model/BookTableModel";
+
+// Context
 import { useModal } from "../../../../Context/ModalContext";
+
+// Another Modal
+import EditBookModal from "../../Book/EditBookModal";
+// Data (CSS Syntax)
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 
 const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {  

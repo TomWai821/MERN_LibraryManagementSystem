@@ -1,12 +1,23 @@
 import { ChangeEvent, FC, useState } from 'react'
-
 import { Box, TextField, Button } from '@mui/material';
+
+// Template
+import ModalTemplate from '../../Templates/ModalTemplate';
+
+// Another Modal
+import EditBookConfirmModal from '../Confirmation/Book/EditBookConfirmModal';
+
+// Context
 import { useModal } from '../../../Context/ModalContext';
-import { BookDataInterface, EditModalInterface } from '../../../Model/TablePageModel';
+
+// Model
+import { EditModalInterface } from '../../../Model/TablePagesAndModalModel';
+import { BookDataInterface } from '../../../Model/BookTableModel';
+
+
+// Data (CSS Syntax)
 import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
 import { CreateBookInputField } from '../../../Maps/TextFieldsMaps';
-import EditBookConfirmModal from '../Confirmation/Book/EditBookConfirmModal';
-import ModalTemplate from '../../Templates/ModalTemplate';
 
 const EditBookModal:FC<EditModalInterface> = (editModalData) => 
 {

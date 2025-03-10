@@ -1,9 +1,17 @@
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { BookRecordTableHeader } from "../../../../Maps/TableMaps";
 import { FC } from "react";
-import { BookRecordTableInterface } from "../../../../Model/TablePageModel";
+
+import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+
+// UI Fragment and Manager
 import ActionTableCell from "../../../Manager/ActionTableCellManager";
 import ContentTableCell from "../../../UIFragment/TableCell/ContentTableCell";
+
+// Model
+import { BookRecordTableInterface } from "../../../../Model/BookTableModel";
+
+// Data(CSS Syntax)
+import { BookRecordTableHeader } from "../../../../Maps/TableMaps";
+
 
 const BookRecordTable:FC<BookRecordTableInterface> = ({isLoggedIn, isAdmin, bookData}) => 
 {

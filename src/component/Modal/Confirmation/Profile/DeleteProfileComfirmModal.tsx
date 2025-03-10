@@ -1,7 +1,13 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useModal } from '../../../../Context/ModalContext';
-import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
+
+// Template
 import ModalTemplate from '../../../Templates/ModalTemplate';
+
+// Context
+import { useModal } from '../../../../Context/ModalContext';
+
+// Data (CSS syntax)
+import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
 
 const DeleteProfileConfirmModal = () => 
 {

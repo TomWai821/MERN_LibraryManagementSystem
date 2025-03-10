@@ -1,6 +1,6 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
-import { FindUserInterface, UserDataInterface } from "./TablePageModel";
+import { ReactNode } from "react";
 import { UserResultDataInterface } from "./ResultModel";
+import { UserDataInterface } from "./UserTableModel";
 
 interface ChildProps
 {

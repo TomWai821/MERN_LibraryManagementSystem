@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { ActionTableCellInterface } from "../../Model/TablePageModel";
+import { ActionTableCellInterface } from "../../Model/TablePagesAndModalModel";
 import ActionTableCellForUser from "../Pages/TablePages/Tables/TableCell/ActionTableCellForUser";
 import ActionTableCellForAdmin from "../Pages/TablePages/Tables/TableCell/ActionTableCellForAdmin";
 

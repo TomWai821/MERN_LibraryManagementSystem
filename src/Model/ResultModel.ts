@@ -1,4 +1,5 @@
-import { UserDataInterface } from "./TablePageModel";
+import { UserDataInterface } from "./UserTableModel";
+
 
 interface ResultInterface
 {
@@ -37,6 +38,5 @@ interface DetailsInterfaceForBannedAndDelete
     dueDate: Date;
     status:string;
 }
-
 
 export type {ResultInterface, GetResultInterface, UserResultDataInterface, DetailsInterfaceForBannedAndDelete}

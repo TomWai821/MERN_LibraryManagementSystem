@@ -1,13 +1,21 @@
-import { Box, Button, duration, Typography } from "@mui/material";
-import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
-import ModalTemplate from "../../../Templates/ModalTemplate";
-import { BanModalInterface } from "../../../../Model/TablePageModel";
 import { FC } from "react";
+import { Box, Button, Typography } from "@mui/material";
+
+// Template
+import ModalTemplate from "../../../Templates/ModalTemplate";
+
+// Context
 import { useModal } from "../../../../Context/ModalContext";
-import BanUserModal from "../../User/BanUserModal";
-import { dateOption } from "../../../../Maps/TextFieldsMaps";
 import { useAllUserContext } from "../../../../Context/User/AllUserContext";
 import { useBannedUserContext } from "../../../../Context/User/BannedUserContext";
+import { BanModalInterface } from "../../../../Model/UserTableModel";
+
+// Another Modal
+import BanUserModal from "../../User/BanUserModal";
+
+// Data (CSS Syntax and dropdown data)
+import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
+import { dateOption } from "../../../../Maps/TextFieldsMaps";
 
 const BanUserConfirmModal:FC<BanModalInterface> = (banData) => 
 {

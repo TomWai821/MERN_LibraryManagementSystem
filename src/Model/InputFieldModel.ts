@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react";
-import { BookDataInterface, UserDataInterface } from "./TablePageModel";
+import { UserDataInterface } from "./UserTableModel";
+import { BookDataInterface } from "./BookTableModel";
 
 interface FirstRow 
 { 

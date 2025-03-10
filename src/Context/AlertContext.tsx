@@ -1,6 +1,7 @@
 import { FC, createContext, useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+
 import { AlertConfig, AlertContextProps, ChildProps } from '../Model/ContextAndProviderModel';
 
 const AlertContext = createContext<AlertContextProps | undefined>(undefined);

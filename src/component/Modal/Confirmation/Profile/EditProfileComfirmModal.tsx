@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
 import { Box, Button, Typography } from "@mui/material";
 import { useModal } from '../../../../Context/ModalContext';

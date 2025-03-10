@@ -1,10 +1,15 @@
-import { Fragment } from "react/jsx-runtime"
-import { FC } from "react"
+import { FC, Fragment } from "react"
+
+// Tabs
 import CustomTabPanel from "../../../UIFragment/TabPanel/CustomTabPanel"
-import { UserDataTableInterface } from "../../../../Model/TablePageModel"
+
+// Another Component
 import AllUserTable from "../Tables/AllUserTable"
 import BannedUserTable from "../Tables/BannedUserTable"
 import DeleteUserTable from "../Tables/DeleteUserTable"
+
+// Model
+import { UserDataTableInterface } from "../../../../Model/UserTableModel"
 
 const UserTabPanel:FC<UserDataTableInterface> = (userTableData) =>
 {

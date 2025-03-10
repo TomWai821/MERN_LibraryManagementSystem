@@ -5,9 +5,9 @@ import { useModal } from '../../../Context/ModalContext';
 import ModalTemplate from '../../Templates/ModalTemplate';
 import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
 import { CreateUserInputField } from '../../../Maps/TextFieldsMaps';
-import { UserDataInterface } from '../../../Model/TablePageModel';
 import CreateUserConfirmModal from '../Confirmation/User/CreateUserConfirmModal';
 import { GetCurrentDate } from '../../../Controller/OtherController';
+import { UserDataInterface } from '../../../Model/UserTableModel';
 
 const CreateUserModal:FC = ({}) => 
 {

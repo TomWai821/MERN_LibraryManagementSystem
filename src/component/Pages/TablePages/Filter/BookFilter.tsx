@@ -4,14 +4,22 @@ import { Box, Button, IconButton, Menu, MenuItem, TextField, Typography } from "
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
+import OptionFields from "../../../Manager/OptionFieldsManager";
+
+// Context
 import { useModal } from "../../../../Context/ModalContext";
 
+// Another Modal
 import CreateBookModal from "../../../Modal/Book/CreateBookModal";
 
-import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
-import { BookDataInterface, BookSearchInterface, FilterInterface } from "../../../../Model/TablePageModel";
-import OptionFields from "../../../Manager/OptionFieldsManager";
+// Models
+import { FilterInterface } from "../../../../Model/TablePagesAndModalModel";
+import { BookDataInterface, BookSearchInterface } from "../../../../Model/BookTableModel";
+
+// Data(CSS Syntax and dropdown data)
 import { BookMainSearchField } from "../../../../Maps/TextFieldsMaps";
+import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
+
 
 const BookFilter: FC<FilterInterface> = (filterData) => 
 {

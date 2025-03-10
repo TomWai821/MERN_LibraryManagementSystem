@@ -6,7 +6,7 @@ import { AvatarSize, MenuItemSyntax, NavColor, NavSyntax } from '../../Maps/Form
 
 import ProfileMenu from './ProfileMenu';
 import NavMenu from './NavMenu';
-import { PagesInterface } from '../../Model/TablePageModel';
+import { PagesInterface } from '../../Model/TablePagesAndModalModel';
 
 const NavBar:FC<PagesInterface> = (loginData) => 
 {

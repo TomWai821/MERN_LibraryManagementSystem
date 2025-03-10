@@ -1,8 +1,15 @@
 import { FC } from "react";
-import { ModalTemplateProps } from "../../Model/ContextAndProviderModel";
 import { Box, Button, Modal, Typography } from "@mui/material";
-import { CreateModalSyntax, ModalSyntax, ModalTitleSyntax } from "../../Maps/FormatSyntaxMaps";
+
+// Context
 import { useModal } from "../../Context/ModalContext";
+
+// Models
+import { ModalTemplateProps } from "../../Model/ContextAndProviderModel";
+
+// Data(CSS Syntax)
+import { CreateModalSyntax, ModalSyntax, ModalTitleSyntax } from "../../Maps/FormatSyntaxMaps";
+
 
 const ModalTemplate:FC <ModalTemplateProps> = (templateData) => 
 {

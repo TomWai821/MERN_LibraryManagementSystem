@@ -1,10 +1,16 @@
+import { FC, Fragment, useState } from "react";
 import { Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+
+// UI Fragment
 import ContentTableCell from "../../../UIFragment/TableCell/ContentTableCell";
 import ActionTableCell from "../../../Manager/ActionTableCellManager";
-import { AllUserTableHeader } from "../../../../Maps/TableMaps";
-import { FC, Fragment, useState } from "react";
-import { UserDataTableInterface } from "../../../../Model/TablePageModel";
+
+// Models
+import { UserDataTableInterface } from "../../../../Model/UserTableModel";
+
+// Data (CSS Syntax and table header)
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
+import { AllUserTableHeader } from "../../../../Maps/TableMaps";
 
 const AllUserTable:FC<UserDataTableInterface> = (DataForAllUserTable) => 
 {

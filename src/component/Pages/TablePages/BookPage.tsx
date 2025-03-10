@@ -1,16 +1,20 @@
 import {  ChangeEvent, FC, useState } from "react";
-
 import { Box, TableContainer, Typography, Paper, Pagination } from "@mui/material";
 
-import { BookDataInterface, PagesInterface } from "../../../Model/TablePageModel";
-
-import { BookTabLabel, PaginationOption } from "../../../Maps/TableMaps";
-import { ItemToCenter, PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
-
+// Another Component
 import BookFilter from "./Filter/BookFilter";
 import CustomTab from "../../UIFragment/Tab/CustomTab";
 import BookTabPanel from "./Tabs/BookTabPanel";
 
+// Model
+import { BookDataInterface } from "../../../Model/BookTableModel";
+import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
+
+// Data (CSS SYntax and dropdown)
+import { ItemToCenter, PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
+import { BookTabLabel, PaginationOption } from "../../../Maps/TableMaps";
+
+// Placeholder
 const BookData: BookDataInterface [] = 
 [
     { bookname: "A", language: "English", genre: "A", author: "A", publisher: "A", pages: "100", amount: "1" },

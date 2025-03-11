@@ -5,10 +5,11 @@ const DeleteUserController = async(authToken:string, userId:string, banListId:st
 {
     try
     {
-        const response = await fetch(`${localhost}/remove/id=${userId}`,
+        const response = await fetch(`${localhost}/User/id=${userId}`,
             {
                 method: 'DELETE',
-                headers: { 
+                headers: 
+                { 
                     'content-type': contentType,
                     'authToken': authToken
                 },

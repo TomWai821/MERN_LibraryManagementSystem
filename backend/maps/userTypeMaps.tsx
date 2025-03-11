@@ -2,9 +2,9 @@ const userStatus = ['Normal', 'Banned', 'Delete'];
 
 const userRole = ['User', 'Admin'];
 
-const userBannedListStatus = ['Banned', 'Unbanned'];
+const userBannedListStatus = ['Banned'];
 
-const userDeleteListStatus = ["Pending", "Undo", "Deleted"];
+const userDeleteListStatus = ["Pending", "Undo"];
 
 const userDeleteListDescription = ['Admin-Request Deletion', 'User-Request Deletion'];
 

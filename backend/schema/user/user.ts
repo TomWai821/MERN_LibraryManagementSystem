@@ -1,4 +1,4 @@
-import mongoose, { ObjectId } from 'mongoose';
+import mongoose, { ObjectId, PipelineStage } from 'mongoose';
 import { UserInterface } from '../../model/userSchemaInterface';
 import { printError } from '../../controller/Utils';
 import { userRole, userStatus } from '../../maps/userTypeMaps';
@@ -71,7 +71,7 @@ export const FindUser = async (data: Record<string, any>) =>
     }
 }
 
-export const FindUserWithData = async (tableName:string, data: Record<string, any>, userId: ObjectId) =>
+export const FindUserWithData = async (tableName:string, data: Record<string, any>, userId?: ObjectId) =>
 {
     try
     {
@@ -101,21 +101,28 @@ export const FindUserWithData = async (tableName:string, data: Record<string, an
 // Local variable(For get banned user data)
 const GetUsersWithBannedDetails = async (data: any) => 
 {
-    return await User.aggregate(
-        [
-            { $match: data }, 
-            {
-                $lookup: {
-                    from: 'banlists',  // the table name does user want to joins
-                    localField: '_id',  // the local column name does want to compare with joins table column
-                    foreignField: 'userID',  // the another table column name does user want to compare with local column name
-                    as: 'bannedDetails'
-                }
-            },
-            { $unwind: '$bannedDetails' },
-            { $project: { 'bannedDetails.password': 0  }}
-        ]
+    let pipeline:PipelineStage[] = [];
+
+    if (data) 
+    {
+        pipeline.push({ $match: data });
+    }
+
+    pipeline.push
+    (
+        {
+            $lookup: {
+                from: 'banlists',
+                localField: '_id',
+                foreignField: 'userID',
+                as: 'bannedDetails'
+            }
+        },
+        { $unwind: '$bannedDetails' },
+        { $project: { 'bannedDetails.password': 0 } }
     );
+
+    return await User.aggregate(pipeline);
 }
 
 // Local variable(For get delete user data)

@@ -3,10 +3,9 @@ import { AuthRequest, BodyInterfaceForDelete, CreateUserInterface } from '../mod
 import { jwtSign, bcryptHash } from './hashing'
 import { UserInterface } from '../model/userSchemaInterface';
 import { CreateUser, FindUserByIDAndDelete, FindUserByIDAndUpdate } from '../schema/user/user';
-import { FindBanListByID, FindBanListByIDAndUpdate } from '../schema/user/banList';
+import { FindBanListByIDAndUpdate } from '../schema/user/banList';
 import { ObjectId } from 'mongoose';
-import { FindDeleteListByID, FindDeleteListByIDAndUpdate } from '../schema/user/deleteList';
-import { ChangeUserListStatus } from './middleware/userUpdateDataMiddleware';
+import { CreateStatusList } from './middleware/userUpdateDataMiddleware';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {
@@ -101,55 +100,28 @@ export const ModifyUserData = async (req: AuthRequest, res: Response) =>
 
 export const ChangeStatus = async (req:AuthRequest, res:Response) => 
 {
-    const { banListID, deleteListID, statusForUserList, statusForBanList, statusForDeleteList, description, startDate, dueDate} = req.body;
+    const { statusForUserList, description, startDate, dueDate } = req.body;
     const foundUser = req.foundUser as UserInterface;
+    const userId = foundUser._id as ObjectId;
     let success = false;
 
     try
     {
-        if(banListID)
+        if(statusForUserList !== "Normal" && foundUser.status === "Normal")
         {
-            const foundBannedList = await FindBanListByID(banListID);
+            const createStatusData = await CreateStatusList(statusForUserList, userId as ObjectId, description, startDate, dueDate);
 
-            if(!foundBannedList)
+            if(!createStatusData)
             {
-                return res.status(200).json({ success, error:"Invalid Ban List ID!"});
-            }
-
-            const UpdateBannedList = await FindBanListByIDAndUpdate(banListID as ObjectId, {status:statusForBanList});
-
-            if(!UpdateBannedList)
-            {
-                return res.status(200).json({ success, error:"Failed to Banned List Status!"});
+                return res.status(400).json({success, message:"Fail to Create Delete List/Ban List Record"});
             }
         }
 
-        if(deleteListID)
+        const changeStatusInUsertable = await FindUserByIDAndUpdate(userId, {status: statusForUserList});
+
+        if(!changeStatusInUsertable)
         {
-            const foundDeleteList = await FindDeleteListByID(deleteListID);
-
-            if(!foundDeleteList)
-            {
-                return res.status(200).json({ success, error:"Invalid Delete List ID!"});
-            }
-
-            const UpdateDeleteList = await FindDeleteListByIDAndUpdate(deleteListID as ObjectId, {status:statusForDeleteList});
-
-            if(!UpdateDeleteList)
-            {
-                return res.status(200).json({ success, error:"Failed to Delete List Status!"});
-            }
-        }
-
-        if(statusForUserList !== foundUser.status)
-        {
-            const userId = foundUser._id as ObjectId;
-            const changeStatus = await ChangeUserListStatus(userId, statusForUserList, description, startDate, dueDate);
-
-            if(!changeStatus)
-            {
-                return res.status(200).json({ success, error:"Failed to Change Status!"});
-            }
+            return res.status(400).json({success, message:"Failed to update status in User Table"});
         }
 
         success = true;
@@ -164,23 +136,10 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
 export const ModifyBanListData = async (req: AuthRequest, res:Response) => 
 {
     const { banListID, dueDate, description } = req.body;
-    const foundUser = req.foundUser as UserInterface;
     let success = false;
 
     try
     {
-        if(foundUser.status !== "Banned")
-        {
-            return res.status(400).json({ success, error: "This user currently is not Banned!"});
-        }
-
-        const foundBanList = await FindBanListByID(banListID as ObjectId);
-
-        if(!foundBanList)
-        {
-            return res.status(400).json({ success, error: "Could not found the record with Ban List!"});
-        }
-
         const modifyBanList = await FindBanListByIDAndUpdate(banListID as ObjectId, {dueDate, description});
 
         if(!modifyBanList)

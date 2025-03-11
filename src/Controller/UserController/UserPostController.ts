@@ -1,4 +1,4 @@
-import { GetResultInterface, ResultInterface } from "../../Model/ResultModel"
+import { ResultInterface } from "../../Model/ResultModel"
 import { handleSuccess } from "./UserOtherController";
 
 const contentType:string = 'application/json';
@@ -10,7 +10,7 @@ const LoginController = async (email:String, password:String, stayLogin:boolean)
 
     try
     {
-        const response = await fetch(`${localhost}/login`, 
+        const response = await fetch(`${localhost}/Login`, 
             {
                 method: 'POST',
                 headers: { 'content-type': contentType },
@@ -40,7 +40,7 @@ const RegisterController = async (registerPosition:string, username:string, emai
 
     try
     {
-        const response = await fetch(`${localhost}/register`,
+        const response = await fetch(`${localhost}/Register`,
             {
                 method: 'POST',
                 headers: { 'content-type': contentType },

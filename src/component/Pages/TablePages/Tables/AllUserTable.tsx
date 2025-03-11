@@ -25,7 +25,6 @@ const AllUserTable:FC<UserDataTableInterface> = (DataForAllUserTable) =>
 
     const paginatedData = currentTableData.slice(startIndex, endIndex);
     const count = Math.ceil(userData.length / paginationValue);
-
     const getCountPage = () : void | number => 
     {
         return currentTableData.length > paginationValue ? count + 1 : count;

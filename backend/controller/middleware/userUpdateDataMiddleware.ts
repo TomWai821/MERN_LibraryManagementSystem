@@ -1,11 +1,10 @@
 import { NextFunction, Response } from "express";
 import { AuthRequest } from "../../model/requestInterface";
-import { FindUser, FindUserByIDAndUpdate } from "../../schema/user/user";
+import { FindUser } from "../../schema/user/user";
 import { ObjectId } from "mongoose";
-import { CreateBanList, FindBanList, FindBanListByID, FindBanListByIDAndUpdate } from "../../schema/user/banList";
-import { CreateDeleteList, FindDeleteList } from "../../schema/user/deleteList";
+import { CreateBanList, FindBanList, FindBanListByID, FindBanListByIDAndDelete, FindBanListByIDAndUpdate } from "../../schema/user/banList";
+import { CreateDeleteList, FindDeleteList, FindDeleteListByID, FindDeleteListByIDAndDelete } from "../../schema/user/deleteList";
 import { UserInterface } from "../../model/userSchemaInterface";
-import { userStatus } from "../../maps/userTypeMaps";
 
 // For user update(Require login)
 export const BuildUpdateData = async (req: AuthRequest, res:Response, next:NextFunction) => 
@@ -56,34 +55,47 @@ export const BuildUpdateData = async (req: AuthRequest, res:Response, next:NextF
     next();
 }
 
-export const ChangeUserListStatus = async (userId:ObjectId, statusForUserList:string, description:string, startDate:Date, dueDate:Date) => 
+export const DeleteBanListOrDeleteListData = async (req: AuthRequest, res: Response, next:NextFunction) => 
 {
-    if(!userStatus.includes(statusForUserList))
+    const {deleteListID, banListID, statusForUserList} = req.body;
+
+    if(statusForUserList === "Normal")
     {
-        return false;
+        if(deleteListID)
+        {
+            const deleteDataFromDeleteList = await FindDeleteListByIDAndDelete(deleteListID);
+
+            if(!deleteDataFromDeleteList)
+            {
+                return res.status(400).json({ success: false, error:"Failed to Remove Delete List Data!"});
+            }
+        }
+        
+        if(banListID)
+        {
+            const deleteDataFromBanList = await FindBanListByIDAndDelete(banListID);
+
+            if(!deleteDataFromBanList)
+            {
+                return res.status(400).json({ success: false, error:"Invalid Delete Ban List Data!"});
+            }
+        } 
     }
 
-    if(statusForUserList !== "Normal")
-    {
-        await CreateStatusList(statusForUserList, userId as ObjectId, description, startDate, dueDate);
-    }
-
-    return await FindUserByIDAndUpdate(userId, {status: statusForUserList});
+    next();
 }
 
-const CreateStatusList = async (statusForUserList:string, userId:ObjectId, description: string, startDate: Date, dueDate: Date) => 
+export const CreateStatusList = async (statusForUserList:string, userId:ObjectId, description: string, startDate: Date, dueDate: Date) => 
 {
     const ListHandlers:Record<string, { find: () => Promise<any>; create: () => Promise<any>; }> = 
     {
         "Banned":
         {
-            find: () => FindBanList({ userId }),
-            create: () => CreateBanList({ userID: userId, description, startDate, dueDate }) 
+            find: () => FindBanList({ userId }), create: () => CreateBanList({ userID: userId, description, startDate, dueDate }) 
         },
         "Delete":
         {
-            find: () => FindDeleteList({userId}),
-            create: () => CreateDeleteList({ userID: userId, description, startDate, dueDate })
+            find: () => FindDeleteList({userId}),  create: () => CreateDeleteList({ userID: userId, description, startDate, dueDate })
         }
     }
 
@@ -100,12 +112,10 @@ const CreateStatusList = async (statusForUserList:string, userId:ObjectId, descr
     {
         try
         {
-            console.log("created");
             return await create();
         } 
         catch (error) 
         {
-            console.error("Error creating list:", error);
             throw new Error("Failed to create list");
         }
     }

@@ -54,7 +54,7 @@ const BannedUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
                     <TableRow>
                         {BannedUserTableHeader.map((header, index) =>
                             (
-                                <TableCell key={index}>{header.label}</TableCell>
+                                (header.isAdmin && !isAdmin) ? null : <TableCell key={index}>{header.label}</TableCell>
                             ) 
                         )}  
                     </TableRow>

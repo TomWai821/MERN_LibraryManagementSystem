@@ -15,36 +15,23 @@ export const BuildQueryAndGetData = async (req: AuthRequest, res: Response, next
     if (userId) 
     {
         const hasBodyParameter = Object.keys(queryParams).length > 0;
-
-        if (!hasBodyParameter && !tableName) 
-        {
-            foundUser = await validateAndGetUserByID(userId);
-        } 
-        else 
-        {
-            foundUser = await fetchUserData(userId, tableName, queryParams);
-        }
+        foundUser = (!hasBodyParameter && !tableName)? await FindUserByID(userId) : await fetchUserData(tableName, queryParams, userId);
     } 
     else 
     {
         foundUser = await GetUser();
     }
 
+    if (!foundUser) 
+    {
+        return res.status(400).json({success: false, message:"Could not found user"});
+    }
+
     req.foundUser = foundUser;
     next();
 };
 
-const validateAndGetUserByID = async (userId: ObjectId) => 
-{
-    const user = await FindUserByID(userId);
-    if (!user) 
-    {
-        throw new Error("Invalid auth Token!");
-    }
-    return user;
-};
-
-const fetchUserData = async (userId: ObjectId, tableName: string, queryParams: any) => 
+const fetchUserData = async (tableName: string, queryParams: any, userId?: ObjectId) => 
 {
     const query = buildQuery(queryParams);
     return await FindUserWithData(tableName, query, userId);

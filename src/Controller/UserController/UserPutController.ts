@@ -39,14 +39,14 @@ const fetchData = async (authToken:string, url: string, data: any) =>
 const ModifyUserDataController = async (authToken:string, userId: string, username:string, email:string, gender:string, role:string) => 
 {
     const data = { username, email, gender, role };
-    const url = `${localhost}/modifyData/id=${userId}`;
+    const url = `${localhost}/UserData/id=${userId}`;
     return await fetchData(authToken, url, data);
 };
 
 const ModifyBanListDataController = async(authToken:string, userId:string, banListID:string, dueDate:Date, description:string) => 
 {
     const data = {banListID, dueDate, description}
-    const url = `${localhost}/modifyBanList/id=${userId}`;
+    const url = `${localhost}/BanListData/id=${userId}`;
     return await fetchData(authToken, url, data);
 }
 
@@ -71,7 +71,7 @@ const ModifyStatusController = async (authToken:string, userId: string, statusFo
     let statusType: keyof typeof statusDataConfig = statusForBanList ? "ban" : statusForDeleteList ? "delete" : "default";
     let statusData = statusDataConfig[statusType]();
     
-    const url = `${localhost}/modifyStatus/id=${userId}`;
+    const url = `${localhost}/Status/id=${userId}`;
     return await fetchData(authToken, url, statusData);
 };
 

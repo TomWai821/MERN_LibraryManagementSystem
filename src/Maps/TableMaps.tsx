@@ -23,13 +23,13 @@ const AllUserTableHeader =
 
 const BannedUserTableHeader = 
 [
-    {label:"No."},
-    {label:"Username"},
-    {label:"Role"},
-    {label:"Description"},
-    {label:"Status"},
-    {label:"Duration"},
-    {label:"Actions"}
+    {label:"No.", isAdmin: false},
+    {label:"Username", isAdmin: false},
+    {label:"Role", isAdmin: false},
+    {label:"Description", isAdmin: false},
+    {label:"Status", isAdmin: false},
+    {label:"Duration", isAdmin: false},
+    {label:"Actions", isAdmin: true}
 ]
 
 const DeleteUserTableHeader = 

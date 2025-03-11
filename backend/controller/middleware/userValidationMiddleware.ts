@@ -4,6 +4,8 @@ import { FindUser, FindUserByID } from "../../schema/user/user";
 import { ObjectId } from "mongoose";
 import { comparePassword } from "../hashing";
 import { UserInterface } from "../../model/userSchemaInterface";
+import { FindBanListByID } from "../../schema/user/banList";
+import { FindDeleteListByID } from "../../schema/user/deleteList";
 
 // For user register (not require login)
 export const UserRegisterDataValidation = async (req: Request, res: Response, next: NextFunction) => 
@@ -48,7 +50,7 @@ export const UserLoginDataValidation = async (req: AuthRequest, res: Response, n
 
     if (!compare) 
     {
-        return res.status(400).json({ error: 'Invalid password' });
+        return res.status(400).json({ successs: false, error: 'Invalid password' });
     }
 
     req.user = user;
@@ -63,9 +65,60 @@ export const FoundUserFromParams = async (req: AuthRequest, res:Response, next:N
         
     if (!foundUser) 
     {
-        return res.status(404).json({ error: "Cannot found this account!" });
+        return res.status(404).json({ successs: false, error: "Cannot found this account!" });
     }
 
     req.foundUser = foundUser as UserInterface;
+    next();
+}
+
+// Validation for status check
+export const CompareUserStatus = async (req: AuthRequest, res: Response, next:NextFunction) => 
+{
+    const { statusForUserList } = req.body;
+    const foundUser = req.foundUser as UserInterface;
+
+    if(statusForUserList === foundUser.status)
+    {
+        return res.status(400).json({success: false, message:"There are no changes for current status"});
+    }
+
+    next();
+}
+
+// BanList ID validation before doing some action
+export const BanListValidation = async (req: AuthRequest, res: Response, next:NextFunction) => 
+{
+    const { banListID } = req.body;
+
+    if(banListID)
+    {
+        const foundBanList = await FindBanListByID(banListID);
+
+        if(!foundBanList)
+        {
+            return res.status(404).json({ success: false, error:"Invalid Ban List ID!"});
+        }
+    }
+    console.log("hi");
+    next();
+}
+
+// DeleteList ID validation before doing some action
+export const DeleteListValidation = async (req: AuthRequest, res: Response, next:NextFunction) => 
+{
+    const {deleteListID} = req.body;
+
+    if(deleteListID)
+    {
+        const foundDeleteList = await FindDeleteListByID(deleteListID);
+
+        if(!foundDeleteList)
+        {
+            return res.status(404).json({ success: false, error:"Invalid Delete List ID!"});
+        }
+    }
+
+    console.log("hi");
     next();
 }

@@ -7,7 +7,14 @@ connectToMongoDB();
 const app = express();
 const PORT = 5000;
 
-app.use(cors());
+app.use(cors
+(
+    {
+        origin: "http://localhost:3000", // Your frontend origin
+        methods: ["GET", "POST", "DELETE", "PUT"],
+        allowedHeaders: ["content-type", "authToken"]
+    }
+));
 app.use(express.json())
 
 app.use('/api/user', require('./routes/user'));

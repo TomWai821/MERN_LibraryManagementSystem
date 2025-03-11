@@ -15,12 +15,12 @@ const BannedUserDataBody:FC<UserModalBody> = (BannedUserData) =>
             <Box sx={{ display: 'grid', gap: '20px 50px', gridTemplateColumns: '100%'}}>
                 <Typography>Username: {data.username}</Typography>
                 {isAdmin && 
-                (
-                    <Fragment>
-                        <Typography>Email: {data.email}</Typography>
-                        <Typography>Gender: {data.gender}</Typography>
-                    </Fragment>
-                )
+                    (
+                        <Fragment>
+                            <Typography>Email: {data.email}</Typography>
+                            <Typography>Gender: {data.gender}</Typography>
+                        </Fragment>
+                    )
                 }
                 <Typography>Status: {data.bannedDetails?.status}</Typography>
                 {
@@ -30,8 +30,13 @@ const BannedUserDataBody:FC<UserModalBody> = (BannedUserData) =>
                             <Typography>Description: {data.bannedDetails?.description}</Typography>
                             <Typography>Date: {TransferDateToString(data.bannedDetails?.startDate as Date)} - {TransferDateToString(data.bannedDetails?.dueDate as Date)}</Typography>
                             <Typography>Duration: {CalculateDuration(data.bannedDetails?.startDate as Date, data.bannedDetails?.dueDate as Date)}</Typography>
-                            <Typography>Count: {CountDuration(data.bannedDetails?.dueDate as Date)}</Typography>
                         </Fragment>
+                    )
+                }
+                {
+                    isAdmin && 
+                    (
+                        <Typography>Count: {CountDuration(data.bannedDetails?.dueDate as Date)}</Typography>
                     )
                 }
             </Box>

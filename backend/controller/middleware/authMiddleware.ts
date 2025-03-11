@@ -13,7 +13,6 @@ export const FetchUserFromHeader = async (req: AuthRequest, res: Response, next:
             const data = await jwtVerify(authToken);
             req.user = data.user;
         }
-
         next();
     } 
     catch (error) 

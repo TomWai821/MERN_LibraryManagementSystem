@@ -24,13 +24,15 @@ import { TransferDateToISOString } from '../../../Controller/OtherController';
 
 const EditBanUserModal:FC<EditModalInterface> = (editModalData) => 
 {
-    const { value, editData, compareData} = editModalData;
+    const { value, editData, compareData } = editModalData;
     const {handleOpen} = useModal();
     
-    const { _id, startDate, dueDate, description, status } = editData as DetailsInterfaceForBannedAndDelete;
+    const { _id, userID, description, startDate, dueDate, status } = editData as DetailsInterfaceForBannedAndDelete;
+    const bannedIDToString = _id.toString() as string;
     const startDateToString = TransferDateToISOString(startDate as Date) as string;
     const dueDateToString = TransferDateToISOString(dueDate as Date) as string;
-    const [banData, setBanData] = useState<DetailsInterfaceForBannedAndDelete>({_id: _id, startDate: startDateToString, dueDate: dueDateToString, description: description, status: status });
+    const descriptionToString = description.toString() as string;
+    const [banData, setBanData] = useState<DetailsInterfaceForBannedAndDelete>({_id: bannedIDToString, userID:userID, startDate: startDateToString, dueDate: dueDateToString, description: descriptionToString, status: status });
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
@@ -40,7 +42,7 @@ const EditBanUserModal:FC<EditModalInterface> = (editModalData) =>
 
     const openConfirmModal = () => 
     {
-        handleOpen(<EditUserConfirmModal value={value}  editData={banData} compareData={compareData} />);
+        handleOpen(<EditUserConfirmModal value={value} editData={banData} compareData={compareData} />);
     }
     
     return(

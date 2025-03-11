@@ -54,9 +54,9 @@ export const BannedUserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[authToken])
 
-    const editBannedUserData = useCallback(async (bannedListID:string, dueDate:Date, description:string) => 
+    const editBannedUserData = useCallback(async (userId:string, bannedListID:string, dueDate:Date, description:string) => 
     {
-        const result : GetResultInterface | undefined = await ModifyBanListDataController(authToken, bannedListID, dueDate, description);
+        const result : GetResultInterface | undefined = await ModifyBanListDataController(authToken, userId, bannedListID, dueDate, description);
 
         try
         {

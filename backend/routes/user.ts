@@ -1,6 +1,6 @@
 import express from 'express';
 import { UserRegisterRules, UserLoginRules, UserModifyDataRules } from '../model/expressBodyRules'
-import { DeleteUser, BuildGetUserDataMessage, ModifyUserData, UserLogin, UserRegister, ChangeStatus } from '../controller/userController';
+import { DeleteUser, BuildGetUserDataMessage, ModifyUserData, UserLogin, UserRegister, ChangeStatus, ModifyBanListData } from '../controller/userController';
 import { AuthIdValidation, FetchUserFromHeader } from '../controller/middleware/authMiddleware';
 import { FoundUserFromParams, UserLoginDataValidation, UserRegisterDataValidation } from '../controller/middleware/userMiddleware';
 import { BuildQueryAndGetData } from '../controller/middleware/userGetDataMiddleware';
@@ -18,6 +18,7 @@ router.post('/login', UserLoginRules, UserLoginDataValidation, UserLogin);
 router.put('/modifyData/id=:id', UserModifyDataRules, ...LoginAsAdminAndFindUser, BuildUpdateData, ModifyUserData);
 // For status only
 router.put('/modifyStatus/id=:id', UserModifyDataRules, ...LoginAsAdminAndFindUser, ChangeStatus);
+router.put('/modifyBanList/id=:id', UserModifyDataRules, ...LoginAsAdminAndFindUser,ModifyBanListData);
 
 router.delete('/remove/id=:id', ...LoginAsAdminAndFindUser, DeleteUser);
 

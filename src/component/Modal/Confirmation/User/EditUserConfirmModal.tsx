@@ -2,8 +2,9 @@ import { Box, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 
 // Context
-import { useAllUserContext } from "../../../../Context/User/AllUserContext";
 import { useModal } from "../../../../Context/ModalContext";
+import { useAllUserContext } from "../../../../Context/User/AllUserContext";
+import { useBannedUserContext } from "../../../../Context/User/BannedUserContext";
 
 // Models
 import { DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "../../../../Model/ResultModel";
@@ -20,7 +21,7 @@ import EditUserModal from "../../User/EditUserModal";
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 import EditBanUserModal from "../../User/EditBanUserModal";
-import { useBannedUserContext } from "../../../../Context/User/BannedUserContext";
+import { TransferDateToISOString } from "../../../../Controller/OtherController";
 
 const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {
@@ -45,15 +46,15 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
 
                 let formattedCompareValue = compareValue;
 
-                if (editValue instanceof Date) 
+                if (["startDate","dueDate"].includes(key)) 
                 {
-                    formattedCompareValue = editValue.toISOString() 
+                    formattedCompareValue = TransferDateToISOString(compareValue);
                 }; 
-    
-                if (formattedCompareValue !== compareValue) 
+
+                if (formattedCompareValue !== editValue) 
                 {
                     const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
-                    newDifferences.push(`${capitalizedKey}: ${compareValue} -> ${editValue}`);
+                    newDifferences.push(`${capitalizedKey}: ${formattedCompareValue} -> ${editValue}`);
                 }
             }
         }
@@ -91,7 +92,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
                 case 1:
                     const CompareBanUserData = compareData as DetailsInterfaceForBannedAndDelete;
                     const EditBanUserData = editData as DetailsInterfaceForBannedAndDelete;
-                    editBannedUserData(CompareBanUserData._id, EditBanUserData.dueDate as Date, EditBanUserData.description);
+                    editBannedUserData(EditBanUserData.userID as string, CompareBanUserData._id, EditBanUserData.dueDate as Date, EditBanUserData.description);
                     break;
             }
         }

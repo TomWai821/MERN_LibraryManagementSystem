@@ -161,6 +161,42 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
     }
 }
 
+export const ModifyBanListData = async (req: AuthRequest, res:Response) => 
+{
+    const { banListID, dueDate, description } = req.body;
+    const foundUser = req.foundUser as UserInterface;
+    let success = false;
+
+    try
+    {
+        if(foundUser.status !== "Banned")
+        {
+            return res.status(400).json({ success, error: "This user currently is not Banned!"});
+        }
+
+        const foundBanList = await FindBanListByID(banListID as ObjectId);
+
+        if(!foundBanList)
+        {
+            return res.status(400).json({ success, error: "Could not found the record with Ban List!"});
+        }
+
+        const modifyBanList = await FindBanListByIDAndUpdate(banListID as ObjectId, {dueDate, description});
+
+        if(!modifyBanList)
+        {
+            return res.status(400).json({ success, error: "Failed to update Ban List record!"});
+        }
+
+        success = true;
+        res.json({ success, message: "Ban List Record Update Successfully!"});
+    }
+    catch(error)
+    {
+        res.status(500).json({ success, error: "Internal Server Error!" });
+    }
+}
+
 export const DeleteUser = async (req: AuthRequest, res: Response) => 
 {
     const foundUser = req.foundUser as UserInterface;

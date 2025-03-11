@@ -27,6 +27,7 @@ const BannedUserDataBody:FC<UserModalBody> = (BannedUserData) =>
                     data.bannedDetails?.status === "Banned" && 
                     (
                         <Fragment>
+                            <Typography>Description: {data.bannedDetails?.description}</Typography>
                             <Typography>Date: {TransferDateToString(data.bannedDetails?.startDate as Date)} - {TransferDateToString(data.bannedDetails?.dueDate as Date)}</Typography>
                             <Typography>Duration: {CalculateDuration(data.bannedDetails?.startDate as Date, data.bannedDetails?.dueDate as Date)}</Typography>
                             <Typography>Count: {CountDuration(data.bannedDetails?.dueDate as Date)}</Typography>

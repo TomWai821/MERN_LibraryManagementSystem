@@ -33,6 +33,7 @@ interface UserResultDataInterface extends UserDataInterface
 interface DetailsInterfaceForBannedAndDelete
 {
     _id:string;
+    userID:string;
     description:string;
     startDate: Date | string;
     dueDate: Date | string;

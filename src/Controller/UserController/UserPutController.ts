@@ -43,10 +43,10 @@ const ModifyUserDataController = async (authToken:string, userId: string, userna
     return await fetchData(authToken, url, data);
 };
 
-const ModifyBanListDataController = async(authToken:string, banListID:string, dueDate:Date, description:string) => 
+const ModifyBanListDataController = async(authToken:string, userId:string, banListID:string, dueDate:Date, description:string) => 
 {
     const data = {banListID, dueDate, description}
-    const url = `${localhost}/modifyBanList`;
+    const url = `${localhost}/modifyBanList/id=${userId}`;
     return await fetchData(authToken, url, data);
 }
 

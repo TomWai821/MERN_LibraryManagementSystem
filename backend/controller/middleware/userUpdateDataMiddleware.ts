@@ -2,7 +2,7 @@ import { NextFunction, Response } from "express";
 import { AuthRequest } from "../../model/requestInterface";
 import { FindUser, FindUserByIDAndUpdate } from "../../schema/user/user";
 import { ObjectId } from "mongoose";
-import { CreateBanList, FindBanList } from "../../schema/user/banList";
+import { CreateBanList, FindBanList, FindBanListByID, FindBanListByIDAndUpdate } from "../../schema/user/banList";
 import { CreateDeleteList, FindDeleteList } from "../../schema/user/deleteList";
 import { UserInterface } from "../../model/userSchemaInterface";
 import { userStatus } from "../../maps/userTypeMaps";
@@ -112,4 +112,3 @@ const CreateStatusList = async (statusForUserList:string, userId:ObjectId, descr
 
     return false;
 }
-

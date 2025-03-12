@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { useModal } from '../../../../Context/ModalContext';
 
 // Context
-import { useAllUserContext } from "../../../../Context/User/AllUserContext";
+import { useUserContext } from "../../../../Context/User/UserContext";
 
 // UI Fragment
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
@@ -22,7 +22,7 @@ const CreateUserConfirmModal = ({...userData}) =>
     const birthDayToString = birthDay.toString();
  
     const { handleOpen, handleClose } = useModal();
-    const { createUser } = useAllUserContext();
+    const { createUser } = useUserContext();
 
     const returnCreateUserModal = () => 
     {

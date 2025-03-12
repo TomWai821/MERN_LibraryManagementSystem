@@ -13,9 +13,7 @@ import { GetCurrentDate } from "../../../Controller/OtherController";
 import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 
 // Contexts
-import { useAllUserContext } from "../../../Context/User/AllUserContext";
-import { useBannedUserContext } from "../../../Context/User/BannedUserContext";
-import { useDeleteUserContext } from "../../../Context/User/DeleteUserContext";
+import { useUserContext } from "../../../Context/User/UserContext";
 
 // Data (CSS Syntax and dropdown data)
 import { PaginationOption, UserTabLabel } from "../../../Maps/TableMaps";
@@ -23,9 +21,7 @@ import { PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
 
 const UserPage:FC<PagesInterface> = (loginData) =>
 {
-    const { AllUser, fetchUser } = useAllUserContext();
-    const { BannedUser, fetchBannedUser } = useBannedUserContext();
-    const { DeleteUser, fetchDeleteUser } = useDeleteUserContext();
+    const { AllUser, BannedUser, DeleteUser, fetchUser } = useUserContext();
 
     const UserData = [AllUser, BannedUser, DeleteUser];
     const { isAdmin } = loginData;
@@ -60,15 +56,15 @@ const UserPage:FC<PagesInterface> = (loginData) =>
             switch(tabValue)
             {
                 case 0:
-                    fetchUser(searchUserData.user);
+                    fetchUser("AllUser", searchUserData.user);
                     break;
 
                 case 1:
-                    fetchBannedUser(searchUserData.user, searchUserData.date);
+                    fetchUser("BannedUser", searchUserData.user);
                     break;
 
                 case 2:
-                    fetchDeleteUser(searchUserData.user, searchUserData.date);
+                    fetchUser("DeleteUser", searchUserData.user);
                     break;
             }
             

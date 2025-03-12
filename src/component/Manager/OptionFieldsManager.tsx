@@ -1,7 +1,9 @@
 import { FC } from "react";
 import SearchOptionField from "../UIFragment/SearchOptionField";
 import { OptionFieldsInterface } from "../../Model/TablePagesAndModalModel";
-import { BookSearchField, AllUserSearchField, OtherUserSearchField } from "../../Maps/TextFieldsMaps";
+import { AllUserSearchField, OtherUserSearchField } from "../../Maps/TextFieldsMaps";
+import { useDefinationContext } from "../../Context/Book/DefinationContext";
+import SearchOptionFieldForBook from "../UIFragment/SearchOptionFieldForBook";
 
 
 const OptionFieldsManager:FC<OptionFieldsInterface> = (searchOptionFieldData) => 
@@ -10,7 +12,9 @@ const OptionFieldsManager:FC<OptionFieldsInterface> = (searchOptionFieldData) =>
 
     const Book = 
     [
-        <SearchOptionField optionVisiable={optionVisiable} onChange={onChange} SearchField={BookSearchField} searchData={searchData} />
+        <SearchOptionFieldForBook optionVisiable={optionVisiable} onChange={onChange} searchData={searchData}/>,
+        <SearchOptionFieldForBook optionVisiable={optionVisiable} onChange={onChange} searchData={searchData}/>,
+        <SearchOptionFieldForBook optionVisiable={optionVisiable} onChange={onChange} searchData={searchData} />
     ]
 
     const User = 

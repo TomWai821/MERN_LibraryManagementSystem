@@ -58,6 +58,9 @@ export const BuildUpdateData = async (req: AuthRequest, res:Response, next:NextF
 export const DeleteBanListOrDeleteListData = async (req: AuthRequest, res: Response, next:NextFunction) => 
 {
     const {deleteListID, banListID, statusForUserList} = req.body;
+    console.log(deleteListID);
+    console.log(banListID);
+    console.log(statusForUserList);
 
     if(statusForUserList === "Normal")
     {

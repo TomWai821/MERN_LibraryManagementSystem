@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { AuthRequest, BodyInterfaceForDelete, CreateUserInterface } from '../model/requestInterface';
+import { AuthRequest, CreateUserInterface } from '../model/requestInterface';
 import { jwtSign, bcryptHash } from './hashing'
 import { UserInterface } from '../model/userSchemaInterface';
 import { CreateUser, FindUserByIDAndDelete, FindUserByIDAndUpdate } from '../schema/user/user';
@@ -114,7 +114,7 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
 
             if(!createStatusData)
             {
-                return res.status(400).json({success, message:"Fail to Create Delete List/Ban List Record"});
+                return res.status(400).json({success, message:"Fail to Create Record in Delete List/Ban List"});
             }
         }
 
@@ -160,24 +160,22 @@ export const ModifyBanListData = async (req: AuthRequest, res:Response) =>
 export const DeleteUser = async (req: AuthRequest, res: Response) => 
 {
     const foundUser = req.foundUser as UserInterface;
-    const {deleteListID} =  req.body as BodyInterfaceForDelete;
-    console.log(deleteListID);
     let success = false;
 
     try 
     {
+        const removeRecordFromDeleteList = await FindDeleteListByIDAndDelete(req.body.deleteListID);
+
+        if(!removeRecordFromDeleteList)
+        {
+            return res.status(401).json({ success, error: "Failed to Delete user in delete List!"});
+        }
+
         const deleteUser = await FindUserByIDAndDelete(foundUser._id);
 
         if(!deleteUser)
         {
             return res.status(401).json({ success, error: "Failed to delete user!" });
-        }
-
-        const changeBannedListStatus = await FindDeleteListByIDAndDelete(deleteListID as unknown as ObjectId)
-
-        if(!changeBannedListStatus)
-        {
-            return res.status(401).json({ success, error: "Failed to Delete user in delete List!"});
         }
 
         success = true;

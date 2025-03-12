@@ -17,8 +17,8 @@ import { FilterInterface } from "../../../../Model/TablePagesAndModalModel";
 import { BookDataInterface, BookSearchInterface } from "../../../../Model/BookTableModel";
 
 // Data(CSS Syntax and dropdown data)
-import { BookMainSearchField } from "../../../../Maps/TextFieldsMaps";
 import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
+import { useDefinationContext } from "../../../../Context/Book/DefinationContext";
 
 
 const BookFilter: FC<FilterInterface> = (filterData) => 
@@ -29,6 +29,7 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
     const [optionVisiable, setOptionVisiable] = useState(false);
     const [actionMenu, openActionMenu] = useState<HTMLElement | null>(null);
     const { handleOpen } = useModal();
+    const { defination } = useDefinationContext();
 
     const ActionMenu = 
     [
@@ -50,14 +51,15 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
     return (
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{ ...ItemToCenter, paddingBottom: '25px', alignItems: 'center' }}>
-                {
-                    BookMainSearchField.map((searchField, index) => 
-                    (
-                        <Fragment key={index}>
-                            <TextField label={searchField.label} name={searchField.name} value={bookData[searchField.name as keyof BookSearchInterface]} onChange={onChange} size="small" sx={searchField.syntax} select={searchField.select}/>
-                        </Fragment>
-                    ))
-                }
+                <TextField label="Book Name" name="bookname" value={bookData["bookname"]} onChange={onChange} size="small" sx={{ width: '50%' }}/>
+                <TextField label="Language" name="language" value={bookData["language"]} onChange={onChange} size="small" sx={{ width: '20%', marginLeft: '10px' }} select>
+                    {   
+                        defination.Language.map((language, index) => 
+                        (
+                            <MenuItem key={index} value={language.language}>{`${language.language}(${language.shortName})`}</MenuItem>
+                        ))
+                    }
+                </TextField>
                 <IconButton onClick={toggleCardVisibility}>
                     {optionVisiable ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                 </IconButton>

@@ -5,9 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { AlertProvider } from './Context/AlertContext';
 import { ModalProvider } from './Context/ModalContext';
-import { AllUserProvider } from './Context/User/AllUserContext';
-import { BannedUserProvider } from './Context/User/BannedUserContext';
-import { DeleteUserProvider } from './Context/User/DeleteUserContext';
+import { UserProvider } from './Context/User/UserContext';
 import { DefinationProvider } from './Context/Book/DefinationContext';
 
 const root = ReactDOM.createRoot
@@ -18,19 +16,15 @@ const root = ReactDOM.createRoot
 root.render
 (
     <DefinationProvider>
-        <AllUserProvider>
-            <DeleteUserProvider>
-                <BannedUserProvider>
-                    <AlertProvider>
-                        <ModalProvider>
-                            <BrowserRouter>
-                                <App />
-                            </BrowserRouter>
-                        </ModalProvider>
-                    </AlertProvider>
-                </BannedUserProvider>
-            </DeleteUserProvider>
-        </AllUserProvider>
+        <UserProvider>
+            <AlertProvider>
+                <ModalProvider>
+                    <BrowserRouter>
+                        <App />
+                    </BrowserRouter>
+                </ModalProvider>
+            </AlertProvider>
+        </UserProvider>
     </DefinationProvider>
 );
 

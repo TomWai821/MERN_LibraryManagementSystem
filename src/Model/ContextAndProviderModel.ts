@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { DefinationResultInterface, DefinationState, UserResultDataInterface } from "./ResultModel";
+import { DefinationState, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
 
 interface ChildProps
@@ -38,32 +38,17 @@ interface ModalTemplateProps extends ChildProps
 }
 
 // For Context
-interface AllUserContextProps
+interface UserContextProps
 {
     AllUser: UserResultDataInterface[];
+    BannedUser: UserResultDataInterface[];
+    DeleteUser: UserResultDataInterface[];
     fetchAllUser: () => Promise<void>;
-    fetchUser: (UserData: UserDataInterface | undefined) => Promise<void>;
+    fetchUser: (type:string, UserData: UserDataInterface | undefined) => Promise<void>;
     createUser: (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string) => void;
     editUserData: (userId:string, username: string, email: string, gender: string, role: string) => void;
-    changeUserStatus: (userId:string, status:string, duration:number, description?:string) => void;
-}
-
-interface BannedUserContextProps
-{
-    BannedUser: UserResultDataInterface[];
-    fetchAllBannedUser: () => Promise<void>;
-    fetchBannedUser: (UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
     editBannedUserData: (userId:string, bannedListID: string, dueDate: Date, description: string) => void;
-    changeBannedUserStatus: (userId:string, bannedListID:string) => void;
-}
-
-interface DeleteUserContextProps
-{
-    DeleteUser: UserResultDataInterface[];
-    fetchAllDeleteUser: () => Promise<void>;
-    fetchDeleteUser: (UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
-    // For unDelete Action
-    changeDeleteUserStatus: (userId:string, deleteListID:string, status:string) => void;
+    changeUserStatus: (type:string, userId:string, status:string, ListID?:string, duration?:number, description?:string) => void;
     actualDeleteUser: (userId:string, deleteListID:string, status:string) => void;
 }
 
@@ -92,4 +77,4 @@ interface ContentTableCellProps extends ChildProps
     Information: UserResultDataInterface;
 }
 
-export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, AllUserContextProps, BannedUserContextProps, DeleteUserContextProps, TabPanelProps, ContentTableCellProps, DefinatonProps}
+export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, UserContextProps, TabPanelProps, ContentTableCellProps, DefinatonProps}

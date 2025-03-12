@@ -37,7 +37,14 @@ interface OptionFieldModel
     optionVisiable: boolean;
     onChange:(event: ChangeEvent<HTMLInputElement>) => void
     SearchField: { label: string; name: string; type: string; select?: boolean; slotProps?: object, options?: string[]} [];
-    searchData: BookDataInterface | UserDataInterface;
+    searchData: UserDataInterface;
 }
 
-export type {ViewProfileModel, LoginModel, RegisterModel, OptionFieldModel}
+interface BookOptionFieldModal
+{
+    optionVisiable: boolean;
+    onChange:(event: ChangeEvent<HTMLInputElement>) => void
+    searchData: BookDataInterface;
+}
+
+export type {ViewProfileModel, LoginModel, RegisterModel, OptionFieldModel, BookOptionFieldModal}

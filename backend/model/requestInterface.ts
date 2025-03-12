@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { UserInterface } from "./userSchemaInterface";
 import { Request } from 'express'
 
@@ -36,9 +37,4 @@ interface AuthRequest extends Request
     updateData?: Record<string, any> | null;
 }
 
-interface BodyInterfaceForDelete
-{
-    deleteListID:string;
-}
-
-export type {LoginInterface, CreateUserInterface, ModifyUserDataInterface, AuthRequest, BodyInterfaceForDelete}
+export type {LoginInterface, CreateUserInterface, ModifyUserDataInterface, AuthRequest}

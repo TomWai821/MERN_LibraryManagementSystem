@@ -10,10 +10,8 @@ import DeleteTypography from "../../../UIFragment/DeleteTypography";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 
 // Context
-import { useBannedUserContext } from "../../../../Context/User/BannedUserContext";
 import { useModal } from "../../../../Context/ModalContext";
-import { useAllUserContext } from "../../../../Context/User/AllUserContext";
-import { useDeleteUserContext } from "../../../../Context/User/DeleteUserContext";
+import { useUserContext } from "../../../../Context/User/UserContext";
 
 // Model
 import { DeleteModalInterface } from "../../../../Model/ModelForModal";
@@ -28,28 +26,21 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
     const { _id, value, data } = userData;
     const Data = data as UserResultDataInterface;
     
-    const { changeBannedUserStatus, fetchAllBannedUser } = useBannedUserContext();
-    const { changeDeleteUserStatus, fetchAllDeleteUser } = useDeleteUserContext();
-    const { fetchAllUser } = useAllUserContext();
+    const { changeUserStatus } = useUserContext();
     const { handleClose } = useModal();
-    console.log(_id);
-    console.log(Data.bannedDetails?._id);
 
     const UndoUserAction = () => 
     {
         switch(value)
         {
             case 1:
-                changeBannedUserStatus(_id, Data.bannedDetails?._id as string);
-                fetchAllBannedUser();
+                changeUserStatus("UnBanned", _id, "Normal", Data.bannedDetails?._id as string);
                 break;
             
             case 2:
-                changeDeleteUserStatus(_id, Data.deleteDetails?._id as string, "Undo");
-                fetchAllDeleteUser();
+                changeUserStatus("UnDelete", _id, "Normal", Data.deleteDetails?._id as string);
                 break;
         }
-        fetchAllUser();
         handleClose();
     }
  
@@ -78,7 +69,7 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
                 <Typography>Email: {Data.email}</Typography>
                 <Typography>Role: {Data.role}</Typography>
                 <Typography>Gender: {Data.gender}</Typography>
-                <Typography>Description: {Data.bannedDetails?.description}</Typography>
+                <Typography>Description: {Data.bannedDetails?.description || Data.deleteDetails?.description}</Typography>
             </Box>
             
             <DeleteTypography/>

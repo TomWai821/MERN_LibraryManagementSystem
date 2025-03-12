@@ -3,8 +3,7 @@ import { FC, useEffect, useState } from "react";
 
 // Context
 import { useModal } from "../../../../Context/ModalContext";
-import { useAllUserContext } from "../../../../Context/User/AllUserContext";
-import { useBannedUserContext } from "../../../../Context/User/BannedUserContext";
+import { useUserContext } from "../../../../Context/User/UserContext";
 
 // Models
 import { DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "../../../../Model/ResultModel";
@@ -29,8 +28,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
     const [differences, setDifferences] = useState<string[]>([]);
 
     const {handleOpen, handleClose} = useModal();
-    const {editUserData} = useAllUserContext();
-    const {editBannedUserData} = useBannedUserContext();
+    const {editUserData, editBannedUserData} = useUserContext();
 
     // editData = use modify, compareData = vanilla one(Before change)
     const generateChangeTypography = (editData: UserDataInterface | DetailsInterfaceForBannedAndDelete, compareData: UserDataInterface | DetailsInterfaceForBannedAndDelete) => 

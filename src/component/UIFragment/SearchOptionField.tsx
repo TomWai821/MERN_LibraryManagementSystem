@@ -27,7 +27,7 @@ const SearchOptionField:FC<OptionFieldModel> = ({...optionData}) =>
                                         {
                                             field.select && field.options?.map((option, index) => 
                                             (
-                                                <MenuItem key={index} value={option}  sx={{height: '40px'}}>{option}</MenuItem>
+                                                <MenuItem key={index} value={option} sx={{height: '40px'}}>{option}</MenuItem>
                                             ))
                                         }
                                     </TextField>

@@ -10,8 +10,7 @@ import DeleteTypography from '../../../UIFragment/DeleteTypography';
 
 // Context
 import { useModal } from '../../../../Context/ModalContext';
-import { useDeleteUserContext } from '../../../../Context/User/DeleteUserContext';
-import { useAllUserContext } from '../../../../Context/User/AllUserContext';
+import { useUserContext } from '../../../../Context/User/UserContext';
 
 // Templates
 import ModalTemplate from '../../../Templates/ModalTemplate';
@@ -26,8 +25,7 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
     const {value, _id, data} = userData;
     const Data = data as UserResultDataInterface;
 
-    const {changeUserStatus, fetchAllUser} = useAllUserContext();
-    const {actualDeleteUser, fetchAllDeleteUser} = useDeleteUserContext();
+    const { changeUserStatus, actualDeleteUser } = useUserContext();
     const {handleClose} = useModal();
 
     const DeleteUserAction = (): void => 
@@ -37,18 +35,15 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
             case 0:
                 if(Data.status !== "Delete")
                 {
-                    changeUserStatus(_id, "Delete", 30, "Admin-Request Deletion");   
+                    changeUserStatus("Delete", _id, "Delete", undefined, 30, "Admin-Request Deletion");   
                 }
-                handleClose();
                 break;
 
             case 2:
                 actualDeleteUser(_id, Data.deleteDetails?._id as string, "Deleted");
-                handleClose();
                 break;
         }
-        fetchAllUser();
-        fetchAllDeleteUser();
+        handleClose();
     }
 
     const setTitle = () =>

@@ -106,7 +106,7 @@ export const BanListValidation = async (req: AuthRequest, res: Response, next:Ne
 // DeleteList ID validation before doing some action
 export const DeleteListValidation = async (req: AuthRequest, res: Response, next:NextFunction) => 
 {
-    const {deleteListID} = req.body;
+    const { deleteListID } = req.body;
 
     if(deleteListID)
     {

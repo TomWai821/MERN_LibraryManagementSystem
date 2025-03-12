@@ -1,11 +1,11 @@
 const contentType:string = 'application/json';
 const localhost:string = 'http://localhost:5000/api/user';
 
-const fetchData = async (authToken:string, url: string, data: any) => 
+const fetchData = async (authToken:string, url: string, data: Record<string, any>) => 
 {
-    console.log(data);
     try 
     {
+        console.log(data);
         const response = await fetch(url, 
         {
             method: 'PUT',
@@ -16,8 +16,6 @@ const fetchData = async (authToken:string, url: string, data: any) =>
             },
             body: JSON.stringify(data)
         });
-
-        console.log(response);
 
         if (response.ok) 
         {
@@ -45,32 +43,25 @@ const ModifyUserDataController = async (authToken:string, userId: string, userna
 
 const ModifyBanListDataController = async(authToken:string, userId:string, banListID:string, dueDate:Date, description:string) => 
 {
-    const data = {banListID, dueDate, description}
+    const data = { banListID, dueDate, description }
     const url = `${localhost}/BanListData/id=${userId}`;
     return await fetchData(authToken, url, data);
 }
 
-const ModifyStatusController = async (authToken:string, userId: string, statusForUserList?: string, statusForBanList?:string, statusForDeleteList?:string, ListID?:string, startDate?: Date, dueDate?: Date, description?:string) => 
+const ModifyStatusController = async (type:string, authToken:string, userId: string, statusForUserList?: string, ListID?:string, startDate?: Date, dueDate?: Date, description?:string) => 
 {
-    const statusDataConfig = 
+    const statusDataConfig =
     {
-        ban: () => 
-        (
-            { banListID: ListID, statusForBanList, statusForUserList}
-        ),
-        delete: () => 
-        (
-            { deleteListID: ListID, statusForDeleteList, statusForUserList }
-        ),
-        default: () => 
-        (
-            { statusForUserList, startDate, dueDate, description }
-        ),
-    }
+        Banned: { banListID: ListID, statusForUserList, startDate, dueDate, description },
+        Delete: { deleteListID: ListID, statusForUserList, startDate, dueDate, description },
+        UnDelete: { statusForUserList, deleteListID: ListID },
+        UnBanned: { statusForUserList, banListID: ListID }
+    };
 
-    let statusType: keyof typeof statusDataConfig = statusForBanList ? "ban" : statusForDeleteList ? "delete" : "default";
-    let statusData = statusDataConfig[statusType]();
-    
+    console.log(statusForUserList);
+
+    const statusData = statusDataConfig[type as keyof typeof statusDataConfig];
+        
     const url = `${localhost}/Status/id=${userId}`;
     return await fetchData(authToken, url, statusData);
 };

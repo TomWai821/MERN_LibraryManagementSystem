@@ -1,4 +1,4 @@
-import { GenderFilterOption, GenderOption, RoleFilterOption, RoleOption, StatusFilterOption, StatusOption } from "./TableMaps";
+import { GenderFilterOption, GenderOption, RoleFilterOption, RoleOption, StatusFilterOption } from "./TableMaps";
 
 const RegisterField = 
 [
@@ -24,20 +24,6 @@ const ViewProfileField =
     {name: "newPassword", label: "New Password:", type: "password"}
 ]
 
-const BookMainSearchField = 
-[
-    {name:"bookname", label:"Book Name", syntax:{ width: '60%' }, select: false},
-    {name:"language", label:"Language", syntax:{ width: '10%', marginLeft: '10px' }, select: true}
-]
-
-const BookSearchField = 
-[
-    {name: "genre", label: "Genre", type: "text", select: true},
-    {name: "publisher", label: "Publisher Name", type: "text", select: true},
-    {name: "author", label: "Author Name", type: "text", select: true},
-    {name: "pages", label: "Pages", type: "number", slotProps: {htmlInput:{min: 0}}}
-]
-
 // For user filter
 const UserSearchField = 
 [
@@ -56,8 +42,6 @@ const OtherUserSearchField =
 [
     {name: "role", label:"Role", type:"text", syntax:{ width: '10%', marginLeft: '10px' }, select: true, options: RoleFilterOption},
     {name: "gender", label: "Gender", type: "text", select: true, options: GenderFilterOption},
-    {name: "startDate", label: "Start Date", type: "date", options:[]},
-    {name: "dueDate", label: "Due Date", type: "date", options:[]},
 ]
 
 // For user modal
@@ -95,7 +79,9 @@ const CreateBookInputField =
 [
     {name: "bookname", label: "Book Name", type:"text", select:false, slotProps: {}},
     {name: "language", label: "Language", type:"text", select:false, slotProps: {}},
-    ...BookSearchField,
+    {name: "publisher", label: "Publisher Name", type: "text", select: true},
+    {name: "author", label: "Author Name", type: "text", select: true},
+    {name: "pages", label: "Pages", type: "number", slotProps: {htmlInput:{min: 0}}},
     {name: "amount", label: "Book Amount", type:"number", slotProps: {htmlInput:{min: 1}}}
 ]
 
@@ -120,4 +106,4 @@ const EditGenreInputField =
     {name: "genre", label: "Genre", type:"text"}
 ]
 
-export {RegisterField, LoginField, ViewProfileField, BookMainSearchField, BookSearchField, AllUserSearchField, OtherUserSearchField, CreateUserInputField, EditUserInputField, EditBanUserInputField, CreateBookInputField, dateOption, EditLanguageInputField, EditGenreInputField}
+export {RegisterField, LoginField, ViewProfileField, AllUserSearchField, OtherUserSearchField, CreateUserInputField, EditUserInputField, EditBanUserInputField, CreateBookInputField, dateOption, EditLanguageInputField, EditGenreInputField}

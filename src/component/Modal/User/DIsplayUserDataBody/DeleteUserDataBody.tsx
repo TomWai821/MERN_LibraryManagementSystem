@@ -1,6 +1,6 @@
-import { FC, Fragment } from "react"
+import { FC } from "react"
 import { UserModalBody } from "../../../../Model/ModelForModal";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Divider, Typography } from "@mui/material";
 import { displayAsColumn } from "../../../../Maps/FormatSyntaxMaps";
 import {  CountDuration, TransferDateToString } from "../../../../Controller/OtherController";
 
@@ -17,15 +17,11 @@ const DeleteUserDataBody:FC<UserModalBody>  = (DeleteUserData) =>
             <Typography>Email: {data.email}</Typography>
             <Typography>Gender: {data.gender}</Typography>
             <Typography>Status: {data.status} ({data.deleteDetails?.status})</Typography>
-            {
-                data.status === "Pending" && 
-                (
-                    <Fragment>
-                        <Typography>Due Date: {TransferDateToString(data.deleteDetails?.dueDate as Date)}</Typography>
-                        <Typography>Count: {CountDuration(data.deleteDetails?.dueDate as Date)}</Typography>
-                    </Fragment>
-                )
-            }
+            <Typography>Description: {data.deleteDetails?.description}</Typography>
+            <Divider/>
+            <Typography>Start Date: {TransferDateToString(data.deleteDetails?.startDate as Date)}</Typography>
+            <Typography>Due Date: {TransferDateToString(data.deleteDetails?.dueDate as Date)}</Typography>
+            <Typography>Count: {CountDuration(data.deleteDetails?.dueDate as Date)}</Typography>
         </Box>
     </Box>
     );

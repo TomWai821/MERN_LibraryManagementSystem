@@ -5,7 +5,6 @@ import { printError } from '../../controller/Utils';
 const languageSchema = new mongoose.Schema<LanguageInterface>
 (
     {
-        _id: { type: String, required: true },
         language: { type: String, required:true },
         shortName: { type:String, require: true },
         createdAt: { type: Date, default: Date.now, immutable: true }
@@ -83,11 +82,11 @@ export const FindLanguageByIDAndUpdate = async (language: string, data: Record<s
     }
 }
 
-export const FindLanguageByIDAndDelete = async (language: string, data: Record<string, any>) =>
+export const FindLanguageByIDAndDelete = async (language: string) =>
 {
     try
     {
-        return await Language.findByIdAndDelete(language, data);
+        return await Language.findByIdAndDelete(language);
     }
     catch(error)
     {

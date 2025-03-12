@@ -1,6 +1,5 @@
 import { UserDataInterface } from "./UserTableModel";
 
-
 interface ResultInterface
 {
     data: RegisterDataInterface;
@@ -40,4 +39,24 @@ interface DetailsInterfaceForBannedAndDelete
     status:string;
 }
 
-export type {ResultInterface, GetResultInterface, UserResultDataInterface, DetailsInterfaceForBannedAndDelete}
+interface DefinationResultInterface
+{
+    success:boolean;
+    foundData: DefinationInterface | DefinationInterface[];
+}
+
+interface DefinationInterface
+{
+    _id:string;
+    shortName:string;
+    language?:string;
+    genre?:string;
+}
+
+interface DefinationState
+{
+    Genre: DefinationInterface[];
+    Language: DefinationInterface[];
+}
+
+export type {ResultInterface, GetResultInterface, UserResultDataInterface, DetailsInterfaceForBannedAndDelete, DefinationResultInterface, DefinationInterface, DefinationState}

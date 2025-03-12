@@ -108,4 +108,16 @@ const dateOption =
     {label:'Forever', value: Infinity}
 ];
 
-export {RegisterField, LoginField, ViewProfileField, BookMainSearchField, BookSearchField, AllUserSearchField, OtherUserSearchField, CreateUserInputField, EditUserInputField, EditBanUserInputField, CreateBookInputField, dateOption}
+const EditLanguageInputField = 
+[
+    {name: "shortName", label: "Short Name", type:"text"},
+    {name: "language", label: "Language", type:"text"}
+]
+
+const EditGenreInputField = 
+[
+    {name: "shortName", label: "Short Name", type:"text"},
+    {name: "genre", label: "Genre", type:"text"}
+]
+
+export {RegisterField, LoginField, ViewProfileField, BookMainSearchField, BookSearchField, AllUserSearchField, OtherUserSearchField, CreateUserInputField, EditUserInputField, EditBanUserInputField, CreateBookInputField, dateOption, EditLanguageInputField, EditGenreInputField}

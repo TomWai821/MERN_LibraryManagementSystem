@@ -114,7 +114,7 @@ export const AllUserProvider: FC<ChildProps> = ({ children }) =>
     )
 
     return (
-        <AllUserContext.Provider value={{ AllUser, fetchAllUser, fetchUser,  createUser, editUserData, changeUserStatus }}>
+        <AllUserContext.Provider value={{ AllUser, fetchAllUser, fetchUser, createUser, editUserData, changeUserStatus }}>
             {children}
         </AllUserContext.Provider>
     );

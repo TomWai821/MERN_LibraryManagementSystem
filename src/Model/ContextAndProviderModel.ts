@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { UserResultDataInterface } from "./ResultModel";
+import { DefinationResultInterface, DefinationState, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
 
 interface ChildProps
@@ -62,8 +62,18 @@ interface DeleteUserContextProps
     DeleteUser: UserResultDataInterface[];
     fetchAllDeleteUser: () => Promise<void>;
     fetchDeleteUser: (UserData: UserDataInterface | undefined, dateData: { startDate: Date; dueDate: Date; }) => Promise<void>;
+    // For unDelete Action
     changeDeleteUserStatus: (userId:string, deleteListID:string, status:string) => void;
     actualDeleteUser: (userId:string, deleteListID:string, status:string) => void;
+}
+
+interface DefinatonProps
+{
+    defination: DefinationState;
+    fetchAllDefination: () => Promise<void>;
+    createDefination:(type:string, shortName:string, genre?:string, language?:string) => void;
+    editDefination:(type:string, id:string, shortName:string, genre?:string, language?:string) => void;
+    deleteDefination:(type:string, id:string) => void;
 }
 
 // For Tab Panel
@@ -82,4 +92,4 @@ interface ContentTableCellProps extends ChildProps
     Information: UserResultDataInterface;
 }
 
-export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, AllUserContextProps, BannedUserContextProps, DeleteUserContextProps, TabPanelProps, ContentTableCellProps}
+export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, AllUserContextProps, BannedUserContextProps, DeleteUserContextProps, TabPanelProps, ContentTableCellProps, DefinatonProps}

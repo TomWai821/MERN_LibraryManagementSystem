@@ -1,14 +1,13 @@
 import express from 'express';
 import { UserRegisterRules, UserLoginRules, UserModifyDataRules } from '../model/expressBodyRules'
 import { DeleteUser, BuildGetUserDataMessage, ModifyUserData, UserLogin, UserRegister, ChangeStatus, ModifyBanListData } from '../controller/userController';
-import { AuthIdValidation, FetchUserFromHeader } from '../controller/middleware/authMiddleware';
-import { BanListValidation, CompareUserStatus, DeleteListValidation, FoundUserFromParams, UserLoginDataValidation, UserRegisterDataValidation } from '../controller/middleware/userValidationMiddleware';
-import { BuildQueryAndGetData } from '../controller/middleware/userGetDataMiddleware';
-import { BuildUpdateData, DeleteBanListOrDeleteListData } from '../controller/middleware/userUpdateDataMiddleware';
+import { FetchUserFromHeader } from '../controller/middleware/User/authMiddleware';
+import { BanListValidation, CompareUserStatus, FoundUserFromParams, UserLoginDataValidation, UserRegisterDataValidation } from '../controller/middleware/User/userValidationMiddleware';
+import { BuildQueryAndGetData } from '../controller/middleware/User/userGetDataMiddleware';
+import { BuildUpdateData, DeleteBanListOrDeleteListData } from '../controller/middleware/User/userUpdateDataMiddleware';
+import { LoginAndFindUser, ValidationForModifyStatus } from '../maps/routesMap';
 
 const router = express.Router();
-const LoginAsAdminAndFindUser = [FetchUserFromHeader, AuthIdValidation, FoundUserFromParams];
-const ValidationForModifyStatus = [CompareUserStatus, BanListValidation, DeleteListValidation];
 
 router.get('/UserData/tableName=:tableName', FetchUserFromHeader, BuildQueryAndGetData, BuildGetUserDataMessage);
 
@@ -16,12 +15,12 @@ router.post('/Register', UserRegisterRules, UserRegisterDataValidation, UserRegi
 router.post('/Login', UserLoginRules, UserLoginDataValidation, UserLogin);
 
 // For another data
-router.put('/UserData/id=:id', UserModifyDataRules, ...LoginAsAdminAndFindUser, BuildUpdateData, ModifyUserData);
+router.put('/UserData/id=:id', UserModifyDataRules, ...LoginAndFindUser, FoundUserFromParams, BuildUpdateData, ModifyUserData);
 
 // For status only
-router.put('/Status/id=:id', UserModifyDataRules, ...LoginAsAdminAndFindUser, ...ValidationForModifyStatus, DeleteBanListOrDeleteListData, ChangeStatus);
-router.put('/BanListData/id=:id', UserModifyDataRules, ...LoginAsAdminAndFindUser, BanListValidation, ModifyBanListData);
+router.put('/Status/id=:id', UserModifyDataRules, ...LoginAndFindUser, ...ValidationForModifyStatus, FoundUserFromParams, CompareUserStatus, DeleteBanListOrDeleteListData, ChangeStatus);
+router.put('/BanListData/id=:id', UserModifyDataRules, ...LoginAndFindUser, FoundUserFromParams, BanListValidation, ModifyBanListData);
 
-router.delete('/User/id=:id', ...LoginAsAdminAndFindUser, DeleteUser);
+router.delete('/User/id=:id', ...LoginAndFindUser, FoundUserFromParams, DeleteUser);
 
 module.exports = router;

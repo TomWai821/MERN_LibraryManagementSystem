@@ -38,8 +38,7 @@ interface AuthRequest extends Request
 
 interface BodyInterfaceForDelete
 {
-    status:string;
-    banListId:string;
+    deleteListID:string;
 }
 
 export type {LoginInterface, CreateUserInterface, ModifyUserDataInterface, AuthRequest, BodyInterfaceForDelete}

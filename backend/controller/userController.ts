@@ -5,7 +5,8 @@ import { UserInterface } from '../model/userSchemaInterface';
 import { CreateUser, FindUserByIDAndDelete, FindUserByIDAndUpdate } from '../schema/user/user';
 import { FindBanListByIDAndUpdate } from '../schema/user/banList';
 import { ObjectId } from 'mongoose';
-import { CreateStatusList } from './middleware/userUpdateDataMiddleware';
+import { CreateStatusList } from './middleware/User/userUpdateDataMiddleware';
+import { FindDeleteListByIDAndDelete } from '../schema/user/deleteList';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {
@@ -159,8 +160,8 @@ export const ModifyBanListData = async (req: AuthRequest, res:Response) =>
 export const DeleteUser = async (req: AuthRequest, res: Response) => 
 {
     const foundUser = req.foundUser as UserInterface;
-    const bodyData =  req.body as BodyInterfaceForDelete;
-    const deleteListID = bodyData.banListId as unknown as ObjectId;
+    const {deleteListID} =  req.body as BodyInterfaceForDelete;
+    console.log(deleteListID);
     let success = false;
 
     try 
@@ -172,11 +173,11 @@ export const DeleteUser = async (req: AuthRequest, res: Response) =>
             return res.status(401).json({ success, error: "Failed to delete user!" });
         }
 
-        const changeBannedListStatus = await FindBanListByIDAndUpdate(deleteListID as ObjectId, {status:bodyData.status})
+        const changeBannedListStatus = await FindDeleteListByIDAndDelete(deleteListID as unknown as ObjectId)
 
         if(!changeBannedListStatus)
         {
-            return res.status(401).json({ success, error: "Failed to change delete user status!"});
+            return res.status(401).json({ success, error: "Failed to Delete user in delete List!"});
         }
 
         success = true;

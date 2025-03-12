@@ -1,0 +1,131 @@
+const url = "http://localhost:5000/api/book/defination/";
+const contentType = "application/json";
+
+const GetDefination = async (type:string) => 
+{
+    try
+    {
+        const response = await fetch(url+`type=${type}`,
+            {
+                method: 'GET',
+                headers: { 'content-type': contentType }
+            }
+        );
+
+        if(response.ok)
+        {
+            const result = response.json();
+            return result;
+        }
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+
+const CreateDefinationData = async (type:string, shortName:string, genre?:string, language?:string) => 
+{
+    try
+    {
+        const data = BuildBodyData(type, shortName, undefined, genre, language);
+
+        const response = await fetch(url+`type=${type}`,
+            {
+                method: 'POST',
+                headers: { 'content-type': contentType },
+                body: JSON.stringify(data)
+            }
+        );
+
+        if(response.ok)
+        {
+            const result = response.json();
+            return result;
+        }
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+
+const EditDefinationData = async (type:string, id:string, shortName:string, genre?:string, language?:string) => 
+{
+    try
+    {
+        const data = BuildBodyData(type, shortName, id, genre, language);
+
+        const response = await fetch(url+`type=${type}`,
+            {
+                method: 'PUT',
+                headers: { 'content-type': contentType },
+                body: JSON.stringify(data)
+            }
+        );
+
+        if(response.ok)
+        {
+            const result = response.json();
+            return result;
+        }
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+
+const DeleteDefinationData = async (type:string, id:string,) => 
+{
+    try
+    {
+        let data:Record<string, any> = {id};
+
+        const response = await fetch(url+`type=${type}`,
+            {
+                method: 'DELETE',
+                headers: { 'content-type': contentType },
+                body: JSON.stringify(data)
+            }
+        );
+
+        if(response.ok)
+        {
+            const result = response.json();
+            return result;
+        }
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+
+const BuildBodyData = (type:string, shortName:string, id?:string, genre?:string, language?:string) => 
+{
+    let data:Record<string, any> = {shortName};
+
+    if(id)
+    {
+        data.id = id;
+    }
+
+    switch(type)
+    {
+        case "Genre":
+            data.genre = genre;
+            break;
+        
+        case "Language":
+            data.language = language;
+            break;
+
+        default:
+            return console.log(`Invalid type ${type}`);
+    }
+
+    return data;
+}
+
+export {GetDefination, CreateDefinationData, EditDefinationData, DeleteDefinationData}

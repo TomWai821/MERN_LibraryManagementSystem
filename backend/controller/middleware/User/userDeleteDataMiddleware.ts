@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
-import { AuthRequest } from "../../model/requestInterface";
-import { FindBanListByIDAndDelete } from "../../schema/user/banList";
-import { FindDeleteListByIDAndDelete } from "../../schema/user/deleteList";
+import { AuthRequest } from "../../../model/requestInterface";
+import { FindBanListByIDAndDelete } from "../../../schema/user/banList";
+import { FindDeleteListByIDAndDelete } from "../../../schema/user/deleteList";
 
 export const DeleteBanListRecord = async (req:AuthRequest, res:Response, next:NextFunction) => 
 {

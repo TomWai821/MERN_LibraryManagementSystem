@@ -82,11 +82,11 @@ export const FindGenreByIDAndUpdate  = async (genreId: string, data: Record<stri
     }
 }
 
-export const FindGenreByIDAndDelete = async (genreId: string, data: Record<string, any>) =>
+export const FindGenreByIDAndDelete = async (genreId: string) =>
 {
     try
     {
-        return await Genre.findByIdAndDelete(genreId, data);
+        return await Genre.findByIdAndDelete(genreId);
     }
     catch(error)
     {

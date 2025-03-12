@@ -1,11 +1,11 @@
 import { NextFunction, Response, Request } from "express";
-import { AuthRequest, LoginInterface } from "../../model/requestInterface";
-import { FindUser, FindUserByID } from "../../schema/user/user";
+import { AuthRequest, LoginInterface } from "../../../model/requestInterface";
+import { FindUser, FindUserByID } from "../../../schema/user/user";
 import { ObjectId } from "mongoose";
-import { comparePassword } from "../hashing";
-import { UserInterface } from "../../model/userSchemaInterface";
-import { FindBanListByID } from "../../schema/user/banList";
-import { FindDeleteListByID } from "../../schema/user/deleteList";
+import { comparePassword } from "../../hashing";
+import { UserInterface } from "../../../model/userSchemaInterface";
+import { FindBanListByID } from "../../../schema/user/banList";
+import { FindDeleteListByID } from "../../../schema/user/deleteList";
 
 // For user register (not require login)
 export const UserRegisterDataValidation = async (req: Request, res: Response, next: NextFunction) => 
@@ -100,7 +100,6 @@ export const BanListValidation = async (req: AuthRequest, res: Response, next:Ne
             return res.status(404).json({ success: false, error:"Invalid Ban List ID!"});
         }
     }
-    console.log("hi");
     next();
 }
 
@@ -118,7 +117,5 @@ export const DeleteListValidation = async (req: AuthRequest, res: Response, next
             return res.status(404).json({ success: false, error:"Invalid Delete List ID!"});
         }
     }
-
-    console.log("hi");
     next();
 }

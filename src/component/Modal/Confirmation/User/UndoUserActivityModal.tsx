@@ -20,27 +20,32 @@ import { DeleteModalInterface } from "../../../../Model/ModelForModal";
 
 // Data (CSS Syntax)
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
+import { UserResultDataInterface } from "../../../../Model/ResultModel";
 
 const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) => 
 {
 
-    const { _id, value, username, email, role, gender, bannedDetails, deleteDetails } = userData;
+    const { _id, value, data } = userData;
+    const Data = data as UserResultDataInterface;
+    
     const { changeBannedUserStatus, fetchAllBannedUser } = useBannedUserContext();
     const { changeDeleteUserStatus, fetchAllDeleteUser } = useDeleteUserContext();
     const { fetchAllUser } = useAllUserContext();
     const { handleClose } = useModal();
+    console.log(_id);
+    console.log(Data.bannedDetails?._id);
 
     const UndoUserAction = () => 
     {
         switch(value)
         {
             case 1:
-                changeBannedUserStatus(_id, bannedDetails?._id as string);
+                changeBannedUserStatus(_id, Data.bannedDetails?._id as string);
                 fetchAllBannedUser();
                 break;
             
             case 2:
-                changeDeleteUserStatus(_id, deleteDetails?._id as string, "Undo");
+                changeDeleteUserStatus(_id, Data.deleteDetails?._id as string, "Undo");
                 fetchAllDeleteUser();
                 break;
         }
@@ -69,11 +74,11 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
         <ModalTemplate title={setTitle().Title} cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>{setTitle().subTitle}</Typography>
-                <Typography>Username: {username}</Typography>
-                <Typography>Email: {email}</Typography>
-                <Typography>Role: {role}</Typography>
-                <Typography>Gender: {gender}</Typography>
-                <Typography>Description: {bannedDetails?.description}</Typography>
+                <Typography>Username: {Data.username}</Typography>
+                <Typography>Email: {Data.email}</Typography>
+                <Typography>Role: {Data.role}</Typography>
+                <Typography>Gender: {Data.gender}</Typography>
+                <Typography>Description: {Data.bannedDetails?.description}</Typography>
             </Box>
             
             <DeleteTypography/>

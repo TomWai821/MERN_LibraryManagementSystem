@@ -1,8 +1,9 @@
 import { FC } from 'react'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 // Models
 import { DeleteModalInterface } from '../../../../Model/ModelForModal';
+import { UserResultDataInterface } from '../../../../Model/ResultModel';
 
 // UI Fragment
 import DeleteTypography from '../../../UIFragment/DeleteTypography';
@@ -22,7 +23,9 @@ import ModalConfirmButton from '../../../UIFragment/ModalConfirmButton';
 
 const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) => 
 {
-    const {value, _id, username, email, role, gender, status, bannedDetails} = userData;
+    const {value, _id, data} = userData;
+    const Data = data as UserResultDataInterface;
+
     const {changeUserStatus, fetchAllUser} = useAllUserContext();
     const {actualDeleteUser, fetchAllDeleteUser} = useDeleteUserContext();
     const {handleClose} = useModal();
@@ -32,7 +35,7 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
         switch(value)
         {
             case 0:
-                if(status !== "Delete")
+                if(Data.status !== "Delete")
                 {
                     changeUserStatus(_id, "Delete", 30, "Admin-Request Deletion");   
                 }
@@ -40,7 +43,7 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
                 break;
 
             case 2:
-                actualDeleteUser(_id, bannedDetails?._id as string, "Deleted");
+                actualDeleteUser(_id, Data.deleteDetails?._id as string, "Deleted");
                 handleClose();
                 break;
         }
@@ -76,10 +79,10 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
         <ModalTemplate title={setTitle() as string} cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>{setSubTitle()}</Typography>
-                <Typography>Username: {username}</Typography>
-                <Typography>Email: {email}</Typography>
-                <Typography>Role: {role}</Typography>
-                <Typography>Gender: {gender}</Typography>
+                <Typography>Username: {Data.username}</Typography>
+                <Typography>Email: {Data.email}</Typography>
+                <Typography>Role: {Data.role}</Typography>
+                <Typography>Gender: {Data.gender}</Typography>
             </Box>
             
             <DeleteTypography/>

@@ -74,7 +74,7 @@ export const DeleteUserProvider: FC<ChildProps> = ({ children }) =>
 
     const actualDeleteUser = useCallback(async(userId:string, banListID:string) => 
         {
-            const result : GetResultInterface | undefined = await DeleteUserController(authToken, userId, banListID, "Deleted");
+            const result : GetResultInterface | undefined = await DeleteUserController(authToken, userId, banListID);
 
             try
             {

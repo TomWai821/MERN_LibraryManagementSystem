@@ -56,7 +56,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
                 break;
 
             case "User":
-                handleOpen(<DeleteUserConfirmModal value={value} {...userData} />);
+                handleOpen(<DeleteUserConfirmModal value={value} _id={userData._id} data={userData}  />);
                 break;
         }
     }
@@ -74,7 +74,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
 
     const openUndoActionModal = () => 
     {
-        handleOpen(<UndoUserActivityModal value={value} {...userData}/>)
+        handleOpen(<UndoUserActivityModal value={value} _id={userData._id} data={userData} />)
     }
     
     const UserActionTableCellForAdmin = 

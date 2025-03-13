@@ -9,7 +9,8 @@ import { useModal } from "../../Context/ModalContext";
 
 // Models
 import { ContentTableCellProps } from "../../Model/ContextAndProviderModel";
-
+import { UserResultDataInterface } from "../../Model/ResultModel";
+import { BookDataInterface } from "../../Model/BookTableModel";
 
 const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) => 
 {
@@ -21,10 +22,11 @@ const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) =>
         switch(TableName)
         {
             case "User":
-                handleOpen(<DisplayUserDataModal value={value} data={Information} isAdmin={isAdmin} />);
+                handleOpen(<DisplayUserDataModal value={value} data={Information as UserResultDataInterface} isAdmin={isAdmin} />);
                 break;
             
             case "Book":
+                handleOpen(<></>);
                 break;
         }
     }

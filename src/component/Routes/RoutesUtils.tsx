@@ -11,6 +11,7 @@ import ViewProfilePage from "../Pages/ViewProfilePage"
 import DefinitionPage from "../Pages/DefinationPage"
 
 import { PagesInterface } from "../../Model/TablePagesAndModalModel"
+import ContactPage from "../Pages/TablePages/ContactPage"
 
 const RoutesUtils:FC<PagesInterface> = (loginData) => 
 {
@@ -24,6 +25,7 @@ const RoutesUtils:FC<PagesInterface> = (loginData) =>
             <Route path="/profile" element={<ViewProfilePage/>}/>
             <Route path="/viewBook" element={<BookPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
             <Route path="/viewUser" element={<UserPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
+            <Route path="/viewContactDetails" element={<ContactPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
             <Route path="/defination" element={<DefinitionPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
         </Routes>
     )

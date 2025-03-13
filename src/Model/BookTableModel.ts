@@ -19,6 +19,8 @@ interface BookRecordTableInterface extends TableInterface
 {
     value: number;
     bookData: BookDataInterface[];
+    paginationValue:number;
+
 }
 
 export type {BookSearchInterface, BookDataInterface, BookRecordTableInterface}

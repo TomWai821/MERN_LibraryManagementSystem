@@ -2,6 +2,7 @@ import { createContext, FC, useCallback, useContext, useEffect,  useState } from
 import { CreateDefinationData, DeleteDefinationData, EditDefinationData, GetDefination } from "../../Controller/BookController/DefinationController";
 import { ChildProps, DefinatonProps } from "../../Model/ContextAndProviderModel";
 import { DefinationInterface, DefinationResultInterface, DefinationState } from "../../Model/ResultModel";
+import { GetData } from "../../Controller/OtherController";
 
 const DefinationContext = createContext<DefinatonProps | undefined>(undefined);
 
@@ -13,6 +14,7 @@ export const DefinationProvider:FC<ChildProps> = ({children}) =>
             Language:[]
         }
     );
+    const authToken = GetData("authToken") as string;
 
     const fetchAllDefination = useCallback(async () => 
     {
@@ -33,7 +35,7 @@ export const DefinationProvider:FC<ChildProps> = ({children}) =>
 
     const createDefination = useCallback(async (type:string, shortName:string, detailsName:string) => 
     {
-        const createDefinationData = await CreateDefinationData(type, shortName, detailsName);
+        const createDefinationData = await CreateDefinationData(type, authToken, shortName, detailsName);
 
         if(createDefinationData)
         {
@@ -44,7 +46,7 @@ export const DefinationProvider:FC<ChildProps> = ({children}) =>
 
     const editDefination = useCallback( async (type:string, id:string, shortName:string, detailsName:string) => 
     {
-        const editDefinationData = await EditDefinationData(type, id, shortName, detailsName);
+        const editDefinationData = await EditDefinationData(type, authToken, id, shortName, detailsName);
 
         if(editDefinationData)
         {
@@ -55,7 +57,7 @@ export const DefinationProvider:FC<ChildProps> = ({children}) =>
 
     const deleteDefination = useCallback(async (type:string, id:string) => 
     {
-        const deleteDefinationData = await DeleteDefinationData(type, id);
+        const deleteDefinationData = await DeleteDefinationData(type, authToken, id);
 
         if(deleteDefinationData)
         {

@@ -26,9 +26,10 @@ const SearchOptionFieldForBook:FC<BookOptionFieldModal> = ({...optionData}) =>
                             {
                                 defination.Genre.map((genre, index) => 
                                 (
-                                    <MenuItem key={index} value={genre.genre}>{`${genre.genre}(${genre.shortName})`}</MenuItem>
+                                    <MenuItem key={index} value={genre.genre}>{`${genre.genre} (${genre.shortName})`}</MenuItem>
                                 ))
                             }
+                            <MenuItem value="" sx={{ height: '40px'}}/>
                         </TextField>
 
                         <Typography>Publisher Name</Typography>

@@ -9,6 +9,7 @@ import { ModalBodySyntax } from "../../../Maps/FormatSyntaxMaps";
 import AllUserDataBody from "./DisplayUserDataBody/AllUserDataBody";
 import BannedUserDataBody from "./DisplayUserDataBody/BannedUserDataBody";
 import DeleteUserDataBody from "./DisplayUserDataBody/DeleteUserDataBody";
+import { UserResultDataInterface } from "../../../Model/ResultModel";
 
 
 const DisplayUserDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 
@@ -22,17 +23,17 @@ const DisplayUserDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
         {
             case 0:
                 displayData.title = "User Information";
-                displayData.displayBody = <AllUserDataBody data={data}/>;
+                displayData.displayBody = <AllUserDataBody data={data as UserResultDataInterface}/>;
                 break;
 
             case 1:
                 displayData.title = "Banned User Information";
-                displayData.displayBody = <BannedUserDataBody data={data} isAdmin={isAdmin}/>;
+                displayData.displayBody = <BannedUserDataBody data={data as UserResultDataInterface} isAdmin={isAdmin}/>;
                 break;
 
             case 2:
                 displayData.title = "Delete User Information";
-                displayData.displayBody = <DeleteUserDataBody data={data}/>;
+                displayData.displayBody = <DeleteUserDataBody data={data as UserResultDataInterface}/>;
                 break;
         }
         return displayData;

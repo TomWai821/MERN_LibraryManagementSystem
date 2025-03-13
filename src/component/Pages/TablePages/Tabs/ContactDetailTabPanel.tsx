@@ -9,20 +9,20 @@ import BookRecordTable from "../Tables/BookRecordTable"
 // Model
 import { BookRecordTableInterface } from "../../../../Model/BookTableModel"
 
-const BookTabPanel:FC<BookRecordTableInterface> = (TabData) =>
+const ContactDetailTabPanel:FC = () =>
 {
-    const {value, isAdmin, isLoggedIn, bookData, paginationValue} = TabData;
+    
     return(
         <Fragment>
-            <CustomTabPanel index={0} value={value}>
-                <BookRecordTable isAdmin={isAdmin} isLoggedIn={isLoggedIn} bookData={bookData} value={value} paginationValue={paginationValue}/>
+            <CustomTabPanel index={0} value={0}>
+                <></>
             </CustomTabPanel>
 
-            <CustomTabPanel index={1} value={value}>
+            <CustomTabPanel index={1} value={1}>
                 <></>
             </CustomTabPanel>
         </Fragment>
     )
 }
 
-export default BookTabPanel
+export default ContactDetailTabPanel

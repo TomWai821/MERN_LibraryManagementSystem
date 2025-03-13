@@ -59,6 +59,7 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
                             <MenuItem key={index} value={language.language}>{`${language.language}(${language.shortName})`}</MenuItem>
                         ))
                     }
+                    <MenuItem value="" sx={{height: '40px'}}/>
                 </TextField>
                 <IconButton onClick={toggleCardVisibility}>
                     {optionVisiable ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}

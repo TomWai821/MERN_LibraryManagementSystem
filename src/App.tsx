@@ -5,7 +5,7 @@ import React, { Fragment } from 'react';
 
 // Components
 import NavNar from './component/NavBar/NavBar';
-import RoutesUtils from './component/Utils/RoutesUtils';
+import RoutesUtils from './component/Routes/RoutesUtils';
 import { Box } from '@mui/material';
 import { useModal } from './Context/ModalContext';
 import { GetData, IsAdmin, IsLoggedIn } from './Controller/OtherController';

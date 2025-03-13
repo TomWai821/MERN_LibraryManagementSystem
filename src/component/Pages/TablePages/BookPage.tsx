@@ -63,8 +63,9 @@ const BookPage:FC<PagesInterface> = (loginData) =>
             <CustomTab isAdmin={isAdmin} value={tabValue} paginationValue={paginationValue} valueChange={changeValue} tabLabel={BookTabLabel} paginationOption={PaginationOption} />
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-                <BookTabPanel value={tabValue} isAdmin={isAdmin} isLoggedIn={isLoggedIn} bookData={BookData}/>
+                <BookTabPanel value={tabValue} isAdmin={isAdmin} isLoggedIn={isLoggedIn} bookData={BookData} paginationValue={paginationValue}/>
             </TableContainer>
+            
             <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={count}/>
         </Box>
     );

@@ -3,7 +3,8 @@ import { DefinationInterface, DetailsInterfaceForBannedAndDelete, UserResultData
 
 interface CreateModalInterface
 {
-    data?: UserResultDataInterface | BookDataInterface;
+    value?: number;
+    data?: any;
 }
 
 interface EditModalInterface
@@ -32,7 +33,7 @@ interface DisplayDataModalInterface
 {
     value:number;
     isAdmin:boolean;
-    data:UserResultDataInterface;
+    data:UserResultDataInterface | BookDataInterface;
 }
 
 interface ModalConfirmButtonInterface

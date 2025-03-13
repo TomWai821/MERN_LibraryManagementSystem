@@ -36,15 +36,23 @@ const EditDefinationConfirmModal:FC<EditModalInterface>  = (data) =>
     const editDefinationAction = () => 
     {
         const EditData = editData as DefinationInterface;
-        editDefination(type, EditData._id, EditData.shortName, EditData.genre as string);
+        switch(type)
+        {
+            case "Genre":
+                editDefination(type, EditData._id, EditData.shortName, EditData.genre as string);
+                break;
+
+            case "Language":
+                editDefination(type, EditData._id, EditData.shortName, EditData.language as string);
+                break;
+        }
+        
         handleClose();
     }
 
     const compareDifference = (editData: DefinationInterface, compareData: DefinationInterface) => 
     {
         const newDifferences = [];
-        console.log(editData);
-        console.log(compareData);
         for(const key in editData)
         {
             if(editData[key as keyof DefinationInterface] != compareData[key as keyof DefinationInterface])

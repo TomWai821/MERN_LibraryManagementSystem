@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { DefinationState, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
+import { BookDataInterface } from "./BookTableModel";
 
 interface ChildProps
 {
@@ -74,7 +75,7 @@ interface ContentTableCellProps extends ChildProps
     TableName: string;
     value: number;
     isAdmin: boolean;
-    Information: UserResultDataInterface;
+    Information: UserResultDataInterface | BookDataInterface;
 }
 
 export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, UserContextProps, TabPanelProps, ContentTableCellProps, DefinatonProps}

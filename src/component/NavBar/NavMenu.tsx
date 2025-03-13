@@ -26,9 +26,10 @@ const NavMenu:FC<NavMenuInterface> = ({isAdmin, isLoggedIn, role, AvatarSize, an
                     open={Boolean(anchorElNav)}
                     onClose={handleNavMenu}
                 >
-                {!isLoggedIn ? 
-                    <CustomMenuItem pages={externalUserPage}/>:
-                    (role === 'Admin' ? <CustomMenuItem pages={adminPage}/>:<CustomMenuItem pages={userPage}/>)
+                {
+                    !isLoggedIn ?  <CustomMenuItem pages={externalUserPage}/> 
+                    : 
+                    (role === 'Admin' ? <CustomMenuItem pages={adminPage}/> : <CustomMenuItem pages={userPage}/>)
                 }
                 </Menu>
         </Box>

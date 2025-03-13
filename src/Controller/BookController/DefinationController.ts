@@ -24,7 +24,7 @@ const GetDefination = async (type:string) =>
     }
 }
 
-const CreateDefinationData = async (type:string, shortName:string, detailsName:string) => 
+const CreateDefinationData = async (type:string, authToken:string, shortName:string, detailsName:string) => 
 {
     try
     {
@@ -33,7 +33,7 @@ const CreateDefinationData = async (type:string, shortName:string, detailsName:s
         const response = await fetch(url+`type=${type}`,
             {
                 method: 'POST',
-                headers: { 'content-type': contentType },
+                headers: { 'content-type': contentType, 'authToken': authToken },
                 body: JSON.stringify(data)
             }
         );
@@ -50,16 +50,16 @@ const CreateDefinationData = async (type:string, shortName:string, detailsName:s
     }
 }
 
-const EditDefinationData = async (type:string, id:string, shortName:string, detailsName:string) => 
-{
+const EditDefinationData = async (type:string, authToken:string, id:string, shortName:string, detailsName:string) => 
+{        
+    const data = BuildBodyData(type, shortName, id, detailsName);
+
     try
     {
-        const data = BuildBodyData(type, shortName, id, detailsName);
-
         const response = await fetch(url+`type=${type}`,
             {
                 method: 'PUT',
-                headers: { 'content-type': contentType },
+                headers: { 'content-type': contentType, 'authToken': authToken  },
                 body: JSON.stringify(data)
             }
         );
@@ -76,17 +76,15 @@ const EditDefinationData = async (type:string, id:string, shortName:string, deta
     }
 }
 
-const DeleteDefinationData = async (type:string, id:string,) => 
+const DeleteDefinationData = async (type:string, authToken:string, id:string) => 
 {
     try
     {
-        let data:Record<string, any> = {id};
-
         const response = await fetch(url+`type=${type}`,
             {
                 method: 'DELETE',
-                headers: { 'content-type': contentType },
-                body: JSON.stringify(data)
+                headers: { 'content-type': contentType, 'authToken': authToken  },
+                body: JSON.stringify({id})
             }
         );
 
@@ -124,7 +122,6 @@ const BuildBodyData = (type:string, shortName:string, detailsName:string, id?:st
         default:
             return console.log(`Invalid type ${type}`);
     }
-
     return data;
 }
 

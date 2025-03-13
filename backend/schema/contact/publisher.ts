@@ -5,7 +5,6 @@ import { printError } from '../../controller/Utils';
 const publisherSchema = new mongoose.Schema<PublisherInterface>
 (
     {
-        _id: { type: String, required: true },
         publisher: { type: String, required: true },
         address: { type: String, required: true },
         phoneNumber: { type: String, required: true },

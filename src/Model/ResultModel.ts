@@ -59,4 +59,4 @@ interface DefinationState
     Language: DefinationInterface[];
 }
 
-export type {ResultInterface, GetResultInterface, UserResultDataInterface, DetailsInterfaceForBannedAndDelete, DefinationResultInterface, DefinationInterface, DefinationState}
+export type {ResultInterface, RegisterDataInterface, GetResultInterface, UserResultDataInterface, DetailsInterfaceForBannedAndDelete, DefinationResultInterface, DefinationInterface, DefinationState}

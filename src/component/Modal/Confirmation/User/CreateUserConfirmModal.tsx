@@ -41,7 +41,6 @@ const CreateUserConfirmModal = ({...userData}) =>
             <Typography sx={ModalSubTitleSyntax}>Do you want to create this account?</Typography>
                 <Typography>Username: {username}</Typography>
                 <Typography>Email: {email}</Typography>
-                <Typography>Password: {password}</Typography>
                 <Typography>Role: {role}</Typography>
                 <Typography>Gender: {gender}</Typography>
                 <Typography>BirthDay: {birthDayToString}</Typography>

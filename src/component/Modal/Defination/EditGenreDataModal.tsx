@@ -38,7 +38,7 @@ const EditGenreDataModal:FC<EditModalInterface> = (editModalData) =>
 
     const openConfirmModal = () => 
     {
-        handleOpen(<EditDefinationConfirmModal editData={editData} compareData={compareData}/>)
+        handleOpen(<EditDefinationConfirmModal value={0} editData={editData} compareData={compareData}/>)
     }
     
     return(

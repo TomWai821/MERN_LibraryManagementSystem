@@ -38,7 +38,7 @@ const EditLanguageDataModal:FC<EditModalInterface> = (editModalData) =>
 
     const openConfirmModal = () => 
     {
-        handleOpen(<EditDefinationConfirmModal editData={editData} compareData={compareData}/>);
+        handleOpen(<EditDefinationConfirmModal value={1} editData={languageData} compareData={compareData}/>);
     }
     
     return(

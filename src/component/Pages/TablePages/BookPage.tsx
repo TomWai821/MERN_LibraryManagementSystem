@@ -28,7 +28,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
     const SetTitle:string = isAdmin ? "Manage Books Record": "View Books";
 
     const [searchBook, setSearchBook] = useState<BookDataInterface>({ bookname: "", language: "", genre: "", publisher: "", author: "", pages: "", amount: "" });
-    const [value, setValue] = useState(0);
+    const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
     const count:number = Math.ceil(BookData.length / paginationValue);
 
@@ -42,7 +42,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
         switch(type)
         {
             case "Tab":
-                setValue(newValue);
+                setTabValue(newValue);
                 break;
 
             case "Pagination":
@@ -56,14 +56,14 @@ const BookPage:FC<PagesInterface> = (loginData) =>
      
     return( 
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
-            <Typography sx={{fontSize: '24px'}}>{SetTitle}</Typography>
+            <Typography sx={{fontSize: '24px'}}>{SetTitle} {BookData.length === 0 && `(No record)`}</Typography>
 
-            <BookFilter isAdmin={isAdmin} value={value} onChange={onChange} searchData={searchBook} Search={() => {}}/>
+            <BookFilter isAdmin={isAdmin} value={tabValue} onChange={onChange} searchData={searchBook} Search={() => {}}/>
 
-            <CustomTab isAdmin={isAdmin} value={value} paginationValue={paginationValue} valueChange={changeValue} tabLabel={BookTabLabel} paginationOption={PaginationOption}/>
+            <CustomTab isAdmin={isAdmin} value={tabValue} paginationValue={paginationValue} valueChange={changeValue} tabLabel={BookTabLabel} paginationOption={PaginationOption} />
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-                <BookTabPanel value={value} isAdmin={isAdmin} isLoggedIn={isLoggedIn} bookData={BookData}/>
+                <BookTabPanel value={tabValue} isAdmin={isAdmin} isLoggedIn={isLoggedIn} bookData={BookData}/>
             </TableContainer>
             <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={count}/>
         </Box>

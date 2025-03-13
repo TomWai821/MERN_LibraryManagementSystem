@@ -21,12 +21,11 @@ import { PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
 
 const UserPage:FC<PagesInterface> = (loginData) =>
 {
+    const { isAdmin } = loginData;
+    const SetTitle = isAdmin ? "User Management Page" : "View BanList";
     const { AllUser, BannedUser, DeleteUser, fetchUser } = useUserContext();
 
     const UserData = [AllUser, BannedUser, DeleteUser];
-    const { isAdmin } = loginData;
-    const SetTitle = isAdmin ? "User Management Page" : "View BanList";
-
     const [searchUserData, setSearchUserData] = useState(
         { 
             user: { username: "", email: "", role: "", status: "", gender: "" },
@@ -107,7 +106,7 @@ const UserPage:FC<PagesInterface> = (loginData) =>
     
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
-            <Typography sx={{fontSize: '24px'}}>{SetTitle}</Typography>
+            <Typography sx={{fontSize: '24px'}}>{SetTitle} {UserData[tabValue].length === 0 && `(No record)`}</Typography>
 
             <UserFilter isAdmin={isAdmin} value={tabValue} onChange={onChange} searchData={searchUserData.user} Search={SearchUser}/>
 

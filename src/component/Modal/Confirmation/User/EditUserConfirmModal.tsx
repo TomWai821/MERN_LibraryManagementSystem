@@ -31,7 +31,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
     const {editUserData, editBannedUserData} = useUserContext();
 
     // editData = use modify, compareData = vanilla one(Before change)
-    const generateChangeTypography = (editData: UserDataInterface | DetailsInterfaceForBannedAndDelete, compareData: UserDataInterface | DetailsInterfaceForBannedAndDelete) => 
+    const compareDifference = (editData: UserDataInterface | DetailsInterfaceForBannedAndDelete, compareData: UserDataInterface | DetailsInterfaceForBannedAndDelete) => 
     {
         const newDifferences: string[] = [];
 
@@ -99,14 +99,14 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
 
     useEffect(() => 
     {
-        generateChangeTypography(editData as UserDataInterface | DetailsInterfaceForBannedAndDelete, compareData as UserDataInterface | DetailsInterfaceForBannedAndDelete);
+        compareDifference(editData as UserDataInterface | DetailsInterfaceForBannedAndDelete, compareData as UserDataInterface | DetailsInterfaceForBannedAndDelete);
     },
     [editData, compareData]);
 
     return(
         <ModalTemplate title={"Edit User Record Confirmation"} cancelButtonName={"No"} cancelButtonEvent={returnEditUserModal}>
             <Box id="modal-description" sx={ModalBodySyntax}>
-                <Typography sx={ModalSubTitleSyntax}>Do you want to edit this book record?</Typography>
+                <Typography sx={ModalSubTitleSyntax}>Do you want to edit this User record?</Typography>
                 <Typography sx={ModalRemarkSyntax}>Changes:</Typography>
                 {
                     differences.length > 0 ? differences.map((difference, index) => 

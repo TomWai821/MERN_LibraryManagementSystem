@@ -25,7 +25,7 @@ interface DeleteModalInterface
 {
     _id:string;
     value:number;
-    data: UserResultDataInterface | DefinationInterface;
+    data: UserResultDataInterface | DefinationInterface | DefinationInterface;
 }
 
 interface DisplayDataModalInterface

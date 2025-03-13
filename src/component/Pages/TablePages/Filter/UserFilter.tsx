@@ -42,13 +42,10 @@ const UserFilter:FC<FilterInterface> = (filterData) =>
             <Box sx={{...ItemToCenter, paddingBottom: '25px', alignItems: 'center'}}>
                 <TextField label={"Username"} value={userData.username} name="username" size="small" onChange={onChange} sx={{width: '75%'}}/>
 
-                {isAdmin &&
-                    (
-                        <IconButton onClick={toggleCardVisibility}>
-                            {optionVisiable ? <ArrowDropUpIcon/> : <ArrowDropDownIcon/>}
-                        </IconButton>
-                    )
-                }
+                <IconButton onClick={toggleCardVisibility}>
+                    {optionVisiable ? <ArrowDropUpIcon/> : <ArrowDropDownIcon/>}
+                </IconButton>
+                
                 <Button variant='contained' sx={{marginLeft: '10px'}} onClick={Search}>Search</Button>
                 {(isAdmin && value === 0) &&
                     (

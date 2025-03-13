@@ -96,14 +96,14 @@ const dateOption =
 
 const EditLanguageInputField = 
 [
-    {name: "shortName", label: "Short Name", type:"text"},
-    {name: "language", label: "Language", type:"text"}
+    {name: "language", label: "Language", type:"text"},
+    {name: "shortName", label: "Short Name", type:"text"}
 ]
 
 const EditGenreInputField = 
 [
-    {name: "shortName", label: "Short Name", type:"text"},
-    {name: "genre", label: "Genre", type:"text"}
+    {name: "genre", label: "Genre", type:"text"},
+    {name: "shortName", label: "Short Name", type:"text"}
 ]
 
 export {RegisterField, LoginField, ViewProfileField, AllUserSearchField, OtherUserSearchField, CreateUserInputField, EditUserInputField, EditBanUserInputField, CreateBookInputField, dateOption, EditLanguageInputField, EditGenreInputField}

@@ -48,32 +48,27 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
 
     const setTitle = () =>
     {
+        let setTitle = {title: "", subTitle: ""};
         switch(value)
         {
             case 0:
-                return "Move to Delete List";
+                setTitle.title = "Move to Delete List";
+                setTitle.subTitle = "Do you want to move this account to delete list?"
+                break;
             
             case 2:
-                return "Delete User Record";
+                setTitle.title = "Delete User Record";
+                setTitle.subTitle = "Do you want to delete this account?"
+                break;
         }
-    }
 
-    const setSubTitle = () => 
-    {
-        switch(value)
-        {
-            case 0:
-                return "Do you want to move this account to delete list?";
-            
-            case 2:
-                return "Do you want to delete this account?";
-        }
+        return setTitle;
     }
     
     return(
-        <ModalTemplate title={setTitle() as string} cancelButtonName={"No"}>
+        <ModalTemplate title={setTitle().title as string} cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
-                <Typography sx={ModalSubTitleSyntax}>{setSubTitle()}</Typography>
+                <Typography sx={ModalSubTitleSyntax}>{setTitle().subTitle}</Typography>
                 <Typography>Username: {Data.username}</Typography>
                 <Typography>Email: {Data.email}</Typography>
                 <Typography>Role: {Data.role}</Typography>

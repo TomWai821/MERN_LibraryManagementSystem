@@ -24,11 +24,11 @@ const GetDefination = async (type:string) =>
     }
 }
 
-const CreateDefinationData = async (type:string, shortName:string, genre?:string, language?:string) => 
+const CreateDefinationData = async (type:string, shortName:string, detailsName:string) => 
 {
     try
     {
-        const data = BuildBodyData(type, shortName, undefined, genre, language);
+        const data = BuildBodyData(type, shortName, detailsName, undefined);
 
         const response = await fetch(url+`type=${type}`,
             {
@@ -50,11 +50,11 @@ const CreateDefinationData = async (type:string, shortName:string, genre?:string
     }
 }
 
-const EditDefinationData = async (type:string, id:string, shortName:string, genre?:string, language?:string) => 
+const EditDefinationData = async (type:string, id:string, shortName:string, detailsName:string) => 
 {
     try
     {
-        const data = BuildBodyData(type, shortName, id, genre, language);
+        const data = BuildBodyData(type, shortName, id, detailsName);
 
         const response = await fetch(url+`type=${type}`,
             {
@@ -102,7 +102,7 @@ const DeleteDefinationData = async (type:string, id:string,) =>
     }
 }
 
-const BuildBodyData = (type:string, shortName:string, id?:string, genre?:string, language?:string) => 
+const BuildBodyData = (type:string, shortName:string, detailsName:string, id?:string) => 
 {
     let data:Record<string, any> = {shortName};
 
@@ -114,11 +114,11 @@ const BuildBodyData = (type:string, shortName:string, id?:string, genre?:string,
     switch(type)
     {
         case "Genre":
-            data.genre = genre;
+            data.genre = detailsName;
             break;
         
         case "Language":
-            data.language = language;
+            data.language = detailsName;
             break;
 
         default:

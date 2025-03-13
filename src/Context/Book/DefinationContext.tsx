@@ -31,9 +31,9 @@ export const DefinationProvider:FC<ChildProps> = ({children}) =>
     }
     ,[])
 
-    const createDefination = useCallback(async (type:string, shortName:string, genre?:string, language?:string) => 
+    const createDefination = useCallback(async (type:string, shortName:string, detailsName:string) => 
     {
-        const createDefinationData = await CreateDefinationData(type, shortName, genre, language);
+        const createDefinationData = await CreateDefinationData(type, shortName, detailsName);
 
         if(createDefinationData)
         {
@@ -42,9 +42,9 @@ export const DefinationProvider:FC<ChildProps> = ({children}) =>
     }
     ,[fetchAllDefination])
 
-    const editDefination = useCallback( async (type:string, id:string, shortName:string, genre?:string, language?:string) => 
+    const editDefination = useCallback( async (type:string, id:string, shortName:string, detailsName:string) => 
     {
-        const editDefinationData = await EditDefinationData(type, id, shortName, genre, language);
+        const editDefinationData = await EditDefinationData(type, id, shortName, detailsName);
 
         if(editDefinationData)
         {

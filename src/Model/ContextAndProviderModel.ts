@@ -56,8 +56,8 @@ interface DefinatonProps
 {
     defination: DefinationState;
     fetchAllDefination: () => Promise<void>;
-    createDefination:(type:string, shortName:string, genre?:string, language?:string) => void;
-    editDefination:(type:string, id:string, shortName:string, genre?:string, language?:string) => void;
+    createDefination:(type:string, shortName:string, detailsName:string) => void;
+    editDefination:(type:string, id:string, shortName:string, detailsName:string) => void;
     deleteDefination:(type:string, id:string) => void;
 }
 

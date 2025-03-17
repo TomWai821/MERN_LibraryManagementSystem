@@ -25,7 +25,8 @@ interface BanModalInterface
 interface DeleteModalInterface
 {
     _id:string;
-    value:number;
+    value?: number;
+    type?: string;
     data: UserResultDataInterface | DefinationInterface | DefinationInterface;
 }
 

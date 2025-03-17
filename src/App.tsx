@@ -5,7 +5,7 @@ import React, { Fragment } from 'react';
 
 // Components
 import NavNar from './component/NavBar/NavBar';
-import RoutesUtils from './component/Routes/RoutesUtils';
+import RoutesList from './component/Routes/RoutesList';
 import { Box } from '@mui/material';
 import { useModal } from './Context/ModalContext';
 import { GetData, IsAdmin, IsLoggedIn } from './Controller/OtherController';
@@ -23,9 +23,9 @@ const App: React.FC = () =>
     
     return (
         <Fragment>
-            <NavNar role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>
+            <NavNar role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status} username={username}/>
             <Box className="App">
-                <RoutesUtils role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>
+                <RoutesList role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>
                 {content}
             </Box>
         </Fragment>

@@ -11,11 +11,10 @@ import { useModal } from "../../../../Context/ModalContext";
 
 const DeleteDefinationConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
 {
-    const {value, data} = deleteData;
+    const {type, data} = deleteData;
     const {handleClose} = useModal();
     const { deleteDefination } = useDefinationContext();
     const Data = data as DefinationInterface;
-    const type = value === 0 ? "Genre" : "Language";
 
     const setTitle = () => 
     {
@@ -28,7 +27,7 @@ const DeleteDefinationConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
 
     const DeleteDefinationAction = () => 
     {
-        deleteDefination(type, deleteData._id);
+        deleteDefination(type as string, deleteData._id);
         handleClose();
     }
 

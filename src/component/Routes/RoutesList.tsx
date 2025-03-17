@@ -8,12 +8,12 @@ import RegisterPage from "../Pages/RegisterPage"
 import BookPage from "../Pages/TablePages/BookPage"
 import UserPage from "../Pages/TablePages/UserPage"
 import ViewProfilePage from "../Pages/ViewProfilePage"
-import DefinitionPage from "../Pages/DefinationPage"
+import DefinitionPage from "../Pages/TablePages/DefinationPage"
 
 import { PagesInterface } from "../../Model/TablePagesAndModalModel"
 import ContactPage from "../Pages/TablePages/ContactPage"
 
-const RoutesUtils:FC<PagesInterface> = (loginData) => 
+const RoutesList:FC<PagesInterface> = (loginData) => 
 {
     const {role, isLoggedIn, isAdmin, avatarUrl, status} = loginData;
 
@@ -32,4 +32,4 @@ const RoutesUtils:FC<PagesInterface> = (loginData) =>
     
 }
 
-export default RoutesUtils
+export default RoutesList

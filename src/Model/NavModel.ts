@@ -25,6 +25,7 @@ interface MenuItemSyntaxInterface
 
 interface ProfileMenuInterface extends NavInterface
 {
+    username:string;
     anchorElUser: HTMLElement | null;
     handleUserMenu: (event: MouseEvent<HTMLElement>) => void;
     NavSyntax: NavSyntaxInterface;

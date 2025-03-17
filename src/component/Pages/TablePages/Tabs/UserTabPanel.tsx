@@ -4,9 +4,9 @@ import { FC, Fragment } from "react"
 import CustomTabPanel from "../../../UIFragment/CustomTabPanel"
 
 // Another Component
-import AllUserTable from "../Tables/AllUserTable"
-import BannedUserTable from "../Tables/BannedUserTable"
-import DeleteUserTable from "../Tables/DeleteUserTable"
+import AllUserTable from "../Tables/User/AllUserTable"
+import BannedUserTable from "../Tables/User/BannedUserTable"
+import DeleteUserTable from "../Tables/User/DeleteUserTable"
 
 // Model
 import { UserDataTableInterface } from "../../../../Model/UserTableModel"

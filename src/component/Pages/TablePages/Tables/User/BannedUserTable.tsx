@@ -3,16 +3,16 @@ import { FC, Fragment, useState } from "react";
 import { Pagination, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 
 // UI Fragment and Manager
-import ContentTableCell from "../../../UIFragment/ContentTableCell";
-import ActionTableCell from "../../../Manager/ActionTableCellManager";
+import ContentTableCell from "../../../../UIFragment/ContentTableCell";
+import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 
 // Model
-import { UserDataTableInterface } from "../../../../Model/UserTableModel";
+import { UserDataTableInterface } from "../../../../../Model/UserTableModel";
 
 // Data (CSS Syntax and table header)
-import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
-import { BannedUserTableHeader } from "../../../../Maps/TableMaps";
-import { CalculateDuration } from "../../../../Controller/OtherController";
+import { ItemToCenter } from "../../../../../Maps/FormatSyntaxMaps";
+import { BannedUserTableHeader } from "../../../../../Maps/TableMaps";
+import { CalculateDuration } from "../../../../../Controller/OtherController";
 
 
 const BannedUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) => 

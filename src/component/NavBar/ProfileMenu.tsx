@@ -2,9 +2,8 @@ import { FC } from 'react';
 import { Avatar, Box, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material"
 import { ProfileMenuInterface } from '../../Model/NavModel';
 import { settings } from '../../Maps/MenuMaps';
-import { GetData } from '../../Controller/OtherController';
 
-const ProfileMenu:FC<ProfileMenuInterface> = ({isLoggedIn, role, avatarUrl, AvatarSize, anchorElUser, handleUserMenu, NavSyntax, MenuItemSyntax}) => 
+const ProfileMenu:FC<ProfileMenuInterface> = ({isLoggedIn, username, role, avatarUrl, AvatarSize, anchorElUser, handleUserMenu, NavSyntax, MenuItemSyntax}) => 
 {
     return(
         isLoggedIn ?
@@ -24,7 +23,7 @@ const ProfileMenu:FC<ProfileMenuInterface> = ({isLoggedIn, role, avatarUrl, Avat
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', padding: '10px 0 10px 0' }}>
                     <Avatar alt="" src={avatarUrl} sx={{ width: AvatarSize, height: AvatarSize, margin: '0 5px 0 10px' }} />
                     <Box sx={{ display: 'block', flexDirection: 'column', marginRight: '20%' }}>
-                        <Typography sx={{ fontWeight: 'bold'}}>{GetData("username")}</Typography>
+                        <Typography sx={{ fontWeight: 'bold'}}>{username}</Typography>
                         <Typography>{role}</Typography>
                     </Box>
                 </Box>

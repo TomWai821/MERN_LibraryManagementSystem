@@ -12,6 +12,7 @@ import { BookRecordTableInterface } from "../../../../Model/BookTableModel"
 const BookTabPanel:FC<BookRecordTableInterface> = (TabData) =>
 {
     const {value, isAdmin, isLoggedIn, bookData, paginationValue} = TabData;
+    
     return(
         <Fragment>
             <CustomTabPanel index={0} value={value}>

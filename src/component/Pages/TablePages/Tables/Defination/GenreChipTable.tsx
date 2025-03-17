@@ -19,31 +19,31 @@ const GenreChipTable:FC<{type:string, value:number, data:any, dataLength:number}
     const {handleOpen} = useModal();
 
     const openCreateModal = (value: number) => 
+    {
+        handleOpen(<CreateDefinationModal value={value} />);
+    }
+
+    const openEditModal = (type: string, data: any) => 
+    {
+        switch(type)
         {
-            handleOpen(<CreateDefinationModal value={value} />);
+            case "Genre":
+                handleOpen(<EditGenreDataModal value={0} editData={data} compareData={data}/>);
+                break;
+
+            case "Language":
+                handleOpen(<EditLanguageDataModal value={1} editData={data} compareData={data}/>);
+                break;
         }
-    
-        const openEditModal = (type: string, data: any) => 
-        {
-            switch(type)
-            {
-                case "Genre":
-                    handleOpen(<EditGenreDataModal value={0} editData={data} compareData={data}/>);
-                    break;
-    
-                case "Language":
-                    handleOpen(<EditLanguageDataModal value={1} editData={data} compareData={data}/>);
-                    break;
-            }
-    
-        }
-    
-        const handleDelete = (value:number, data:any) =>
-        {
-            /*
+
+    }
+
+    const handleDelete = (value:number, data:any) =>
+    {
+        /*
             handleOpen(<DeleteDefinationConfirmModal _id={data._id} type={type} data={data}/>);
-            */
-        }
+        */
+    }
 
     return(
         <Box sx={{ paddingTop: '50px', minHeight: '100px' }}>

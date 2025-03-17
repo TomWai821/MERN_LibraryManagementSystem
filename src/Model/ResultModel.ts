@@ -29,6 +29,16 @@ interface UserResultDataInterface extends UserDataInterface
     deleteDetails?: DetailsInterfaceForBannedAndDelete;
 }
 
+interface BookResultDataInterface
+{
+    _id:string;
+    bookname:string;
+    genreID:string;
+    languageID:string;
+    page: number;
+    description: string;
+}
+
 interface DetailsInterfaceForBannedAndDelete
 {
     _id:string;
@@ -59,4 +69,4 @@ interface DefinationState
     Language: DefinationInterface[];
 }
 
-export type {ResultInterface, RegisterDataInterface, GetResultInterface, UserResultDataInterface, DetailsInterfaceForBannedAndDelete, DefinationResultInterface, DefinationInterface, DefinationState}
+export type {ResultInterface, RegisterDataInterface, GetResultInterface, UserResultDataInterface, BookResultDataInterface, DetailsInterfaceForBannedAndDelete, DefinationResultInterface, DefinationInterface, DefinationState}

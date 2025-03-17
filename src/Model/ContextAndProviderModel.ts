@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { DefinationState, UserResultDataInterface } from "./ResultModel";
+import { BookResultDataInterface, DefinationState, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
 import { BookDataInterface } from "./BookTableModel";
 
@@ -53,6 +53,13 @@ interface UserContextProps
     actualDeleteUser: (userId:string, deleteListID:string, status:string) => void;
 }
 
+interface BookContextProps
+{
+    AllBook: BookResultDataInterface[];
+    fetchAllBook: () => Promise<void>;
+    createBook: (bookname:string, genreID:string, languageID:string, page:number, description:string) => void;
+}
+
 interface DefinatonProps
 {
     defination: DefinationState;
@@ -78,4 +85,4 @@ interface ContentTableCellProps extends ChildProps
     Information: UserResultDataInterface | BookDataInterface;
 }
 
-export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, UserContextProps, TabPanelProps, ContentTableCellProps, DefinatonProps}
+export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, UserContextProps, BookContextProps, TabPanelProps, ContentTableCellProps, DefinatonProps}

@@ -47,15 +47,15 @@ const DeleteUserTableHeader =
 const BookTabLabel = 
 [
     {label: "Book Record"},
-    {label: "Book Issued"},
-    {label: "Book Return"}
+    {label: "Book Loaned"},
+    {label: "Book OnShelf"}
 ]
 
 const UserTabLabel = 
 [
     {label: 'All User'},
-    {label: 'Banned User'},
-    {label: 'Delete User'}
+    {label: 'Suspend User'},
+    {label: 'Deleted User'}
 ]
 
 const UserDataTableName = ["AllUser", "BannedUser", "DeleteUser"];

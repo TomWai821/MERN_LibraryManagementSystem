@@ -1,3 +1,4 @@
+import { BookResultDataInterface } from "./ResultModel";
 import { TableInterface } from "./TablePagesAndModalModel";
 
 interface BookSearchInterface
@@ -5,22 +6,18 @@ interface BookSearchInterface
     bookname:string;
     language:string;
     genre:string;
-    author:string;
-    publisher:string;
-    pages:string;
+    pages:number;
 }
 
 interface BookDataInterface extends BookSearchInterface
 {
-    amount:string;
+    description:string;
 }
 
 interface BookRecordTableInterface extends TableInterface
 {
     value: number;
-    bookData: BookDataInterface[];
+    bookData: BookResultDataInterface[][];
     paginationValue:number;
-
 }
-
 export type {BookSearchInterface, BookDataInterface, BookRecordTableInterface}

@@ -7,6 +7,7 @@ import { AlertProvider } from './Context/AlertContext';
 import { ModalProvider } from './Context/ModalContext';
 import { UserProvider } from './Context/User/UserContext';
 import { DefinationProvider } from './Context/Book/DefinationContext';
+import { BookProvider } from './Context/Book/BookContext';
 
 const root = ReactDOM.createRoot
 (
@@ -16,15 +17,17 @@ const root = ReactDOM.createRoot
 root.render
 (
     <DefinationProvider>
-        <UserProvider>
-            <AlertProvider>
-                <ModalProvider>
-                    <BrowserRouter>
-                        <App />
-                    </BrowserRouter>
-                </ModalProvider>
-            </AlertProvider>
-        </UserProvider>
+        <BookProvider>
+            <UserProvider>
+                <AlertProvider>
+                    <ModalProvider>
+                        <BrowserRouter>
+                            <App />
+                        </BrowserRouter>
+                    </ModalProvider>
+                </AlertProvider>
+            </UserProvider>
+        </BookProvider>
     </DefinationProvider>
 );
 

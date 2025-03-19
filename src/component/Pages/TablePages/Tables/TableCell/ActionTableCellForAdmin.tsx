@@ -13,7 +13,7 @@ import EditUserModal from "../../../../Modal/User/EditUserModal";
 import EditBookModal from "../../../../Modal/Book/EditBookModal";
 import DeleteUserConfirmModal from "../../../../Modal/Confirmation/User/DeleteUserConfirmModal";
 import DeleteBookModal from "../../../../Modal/Confirmation/Book/DeleteBookConfirmModal";
-import BanUserModal from "../../../../Modal/User/BanUserModal";
+import BanUserModal from "../../../../Modal/User/SuspendUserModal";
 import UndoUserActivityModal from "../../../../Modal/Confirmation/User/UndoUserActivityModal";
 
 // Model
@@ -81,7 +81,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
     [
         [
             {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />},
-            {title: "Move To Banned List" , syntax:ImportantActionButtonSyntax, clickEvent:openBannedModal, icon:<BlockIcon />, disable: StatusDetectionForAllUser(userData.status).banned.disable},
+            {title: "Suspend User" , syntax:ImportantActionButtonSyntax, clickEvent:openBannedModal, icon:<BlockIcon />, disable: StatusDetectionForAllUser(userData.status).banned.disable},
             {title: "Move To Delete List", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />, disable: StatusDetectionForAllUser(userData.status).delete.disable}
         ],
         [

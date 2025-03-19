@@ -7,41 +7,45 @@ import ModalTemplate from "../../../Templates/ModalTemplate"
 // Context
 import { useModal } from "../../../../Context/ModalContext"
 
-// Model
-import { BookDataInterface } from "../../../../Model/BookTableModel"
-
 // Another Modal
 import CreateBookModal from "../../Book/CreateBookModal"
 import { CreateModalInterface } from "../../../../Model/ModelForModal"
 
 // Data(CSS Syntax)
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps"
+import { useBookContext } from "../../../../Context/Book/BookContext"
 
 const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) => 
 {
-    const {bookname, genre, publisher, author, pages, amount} = bookData as BookDataInterface;
-
-    const {handleOpen} = useModal();
+    const {bookname, genre, genreID, language, languageID, pages, description} = bookData.data;
+    
+    const { handleOpen, handleClose } = useModal();
+    const { createBook } = useBookContext();
 
     const backToCreateModal = () => 
     {
-        handleOpen(<CreateBookModal data={bookData as BookDataInterface} />);
+        handleOpen(<CreateBookModal bookname={bookname} language={language} languageID={languageID} genre={genre} genreID={genreID} pages={pages} description={description}  />);
+    }
+
+    const CreateBook = () => 
+    {
+        createBook(bookname, genreID, languageID, pages, description);
+        handleClose();
     }
 
     return(
         <ModalTemplate title={"Create Book Confirmation"} cancelButtonName={"No"} cancelButtonEvent={() => backToCreateModal()}>
             <Box id="modal-description" sx={ModalBodySyntax}>
             <Typography sx={ModalSubTitleSyntax}>Do you want to create this book record?</Typography>
-                <Typography>Name: {bookname}</Typography>
+                <Typography>BookName: {bookname}</Typography>
+                <Typography>Language: {language}</Typography>
                 <Typography>Genre: {genre}</Typography>
-                <Typography>Publisher: {publisher}</Typography>
-                <Typography>Author: {author}</Typography>
                 <Typography>Pages: {pages}</Typography>
-                <Typography>Amount: {amount}</Typography>
+                <Typography>Description: {description}</Typography>
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
             </Box>
 
-            <Button variant="contained">Yes</Button>
+            <Button variant="contained" onClick={CreateBook}>Yes</Button>
         </ModalTemplate>
     )
 }

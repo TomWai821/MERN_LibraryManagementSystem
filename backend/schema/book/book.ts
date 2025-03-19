@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { PipelineStage } from 'mongoose';
 import { BookInterface } from '../../model/bookSchemaInterface';
 import { printError } from '../../controller/Utils';
 
@@ -34,16 +34,54 @@ export const GetBook = async (data?:Record<string, any>) =>
     {
         if(!data)
         {
-            return await Book.find({});
+            return await GetBooksWithOtherDetails();
         }
-        return await Book.find(data);
+        return await Book.find(data as Record<string, any>);
     }
     catch(error)
     {
         printError(error);
     }
-
 };
+
+// Local variable(For get banned user data)
+const GetBooksWithOtherDetails = async () => 
+{
+    let pipeline:PipelineStage[] = [];
+
+    pipeline.push(
+        {
+            $lookup: {
+                from: 'genres',
+                localField: 'genreID',
+                foreignField: '_id',
+                as: 'genreDetails'
+            }
+        },
+        {
+            $unwind: {
+                path: '$genreDetails',
+                preserveNullAndEmptyArrays: true 
+            }
+        },
+        {
+            $lookup: {
+                from: 'languages',
+                localField: 'languageID',
+                foreignField: '_id',
+                as: 'languageDetails'
+            }
+        },
+        {
+            $unwind: {
+                path: '$languageDetails', // Specify the field to unwind
+                preserveNullAndEmptyArrays: true // Optional: Keeps documents without a match
+            }
+        },
+    );
+
+    return await Book.aggregate(pipeline);
+}
         
 export const FindBook = async (data: Record<string, any>) => 
 {

@@ -1,3 +1,5 @@
+import { GetResultInterface } from "../../Model/ResultModel";
+
 const url = "http://localhost:5000/api/book/defination/";
 const contentType = "application/json";
 
@@ -14,7 +16,7 @@ const GetDefination = async (type:string) =>
 
         if(response.ok)
         {
-            const result = response.json();
+            const result:GetResultInterface = await response.json();
             return result;
         }
     }

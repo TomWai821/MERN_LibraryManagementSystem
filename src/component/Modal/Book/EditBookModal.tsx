@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useState } from 'react'
-import { Box, TextField, Button } from '@mui/material';
+import { Box, TextField, Button, MenuItem } from '@mui/material';
 
 // Template
 import ModalTemplate from '../../Templates/ModalTemplate';
@@ -16,14 +16,25 @@ import { BookDataInterface } from '../../../Model/BookTableModel';
 
 // Data (CSS Syntax)
 import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
-import { CreateBookInputField } from '../../../Maps/TextFieldsMaps';
+import { useDefinationContext } from '../../../Context/Book/DefinationContext';
 
 const EditBookModal:FC<EditModalInterface> = (editModalData) => 
 {
     const { value, editData, compareData } = editModalData;
-    const { bookname, language, genre, publisher, author, pages, amount } = editData as BookDataInterface;
+    const { bookname, language, genre, pages, description } = editData as BookDataInterface;
+    const { defination } = useDefinationContext();
 
-    const [book, setBook] = useState<BookDataInterface>({bookname: bookname, language: language, genre: genre, publisher: publisher, author: author, pages: pages, amount: amount});
+    // For book filter
+    const CreateBookInputField = 
+    [
+        {name: "bookname", label: "Book Name", type:"text", select:false, slotProps: {}, multiline:false, rows: 1},
+        {name: "language", label: "Language", type:"text", select:true, options:defination.Language, slotProps: {}, multiline:false, rows: 1},
+        {name: "genre", label: "Genre", type:"text", select: true, options:defination.Genre ,slotProps:{}, multiline:false, rows: 1},
+        {name: "pages", label: "Pages", type: "number", slotProps: {htmlInput:{min: 0}}, multiline:false, rows: 1},
+        {name: "description", label: "Description", type: "text", select:false, slotProps:{}, multiline:true, rows: 5}
+    ]
+
+    const [book, setBook] = useState<BookDataInterface>({bookname: bookname, language: language, genre: genre, pages: pages, description: description});
     const { handleOpen } = useModal();
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
@@ -42,8 +53,16 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
             {
                 CreateBookInputField.map((field, index) => 
                     (
-                        <TextField key={index} label={field.label} name={field.name} 
-                                type={field.type} size="small" value={book[field.name as keyof BookDataInterface]} onChange={onChange} select={field.select} slotProps={field.slotProps} required/>
+                        <TextField key={index} label={field.label} name={field.name} value={book[field.name as keyof BookDataInterface]}
+                            type={field.type} size="small" onChange={onChange} select={field.select} slotProps={field.slotProps} multiline={field.multiline} rows={field.rows}>
+                                {
+                                    field.options && field.options.map((option, index) => 
+                                        (
+                                            field.name === "genre" ? <MenuItem key={index} value={option.genre}>{option.genre}</MenuItem> : <MenuItem key={index} value={option.language}>{option.language}</MenuItem>
+                                        )
+                                    )
+                                }
+                        </TextField>
                     )
                 )
             }

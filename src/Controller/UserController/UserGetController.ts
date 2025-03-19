@@ -8,7 +8,7 @@ const BuildQuery = (params:Record<string, number | string | Date | undefined>) =
     let queryParams = new URLSearchParams();
     for(const key in params)
     {
-        if (params[key] === undefined || params[key] === null || params[key] === "" || key.trim() === "") 
+        if (params[key] === undefined || params[key] === null || params[key] === "" || params[key] === "All" || key.trim() === "") 
         {
             continue; 
         }

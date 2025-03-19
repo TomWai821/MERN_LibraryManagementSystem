@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { UserResultDataInterface } from "./ResultModel";
+import { BookResultDataInterface, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
 import { BookDataInterface, BookSearchInterface } from "./BookTableModel"
 
@@ -29,7 +29,7 @@ interface ActionTableCellInterface extends IsAdminInterface
 {
     value: number;
     TableName: string;
-    Information: UserResultDataInterface | BookDataInterface;
+    Information: UserResultDataInterface | BookResultDataInterface | BookDataInterface;
 }
 
 

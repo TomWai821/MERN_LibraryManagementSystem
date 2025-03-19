@@ -72,7 +72,6 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
                 <Typography>Description: {Data.bannedDetails?.description || Data.deleteDetails?.description}</Typography>
             </Box>
             
-            <DeleteTypography/>
             <ModalConfirmButton clickEvent={UndoUserAction} name={"Yes"} buttonType={""}/>
         </ModalTemplate>
     );

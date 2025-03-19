@@ -13,7 +13,7 @@ import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../
 
 const DeleteBookModal:FC<BookDataInterface> = ({...bookData}) => 
 {  
-    const { bookname, genre, publisher, author, pages, amount } = bookData;
+    const { bookname, genre, pages } = bookData;
 
     const onClick = () => 
     {
@@ -26,10 +26,7 @@ const DeleteBookModal:FC<BookDataInterface> = ({...bookData}) =>
                 <Typography sx={ModalSubTitleSyntax}>Do you want to delete this book record?</Typography>
                 <Typography>Book Name:{bookname}</Typography>
                 <Typography>Book Genre:{genre}</Typography>
-                <Typography>Publisher Name:{publisher}</Typography>
-                <Typography>Author Name:{author}</Typography>
                 <Typography>Number of Pages:{pages}</Typography>
-                <Typography>Current amount:{amount}</Typography>
             </Box>
 
             <DeleteTypography/>

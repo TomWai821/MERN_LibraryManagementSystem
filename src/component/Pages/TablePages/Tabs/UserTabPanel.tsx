@@ -5,7 +5,7 @@ import CustomTabPanel from "../../../UIFragment/CustomTabPanel"
 
 // Another Component
 import AllUserTable from "../Tables/User/AllUserTable"
-import BannedUserTable from "../Tables/User/BannedUserTable"
+import BannedUserTable from "../Tables/User/SuspendUserTable"
 import DeleteUserTable from "../Tables/User/DeleteUserTable"
 
 // Model

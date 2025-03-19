@@ -9,10 +9,10 @@ export const GetAllBook = async (req:Request, res:Response) =>
 
     try
     {
-        const findBooks = await GetBook();
+        const foundBook = await GetBook();
 
         success = true;
-        res.json({ success, message:{findBooks} })
+        res.json({ success, foundBook })
     }
     catch(error)
     {

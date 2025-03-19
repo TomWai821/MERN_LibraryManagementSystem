@@ -1,3 +1,5 @@
+import { GetResultInterface } from "../../Model/ResultModel";
+
 const localhost:string = 'http://localhost:5000/api/book';
 const contentType:string = "application/json";
 
@@ -12,8 +14,7 @@ export const fetchBook = async () =>
 
     if(response.ok)
     {
-        const result = await response.json();
-        console.log("Create Book Successfully!")
+        const result: GetResultInterface = await response.json();
         return result;
     }
 }

@@ -15,13 +15,13 @@ import { useModal } from "../../../../Context/ModalContext";
 import { useUserContext } from "../../../../Context/User/UserContext";
 
 // Another Modal
-import BanUserModal from "../../User/BanUserModal";
+import BanUserModal from "../../User/SuspendUserModal";
 
 // Data (CSS Syntax and dropdown data)
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 import { dateOption } from "../../../../Maps/TextFieldsMaps";
 
-const BanUserConfirmModal:FC<BanModalInterface> = (banData) => 
+const SuspendUserConfirmModal:FC<BanModalInterface> = (banData) => 
 {
     const { _id, username, durationOption, description } = banData;
     const { handleOpen, handleClose } = useModal();
@@ -40,7 +40,7 @@ const BanUserConfirmModal:FC<BanModalInterface> = (banData) =>
     }
 
     return(
-        <ModalTemplate title={"Ban User Confirmation"} cancelButtonName={"No"}  cancelButtonEvent={returnBanUserModal}>
+        <ModalTemplate title={"Suspend User Confirmation"} cancelButtonName={"No"}  cancelButtonEvent={returnBanUserModal}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>Do you want to ban {username}?</Typography>
                 <Typography>Duration: {dateOption[durationOption as number].label}</Typography>
@@ -52,4 +52,4 @@ const BanUserConfirmModal:FC<BanModalInterface> = (banData) =>
     );
 }
 
-export default BanUserConfirmModal
+export default SuspendUserConfirmModal

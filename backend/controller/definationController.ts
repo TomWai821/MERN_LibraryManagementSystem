@@ -1,7 +1,6 @@
 import { Request, Response } from "express"
 import { CreateGenre, FindGenreByIDAndDelete, FindGenreByIDAndUpdate, GetGenre } from "../schema/book/genre";
 import { CreateLanguage, FindLanguageByIDAndDelete, FindLanguageByIDAndUpdate, GetLanguage } from "../schema/book/language";
-import { GenreInterface, LanguageInterface } from "../model/bookSchemaInterface";
 
 export const GetDefination = async (req: Request, res: Response) => 
 {
@@ -22,7 +21,7 @@ export const GetDefination = async (req: Request, res: Response) =>
         }
 
         success = true;
-        return res.json({ success, foundData: getData });
+        return res.json({ success, foundDefination: getData });
     } 
     catch (error) 
     {

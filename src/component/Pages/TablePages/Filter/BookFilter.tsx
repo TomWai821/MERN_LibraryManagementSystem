@@ -59,29 +59,23 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
                             <MenuItem key={index} value={language.language}>{`${language.language}(${language.shortName})`}</MenuItem>
                         ))
                     }
-                    <MenuItem value="" sx={{height: '40px'}}/>
+                    <MenuItem value="All" sx={{height: '40px'}}>All</MenuItem>
                 </TextField>
                 <IconButton onClick={toggleCardVisibility}>
                     {optionVisiable ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                 </IconButton>
                 <Button variant='contained' sx={{marginLeft: '10px'}}>Search</Button>
-                {isAdmin && 
-                    (
-                        <Fragment>
-                            <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={handleActionMenu}>Action</Button>
-                            <Menu open={Boolean(actionMenu)} anchorEl={actionMenu} onClose={handleActionMenu}>
-                            {
-                                ActionMenu.map((action, index) =>(
-                                    <MenuItem key={index}>
-                                        <Typography onClick={action.clickEvent}>{action.label}</Typography>
-                                    </MenuItem>
-                                    )
-                                )
-                            }
-                            </Menu>
-                        </Fragment>
-                    )
-                }
+                    <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={handleActionMenu}>Action</Button>
+                    <Menu open={Boolean(actionMenu)} anchorEl={actionMenu} onClose={handleActionMenu}>
+                    {
+                        ActionMenu.map((action, index) =>(
+                            <MenuItem key={index}>
+                                <Typography onClick={action.clickEvent}>{action.label}</Typography>
+                            </MenuItem>
+                            )
+                        )
+                    }
+                    </Menu>
             </Box>
 
             <OptionFields value={value} type={"Book"} optionVisiable={optionVisiable} onChange={onChange} searchData={searchData}/>

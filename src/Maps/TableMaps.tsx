@@ -10,6 +10,7 @@ const BookRecordTableHeader = [
     {label:"Actions", condition:"isLoggedIn"}
 ];
 
+// Table Cell Header for User tables
 const AllUserTableHeader = 
 [
     {label:"No."},
@@ -44,9 +45,21 @@ const DeleteUserTableHeader =
     {label:"Actions"}
 ]
 
+// Table Cell Header for Book tables
+const AllBookTableHeader = 
+[
+    {label:"No."},
+    {label:"BookName"},
+    {label:"Genre"},
+    {label:"Language"},
+    {label:"Pages"},
+    {label:"Description"},
+    {label:"Actions"}
+]
+
 const BookTabLabel = 
 [
-    {label: "Book Record"},
+    {label: "All Book"},
     {label: "Book Loaned"},
     {label: "Book OnShelf"}
 ]
@@ -62,7 +75,7 @@ const UserDataTableName = ["AllUser", "BannedUser", "DeleteUser"];
 
 const PaginationOption = [10, 20, 50, 100];
 
-const EmptyOption = [""];
+const EmptyOption = ["All"];
 
 const RoleOption = ["User", "Admin"];
 
@@ -76,4 +89,4 @@ const StatusFilterOption = [...StatusOption, ...EmptyOption];
 
 const GenderFilterOption = [...GenderOption, ...EmptyOption];
 
-export {BookRecordTableHeader, AllUserTableHeader, BannedUserTableHeader, DeleteUserTableHeader, BookTabLabel, UserTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption}
+export {BookRecordTableHeader, AllUserTableHeader, BannedUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, BookTabLabel, UserTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption}

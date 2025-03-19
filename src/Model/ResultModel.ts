@@ -18,7 +18,9 @@ interface GetResultInterface
 {
     success:boolean;
     authtoken?:string;
-    foundUser: UserResultDataInterface | UserResultDataInterface[];
+    foundUser?: UserResultDataInterface | UserResultDataInterface[];
+    foundBook?: BookResultDataInterface | BookResultDataInterface[];
+    foundDefination?: DefinationInterface | DefinationInterface[];
 }
 
 interface UserResultDataInterface extends UserDataInterface
@@ -37,6 +39,9 @@ interface BookResultDataInterface
     languageID:string;
     page: number;
     description: string;
+    amount:string;
+    genreDetails: DefinationInterface;
+    languageDetails: DefinationInterface;
 }
 
 interface DetailsInterfaceForBannedAndDelete

@@ -7,30 +7,25 @@ import CustomTab from "../../UIFragment/CustomTab";
 import BookTabPanel from "./Tabs/BookTabPanel";
 
 // Model
-import { BookDataInterface } from "../../../Model/BookTableModel";
+import { BookDataInterface, BookSearchInterface } from "../../../Model/BookTableModel";
 import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 
 // Data (CSS SYntax and dropdown)
-import { ItemToCenter, PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
+import { PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
 import { BookTabLabel, PaginationOption } from "../../../Maps/TableMaps";
-
-// Placeholder
-const BookData: BookDataInterface [] = 
-[
-    { bookname: "A", language: "English", genre: "A", author: "A", publisher: "A", pages: "100", amount: "1" },
-    { bookname: "B", language: "English", genre: "B", author: "B", publisher: "B", pages: "100", amount: "1" },
-    { bookname: "C", language: "English", genre: "C", author: "C", publisher: "C", pages: "100", amount: "1" },
-];
+import { useBookContext } from "../../../Context/Book/BookContext";
 
 const BookPage:FC<PagesInterface> = (loginData) =>
 {
-    const {isLoggedIn, isAdmin} = loginData;
+    const { isLoggedIn, isAdmin } = loginData;
+    const { AllBook, LoanBook, OnShelfBook } = useBookContext();
+
+    const bookData = [AllBook, LoanBook, OnShelfBook];
     const SetTitle:string = isAdmin ? "Manage Books Record": "View Books";
 
-    const [searchBook, setSearchBook] = useState<BookDataInterface>({ bookname: "", language: "", genre: "", publisher: "", author: "", pages: "", amount: "" });
+    const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", language: "All", genre: "All", pages: 0 });
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
-    const count:number = Math.ceil(BookData.length / paginationValue);
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
@@ -53,20 +48,23 @@ const BookPage:FC<PagesInterface> = (loginData) =>
                 break;
         }
     }
+
+    const SearchBook = () => 
+    {
+
+    }
      
     return( 
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
-            <Typography sx={{fontSize: '24px'}}>{SetTitle} {BookData.length === 0 && `(No record)`}</Typography>
+            <Typography sx={{fontSize: '24px'}}>{SetTitle} {bookData[tabValue].length === 0 && `(No record)`}</Typography>
 
-            <BookFilter isAdmin={isAdmin} value={tabValue} onChange={onChange} searchData={searchBook} Search={() => {}}/>
+            <BookFilter isAdmin={isAdmin} value={tabValue} onChange={onChange} searchData={searchBook} Search={SearchBook}/>
 
-            <CustomTab isAdmin={isAdmin} value={tabValue} paginationValue={paginationValue} valueChange={changeValue} tabLabel={BookTabLabel} paginationOption={PaginationOption} />
+            <CustomTab isAdmin={isAdmin} value={tabValue} valueChange={changeValue} paginationValue={paginationValue} tabLabel={BookTabLabel} paginationOption={PaginationOption}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-                <BookTabPanel value={tabValue} isAdmin={isAdmin} isLoggedIn={isLoggedIn} bookData={BookData} paginationValue={paginationValue}/>
+                <BookTabPanel value={tabValue} isAdmin={isAdmin} bookData={bookData} paginationValue={paginationValue} isLoggedIn={isLoggedIn}/>
             </TableContainer>
-            
-            <Pagination sx={{...ItemToCenter, alignItems: 'center', paddingTop: '10px'}} count={count}/>
         </Box>
     );
 }

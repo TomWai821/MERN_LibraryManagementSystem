@@ -32,7 +32,7 @@ const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) =>
     }
     
     return(
-        <TableCell sx={{"&:hover": {cursor: "pointer"}}} onClick={onClick}>
+        <TableCell sx={{ fontSize: '16px ', "&:hover": {cursor: "pointer"}}} onClick={onClick}>
             {children}
         </TableCell>
     );

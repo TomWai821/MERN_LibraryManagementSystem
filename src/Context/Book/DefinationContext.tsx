@@ -1,7 +1,7 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
 import { CreateDefinationData, DeleteDefinationData, EditDefinationData, GetDefination } from "../../Controller/BookController/DefinationController";
 import { ChildProps, DefinatonProps } from "../../Model/ContextAndProviderModel";
-import { DefinationInterface, DefinationResultInterface, DefinationState } from "../../Model/ResultModel";
+import { DefinationInterface, DefinationState, GetResultInterface } from "../../Model/ResultModel";
 import { GetData } from "../../Controller/OtherController";
 
 const DefinationContext = createContext<DefinatonProps | undefined>(undefined);
@@ -18,17 +18,17 @@ export const DefinationProvider:FC<ChildProps> = ({children}) =>
 
     const fetchAllDefination = useCallback(async () => 
     {
-        const getGenreData: DefinationResultInterface | undefined = await GetDefination("Genre");
-        const getLanguageData : DefinationResultInterface | undefined = await GetDefination("Language");
+        const getGenreData: GetResultInterface | undefined = await GetDefination("Genre");
+        const getLanguageData : GetResultInterface | undefined = await GetDefination("Language");
 
-        if(getGenreData && Array.isArray(getGenreData.foundData))
+        if(getGenreData && Array.isArray(getGenreData.foundDefination as DefinationInterface[]))
         {
-            setDefination((prev) => ({...prev, Genre:getGenreData.foundData as DefinationInterface[]}));
+            setDefination((prev) => ({...prev, Genre:getGenreData.foundDefination as DefinationInterface[]}));
         }
 
-        if(getLanguageData && Array.isArray(getLanguageData.foundData))
+        if(getLanguageData && Array.isArray(getLanguageData.foundDefination as DefinationInterface[]))
         {
-            setDefination((prev) => ({...prev, Language:getLanguageData.foundData as DefinationInterface[]}));
+            setDefination((prev) => ({...prev, Language:getLanguageData.foundDefination as DefinationInterface[]}));
         }
     }
     ,[])

@@ -18,23 +18,25 @@ import { useUserContext } from "../../../Context/User/UserContext";
 // Data (CSS Syntax and dropdown data)
 import { PaginationOption, UserTabLabel } from "../../../Maps/TableMaps";
 import { PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
+import TableTitle from "../../UIFragment/TableTitle";
 
 const UserPage:FC<PagesInterface> = (loginData) =>
 {
     const { isAdmin } = loginData;
-    const SetTitle = isAdmin ? "User Management Page" : "View BanList";
     const { AllUser, BannedUser, DeleteUser, fetchUser } = useUserContext();
-
     const UserData = [AllUser, BannedUser, DeleteUser];
+
+    const SetTitle = isAdmin ? "User Management Page" : "View BanList";
+
     const [searchUserData, setSearchUserData] = useState(
-        { 
-            user: { username: "", email: "", role: "", status: "", gender: "" },
+        {
+            user: { username: "", email: "", role: "All", status: "All", gender: "All" },
             date: { startDate: GetCurrentDate("Date") as Date, dueDate: GetCurrentDate("Date") as Date } 
         }
     );
 
     // Reset data while tab is change
-    const defaultSearchUser = {username: "", email:"", role:"", status:"", gender:""};
+    const defaultSearchUser = {username: "", email:"", role:"All", status:"All", gender:"All"};
     const defaultsearchUserDate = {startDate: GetCurrentDate("Date") as Date, dueDate: GetCurrentDate("Date") as Date};
 
     const [tabValue, setTabValue] = useState(0);
@@ -106,7 +108,7 @@ const UserPage:FC<PagesInterface> = (loginData) =>
     
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
-            <Typography sx={{fontSize: '24px'}}>{SetTitle} {UserData[tabValue].length === 0 && `(No record)`}</Typography>
+            <TableTitle type={SetTitle} dataLength={UserData[tabValue].length}/>
 
             <UserFilter isAdmin={isAdmin} value={tabValue} onChange={onChange} searchData={searchUserData.user} Search={SearchUser}/>
 

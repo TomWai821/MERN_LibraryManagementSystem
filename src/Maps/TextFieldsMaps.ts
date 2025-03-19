@@ -74,17 +74,6 @@ const EditBanUserInputField =
     {name: "description", label: "Description", type:"String", select:false, slotProps: {}, options: [], rows: 5, disable: false},
 ]
 
-// For book filter
-const CreateBookInputField = 
-[
-    {name: "bookname", label: "Book Name", type:"text", select:false, slotProps: {}},
-    {name: "language", label: "Language", type:"text", select:false, slotProps: {}},
-    {name: "publisher", label: "Publisher Name", type: "text", select: true},
-    {name: "author", label: "Author Name", type: "text", select: true},
-    {name: "pages", label: "Pages", type: "number", slotProps: {htmlInput:{min: 0}}},
-    {name: "amount", label: "Book Amount", type:"number", slotProps: {htmlInput:{min: 1}}}
-]
-
 // For banList
 const dateOption = 
 [
@@ -106,4 +95,4 @@ const EditGenreInputField =
     {name: "shortName", label: "Short Name", type:"text"}
 ]
 
-export {RegisterField, LoginField, ViewProfileField, AllUserSearchField, OtherUserSearchField, CreateUserInputField, EditUserInputField, EditBanUserInputField, CreateBookInputField, dateOption, EditLanguageInputField, EditGenreInputField}
+export {RegisterField, LoginField, ViewProfileField, AllUserSearchField, OtherUserSearchField, CreateUserInputField, EditUserInputField, EditBanUserInputField, dateOption, EditLanguageInputField, EditGenreInputField}

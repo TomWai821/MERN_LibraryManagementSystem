@@ -7,6 +7,17 @@ interface CreateModalInterface
     data?: any;
 }
 
+interface CreateBookModalInterface
+{
+    bookname?:string;
+    language?:string;
+    languageID?:string;
+    genre?:string;
+    genreID?:string;
+    pages?:number;
+    description?:string;
+}
+
 interface EditModalInterface
 {
     value?: number;
@@ -50,4 +61,4 @@ interface UserModalBody
     data: UserResultDataInterface;
 }
 
-export type {CreateModalInterface, EditModalInterface, BanModalInterface, DeleteModalInterface, DisplayDataModalInterface, ModalConfirmButtonInterface, UserModalBody}
+export type {CreateModalInterface, CreateBookModalInterface, EditModalInterface, BanModalInterface, DeleteModalInterface, DisplayDataModalInterface, ModalConfirmButtonInterface, UserModalBody}

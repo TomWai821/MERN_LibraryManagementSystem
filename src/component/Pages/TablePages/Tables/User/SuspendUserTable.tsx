@@ -15,7 +15,7 @@ import { BannedUserTableHeader } from "../../../../../Maps/TableMaps";
 import { CalculateDuration } from "../../../../../Controller/OtherController";
 
 
-const BannedUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) => 
+const SuspendUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) => 
 {
     const {isAdmin, value, userData, paginationValue} = DataForBannedUserTable;
     const TableName = "User";
@@ -94,4 +94,4 @@ const BannedUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
     );
 }
 
-export default BannedUserTable
+export default SuspendUserTable

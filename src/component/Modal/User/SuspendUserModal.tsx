@@ -8,7 +8,7 @@ import ModalTemplate from "../../Templates/ModalTemplate"
 import ModalConfirmButton from "../../UIFragment/ModalConfirmButton";
 
 // Another Modal
-import BanUserConfirmModal from "../Confirmation/User/BanUserConfirmModal";
+import BanUserConfirmModal from "../Confirmation/User/SuspendUserConfirmModal";
 
 // Modals
 import { useModal } from "../../../Context/ModalContext";
@@ -38,7 +38,7 @@ const BanUserModal:FC<BanModalInterface> = ({...userData}) =>
     }
 
     return(
-        <ModalTemplate title={"Ban User"} cancelButtonName={"Exit"}>
+        <ModalTemplate title={"Suspend User"} cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography>Username: {username}</Typography>
 

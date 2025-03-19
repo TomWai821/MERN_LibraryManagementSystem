@@ -3,9 +3,6 @@ import { FC, Fragment } from "react"
 // UI Fragment
 import CustomTabPanel from "../../../UIFragment/CustomTabPanel"
 
-// Another Component
-import BookRecordTable from "../Tables/BookRecordTable"
-
 // Model
 import { BookRecordTableInterface } from "../../../../Model/BookTableModel"
 

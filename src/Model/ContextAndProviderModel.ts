@@ -56,6 +56,8 @@ interface UserContextProps
 interface BookContextProps
 {
     AllBook: BookResultDataInterface[];
+    LoanBook: BookResultDataInterface[];
+    OnShelfBook: BookResultDataInterface[];
     fetchAllBook: () => Promise<void>;
     createBook: (bookname:string, genreID:string, languageID:string, page:number, description:string) => void;
 }
@@ -82,7 +84,7 @@ interface ContentTableCellProps extends ChildProps
     TableName: string;
     value: number;
     isAdmin: boolean;
-    Information: UserResultDataInterface | BookDataInterface;
+    Information: UserResultDataInterface | BookResultDataInterface | BookDataInterface;
 }
 
 export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, UserContextProps, BookContextProps, TabPanelProps, ContentTableCellProps, DefinatonProps}

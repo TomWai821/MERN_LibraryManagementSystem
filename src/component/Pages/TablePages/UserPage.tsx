@@ -108,7 +108,7 @@ const UserPage:FC<PagesInterface> = (loginData) =>
     
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
-            <TableTitle type={SetTitle} dataLength={UserData[tabValue].length}/>
+            <TableTitle title={SetTitle} dataLength={UserData[tabValue].length}/>
 
             <UserFilter isAdmin={isAdmin} value={tabValue} onChange={onChange} searchData={searchUserData.user} Search={SearchUser}/>
 

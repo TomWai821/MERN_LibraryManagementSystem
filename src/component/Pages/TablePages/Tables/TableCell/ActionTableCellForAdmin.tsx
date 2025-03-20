@@ -19,7 +19,7 @@ import UndoUserActivityModal from "../../../../Modal/Confirmation/User/UndoUserA
 // Model
 import { BookDataInterface } from "../../../../../Model/BookTableModel";
 import { ActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel"
-import { DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "../../../../../Model/ResultModel";
+import { BookResultDataInterface, DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "../../../../../Model/ResultModel";
 
 // Data(CSS Syntax)
 import { ImportantActionButtonSyntax } from "../../../../../Maps/FormatSyntaxMaps";
@@ -37,7 +37,8 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         switch (TableName) 
         {
             case "Book":
-                const bookData = Information as BookDataInterface;
+                const data = Information as BookResultDataInterface;
+                const bookData = {_id: data._id, bookname: data.bookname, language: data.languageDetails.language, languageID: data.languageDetails._id, genre: data.genreDetails.genre, genreID: data.genreDetails._id, pages: data.pages, description: data.description}
                 handleOpen(<EditBookModal value={value} editData={bookData} compareData={bookData}/>);
                 break;
                 
@@ -52,7 +53,12 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         switch (TableName) 
         {
             case "Book":
-                handleOpen(<DeleteBookModal {...Information as BookDataInterface} />);
+                const data = Information as BookResultDataInterface;
+                handleOpen(<DeleteBookModal 
+                    bookID={data._id} description={data.description} bookname={data.bookname}
+                    language={data.languageDetails.language as string} genre={data.genreDetails.genre as string}
+                    pages={data.pages}/>
+                );
                 break;
 
             case "User":

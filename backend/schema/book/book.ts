@@ -6,9 +6,10 @@ const BookSchema = new mongoose.Schema<BookInterface>
 (
     {
         bookname: { type: String, required: true },
-        languageID: { type: mongoose.Types.ObjectId, ref:'Language', required: true },
-        genreID: { type: mongoose.Types.ObjectId, ref:'Genre', required: true },
-        page: { type: Number, required: true, min: 1 },
+        languageID: { type: mongoose.Types.ObjectId, ref: 'Language', required: true },
+        genreID: { type: mongoose.Types.ObjectId, ref: 'Genre', required: true },
+        pages: { type: Number, required: true, min: 1 },
+        status: { type: String, required: true , default: 'OnShelf'},
         description: { type: String, default: '' },
         createdAt: { type: Date, default: Date.now, immutable: true }
     }
@@ -95,15 +96,15 @@ export const FindBook = async (data: Record<string, any>) =>
     }
 }
 
-export const FindBookByID = async (book: string, select?: Record<string, any>) => 
+export const FindBookByID = async (bookID: string, select?: Record<string, any>) => 
 {
     try
     {
         if(select)
         {
-            return await Book.findById(book).select(select);
+            return await Book.findById(bookID).select(select);
         }
-        return await Book.findById(book);
+        return await Book.findById(bookID);
     }
     catch(error)
     {
@@ -111,11 +112,11 @@ export const FindBookByID = async (book: string, select?: Record<string, any>) =
     }
 }
 
-export const FindBookByIDAndUpdate = async (book: string, data: Record<string, any>) => 
+export const FindBookByIDAndUpdate = async (bookID: string, data: Record<string, any>) => 
 {
     try
     {
-        return await Book.findByIdAndUpdate(book, data);
+        return await Book.findByIdAndUpdate(bookID, data);
     }
     catch(error)
     {
@@ -123,11 +124,11 @@ export const FindBookByIDAndUpdate = async (book: string, data: Record<string, a
     }
 }
 
-export const FindBookByIDAndDelete = async (book: string, data: Record<string, any>) =>
+export const FindBookByIDAndDelete = async (bookID: string) =>
 {
     try
     {
-        return await Book.findByIdAndDelete(book, data);
+        return await Book.findByIdAndDelete(bookID);
     }
     catch(error)
     {

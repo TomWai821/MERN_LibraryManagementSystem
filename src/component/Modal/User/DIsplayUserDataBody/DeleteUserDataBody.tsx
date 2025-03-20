@@ -3,25 +3,27 @@ import { UserModalBody } from "../../../../Model/ModelForModal";
 import { Avatar, Box, Divider, Typography } from "@mui/material";
 import { displayAsColumn } from "../../../../Maps/FormatSyntaxMaps";
 import {  CountDuration, TransferDateToString } from "../../../../Controller/OtherController";
+import { UserResultDataInterface } from "../../../../Model/ResultModel";
 
 const DeleteUserDataBody:FC<UserModalBody>  = (DeleteUserData) => 
 {
     const {data} = DeleteUserData;
+    const Data = data as UserResultDataInterface;
 
     return(
         <Box sx={{...displayAsColumn, alignItems:'center', justifyContent: 'center'}}>
-        <Avatar src={data.avatarUrl ?? "/broken-image.jpg"} sx={{ width: "100px", height: "100px" }} />
-        <Typography sx={{fontSize: '24px', padding: '15px'}}>{data.role}</Typography>
+        <Avatar src={Data.avatarUrl ?? "/broken-image.jpg"} sx={{ width: "100px", height: "100px" }} />
+        <Typography sx={{fontSize: '24px', padding: '15px'}}>{Data.role}</Typography>
         <Box sx={{ display: 'grid', paddingTop: '30px', gap: '20px 50px', gridTemplateColumns: '100%'}}>
-            <Typography>Username: {data.username}</Typography>
-            <Typography>Email: {data.email}</Typography>
-            <Typography>Gender: {data.gender}</Typography>
-            <Typography>Status: {data.status} ({data.deleteDetails?.status})</Typography>
-            <Typography>Description: {data.deleteDetails?.description}</Typography>
+            <Typography>Username: {Data.username}</Typography>
+            <Typography>Email: {Data.email}</Typography>
+            <Typography>Gender: {Data.gender}</Typography>
+            <Typography>Status: {Data.status} ({Data.deleteDetails?.status})</Typography>
+            <Typography>Description: {Data.deleteDetails?.description}</Typography>
             <Divider/>
-            <Typography>Start Date: {TransferDateToString(data.deleteDetails?.startDate as Date)}</Typography>
-            <Typography>Due Date: {TransferDateToString(data.deleteDetails?.dueDate as Date)}</Typography>
-            <Typography>Count: {CountDuration(data.deleteDetails?.dueDate as Date)}</Typography>
+            <Typography>Start Date: {TransferDateToString(Data.deleteDetails?.startDate as Date)}</Typography>
+            <Typography>Due Date: {TransferDateToString(Data.deleteDetails?.dueDate as Date)}</Typography>
+            <Typography>Count: {CountDuration(Data.deleteDetails?.dueDate as Date)}</Typography>
         </Box>
     </Box>
     );

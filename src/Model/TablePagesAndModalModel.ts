@@ -56,7 +56,11 @@ interface OptionFieldsInterface
     searchData: any;
 }
 
+interface TableTitleInterface
+{
+    title:string;
+    dataLength:number;
+}
 
-
-export type {IsAdminInterface, PagesInterface, ActionTableCellInterface, FilterInterface, TableInterface, TabInterface, OptionFieldsInterface}
+export type {IsAdminInterface, PagesInterface, ActionTableCellInterface, FilterInterface, TableInterface, TabInterface, OptionFieldsInterface, TableTitleInterface}
 

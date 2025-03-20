@@ -27,7 +27,7 @@ const DisplayUserDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
                 break;
 
             case 1:
-                displayData.title = "Banned User Information";
+                displayData.title = "Suspend User Information";
                 displayData.displayBody = <BannedUserDataBody data={data as UserResultDataInterface} isAdmin={isAdmin}/>;
                 break;
 

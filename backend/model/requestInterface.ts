@@ -1,6 +1,6 @@
-import { ObjectId } from "mongoose";
 import { UserInterface } from "./userSchemaInterface";
 import { Request } from 'express'
+import { BookInterface } from "./bookSchemaInterface";
 
 interface LoginInterface
 {
@@ -35,6 +35,7 @@ interface AuthRequest extends Request
     user?: UserInterface;
     foundUser?: UserInterface | UserInterface[] | null;
     updateData?: Record<string, any> | null;
+    foundBook?: BookInterface | BookInterface[] | null;
 }
 
 export type {LoginInterface, CreateUserInterface, ModifyUserDataInterface, AuthRequest}

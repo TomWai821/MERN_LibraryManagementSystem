@@ -50,7 +50,7 @@ const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                     <TableRow>
                         {AllBookTableHeader.map((header, index) =>
                             (
-                                <TableCell key={index}>{header.label}</TableCell>
+                                <TableCell sx={{fontSize: '16px'}} key={index}>{header.label}</TableCell>
                             ) 
                         )}  
                     </TableRow>
@@ -60,12 +60,11 @@ const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                     {paginatedData.map((data, index) => 
                         (
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
-                                <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
+                                <TableCell sx={{fontSize: "16px", "&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.bookname}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.genreDetails?.genre}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.languageDetails?.language}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.page}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.description}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.pages}</ContentTableCell>
                                 {isAdmin && (<ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin}/>)}
                             </TableRow>
                         )

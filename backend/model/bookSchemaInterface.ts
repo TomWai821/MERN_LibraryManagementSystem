@@ -6,10 +6,8 @@ interface BookInterface extends IDInterface, CreateAtInterface
     bookname: string;
     languageID: mongoose.Schema.Types.ObjectId;
     genreID: mongoose.Schema.Types.ObjectId;
-    publisherID: mongoose.Schema.Types.ObjectId;
-    authorID: mongoose.Schema.Types.ObjectId;
-    genre:string;
-    page:number;
+    status:string;
+    pages:number;
     description:string;
 }
 

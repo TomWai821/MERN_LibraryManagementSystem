@@ -1,7 +1,7 @@
 import mongoose, { ObjectId } from "mongoose";
 import { DeleteAndBannedListInterface } from "../../model/userSchemaInterface";
 import { printError } from "../../controller/Utils";
-import { userDeleteListDescription, userDeleteListStatus } from "../../maps/userTypeMaps";
+import { userDeleteListDescription, userDeleteListStatus } from "../../maps/TypeArrayForUser";
 
 const DeleteListSchema = new mongoose.Schema<DeleteAndBannedListInterface>
 (

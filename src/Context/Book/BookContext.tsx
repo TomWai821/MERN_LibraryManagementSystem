@@ -4,6 +4,8 @@ import { GetData } from "../../Controller/OtherController";
 import { BookResultDataInterface, GetResultInterface } from "../../Model/ResultModel";
 import { fetchBook } from "../../Controller/BookController/BookGetController";
 import { createBookRecord } from "../../Controller/BookController/BookPostController";
+import { updateBookRecord } from "../../Controller/BookController/BookPutController";
+import { deleteBookRecord } from "../../Controller/BookController/BookDeleteController";
 
 const BookContext = createContext<BookContextProps | undefined>(undefined);
 
@@ -20,7 +22,6 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         const resultForLoanBook: GetResultInterface | undefined = await fetchBook();
         const resultForOnShelfBook: GetResultInterface | undefined = await fetchBook();
 
-        console.log(resultForAllBook);
         if(resultForAllBook && Array.isArray(resultForAllBook.foundBook))
         {
             setAllBook(resultForAllBook.foundBook);
@@ -41,13 +42,35 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
 
     const createBook = useCallback(async (bookname:string, genreID:string, languageID:string, page:number, description:string) => 
     {
-        const result = await createBookRecord(bookname, genreID, languageID, page, description);
+        const result = await createBookRecord(authToken, bookname, genreID, languageID, page, description);
 
         if(result)
         {
             fetchAllBook();
         }
-    },[])
+    },[fetchAllBook])
+
+    const editBook = useCallback(async (bookID:string, bookname:string, genreID:string, languageID:string, pages:number, description: string) => 
+        {
+            const result = await updateBookRecord(authToken, bookID, bookname, genreID, languageID, pages, description)
+
+            if(result)
+            {
+                fetchAllBook();
+            }
+        },[fetchAllBook]
+    )
+
+    const deleteBook = useCallback(async (bookID:string) => 
+        {
+            const result = await deleteBookRecord(authToken, bookID)
+
+            if(result)
+            {
+                fetchAllBook();
+            }
+        },[fetchAllBook]
+    )
 
     useEffect(() => 
         {
@@ -56,7 +79,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
     )
 
     return (
-        <BookContext.Provider value={{ AllBook, LoanBook, OnShelfBook, fetchAllBook, createBook }}>
+        <BookContext.Provider value={{ AllBook, LoanBook, OnShelfBook, fetchAllBook, createBook, editBook, deleteBook }}>
             {children}
         </BookContext.Provider>
     );

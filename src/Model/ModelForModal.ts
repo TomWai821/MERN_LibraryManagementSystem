@@ -1,5 +1,5 @@
 import { BookDataInterface } from "./BookTableModel";
-import { DefinationInterface, DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "./ResultModel";
+import { BookResultDataInterface, DefinationInterface, DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "./ResultModel";
 
 interface CreateModalInterface
 {
@@ -21,8 +21,8 @@ interface CreateBookModalInterface
 interface EditModalInterface
 {
     value?: number;
-    editData: UserResultDataInterface | DetailsInterfaceForBannedAndDelete | DefinationInterface | BookDataInterface;
-    compareData: UserResultDataInterface | DetailsInterfaceForBannedAndDelete | DefinationInterface | BookDataInterface;
+    editData: UserResultDataInterface | DetailsInterfaceForBannedAndDelete | DefinationInterface | BookResultDataInterface | CreateBookModalInterface;
+    compareData: UserResultDataInterface | DetailsInterfaceForBannedAndDelete | DefinationInterface | BookResultDataInterface | CreateBookModalInterface;
 }
 
 interface BanModalInterface
@@ -45,7 +45,7 @@ interface DisplayDataModalInterface
 {
     value:number;
     isAdmin:boolean;
-    data:UserResultDataInterface | BookDataInterface;
+    data: UserResultDataInterface | BookResultDataInterface;
 }
 
 interface ModalConfirmButtonInterface
@@ -58,7 +58,7 @@ interface ModalConfirmButtonInterface
 interface UserModalBody
 {
     isAdmin?:boolean;
-    data: UserResultDataInterface;
+    data: UserResultDataInterface | BookResultDataInterface;
 }
 
 export type {CreateModalInterface, CreateBookModalInterface, EditModalInterface, BanModalInterface, DeleteModalInterface, DisplayDataModalInterface, ModalConfirmButtonInterface, UserModalBody}

@@ -9,9 +9,18 @@ interface BookSearchInterface
     pages:number;
 }
 
-interface BookDataInterface extends BookSearchInterface
+interface BookDataInterface 
 {
+    bookname:string;
+    language:string;
+    genre:string;
+    pages:number;
     description:string;
+}
+
+interface BookDataInterfaceForDelete extends BookDataInterface
+{
+    bookID:string;
 }
 
 interface BookRecordTableInterface extends TableInterface
@@ -20,4 +29,4 @@ interface BookRecordTableInterface extends TableInterface
     bookData: BookResultDataInterface[][];
     paginationValue:number;
 }
-export type {BookSearchInterface, BookDataInterface, BookRecordTableInterface}
+export type {BookSearchInterface, BookDataInterface, BookDataInterfaceForDelete, BookRecordTableInterface}

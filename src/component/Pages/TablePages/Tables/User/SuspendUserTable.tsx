@@ -54,7 +54,7 @@ const SuspendUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
                     <TableRow>
                         {BannedUserTableHeader.map((header, index) =>
                             (
-                                (header.isAdmin && !isAdmin) ? null : <TableCell key={index}>{header.label}</TableCell>
+                                (header.isAdmin && !isAdmin) ? null : <TableCell key={index} sx={{fontSize: '16px'}}>{header.label}</TableCell>
                             ) 
                         )}  
                     </TableRow>
@@ -65,7 +65,7 @@ const SuspendUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
                         {
                             return(
                                 <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
-                                    <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
+                                    <TableCell sx={{fontSize: "16px", "&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
                                     <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.username} </ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.role} </ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.bannedDetails?.description} </ContentTableCell>

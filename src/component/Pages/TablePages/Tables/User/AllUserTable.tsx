@@ -48,7 +48,7 @@ const AllUserTable:FC<UserDataTableInterface> = (DataForAllUserTable) =>
                     <TableRow>
                         {AllUserTableHeader.map((header, index) =>
                             (
-                                <TableCell key={index}>{header.label}</TableCell>
+                                <TableCell sx={{fontSize: '16px'}} key={index}>{header.label}</TableCell>
                             ) 
                         )}  
                     </TableRow>

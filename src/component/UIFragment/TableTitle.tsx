@@ -1,11 +1,12 @@
 import { FC } from "react"
 import { Typography } from "@mui/material"
+import { TableTitleInterface } from "../../Model/TablePagesAndModalModel";
 
-const TableTitle:FC<{type:string, dataLength:number}> = (tableTitleData) => 
+const TableTitle:FC<TableTitleInterface> = (tableTitleData) => 
 {
-    const {type, dataLength} = tableTitleData;
+    const {title, dataLength} = tableTitleData;
     return(
-        <Typography sx={{fontSize: '24px'}}>{type} {dataLength === 0 ? "(No Record)" : `(Totally ${dataLength} Records)`}</Typography>
+        <Typography sx={{fontSize: '24px'}}>{title} {dataLength === 0 ? "(No Record)" : `(Totally ${dataLength} Records)`}</Typography>
     )
 }
 

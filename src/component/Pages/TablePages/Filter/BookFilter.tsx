@@ -34,8 +34,8 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
     const ActionMenu = 
     [
         {label: 'Create book', clickEvent: () => handleOpen(<CreateBookModal />)},
-        {label: 'OnLoan book', clickEvent: () => handleOpen(<></>)},
-        {label: 'OnShelf book', clickEvent: () => handleOpen(<></>)}
+        {label: 'Loan book', clickEvent: () => handleOpen(<></>)},
+        {label: 'Return book', clickEvent: () => handleOpen(<></>)}
     ]
 
     const toggleCardVisibility = () => 
@@ -51,19 +51,12 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
     return (
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{ ...ItemToCenter, paddingBottom: '25px', alignItems: 'center' }}>
-                <TextField label="Book Name" name="bookname" value={bookData["bookname"]} onChange={onChange} size="small" sx={{ width: '50%' }}/>
-                <TextField label="Language" name="language" value={bookData["language"]} onChange={onChange} size="small" sx={{ width: '20%', marginLeft: '10px' }} select>
-                    {   
-                        defination.Language.map((language, index) => 
-                        (
-                            <MenuItem key={index} value={language.language}>{`${language.language}(${language.shortName})`}</MenuItem>
-                        ))
-                    }
-                    <MenuItem value="All" sx={{height: '40px'}}>All</MenuItem>
-                </TextField>
+                <TextField label="Book Name" name="bookname" value={bookData["bookname"]} onChange={onChange} size="small" sx={{ width: '75%' }}/>
+
                 <IconButton onClick={toggleCardVisibility}>
                     {optionVisiable ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                 </IconButton>
+
                 <Button variant='contained' sx={{marginLeft: '10px'}}>Search</Button>
                     <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={handleActionMenu}>Action</Button>
                     <Menu open={Boolean(actionMenu)} anchorEl={actionMenu} onClose={handleActionMenu}>

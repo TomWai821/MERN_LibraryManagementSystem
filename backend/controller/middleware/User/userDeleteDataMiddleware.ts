@@ -13,7 +13,7 @@ export const DeleteBanListRecord = async (req:AuthRequest, res:Response, next:Ne
 
         if(!deleteBanListRecord)
         {
-            return res.status(400).json({success: false, message:"Failed to delete Ban List Record"});
+            return res.status(400).json({success: false, message: "Failed to delete Ban List Record"});
         }
     }
 
@@ -29,7 +29,7 @@ export const RemoveDeleteListRecord = async (req:AuthRequest, res:Response, next
 
         if(!removeDeleteListRecord)
         {
-            return res.status(400).json({successsuccess: false, message:"Failed to remove Delete List Record"});
+            return res.status(400).json({success: false, message: "Failed to remove Delete List Record"});
         }
     }
     next();

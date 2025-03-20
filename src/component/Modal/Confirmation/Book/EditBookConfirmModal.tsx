@@ -9,35 +9,37 @@ import { useModal } from "../../../../Context/ModalContext";
 
 // Model
 import { EditModalInterface } from "../../../../Model/ModelForModal";
-import { BookDataInterface } from "../../../../Model/BookTableModel";
 
 // Another Modal
 import EditBookModal from "../../Book/EditBookModal";
 
 // Data (CSS Syntax)
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
+import { BookResultDataInterface } from "../../../../Model/ResultModel";
+import { useBookContext } from "../../../../Context/Book/BookContext";
 
 const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {  
     const {value, editData, compareData} = editModalData;
     const [differences, setDifferences] = useState<JSX.Element[]>([]);
-    const {handleOpen} = useModal();
+    const {handleOpen, handleClose} = useModal();
+    const {editBook} = useBookContext();
 
     useEffect(() => 
     {
-            generateChangeTypography(editData as BookDataInterface, compareData as BookDataInterface);
+        generateChangeTypography(editData as BookResultDataInterface, compareData as BookResultDataInterface);
     },[editData, compareData]);
 
-    const generateChangeTypography = (editData: BookDataInterface, compareData: BookDataInterface) => 
+    const generateChangeTypography = (editData: BookResultDataInterface, compareData: BookResultDataInterface) => 
     {
         let differences: JSX.Element[] = [];
         for (const key in editData) 
         {
-            if (editData[key as keyof BookDataInterface] !== compareData[key as keyof BookDataInterface]) 
+            if (editData[key as keyof BookResultDataInterface] !== compareData[key as keyof BookResultDataInterface]) 
             {
                 differences.push(
                     <Typography key={key}>
-                        {`- ${key}: ${compareData[key as keyof BookDataInterface]} -> ${editData[key as keyof BookDataInterface]}`}
+                        {`- ${key}: ${compareData[key as keyof BookResultDataInterface]} -> ${editData[key as keyof BookResultDataInterface]}`}
                     </Typography>
                 );
             }
@@ -57,9 +59,11 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
         handleOpen(<EditBookModal editData={editData} compareData={compareData} value={value} />);
     }
     
-    const onClick = () => 
+    const editBookData = () => 
     {
-    
+        const EditData = editData as BookResultDataInterface;
+        editBook(EditData._id, EditData.bookname, EditData.genreID, EditData.languageID, EditData.pages, EditData.description);
+        handleClose();
     }
 
     return(
@@ -70,7 +74,7 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
                 {differences}
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
             </Box>
-            <Button variant='contained' onClick={onClick}>Yes</Button>
+            <Button variant='contained' onClick={editBookData}>Yes</Button>
         </ModalTemplate>
 
     );

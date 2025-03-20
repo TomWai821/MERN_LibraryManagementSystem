@@ -53,7 +53,7 @@ const DeleteUserTable:FC<UserDataTableInterface> = (DataForDeleteUserTable) =>
                     <TableRow>
                         {DeleteUserTableHeader.map((header, index) =>
                             (
-                                <TableCell key={index}>{header.label}</TableCell>
+                                <TableCell sx={{fontSize: "16px"}} key={index}>{header.label}</TableCell>
                             ) 
                         )}  
                     </TableRow>
@@ -63,7 +63,7 @@ const DeleteUserTable:FC<UserDataTableInterface> = (DataForDeleteUserTable) =>
                     {paginatedData.map((data, index) => 
                         (
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
-                                <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
+                                <TableCell sx={{fontSize: "16px", "&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data} >{data.username}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.role}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.gender}</ContentTableCell>

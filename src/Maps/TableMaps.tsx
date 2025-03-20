@@ -53,15 +53,14 @@ const AllBookTableHeader =
     {label:"Genre"},
     {label:"Language"},
     {label:"Pages"},
-    {label:"Description"},
     {label:"Actions"}
 ]
 
 const BookTabLabel = 
 [
     {label: "All Book"},
-    {label: "Book Loaned"},
-    {label: "Book OnShelf"}
+    {label: "Loaned Book"},
+    {label: "OnShelf Book"}
 ]
 
 const UserTabLabel = 

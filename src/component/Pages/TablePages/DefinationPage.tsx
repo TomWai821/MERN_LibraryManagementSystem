@@ -66,7 +66,7 @@ const DefinitionPage:FC<PagesInterface>  = (loginData) =>
             <Typography sx={{fontSize: '24px'}}>Manage Defination</Typography>
 
             <Box sx={{ paddingTop: '50px', minHeight: '100px' }}>
-            <TableTitle type={"Genre"} dataLength={defination.Genre.length}/>
+            <TableTitle title={"Genre"} dataLength={defination.Genre.length}/>
                 {   defination.Genre.map((genreData, index) => 
                     (
                         <Chip sx={{marginRight: '10px'}} key={index} label={`${genreData.genre} (${genreData.shortName})`} variant="outlined" 
@@ -81,7 +81,7 @@ const DefinitionPage:FC<PagesInterface>  = (loginData) =>
             </Box>
 
             <Box sx={{ paddingTop: '50px', minHeight: '100px' }}>
-                <TableTitle type={"Language"} dataLength={defination.Language.length}/>
+                <TableTitle title={"Language"} dataLength={defination.Language.length}/>
                 {   defination.Language.map((languageData, index) => 
                     (
                         <Chip sx={{marginRight: '10px'}} key={index} label={`${languageData.language} (${languageData.shortName})`} variant="outlined" 

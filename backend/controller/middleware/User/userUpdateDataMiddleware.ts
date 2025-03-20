@@ -2,8 +2,8 @@ import { NextFunction, Response } from "express";
 import { AuthRequest } from "../../../model/requestInterface";
 import { FindUser } from "../../../schema/user/user";
 import { ObjectId } from "mongoose";
-import { CreateBanList, FindBanList, FindBanListByID, FindBanListByIDAndDelete, FindBanListByIDAndUpdate } from "../../../schema/user/banList";
-import { CreateDeleteList, FindDeleteList, FindDeleteListByID, FindDeleteListByIDAndDelete } from "../../../schema/user/deleteList";
+import { CreateBanList, FindBanList, FindBanListByIDAndDelete } from "../../../schema/user/banList";
+import { CreateDeleteList, FindDeleteList,  FindDeleteListByIDAndDelete } from "../../../schema/user/deleteList";
 import { UserInterface } from "../../../model/userSchemaInterface";
 
 // For user update(Require login)
@@ -58,9 +58,6 @@ export const BuildUpdateData = async (req: AuthRequest, res:Response, next:NextF
 export const DeleteBanListOrDeleteListData = async (req: AuthRequest, res: Response, next:NextFunction) => 
 {
     const {deleteListID, banListID, statusForUserList} = req.body;
-    console.log(deleteListID);
-    console.log(banListID);
-    console.log(statusForUserList);
 
     if(statusForUserList === "Normal")
     {

@@ -14,6 +14,7 @@ import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 import { PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
 import { BookTabLabel, PaginationOption } from "../../../Maps/TableMaps";
 import { useBookContext } from "../../../Context/Book/BookContext";
+import TableTitle from "../../UIFragment/TableTitle";
 
 const BookPage:FC<PagesInterface> = (loginData) =>
 {
@@ -56,7 +57,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
      
     return( 
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
-            <Typography sx={{fontSize: '24px'}}>{SetTitle} {bookData[tabValue].length === 0 && `(No record)`}</Typography>
+            <TableTitle title={"Book Mangement Page"} dataLength={bookData[tabValue].length}/>
 
             <BookFilter isAdmin={isAdmin} value={tabValue} onChange={onChange} searchData={searchBook} Search={SearchBook}/>
 

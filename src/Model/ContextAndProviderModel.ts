@@ -60,6 +60,8 @@ interface BookContextProps
     OnShelfBook: BookResultDataInterface[];
     fetchAllBook: () => Promise<void>;
     createBook: (bookname:string, genreID:string, languageID:string, page:number, description:string) => void;
+    editBook: (bookID:string, bookname:string, genreID:string, languageID:string, page:number, description:string) => void;
+    deleteBook: (bookID:string) => void;
 }
 
 interface DefinatonProps

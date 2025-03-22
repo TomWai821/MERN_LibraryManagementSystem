@@ -10,8 +10,8 @@ import { TransferDateToString } from "../../../../../Controller/OtherController"
 import { UserDataTableInterface } from "../../../../../Model/UserTableModel";
 
 // Data (CSS Syntax and table header)
-import { DeleteUserTableHeader } from "../../../../../Maps/TableMaps";
-import { ItemToCenter } from "../../../../../Maps/FormatSyntaxMaps";
+import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { DeleteUserTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
 
 const DeleteUserTable:FC<UserDataTableInterface> = (DataForDeleteUserTable) => 
 {

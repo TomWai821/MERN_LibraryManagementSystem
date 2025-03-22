@@ -1,11 +1,12 @@
 import { FC } from "react"
-import { UserModalBody } from "../../../../Model/ModelForModal";
 import { Avatar, Box, Divider, Typography } from "@mui/material";
-import { displayAsColumn } from "../../../../Maps/FormatSyntaxMaps";
-import {  CountDuration, TransferDateToString } from "../../../../Controller/OtherController";
-import { UserResultDataInterface } from "../../../../Model/ResultModel";
 
-const DeleteUserDataBody:FC<UserModalBody>  = (DeleteUserData) => 
+import {  CountDuration, TransferDateToString } from "../../../../Controller/OtherController";
+import { DisplayDataModalBody } from "../../../../Model/ModelForModal";
+import { UserResultDataInterface } from "../../../../Model/ResultModel";
+import { displayAsColumn } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+
+const DeleteUserDataBody:FC<DisplayDataModalBody>  = (DeleteUserData) => 
 {
     const {data} = DeleteUserData;
     const Data = data as UserResultDataInterface;

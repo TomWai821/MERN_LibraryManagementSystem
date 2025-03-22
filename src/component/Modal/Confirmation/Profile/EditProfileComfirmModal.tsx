@@ -1,9 +1,11 @@
 import { FC } from 'react'
-
 import { Box, Button, Typography } from "@mui/material";
+
 import { useModal } from '../../../../Context/ModalContext';
-import { ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
+
 import ModalTemplate from '../../../Templates/ModalTemplate';
+
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 
 const EditProfileConfirmModal:FC<{}> = ({}) => 

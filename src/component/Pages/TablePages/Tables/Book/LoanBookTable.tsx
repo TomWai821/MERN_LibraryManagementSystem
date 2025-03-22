@@ -9,9 +9,8 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
 
 // Data (CSS Syntax and table header)
-import { ItemToCenter } from "../../../../../Maps/FormatSyntaxMaps";
-import { AllUserTableHeader } from "../../../../../Maps/TableMaps";
-
+import { AllUserTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
+import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {

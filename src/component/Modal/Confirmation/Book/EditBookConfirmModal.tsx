@@ -14,9 +14,9 @@ import { EditModalInterface } from "../../../../Model/ModelForModal";
 import EditBookModal from "../../Book/EditBookModal";
 
 // Data (CSS Syntax)
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
 import { BookResultDataInterface } from "../../../../Model/ResultModel";
 import { useBookContext } from "../../../../Context/Book/BookContext";
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {  

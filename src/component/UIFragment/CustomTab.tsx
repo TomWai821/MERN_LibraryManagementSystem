@@ -3,7 +3,7 @@ import { ChangeEvent, FC, Fragment } from "react";
 
 import { TabInterface } from "../../Model/TablePagesAndModalModel";
 
-import { displayAsRow } from "../../Maps/FormatSyntaxMaps";
+import { displayAsRow } from "../../ArraysAndObjects/FormatSyntaxObjects";
 
 const getTabProps = (index: number) => 
 {

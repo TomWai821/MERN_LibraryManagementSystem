@@ -10,9 +10,11 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 import { UserDataTableInterface } from "../../../../../Model/UserTableModel";
 
 // Data (CSS Syntax and table header)
-import { ItemToCenter } from "../../../../../Maps/FormatSyntaxMaps";
-import { BannedUserTableHeader } from "../../../../../Maps/TableMaps";
+import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { BannedUserTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
+
 import { CalculateDuration } from "../../../../../Controller/OtherController";
+
 
 
 const SuspendUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) => 

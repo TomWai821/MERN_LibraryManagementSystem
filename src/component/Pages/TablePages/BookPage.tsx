@@ -1,37 +1,53 @@
-import {  ChangeEvent, FC, useState } from "react";
-import { Box, TableContainer, Typography, Paper, Pagination } from "@mui/material";
+import {  ChangeEvent, FC, useEffect, useState } from "react";
+import { Box, TableContainer, Paper } from "@mui/material";
+
+// Context
+import { useBookContext } from "../../../Context/Book/BookContext";
+import { useDefinationContext } from "../../../Context/Book/DefinationContext";
 
 // Another Component
 import BookFilter from "./Filter/BookFilter";
 import CustomTab from "../../UIFragment/CustomTab";
 import BookTabPanel from "./Tabs/BookTabPanel";
+import TableTitle from "../../UIFragment/TableTitle";
 
 // Model
-import { BookDataInterface, BookSearchInterface } from "../../../Model/BookTableModel";
+import { BookSearchInterface } from "../../../Model/BookTableModel";
 import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 
 // Data (CSS SYntax and dropdown)
-import { PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
-import { BookTabLabel, PaginationOption } from "../../../Maps/TableMaps";
-import { useBookContext } from "../../../Context/Book/BookContext";
-import TableTitle from "../../UIFragment/TableTitle";
+import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects";
+import { BookTabLabel, PaginationOption } from "../../../ArraysAndObjects/TableArrays";
 
 const BookPage:FC<PagesInterface> = (loginData) =>
 {
     const { isLoggedIn, isAdmin } = loginData;
-    const { AllBook, LoanBook, OnShelfBook } = useBookContext();
-
-    const bookData = [AllBook, LoanBook, OnShelfBook];
+    const { bookData, fetchBookWithFliterData } = useBookContext();
+    const { defination } = useDefinationContext();
     const SetTitle:string = isAdmin ? "Manage Books Record": "View Books";
 
-    const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", language: "All", genre: "All", pages: 0 });
+    const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", language: "All", languageID: "", genre: "All", genreID: ""});
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
 
-    const onChange = (event: ChangeEvent<HTMLInputElement>) => 
-    {
-        setSearchBook({ ...searchBook, [event.target.name]: event.target.value });
-    }
+    const defaultValue = { bookname: "", language: "All", languageID: "", genre: "All", genreID: ""};
+
+    const onChange = (event: ChangeEvent<HTMLInputElement>, index?: number) => {
+        const { name, value } = event.target;
+    
+        if (name === "genre") 
+        {
+            setSearchBook({...searchBook,genre: value, genreID: index !== undefined && defination.Genre[index]?._id ? defination.Genre[index]._id : ""});
+        } 
+        else if (name === "language") 
+        {
+            setSearchBook({...searchBook, language: value, languageID: index !== undefined && defination.Language[index]?._id ? defination.Language[index]._id : ""});
+        } 
+        else 
+        {
+            setSearchBook({ ...searchBook, [name]: value });
+        }
+    };
 
     const changeValue = (type:string, newValue: number) =>
     {
@@ -52,12 +68,29 @@ const BookPage:FC<PagesInterface> = (loginData) =>
 
     const SearchBook = () => 
     {
-
+        const TableName=["AllBook","OnLoanBook"]
+        fetchBookWithFliterData(TableName[tabValue], searchBook.bookname, searchBook.genreID, searchBook.languageID);
     }
+
+    useEffect(() => 
+        { 
+            if(!isAdmin) 
+            { 
+                setTabValue(1); 
+            }
+        },[isAdmin]
+    )
+
+    useEffect(() => 
+        {
+            // Reset while value change
+            setSearchBook(defaultValue);
+        },[tabValue]
+    )
      
     return( 
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
-            <TableTitle title={"Book Mangement Page"} dataLength={bookData[tabValue].length}/>
+            <TableTitle title={SetTitle} dataLength={bookData[tabValue].length}/>
 
             <BookFilter isAdmin={isAdmin} value={tabValue} onChange={onChange} searchData={searchBook} Search={SearchBook}/>
 

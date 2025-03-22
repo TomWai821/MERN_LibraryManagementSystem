@@ -1,11 +1,11 @@
 import { FC, Fragment } from "react"
-import { UserModalBody } from "../../../../Model/ModelForModal";
+import { DisplayDataModalBody } from "../../../../Model/ModelForModal";
 import { Avatar, Box, Typography } from "@mui/material";
-import { displayAsColumn } from "../../../../Maps/FormatSyntaxMaps";
 import { CalculateDuration, CountDuration, TransferDateToString } from "../../../../Controller/OtherController";
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
+import { displayAsColumn } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
-const BannedUserDataBody:FC<UserModalBody> = (BannedUserData) => 
+const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) => 
 {
     const {data, isAdmin} = BannedUserData;
     const Data = data as UserResultDataInterface;

@@ -11,11 +11,11 @@ import EditBookConfirmModal from '../Confirmation/Book/EditBookConfirmModal';
 import { useModal } from '../../../Context/ModalContext';
 
 // Model
-import { CreateBookModalInterface, EditModalInterface } from '../../../Model/ModelForModal';
+import { EditModalInterface } from '../../../Model/ModelForModal';
 import { BookDataInterface } from '../../../Model/BookTableModel';
 
 // Data (CSS Syntax)
-import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
+import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 import { useDefinationContext } from '../../../Context/Book/DefinationContext';
 import { BookResultDataInterface } from '../../../Model/ResultModel';
 

@@ -16,7 +16,7 @@ import { useUserContext } from '../../../../Context/User/UserContext';
 import ModalTemplate from '../../../Templates/ModalTemplate';
 
 // Data (CSS syntax)
-import { ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import ModalConfirmButton from '../../../UIFragment/ModalConfirmButton';
 
 

@@ -12,8 +12,8 @@ import CreateBookModal from "../../Book/CreateBookModal"
 import { CreateModalInterface } from "../../../../Model/ModelForModal"
 
 // Data(CSS Syntax)
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps"
 import { useBookContext } from "../../../../Context/Book/BookContext"
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects"
 
 const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) => 
 {

@@ -43,7 +43,7 @@ interface OptionFieldModel
 interface BookOptionFieldModal
 {
     optionVisiable: boolean;
-    onChange:(event: ChangeEvent<HTMLInputElement>) => void
+    onChange:(event: ChangeEvent<HTMLInputElement>, index:number) => void
     searchData: BookDataInterface;
 }
 

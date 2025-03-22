@@ -18,8 +18,8 @@ import { useUserContext } from "../../../../Context/User/UserContext";
 import BanUserModal from "../../User/SuspendUserModal";
 
 // Data (CSS Syntax and dropdown data)
-import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
-import { dateOption } from "../../../../Maps/TextFieldsMaps";
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { dateOption } from "../../../../ArraysAndObjects/TextFieldsArrays";
 
 const SuspendUserConfirmModal:FC<BanModalInterface> = (banData) => 
 {

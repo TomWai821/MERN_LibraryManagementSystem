@@ -3,13 +3,13 @@ import { UserRegisterRules, UserLoginRules, UserModifyDataRules } from '../model
 import { DeleteUser, BuildGetUserDataMessage, ModifyUserData, UserLogin, UserRegister, ChangeStatus, ModifyBanListData } from '../controller/userController';
 import { FetchUserFromHeader } from '../controller/middleware/User/authMiddleware';
 import { BanListValidation, CompareUserStatus, FoundUserFromParams, UserLoginDataValidation, UserRegisterDataValidation } from '../controller/middleware/User/userValidationMiddleware';
-import { BuildQueryAndGetData } from '../controller/middleware/User/userGetDataMiddleware';
+import { BuildUserQueryAndGetData } from '../controller/middleware/User/userGetDataMiddleware';
 import { BuildUpdateData, DeleteBanListOrDeleteListData } from '../controller/middleware/User/userUpdateDataMiddleware';
-import { LoginAndFindUser, ValidationForModifyStatus } from '../maps/routesMap';
+import { LoginAndFindUser, ValidationForModifyStatus } from '../Arrays/routesMap';
 
 const router = express.Router();
 
-router.get('/UserData/tableName=:tableName', FetchUserFromHeader, BuildQueryAndGetData, BuildGetUserDataMessage);
+router.get('/UserData/tableName=:tableName', FetchUserFromHeader, BuildUserQueryAndGetData, BuildGetUserDataMessage);
 
 router.post('/Register', UserRegisterRules, UserRegisterDataValidation, UserRegister);
 router.post('/Login', UserLoginRules, UserLoginDataValidation, UserLogin);

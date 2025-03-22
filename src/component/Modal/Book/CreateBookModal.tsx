@@ -15,8 +15,8 @@ import { BookDataInterface } from '../../../Model/BookTableModel';
 import { CreateBookModalInterface } from '../../../Model/ModelForModal';
 
 // Data (CSS Syntax and dropdown data)
-import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
 import { useDefinationContext } from '../../../Context/Book/DefinationContext';
+import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 
 const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) => 
 {

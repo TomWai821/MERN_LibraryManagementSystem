@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Box, Typography } from "@mui/material";
 
 // Context
-import { useUserContext } from "../../../../Context/User/UserContext";
 import { useModal } from '../../../../Context/ModalContext';
+import { useDefinationContext } from "../../../../Context/Book/DefinationContext";
 
 // UI Fragment
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
@@ -11,12 +11,16 @@ import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 // Template
 import ModalTemplate from '../../../Templates/ModalTemplate';
 
+// Another Modal
+import CreateDefinationModal from "../../Defination/CreateDefinationModal";
+
 // Data (CSS Synxax)
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
-import { useDefinationContext } from "../../../../Context/Book/DefinationContext";
+import { ModalBodySyntax, ModalSubTitleSyntax, ModalRemarkSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+
+// Models
 import { CreateModalInterface } from "../../../../Model/ModelForModal";
 import { DefinationInterface } from "../../../../Model/ResultModel";
-import CreateDefinationModal from "../../Defination/CreateDefinationModal";
+
 
 const CreateDefinationConfirmModal:FC<CreateModalInterface> = (definationData) => 
 {

@@ -14,22 +14,21 @@ import CreateBookModal from "../../../Modal/Book/CreateBookModal";
 
 // Models
 import { FilterInterface } from "../../../../Model/TablePagesAndModalModel";
-import { BookDataInterface, BookSearchInterface } from "../../../../Model/BookTableModel";
+import { BookDataInterface } from "../../../../Model/BookTableModel";
+import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 // Data(CSS Syntax and dropdown data)
-import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
-import { useDefinationContext } from "../../../../Context/Book/DefinationContext";
+
 
 
 const BookFilter: FC<FilterInterface> = (filterData) => 
 {
-    const {value, isAdmin, onChange, searchData} = filterData;
-    const bookData = searchData as BookDataInterface;
+    const {value, onChange, searchData, Search} = filterData;
+    const bookData = searchData as unknown as BookDataInterface;
 
     const [optionVisiable, setOptionVisiable] = useState(false);
     const [actionMenu, openActionMenu] = useState<HTMLElement | null>(null);
     const { handleOpen } = useModal();
-    const { defination } = useDefinationContext();
 
     const ActionMenu = 
     [
@@ -57,7 +56,7 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
                     {optionVisiable ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                 </IconButton>
 
-                <Button variant='contained' sx={{marginLeft: '10px'}}>Search</Button>
+                <Button variant='contained' sx={{marginLeft: '10px'}} onClick={Search}>Search</Button>
                     <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={handleActionMenu}>Action</Button>
                     <Menu open={Boolean(actionMenu)} anchorEl={actionMenu} onClose={handleActionMenu}>
                     {

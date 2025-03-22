@@ -7,7 +7,7 @@ import ModalTemplate from '../../../Templates/ModalTemplate';
 import { useModal } from '../../../../Context/ModalContext';
 
 // Data (CSS syntax)
-import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
+import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const DeleteProfileConfirmModal = () => 
 {

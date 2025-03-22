@@ -8,8 +8,7 @@ import { useModal } from "../../Context/ModalContext";
 import { ModalTemplateProps } from "../../Model/ContextAndProviderModel";
 
 // Data(CSS Syntax)
-import { CreateModalSyntax, ModalSyntax, ModalTitleSyntax } from "../../Maps/FormatSyntaxMaps";
-
+import { CreateModalSyntax, ModalSyntax, ModalTitleSyntax } from "../../ArraysAndObjects/FormatSyntaxObjects";
 
 const ModalTemplate:FC <ModalTemplateProps> = (templateData) => 
 {

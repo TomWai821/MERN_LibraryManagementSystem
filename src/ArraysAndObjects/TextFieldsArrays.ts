@@ -1,4 +1,4 @@
-import { GenderFilterOption, GenderOption, RoleFilterOption, RoleOption, StatusFilterOption } from "./TableMaps";
+import { GenderFilterOption, GenderOption, RoleFilterOption, RoleOption, StatusFilterOption } from "./TableArrays";
 
 const RegisterField = 
 [

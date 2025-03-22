@@ -1,14 +1,14 @@
 import { Request, Response } from 'express'
 import { CreateBook, FindBookByIDAndDelete, FindBookByIDAndUpdate, GetBook } from '../schema/book/book';
+import { AuthRequest } from '../model/requestInterface';
 
-export const GetAllBookRecord = async (req:Request, res:Response) => 
+export const GetBookRecord = async (req:AuthRequest, res:Response) => 
 {
     let success = false;
+    const foundBook = req.foundBook;
 
     try
     {
-        const foundBook = await GetBook();
-
         success = true;
         res.json({ success, foundBook })
     }

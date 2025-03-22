@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
-import { PageItemToCenter } from "../../Maps/FormatSyntaxMaps";
+import { PageItemToCenter } from "../../ArraysAndObjects/FormatSyntaxObjects";
+
 
 const MainPage = () =>
 {

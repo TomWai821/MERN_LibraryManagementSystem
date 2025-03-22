@@ -17,8 +17,8 @@ import { useModal } from "../../../Context/ModalContext";
 import { BanModalInterface } from "../../../Model/ModelForModal";
 
 // Data (CSS Syntax and dropdown option)
-import { ModalBodySyntax } from "../../../Maps/FormatSyntaxMaps"
-import { dateOption } from "../../../Maps/TextFieldsMaps";
+import { ModalBodySyntax } from "../../../ArraysAndObjects/FormatSyntaxObjects";
+import { dateOption } from "../../../ArraysAndObjects/TextFieldsArrays";
 
 const BanUserModal:FC<BanModalInterface> = ({...userData}) => 
 {

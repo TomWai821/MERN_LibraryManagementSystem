@@ -17,7 +17,7 @@ import { FilterInterface } from "../../../../Model/TablePagesAndModalModel";
 import { UserDataInterface } from "../../../../Model/UserTableModel";
 
 // data (CSS Syntax)
-import { ItemToCenter } from "../../../../Maps/FormatSyntaxMaps";
+import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const UserFilter:FC<FilterInterface> = (filterData) => 
 {

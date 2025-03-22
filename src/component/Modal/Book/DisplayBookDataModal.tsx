@@ -5,7 +5,7 @@ import ModalTemplate from "../../Templates/ModalTemplate";
 
 import { DisplayDataModalInterface } from "../../../Model/ModelForModal";
 
-import { ModalBodySyntax } from "../../../Maps/FormatSyntaxMaps";
+import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 import AllBookDataBody from "./DisplayBookDataBody/AllBookDataBody";
 import { BookResultDataInterface } from "../../../Model/ResultModel";
 
@@ -24,12 +24,9 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
                 break;
 
             case 1:
-                displayData.title = "Loaned Book Information";
+                displayData.title = "OnLoan Book Information";
                 break;
 
-            case 2:
-                displayData.title = "OnShelf Book Information";
-                break;
         }
         return displayData;
     }

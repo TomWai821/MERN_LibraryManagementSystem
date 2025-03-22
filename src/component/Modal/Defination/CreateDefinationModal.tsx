@@ -1,12 +1,23 @@
 import { ChangeEvent, FC, useState } from 'react'
 import { Box,  TextField } from '@mui/material'
 
+
+// Context
 import { useModal } from '../../../Context/ModalContext';
-import ModalTemplate from '../../Templates/ModalTemplate';
-import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
-import ModalConfirmButton from '../../UIFragment/ModalConfirmButton';
+
+// Another Modal
 import CreateDefinationConfirmModal from '../Confirmation/Defination/CreateDefinationConfirmModal';
+
+// Models
 import { CreateModalInterface } from '../../../Model/ModelForModal';
+
+// UI Fragment
+import ModalTemplate from '../../Templates/ModalTemplate';
+import ModalConfirmButton from '../../UIFragment/ModalConfirmButton';
+
+// Useful Array/Object (data)
+import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
+
 
 const CreateDefinationModal:FC<CreateModalInterface> = (createModalData) => 
 {

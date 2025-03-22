@@ -1,6 +1,5 @@
-import { ImportantActionButtonSyntax } from '../../Maps/FormatSyntaxMaps';
-import { ResultInterface } from '../../Model/ResultModel';
-import { SetUserCookie, DeleteUserCookie } from '../CookieController'
+import { ResultInterface } from '../Model/ResultModel';
+import { SetUserCookie, DeleteUserCookie } from './CookieController'
 
 const mainPage:string = 'http://localhost:3000/';
 

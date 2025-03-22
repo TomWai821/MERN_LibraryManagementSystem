@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react"
+import { ChangeEvent, FC, Fragment } from "react"
 import { Box, Card, MenuItem, TextField, Typography } from "@mui/material"
 
 import { BookOptionFieldModal } from "../../Model/InputFieldModel";
@@ -22,7 +22,15 @@ const SearchOptionFieldForBook:FC<BookOptionFieldModal> = ({...optionData}) =>
                     <Box sx={{ padding: '15px 20px', display: 'grid', justifyContent: 'center', alignItems: 'center', gap: '15px 50px', gridTemplateColumns: '10% 30% 10% 30%' }}>
 
                         <Typography>Genre</Typography>
-                        <TextField name="genre" onChange={onChange} value={searchData.genre} size="small" select>
+                        <TextField name="genre" value={searchData.genre} size="small" select 
+                        onChange=
+                        {
+                            (event) => 
+                            { 
+                                const selectedIndex = defination.Genre.findIndex((genre) => genre.genre === event.target.value);
+                                onChange(event as ChangeEvent<HTMLInputElement>, selectedIndex as number)
+                            }
+                        }>
                             {
                                 defination.Genre.map((genre, index) => 
                                 (
@@ -33,7 +41,15 @@ const SearchOptionFieldForBook:FC<BookOptionFieldModal> = ({...optionData}) =>
                         </TextField>
 
                         <Typography>Language</Typography>
-                        <TextField name="language" value={searchData.language} onChange={onChange} size="small" select>
+                        <TextField name="language" value={searchData.language} size="small" select 
+                        onChange=
+                        {
+                            (event) => 
+                            { 
+                                const selectedIndex = defination.Language.findIndex((language) => language.language === event.target.value);
+                                onChange(event as ChangeEvent<HTMLInputElement>, selectedIndex as number)
+                            }
+                        }>
                             {   
                                 defination.Language.map((language, index) => 
                                 (

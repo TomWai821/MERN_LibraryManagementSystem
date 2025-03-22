@@ -5,12 +5,14 @@ import { AuthRequest } from "../../../model/requestInterface";
 import { ObjectId } from "mongoose";
 
 // for build query (GET method in user, which require login)
-export const BuildQueryAndGetData = async (req: AuthRequest, res: Response, next: NextFunction) => 
+export const BuildUserQueryAndGetData = async (req: AuthRequest, res: Response, next: NextFunction) => 
 {
     const userId = req.user?._id;
     const tableName = req.params.tableName;
     const queryParams = req.query;
     let foundUser: UserInterface | UserInterface[] | null | undefined;
+
+    console.log(queryParams);
 
     if (userId) 
     {

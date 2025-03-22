@@ -1,14 +1,24 @@
 import { ChangeEvent, FC, useState } from 'react'
+import { Box, MenuItem, TextField } from '@mui/material'
 
-import { Box, Button, MenuItem, TextField } from '@mui/material'
+// Context
 import { useModal } from '../../../Context/ModalContext';
-import ModalTemplate from '../../Templates/ModalTemplate';
-import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
-import { CreateUserInputField } from '../../../Maps/TextFieldsMaps';
+
+// Another Modals
 import CreateUserConfirmModal from '../Confirmation/User/CreateUserConfirmModal';
+
+// Models
+import ModalTemplate from '../../Templates/ModalTemplate';
+
 import { GetCurrentDate } from '../../../Controller/OtherController';
 import { UserDataInterface } from '../../../Model/UserTableModel';
+
+// UI Fragment
 import ModalConfirmButton from '../../UIFragment/ModalConfirmButton';
+
+// Arrays And Object(For Dropdown Data and css syntax)
+import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
+import { CreateUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
 
 const CreateUserModal:FC = ({}) => 
 {

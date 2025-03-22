@@ -14,7 +14,7 @@ import ModalTemplate from '../../../Templates/ModalTemplate';
 import CreateUserModal from "../../User/CreateUserModal";
 
 // Data (CSS Synxax)
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const CreateUserConfirmModal = ({...userData}) => 
 {

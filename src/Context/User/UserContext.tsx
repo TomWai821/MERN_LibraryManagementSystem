@@ -20,6 +20,7 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
     const [BannedUser, setBannedUser] = useState<UserResultDataInterface[]>([]);
     const [DeleteUser, setDeleteUser] = useState<UserResultDataInterface[]>([]);
     const authToken = GetData("authToken") as string;
+    const userData = [AllUser, BannedUser, DeleteUser];
 
     // For init
     const fetchAllUser = useCallback(async () => 
@@ -195,7 +196,7 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
     )
 
     return (
-        <UserContext.Provider value={{ AllUser, BannedUser, DeleteUser, fetchAllUser, fetchUser, createUser, editUserData, editBannedUserData, changeUserStatus, actualDeleteUser }}>
+        <UserContext.Provider value={{ userData, fetchAllUser, fetchUser, createUser, editUserData, editBannedUserData, changeUserStatus, actualDeleteUser }}>
             {children}
         </UserContext.Provider>
     );

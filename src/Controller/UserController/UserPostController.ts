@@ -1,5 +1,5 @@
 import { ResultInterface } from "../../Model/ResultModel"
-import { handleSuccess } from "./UserOtherController";
+import { handleSuccess } from "../OtherUsefulController";
 
 const contentType:string = 'application/json';
 const localhost:string = 'http://localhost:5000/api/user';

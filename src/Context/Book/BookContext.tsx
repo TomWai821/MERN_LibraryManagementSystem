@@ -12,15 +12,16 @@ const BookContext = createContext<BookContextProps | undefined>(undefined);
 export const BookProvider:FC<ChildProps> = ({children}) => 
 {
     const [AllBook, setAllBook] = useState<BookResultDataInterface[]>([]);
-    const [LoanBook, setLoanBook] = useState<BookResultDataInterface[]>([]);
-    const [OnShelfBook, setOnShelfBook] = useState<BookResultDataInterface[]>([]);
+    const [OnLoanBook, setOnLoanBook] = useState<BookResultDataInterface[]>([]);
     const authToken = GetData("authToken") as string;
+    const bookData = [AllBook, OnLoanBook];
 
     const fetchAllBook = useCallback(async () => 
     {
-        const resultForAllBook: GetResultInterface | undefined = await fetchBook();
-        const resultForLoanBook: GetResultInterface | undefined = await fetchBook();
-        const resultForOnShelfBook: GetResultInterface | undefined = await fetchBook();
+        const resultForAllBook: GetResultInterface | undefined = await fetchBook("AllBook");
+        /*
+        const resultForLoanBook: GetResultInterface | undefined = await fetchBook("LoanBook");
+        */
 
         if(resultForAllBook && Array.isArray(resultForAllBook.foundBook))
         {
@@ -32,12 +33,28 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         {
             setLoanBook(resultForLoanBook.foundBook);
         }
-
-        if(resultForOnShelfBook && Array.isArray(resultForOnShelfBook.foundBook))
-        {
-            setOnShelfBook(resultForOnShelfBook.foundBook);
-        }
         */
+    },[])
+
+    const fetchBookWithFliterData = useCallback(async (tableName:string, bookname?:string, genreID?:string, languageID?:string) => 
+    {
+        const result: GetResultInterface | undefined = await fetchBook(tableName, bookname, genreID, languageID);
+
+        if(result && Array.isArray(result.foundBook))
+        {
+            switch(tableName)
+            {
+                case "AllBook":
+                    setAllBook(result.foundBook);
+                    break;
+
+                /*
+                case "OnLoanBook":
+                    setLoanBook(result.foundBook);
+                    break;
+                */
+            }
+        }
     },[])
 
     const createBook = useCallback(async (bookname:string, genreID:string, languageID:string, page:number, description:string) => 
@@ -62,24 +79,23 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
     )
 
     const deleteBook = useCallback(async (bookID:string) => 
-        {
-            const result = await deleteBookRecord(authToken, bookID)
+    {
+        const result = await deleteBookRecord(authToken, bookID)
 
-            if(result)
-            {
-                fetchAllBook();
-            }
-        },[fetchAllBook]
-    )
-
-    useEffect(() => 
+        if(result)
         {
             fetchAllBook();
-        },[]
-    )
+        }
+
+    },[fetchAllBook])
+
+    useEffect(() => 
+    {
+        fetchAllBook();
+    },[])
 
     return (
-        <BookContext.Provider value={{ AllBook, LoanBook, OnShelfBook, fetchAllBook, createBook, editBook, deleteBook }}>
+        <BookContext.Provider value={{ bookData, fetchAllBook, fetchBookWithFliterData, createBook, editBook, deleteBook }}>
             {children}
         </BookContext.Provider>
     );

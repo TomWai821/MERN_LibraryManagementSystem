@@ -5,8 +5,9 @@ interface BookSearchInterface
 {
     bookname:string;
     language:string;
+    languageID:string;
     genre:string;
-    pages:number;
+    genreID:string;
 }
 
 interface BookDataInterface 

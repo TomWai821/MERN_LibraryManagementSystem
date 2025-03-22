@@ -6,7 +6,6 @@ import { Box,  Typography } from "@mui/material";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
 // UI Fragnemt
-import DeleteTypography from "../../../UIFragment/DeleteTypography";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 
 // Context
@@ -17,7 +16,7 @@ import { useUserContext } from "../../../../Context/User/UserContext";
 import { DeleteModalInterface } from "../../../../Model/ModelForModal";
 
 // Data (CSS Syntax)
-import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
 
 const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) => 

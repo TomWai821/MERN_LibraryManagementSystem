@@ -1,11 +1,11 @@
 import { FC } from "react"
-import { UserModalBody } from "../../../../Model/ModelForModal"
 import { Avatar, Box, Typography } from "@mui/material";
-import { displayAsColumn} from "../../../../Maps/FormatSyntaxMaps";
-import { CalculateDuration } from "../../../../Controller/OtherController";
+import { DisplayDataModalBody } from "../../../../Model/ModelForModal"
+import { displayAsColumn } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
 
-const AllUserDataBody:FC<UserModalBody> = (AllUserData) => 
+
+const AllUserDataBody:FC<DisplayDataModalBody> = (AllUserData) => 
 {
     const {data} = AllUserData;
     const Data = data as UserResultDataInterface;

@@ -1,13 +1,21 @@
 import { FC } from "react";
+import { Box, Typography } from "@mui/material";
+
+// Models
 import { DeleteModalInterface } from "../../../../Model/ModelForModal";
 import { DefinationInterface } from "../../../../Model/ResultModel";
+
+// UI Fragment
 import ModalTemplate from "../../../Templates/ModalTemplate";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 import DeleteTypography from "../../../UIFragment/DeleteTypography";
-import { Box, Typography } from "@mui/material";
-import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
+
+// Contexts
 import { useDefinationContext } from "../../../../Context/Book/DefinationContext";
 import { useModal } from "../../../../Context/ModalContext";
+
+// Useful Object/Array Data
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const DeleteDefinationConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
 {

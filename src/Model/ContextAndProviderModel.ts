@@ -41,9 +41,7 @@ interface ModalTemplateProps extends ChildProps
 // For Context
 interface UserContextProps
 {
-    AllUser: UserResultDataInterface[];
-    BannedUser: UserResultDataInterface[];
-    DeleteUser: UserResultDataInterface[];
+    userData: UserResultDataInterface[][];
     fetchAllUser: () => Promise<void>;
     fetchUser: (type:string, UserData: UserDataInterface | undefined) => Promise<void>;
     createUser: (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string) => void;
@@ -55,10 +53,9 @@ interface UserContextProps
 
 interface BookContextProps
 {
-    AllBook: BookResultDataInterface[];
-    LoanBook: BookResultDataInterface[];
-    OnShelfBook: BookResultDataInterface[];
+    bookData: BookResultDataInterface[][];
     fetchAllBook: () => Promise<void>;
+    fetchBookWithFliterData: (tablename:string, bookname?:string, genreID?:string, languageID?:string) => Promise<void>;
     createBook: (bookname:string, genreID:string, languageID:string, page:number, description:string) => void;
     editBook: (bookID:string, bookname:string, genreID:string, languageID:string, page:number, description:string) => void;
     deleteBook: (bookID:string) => void;

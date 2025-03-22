@@ -52,6 +52,7 @@ const AllBookTableHeader =
     {label:"BookName"},
     {label:"Genre"},
     {label:"Language"},
+    {label:"Status"},
     {label:"Pages"},
     {label:"Actions"}
 ]

@@ -1,14 +1,24 @@
-import { FC, useEffect, useState } from "react";
-import { EditModalInterface } from "../../../../Model/ModelForModal";
-import ModalTemplate from "../../../Templates/ModalTemplate";
-import { useModal } from "../../../../Context/ModalContext";
 import { Box, Typography } from "@mui/material";
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
-import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
-import { useDefinationContext } from "../../../../Context/Book/DefinationContext";
+import { FC, useEffect, useState } from "react";
+
+// Models
 import { DefinationInterface } from "../../../../Model/ResultModel";
+import { EditModalInterface } from "../../../../Model/ModelForModal";
+
+// UI fragment
+import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
+import ModalTemplate from "../../../Templates/ModalTemplate";
+
+// Context
+import { useModal } from "../../../../Context/ModalContext";
+import { useDefinationContext } from "../../../../Context/Book/DefinationContext";
+
+// Another Modals
 import EditGenreDataModal from "../../Defination/EditGenreDataModal";
 import EditLanguageDataModal from "../../Defination/EditLanguageDataModal";
+
+// useful Array/Objects(Data)
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const EditDefinationConfirmModal:FC<EditModalInterface>  = (data) =>
 {

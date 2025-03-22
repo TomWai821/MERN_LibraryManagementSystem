@@ -3,29 +3,7 @@ import { GetResultInterface } from "../../Model/ResultModel";
 const contentType:string = 'application/json';
 const localhost:string = 'http://localhost:5000/api/user';
 
-const BuildQuery = (params:Record<string, number | string | Date | undefined>) =>
-{
-    let queryParams = new URLSearchParams();
-    for(const key in params)
-    {
-        if (params[key] === undefined || params[key] === null || params[key] === "" || params[key] === "All" || key.trim() === "") 
-        {
-            continue; 
-        }
-        else if(params[key] instanceof Date)
-        {
-            queryParams.append(key, (params[key] as Date).toISOString());
-        }
-        else
-        {
-            queryParams.append(key, params[key] as string);
-        }
-    }
-
-    return queryParams.toString();
-}
-
-const FetchUserData = async(tableName?: string, authToken?:string,  username?: string, email?: string , role?: string , status?: string, gender?: string, startDate?:Date, dueDate?: Date) => 
+export const FetchUserData = async(tableName?: string, authToken?:string,  username?: string, email?: string , role?: string , status?: string, gender?: string, startDate?:Date, dueDate?: Date) => 
 {
     try
     {
@@ -61,4 +39,24 @@ const FetchUserData = async(tableName?: string, authToken?:string,  username?: s
     }
 }
 
-export { FetchUserData }
+const BuildQuery = (params:Record<string, number | string | Date | undefined>) =>
+{
+    let queryParams = new URLSearchParams();
+    for(const key in params)
+    {
+        if (params[key] === undefined || params[key] === null || params[key] === "" || params[key] === "All" || key.trim() === "") 
+        {
+            continue; 
+        }
+        else if(params[key] instanceof Date)
+        {
+            queryParams.append(key, (params[key] as Date).toISOString());
+        }
+        else
+        {
+            queryParams.append(key, params[key] as string);
+        }
+    }
+
+    return queryParams.toString();
+}

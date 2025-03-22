@@ -1,8 +1,9 @@
 import { FC } from "react";
 import SearchOptionField from "../UIFragment/SearchOptionField";
 import { OptionFieldsInterface } from "../../Model/TablePagesAndModalModel";
-import { AllUserSearchField, OtherUserSearchField } from "../../Maps/TextFieldsMaps";
+
 import SearchOptionFieldForBook from "../UIFragment/SearchOptionFieldForBook";
+import { AllUserSearchField, OtherUserSearchField } from "../../ArraysAndObjects/TextFieldsArrays";
 
 
 const OptionFieldsManager:FC<OptionFieldsInterface> = (searchOptionFieldData) => 

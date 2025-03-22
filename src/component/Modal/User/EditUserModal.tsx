@@ -17,10 +17,11 @@ import { useModal } from '../../../Context/ModalContext';
 import { UserResultDataInterface } from '../../../Model/ResultModel';
 import { UserDataInterface } from '../../../Model/UserTableModel';
 import { EditModalInterface } from '../../../Model/ModelForModal';
+import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
+import { EditUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
 
 // Data (Dropdown option and CSS Syntax)
-import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
-import { EditUserInputField } from '../../../Maps/TextFieldsMaps';
+
 
 const EditUserModal:FC<EditModalInterface> = (editModalData) => 
 {

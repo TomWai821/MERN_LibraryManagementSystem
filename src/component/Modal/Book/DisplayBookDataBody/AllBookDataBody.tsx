@@ -1,10 +1,10 @@
 import { FC } from "react"
-import { UserModalBody } from "../../../../Model/ModelForModal"
+import { DisplayDataModalBody } from "../../../../Model/ModelForModal"
 import { Box, Typography } from "@mui/material";
-import { displayAsColumn} from "../../../../Maps/FormatSyntaxMaps";
+import { displayAsColumn} from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { BookResultDataInterface } from "../../../../Model/ResultModel";
 
-const AllBookDataBody:FC<UserModalBody> = (AllUserData) => 
+const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) => 
 {
     const {data} = AllUserData;
     const Data = data as BookResultDataInterface;
@@ -16,7 +16,13 @@ const AllBookDataBody:FC<UserModalBody> = (AllUserData) =>
                 <Typography>Genre: {Data.genreDetails.genre}</Typography>
                 <Typography>Language: {Data.languageDetails.language}</Typography>
                 <Typography>Pages: {Data.pages}</Typography>
-                <Typography>Description:{Data.description}</Typography>
+                <Typography>Status: {Data.status}</Typography>
+                <Box sx={{ maxWidth: '350px', display: 'inline-block'}}>
+                    <Typography>Description:</Typography>
+                    <Typography>
+                        {Data.description}
+                    </Typography>
+                </Box>
             </Box>
         </Box>
     );

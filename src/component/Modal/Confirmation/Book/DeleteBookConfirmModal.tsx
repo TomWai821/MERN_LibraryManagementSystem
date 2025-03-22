@@ -6,12 +6,12 @@ import ModalTemplate from '../../../Templates/ModalTemplate';
 import DeleteTypography from '../../../UIFragment/DeleteTypography';
 
 // Model
-import { BookDataInterface, BookDataInterfaceForDelete } from '../../../../Model/BookTableModel';
+import { BookDataInterfaceForDelete } from '../../../../Model/BookTableModel';
 
 // Data (CSS Syntax)
-import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Maps/FormatSyntaxMaps';
 import { useBookContext } from '../../../../Context/Book/BookContext';
 import { useModal } from '../../../../Context/ModalContext';
+import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../ArraysAndObjects/FormatSyntaxObjects';
 
 const DeleteBookModal:FC<BookDataInterfaceForDelete> = ({...bookData}) => 
 {  

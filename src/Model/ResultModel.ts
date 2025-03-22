@@ -39,7 +39,7 @@ interface BookResultDataInterface
     languageID:string;
     pages: number;
     description: string;
-    amount:string;
+    status:string;
     genre?:string;
     language?:string;
     genreDetails: DefinationInterface;

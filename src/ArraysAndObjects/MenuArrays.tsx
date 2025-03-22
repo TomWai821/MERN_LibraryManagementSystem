@@ -1,6 +1,6 @@
 import { ChangePage, GetData } from "../Controller/OtherController";
 
-import { handleLogout } from "../Controller/UserController/UserOtherController";
+import { handleLogout } from "../Controller/OtherUsefulController";
 
 // MUI Image
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -11,7 +11,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import StarIcon from '@mui/icons-material/Star';
-import RecentActorsIcon from '@mui/icons-material/RecentActors';
 
 // For navigation bar
 const externalUserPage = 

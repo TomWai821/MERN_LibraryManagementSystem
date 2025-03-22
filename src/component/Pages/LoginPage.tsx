@@ -13,9 +13,9 @@ import { ValidateField } from '../../Controller/ValidateController'
 import { LoginController } from '../../Controller/UserController/UserPostController';
 import { ChangePage } from '../../Controller/OtherController';
 
-// Data (CSS Syntax)
-import { PageItemToCenter, PageTitleSyntax } from '../../Maps/FormatSyntaxMaps';
-import { LoginField } from '../../Maps/TextFieldsMaps'
+// Data (CSS Syntax and dropdown)
+import { PageItemToCenter, PageTitleSyntax } from '../../ArraysAndObjects/FormatSyntaxObjects';
+import { LoginField } from '../../ArraysAndObjects/TextFieldsArrays';
 
 const LoginPage = () => 
 {
@@ -43,7 +43,6 @@ const LoginPage = () =>
             alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to login!", open: true, onClose: () => alertContext.setAlertConfig(null)});
 
         }
-
     };
     
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 

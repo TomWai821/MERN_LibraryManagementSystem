@@ -5,11 +5,15 @@ import ModalTemplate from "../../Templates/ModalTemplate";
 
 import { DisplayDataModalInterface } from "../../../Model/ModelForModal";
 
-import { ModalBodySyntax } from "../../../Maps/FormatSyntaxMaps";
+// Another COmponent
 import AllUserDataBody from "./DisplayUserDataBody/AllUserDataBody";
 import BannedUserDataBody from "./DisplayUserDataBody/BannedUserDataBody";
 import DeleteUserDataBody from "./DisplayUserDataBody/DeleteUserDataBody";
+
+// Models
 import { UserResultDataInterface } from "../../../Model/ResultModel";
+
+import { ModalBodySyntax } from "../../../ArraysAndObjects/FormatSyntaxObjects";
 
 
 const DisplayUserDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 

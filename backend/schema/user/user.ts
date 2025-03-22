@@ -1,7 +1,7 @@
 import mongoose, { ObjectId, PipelineStage } from 'mongoose';
 import { UserInterface } from '../../model/userSchemaInterface';
 import { printError } from '../../controller/Utils';
-import { userRole, userStatus } from '../../maps/TypeArrayForUser';
+import { userRole, userStatus } from '../../Arrays/TypeArrayForUser';
 
 
 const UserSchema = new mongoose.Schema<UserInterface>

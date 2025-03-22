@@ -18,8 +18,8 @@ import { GetUserCookie } from '../../Controller/CookieController'
 import DeleteProfileConfirmModal from '../Modal/Confirmation/Profile/DeleteProfileComfirmModal'
 
 // Data(CSS Syntax)
-import { DeleteButton, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../Maps/FormatSyntaxMaps'
-import { ViewProfileField } from '../../Maps/TextFieldsMaps'
+import { DeleteButton, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../ArraysAndObjects/FormatSyntaxObjects';
+import { ViewProfileField } from '../../ArraysAndObjects/TextFieldsArrays';
 
 const ViewProfilePage = () => 
 {

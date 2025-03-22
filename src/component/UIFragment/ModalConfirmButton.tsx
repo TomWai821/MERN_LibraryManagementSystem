@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
-import { DeleteButton } from "../../Maps/FormatSyntaxMaps";
+
 
 import { ModalConfirmButtonInterface } from "../../Model/ModelForModal";
+import { DeleteButton } from "../../ArraysAndObjects/FormatSyntaxObjects";
 
 const ModalConfirmButton:FC<ModalConfirmButtonInterface> = (modalConfirmButtonData) => 
 {

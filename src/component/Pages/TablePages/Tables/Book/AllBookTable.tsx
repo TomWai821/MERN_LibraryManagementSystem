@@ -7,10 +7,11 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 
 // Models
 import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
+import { AllBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
+import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 // Data (CSS Syntax and table header)
-import { ItemToCenter } from "../../../../../Maps/FormatSyntaxMaps";
-import { AllBookTableHeader } from "../../../../../Maps/TableMaps";
+
 
 
 const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
@@ -64,6 +65,7 @@ const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.bookname}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.genreDetails?.genre}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.languageDetails?.language}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.status}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.pages}</ContentTableCell>
                                 {isAdmin && (<ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin}/>)}
                             </TableRow>

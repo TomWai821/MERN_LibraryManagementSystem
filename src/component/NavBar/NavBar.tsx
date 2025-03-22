@@ -2,11 +2,12 @@ import React, { FC, useState } from 'react';
 
 import { AppBar, Box, Button, Toolbar } from '@mui/material';
 
-import { AvatarSize, MenuItemSyntax, NavColor, NavSyntax } from '../../Maps/FormatSyntaxMaps';
+
 
 import ProfileMenu from './ProfileMenu';
 import NavMenu from './NavMenu';
 import { PagesInterface } from '../../Model/TablePagesAndModalModel';
+import { NavColor, AvatarSize, NavSyntax, MenuItemSyntax } from '../../ArraysAndObjects/FormatSyntaxObjects';
 
 const NavBar:FC<PagesInterface> = (loginData) => 
 {

@@ -16,7 +16,7 @@ import DeleteDefinationConfirmModal from "../../Modal/Confirmation/Defination/De
 import { ChangePage } from "../../../Controller/OtherController";
 
 // data (CSS Syntax)
-import { PageItemToCenter } from "../../../Maps/FormatSyntaxMaps";
+import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects";
 
 //Model
 import { PagesInterface } from "../../../Model/TablePagesAndModalModel";

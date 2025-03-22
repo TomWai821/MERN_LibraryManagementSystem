@@ -9,8 +9,8 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 import { UserDataTableInterface } from "../../../../../Model/UserTableModel";
 
 // Data (CSS Syntax and table header)
-import { ItemToCenter } from "../../../../../Maps/FormatSyntaxMaps";
-import { AllUserTableHeader } from "../../../../../Maps/TableMaps";
+import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { AllUserTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
 
 const AllUserTable:FC<UserDataTableInterface> = (DataForAllUserTable) => 
 {

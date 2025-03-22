@@ -55,10 +55,10 @@ interface ModalConfirmButtonInterface
     buttonType:string;
 }
 
-interface UserModalBody
+interface DisplayDataModalBody
 {
     isAdmin?:boolean;
     data: UserResultDataInterface | BookResultDataInterface;
 }
 
-export type {CreateModalInterface, CreateBookModalInterface, EditModalInterface, BanModalInterface, DeleteModalInterface, DisplayDataModalInterface, ModalConfirmButtonInterface, UserModalBody}
+export type {CreateModalInterface, CreateBookModalInterface, EditModalInterface, BanModalInterface, DeleteModalInterface, DisplayDataModalInterface, ModalConfirmButtonInterface, DisplayDataModalBody}

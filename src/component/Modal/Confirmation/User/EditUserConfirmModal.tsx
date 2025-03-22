@@ -15,12 +15,17 @@ import ModalTemplate from "../../../Templates/ModalTemplate";
 
 // Another Modal
 import EditUserModal from "../../User/EditUserModal";
+import EditBanUserModal from "../../User/EditBanUserModal";
+
+// Useful function
+import { TransferDateToISOString } from "../../../../Controller/OtherController";
+
+// UI fragment
+import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 
 // Data (CSS syntax)
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Maps/FormatSyntaxMaps";
-import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
-import EditBanUserModal from "../../User/EditBanUserModal";
-import { TransferDateToISOString } from "../../../../Controller/OtherController";
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+
 
 const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {

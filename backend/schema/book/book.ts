@@ -1,6 +1,7 @@
 import mongoose, { PipelineStage } from 'mongoose';
 import { BookInterface } from '../../model/bookSchemaInterface';
 import { printError } from '../../controller/Utils';
+import { bookStatusArray } from '../../Arrays/TypeArrayForBook';
 
 const BookSchema = new mongoose.Schema<BookInterface>
 (
@@ -9,7 +10,7 @@ const BookSchema = new mongoose.Schema<BookInterface>
         languageID: { type: mongoose.Types.ObjectId, ref: 'Language', required: true },
         genreID: { type: mongoose.Types.ObjectId, ref: 'Genre', required: true },
         pages: { type: Number, required: true, min: 1 },
-        status: { type: String, required: true , default: 'OnShelf'},
+        status: { type: String, required: true , default: 'OnShelf', enum:bookStatusArray},
         description: { type: String, default: '' },
         createdAt: { type: Date, default: Date.now, immutable: true }
     }
@@ -37,7 +38,7 @@ export const GetBook = async (data?:Record<string, any>) =>
         {
             return await GetBooksWithOtherDetails();
         }
-        return await Book.find(data as Record<string, any>);
+        return await Book.find(data);
     }
     catch(error)
     {

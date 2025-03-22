@@ -6,7 +6,7 @@ import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as
 import { useModal } from "../../../../../Context/ModalContext";
 
 // Useful function 
-import { StatusDetectionForAllUser, StatusDetectionForBannedUser, StatusDetectionForDeleteUser } from "../../../../../Controller/UserController/UserOtherController";
+import { StatusDetectionForAllUser, StatusDetectionForBannedUser, StatusDetectionForDeleteUser } from "../../../../../Controller/OtherUsefulController";
 
 // Another Modal
 import EditUserModal from "../../../../Modal/User/EditUserModal";
@@ -22,8 +22,9 @@ import { ActionTableCellInterface } from "../../../../../Model/TablePagesAndModa
 import { BookResultDataInterface, DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "../../../../../Model/ResultModel";
 
 // Data(CSS Syntax)
-import { ImportantActionButtonSyntax } from "../../../../../Maps/FormatSyntaxMaps";
+
 import EditBanUserModal from "../../../../Modal/User/EditBanUserModal";
+import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
 {

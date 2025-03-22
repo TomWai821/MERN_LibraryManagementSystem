@@ -18,9 +18,10 @@ import { DetailsInterfaceForBannedAndDelete } from '../../../Model/ResultModel';
 import { EditModalInterface } from '../../../Model/ModelForModal';
 
 // Data (Dropdown option and CSS Syntax)
-import { ModalBodySyntax } from '../../../Maps/FormatSyntaxMaps';
-import { EditBanUserInputField } from '../../../Maps/TextFieldsMaps';
+
 import { TransferDateToISOString } from '../../../Controller/OtherController';
+import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
+import { EditBanUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
 
 const EditBanUserModal:FC<EditModalInterface> = (editModalData) => 
 {

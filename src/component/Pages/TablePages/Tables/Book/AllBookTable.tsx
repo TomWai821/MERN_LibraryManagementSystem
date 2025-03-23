@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from "react";
-import { Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Avatar, Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 // UI Fragment
 import ContentTableCell from "../../../../UIFragment/ContentTableCell";
@@ -8,7 +8,7 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 // Models
 import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
 import { AllBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
-import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { BookImageFormat, ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 // Data (CSS Syntax and table header)
 
@@ -62,6 +62,9 @@ const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                         (
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                 <TableCell sx={{fontSize: "16px", "&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
+                                    <Avatar src={data.image.path} alt="Preview" variant="rounded" sx={BookImageFormat}/>
+                                </ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.bookname}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.genreDetails?.genre}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.languageDetails?.language}</ContentTableCell>

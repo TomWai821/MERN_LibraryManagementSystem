@@ -14,7 +14,7 @@ import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObject
 
 const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
-    const {isAdmin, value, bookData, paginationValue} = DataForAllUserTable;
+    const {value, bookData, paginationValue} = DataForAllUserTable;
     const TableName = "Book";
 
     const currentTableData = bookData[value];

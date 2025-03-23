@@ -37,7 +37,7 @@ const CreateUserModal:FC = ({}) =>
     }
     
     return(
-        <ModalTemplate title={"Create User Record"} cancelButtonName={"Exit"}>
+        <ModalTemplate title={"Create User Record"} width="400px" cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
             {
                 CreateUserInputField.map((field, index) => 

@@ -19,9 +19,7 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
                 <Typography>Status: {Data.status}</Typography>
                 <Box sx={{ maxWidth: '350px', display: 'inline-block'}}>
                     <Typography>Description:</Typography>
-                    <Typography>
-                        {Data.description}
-                    </Typography>
+                    <Typography>{Data.description}</Typography>
                 </Box>
             </Box>
         </Box>

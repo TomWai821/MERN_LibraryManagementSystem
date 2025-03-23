@@ -52,7 +52,7 @@ const CreateDefinationConfirmModal:FC<CreateModalInterface> = (definationData) =
     }
 
     return(
-        <ModalTemplate title={`Create ${type} Confirmation`} cancelButtonName={"No"} cancelButtonEvent={returnCreateUserModal}>
+        <ModalTemplate title={`Create ${type} Confirmation`} width="400px" cancelButtonName={"No"} cancelButtonEvent={returnCreateUserModal}>
             <Box id="modal-description" sx={ModalBodySyntax}>
             <Typography sx={ModalSubTitleSyntax}>Do you want to create this {type}?</Typography>
                 {

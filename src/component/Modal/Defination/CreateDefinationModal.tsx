@@ -39,7 +39,7 @@ const CreateDefinationModal:FC<CreateModalInterface> = (createModalData) =>
     }
     
     return(
-        <ModalTemplate title={`Create ${type} Record`} cancelButtonName={"Exit"}>
+        <ModalTemplate title={`Create ${type} Record`} width="400px" cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
             {
                 value === 0 ?

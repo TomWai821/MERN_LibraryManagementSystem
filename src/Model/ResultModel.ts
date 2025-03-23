@@ -34,6 +34,7 @@ interface UserResultDataInterface extends UserDataInterface
 interface BookResultDataInterface
 {
     _id:string;
+    image: ImageInterface;
     bookname:string;
     genreID:string;
     languageID:string;
@@ -44,6 +45,12 @@ interface BookResultDataInterface
     language?:string;
     genreDetails: DefinationInterface;
     languageDetails: DefinationInterface;
+}
+
+interface ImageInterface
+{
+    path?:string;
+    filename?:string;
 }
 
 interface DetailsInterfaceForBannedAndDelete

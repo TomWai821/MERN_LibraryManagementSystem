@@ -26,7 +26,7 @@ const DeleteBookModal:FC<BookDataInterfaceForDelete> = ({...bookData}) =>
     }
         
     return(
-        <ModalTemplate title={"Delete Book Record Confirmation"} cancelButtonName={"No"}>
+        <ModalTemplate title={"Delete Book Record Confirmation"} width="400px" cancelButtonName="No">
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>Do you want to delete this book record?</Typography>
                 <Typography>Name: {bookname}</Typography>

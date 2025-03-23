@@ -109,7 +109,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
     [editData, compareData]);
 
     return(
-        <ModalTemplate title={"Edit User Record Confirmation"} cancelButtonName={"No"} cancelButtonEvent={returnEditUserModal}>
+        <ModalTemplate title={"Edit User Record Confirmation"} width="400px" cancelButtonName={"No"} cancelButtonEvent={returnEditUserModal}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>Do you want to edit this User record?</Typography>
                 <Typography sx={ModalRemarkSyntax}>Changes:</Typography>

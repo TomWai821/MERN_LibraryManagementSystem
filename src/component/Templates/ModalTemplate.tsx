@@ -8,12 +8,33 @@ import { useModal } from "../../Context/ModalContext";
 import { ModalTemplateProps } from "../../Model/ContextAndProviderModel";
 
 // Data(CSS Syntax)
-import { CreateModalSyntax, ModalSyntax, ModalTitleSyntax } from "../../ArraysAndObjects/FormatSyntaxObjects";
+import { ModalSyntax, ModalTitleSyntax } from "../../ArraysAndObjects/FormatSyntaxObjects";
+import { widthSyntaxType } from "../../Model/OtherModel";
 
 const ModalTemplate:FC <ModalTemplateProps> = (templateData) => 
 {
-    const {children, title, cancelButtonName, cancelButtonEvent} = templateData;
+    const {children, minWidth, maxWidth, width, title, cancelButtonName, cancelButtonEvent} = templateData;
+
     const {open, handleClose} = useModal();
+
+    const widthSyntax = () => 
+    {
+        let WidthSyntax:widthSyntaxType = {};
+
+        if(maxWidth)
+        {
+            WidthSyntax.maxWidth =  `${maxWidth}`;
+        }
+
+        if(minWidth)
+        {
+            WidthSyntax.minWidth = `${minWidth}`;
+        }
+
+        WidthSyntax.width = `${width}`;
+
+        return WidthSyntax;
+    }
 
     const ButtonEvent = () =>
     {
@@ -22,7 +43,7 @@ const ModalTemplate:FC <ModalTemplateProps> = (templateData) =>
     
     return(
         <Modal open={open} onClose={handleClose} >
-            <Box sx={{...ModalSyntax, ...CreateModalSyntax}}>
+            <Box sx={{...ModalSyntax, ...widthSyntax()}}>
                 <Typography id="modal-title" sx={ModalTitleSyntax}>{title}</Typography>
                     {children}
                 <Button onClick={ButtonEvent}>{cancelButtonName}</Button>

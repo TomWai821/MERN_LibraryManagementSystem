@@ -1,4 +1,3 @@
-import { BookDataInterface } from "./BookTableModel";
 import { BookResultDataInterface, DefinationInterface, DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "./ResultModel";
 
 interface CreateModalInterface
@@ -9,6 +8,8 @@ interface CreateModalInterface
 
 interface CreateBookModalInterface
 {
+    image?:File;
+    imageURL?:string;
     bookname?:string;
     language?:string;
     languageID?:string;

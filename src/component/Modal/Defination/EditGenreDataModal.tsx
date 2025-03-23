@@ -44,7 +44,7 @@ const EditGenreDataModal:FC<EditModalInterface> = (editModalData) =>
     }
     
     return(
-        <ModalTemplate title={"Edit Language Defination Record"} cancelButtonName={"Exit"}>
+        <ModalTemplate title={"Edit Language Defination Record"} width="400px" cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 {
                     EditGenreInputField.map((inputField, index) => 

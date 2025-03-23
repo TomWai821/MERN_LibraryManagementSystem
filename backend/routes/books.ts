@@ -1,4 +1,5 @@
 import express from 'express';
+import upload from '../storage';
 import { GetDefination, CreateDefinationData, EditDefinationData, DeleteDefinationData } from '../controller/definationController';
 import { LoginAndFindUser } from '../Arrays/routesMap';
 import { CreateBookRecord, DeleteBookRecord, EditBookRecord, GetBookRecord } from '../controller/bookController';
@@ -8,6 +9,10 @@ import { BuildBookQueryAndGetData } from '../controller/middleware/Book/bookGetD
 
 const router = express.Router();
 
+// Serve static files from the "uploads" folder
+router.use("/uploads", express.static("uploads"));
+
+
 // For defination
 router.get('/defination/type=:type', GetDefination);
 router.post('/defination/type=:type', ...LoginAndFindUser, CreateDefinationData);
@@ -16,7 +21,7 @@ router.delete('/defination/type=:type', ...LoginAndFindUser, DeleteDefinationDat
 
 // For book records
 router.get('/BookData/tableName=:tableName', BuildBookQueryAndGetData, GetBookRecord);
-router.post('/BookData', BookCreateRules, ...LoginAndFindUser, BookNameValidation, BookGenreIDAndLanguageIDValidation, CreateBookRecord);
+router.post('/BookData', upload.single("image"),BookCreateRules, ...LoginAndFindUser, BookNameValidation, BookGenreIDAndLanguageIDValidation, CreateBookRecord);
 router.put('/BookData/id=:id', ...LoginAndFindUser, BookRecordIDValidation, BookGenreIDAndLanguageIDValidation, EditBookRecord);
 router.delete('/BookData/id=:id', ...LoginAndFindUser, BookRecordIDValidation, DeleteBookRecord);
 

@@ -6,6 +6,13 @@ import { bookStatusArray } from '../../Arrays/TypeArrayForBook';
 const BookSchema = new mongoose.Schema<BookInterface>
 (
     {
+        image: 
+        {  
+            path: { type: String }, 
+            filename: { type: String }, 
+            size: { type: Number },  
+            uploadedAt: { type: Date, default: Date.now }
+        },  
         bookname: { type: String, required: true },
         languageID: { type: mongoose.Types.ObjectId, ref: 'Language', required: true },
         genreID: { type: mongoose.Types.ObjectId, ref: 'Genre', required: true },

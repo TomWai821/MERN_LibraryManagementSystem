@@ -57,9 +57,9 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         }
     },[])
 
-    const createBook = useCallback(async (bookname:string, genreID:string, languageID:string, page:number, description:string) => 
+    const createBook = useCallback(async (image:File, bookname:string, genreID:string, languageID:string, page:number, description:string) => 
     {
-        const result = await createBookRecord(authToken, bookname, genreID, languageID, page, description);
+        const result = await createBookRecord(authToken, image, bookname, genreID, languageID, page, description);
 
         if(result)
         {

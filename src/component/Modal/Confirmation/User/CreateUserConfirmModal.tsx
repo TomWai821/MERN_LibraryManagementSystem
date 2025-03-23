@@ -36,7 +36,7 @@ const CreateUserConfirmModal = ({...userData}) =>
     }
 
     return(
-        <ModalTemplate title={"Create Account Confirmation"} cancelButtonName={"No"} cancelButtonEvent={returnCreateUserModal}>
+        <ModalTemplate title={"Create Account Confirmation"} width="400px" cancelButtonName={"No"} cancelButtonEvent={returnCreateUserModal}>
             <Box id="modal-description" sx={ModalBodySyntax}>
             <Typography sx={ModalSubTitleSyntax}>Do you want to create this account?</Typography>
                 <Typography>Username: {username}</Typography>

@@ -32,7 +32,8 @@ const BookPage:FC<PagesInterface> = (loginData) =>
 
     const defaultValue = { bookname: "", language: "All", languageID: "", genre: "All", genreID: ""};
 
-    const onChange = (event: ChangeEvent<HTMLInputElement>, index?: number) => {
+    const onChange = (event: ChangeEvent<HTMLInputElement>, index?: number) => 
+    {
         const { name, value } = event.target;
     
         if (name === "genre") 
@@ -68,7 +69,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
 
     const SearchBook = () => 
     {
-        const TableName=["AllBook","OnLoanBook"]
+        const TableName=["AllBook", "OnLoanBook"]
         fetchBookWithFliterData(TableName[tabValue], searchBook.bookname, searchBook.genreID, searchBook.languageID);
     }
 

@@ -66,7 +66,7 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
     }
     
     return(
-        <ModalTemplate title={setTitle().title as string} cancelButtonName={"No"}>
+        <ModalTemplate title={setTitle().title as string} width="400px" cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>{setTitle().subTitle}</Typography>
                 <Typography>Username: {Data.username}</Typography>

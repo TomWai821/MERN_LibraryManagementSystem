@@ -15,6 +15,7 @@ export const GetDefination = async (req: Request, res: Response) =>
     try 
     {
         const getData = await definationHandlers[definationType].getAll();
+        
         if (!getData) 
         {
             return res.status(400).json({ success, error: `Failed to get ${definationType} data` });

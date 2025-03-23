@@ -4,9 +4,8 @@ import { FC, Fragment } from "react"
 import CustomTabPanel from "../../../UIFragment/CustomTabPanel"
 
 // 
-import LoanBookTable from "../Tables/Book/LoanBookTable"
+import LoanBookTable from "../Tables/Book/OnLoanBookTable"
 import AllBookTable from "../Tables/Book/AllBookTable"
-import OnShelfBookTable from "../Tables/Book/OnShelfBookTable"
 
 // Model
 import { BookRecordTableInterface } from "../../../../Model/BookTableModel"
@@ -23,10 +22,6 @@ const BookTabPanel:FC<BookRecordTableInterface> = (TabData) =>
 
             <CustomTabPanel index={1} value={value}>
                 <LoanBookTable isAdmin={isAdmin} isLoggedIn={isLoggedIn} bookData={bookData} value={value} paginationValue={paginationValue}/>
-            </CustomTabPanel>
-
-            <CustomTabPanel index={2} value={value}>
-                <OnShelfBookTable isAdmin={isAdmin} isLoggedIn={isLoggedIn} bookData={bookData} value={value} paginationValue={paginationValue}/>
             </CustomTabPanel>
         </Fragment>
     )

@@ -60,8 +60,7 @@ const AllBookTableHeader =
 const BookTabLabel = 
 [
     {label: "All Book"},
-    {label: "Loaned Book"},
-    {label: "OnShelf Book"}
+    {label: "OnLoan Book"}
 ]
 
 const UserTabLabel = 

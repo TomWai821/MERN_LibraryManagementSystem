@@ -40,7 +40,7 @@ const DeleteDefinationConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
     }
 
     return( 
-        <ModalTemplate title={setTitle().title} cancelButtonName={"No"}>
+        <ModalTemplate title={setTitle().title} width="400px"  cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>{setTitle().subTitle}</Typography>
                 {

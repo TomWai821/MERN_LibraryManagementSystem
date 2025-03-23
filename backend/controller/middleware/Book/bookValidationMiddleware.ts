@@ -21,6 +21,7 @@ export const BookNameValidation = async (req:Request, res:Response, next: NextFu
     }
     catch(error)
     {
+        console.log(error);
         res.status(500).json({ success, error: 'Internal Server Error!' });
     }
 }
@@ -72,6 +73,7 @@ export const BookGenreIDAndLanguageIDValidation = async (req:Request, res:Respon
     }
     catch(error)
     {
+        console.log(error);
         res.status(500).json({ success, error: 'Internal Server Error!' });
     }
 

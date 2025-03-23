@@ -5,7 +5,6 @@ import { printError } from "../../controller/Utils";
 const BookFavouriteSchema = new mongoose.Schema<BookFavouriteInterface>
 (   
     {
-        _id: { type: String, required: true },
         userID: { type: String, required: true },
         bookID: { type: String, required: true },
         createdAt: { type: Date, default: Date.now, immutable: true }

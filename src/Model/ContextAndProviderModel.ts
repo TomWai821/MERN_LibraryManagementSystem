@@ -34,6 +34,9 @@ interface ModalContextProps
 interface ModalTemplateProps extends ChildProps
 {
     title: string;
+    minWidth?: string;
+    maxWidth?: string;
+    width?:string;
     cancelButtonName: string;
     cancelButtonEvent?: () => void;
 }
@@ -56,7 +59,7 @@ interface BookContextProps
     bookData: BookResultDataInterface[][];
     fetchAllBook: () => Promise<void>;
     fetchBookWithFliterData: (tablename:string, bookname?:string, genreID?:string, languageID?:string) => Promise<void>;
-    createBook: (bookname:string, genreID:string, languageID:string, page:number, description:string) => void;
+    createBook: (image:File, bookname:string, genreID:string, languageID:string, page:number, description:string) => void;
     editBook: (bookID:string, bookname:string, genreID:string, languageID:string, page:number, description:string) => void;
     deleteBook: (bookID:string) => void;
 }

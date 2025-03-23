@@ -38,7 +38,7 @@ const BanUserModal:FC<BanModalInterface> = ({...userData}) =>
     }
 
     return(
-        <ModalTemplate title={"Suspend User"} cancelButtonName={"Exit"}>
+        <ModalTemplate title={"Suspend User"} width="400px" cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography>Username: {username}</Typography>
 

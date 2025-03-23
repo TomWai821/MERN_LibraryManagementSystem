@@ -25,7 +25,10 @@ export const CreateBookRecord = async (req:Request, res:Response) =>
 
     try
     {
-        const createBook = await CreateBook({ bookname, languageID, genreID, pages, description });
+        const imagePath = req.file?.path;
+        const imageName = req.file?.filename;
+        const imageSize = req.file?.size;
+        const createBook = await CreateBook({ image: {path:imagePath, filename:imageName, size: imageSize}, bookname, languageID, genreID, pages, description });
 
         if(!createBook)
         {
@@ -37,6 +40,7 @@ export const CreateBookRecord = async (req:Request, res:Response) =>
     }
     catch(error)
     {
+        console.log(error);
         res.status(500).json({ success, error: 'Internal Server Error!' });
     }
 }

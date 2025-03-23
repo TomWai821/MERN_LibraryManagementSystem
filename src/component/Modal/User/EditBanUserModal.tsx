@@ -47,7 +47,7 @@ const EditBanUserModal:FC<EditModalInterface> = (editModalData) =>
     }
     
     return(
-        <ModalTemplate title={"Edit Ban Record"} cancelButtonName={"Exit"}>
+        <ModalTemplate title={"Edit Ban Record"} width="400px" cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 {
                     EditBanUserInputField.map((field, index) => (

@@ -44,7 +44,7 @@ const DisplayUserDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
     }
 
     return(
-        <ModalTemplate title={setTitle().title as string} cancelButtonName={"Exit"} >
+        <ModalTemplate title={setTitle().title as string} width="400px" cancelButtonName={"Exit"} >
             <Box id="modal-description" sx={ModalBodySyntax}>
                 {setTitle().displayBody}
             </Box>

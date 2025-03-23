@@ -43,7 +43,7 @@ const EditUserModal:FC<EditModalInterface> = (editModalData) =>
     }
     
     return(
-        <ModalTemplate title={"Edit User Record"} cancelButtonName={"Exit"}>
+        <ModalTemplate title={"Edit User Record"} width="400px" cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 {
                     EditUserInputField.map((field, index) => (

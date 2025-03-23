@@ -61,7 +61,7 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
     }
 
     return(
-        <ModalTemplate title={setTitle().Title} cancelButtonName={"No"}>
+        <ModalTemplate title={setTitle().Title} width="400px" cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>{setTitle().subTitle}</Typography>
                 <Typography>Username: {Data.username}</Typography>

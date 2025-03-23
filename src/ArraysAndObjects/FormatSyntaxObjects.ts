@@ -1,3 +1,4 @@
+import { BorderStyle } from "@mui/icons-material";
 import { NavSyntaxInterface } from "../Model/NavModel";
 
 // For View Profile Button
@@ -42,7 +43,8 @@ const ModalSyntax = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     padding: '20px',
-    borderRadius: '16px'
+    borderRadius: '16px',
+    BorderStyle: 'none'
 };
 
 const ModalTitleSyntax = 
@@ -69,9 +71,9 @@ const ModalBodySyntax =
     gap:"20px 50px"
 }
 
-const CreateModalSyntax = {width: '400px'}
-
 // For Action Table Cell
 const ImportantActionButtonSyntax = { color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } };
 
-export {ViewProfileButton, buttonFontColor, DeleteButton, ItemToCenter, displayAsRow, displayAsColumn, PageItemToCenter, NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSubTitleSyntax, ModalSyntax, ModalRemarkSyntax, CreateModalSyntax, ModalBodySyntax, ImportantActionButtonSyntax}
+const BookImageFormat = { minHeight: '225px', maxHeight: '350px', width: 'auto', height: '100%' };
+
+export {ViewProfileButton, buttonFontColor, DeleteButton, ItemToCenter, displayAsRow, displayAsColumn, PageItemToCenter, NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSubTitleSyntax, ModalSyntax, ModalRemarkSyntax, ModalBodySyntax, ImportantActionButtonSyntax, BookImageFormat}

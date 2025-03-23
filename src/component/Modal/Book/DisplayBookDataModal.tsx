@@ -12,6 +12,7 @@ import { BookResultDataInterface } from "../../../Model/ResultModel";
 const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 
 {
     const {value, data, isAdmin} = displayUserData;
+    const BookData = data as BookResultDataInterface;
 
     const setTitle = () => 
     {
@@ -31,8 +32,10 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
         return displayData;
     }
 
+    const width = BookData.image.path ? '600px' : '400px';
+
     return(
-        <ModalTemplate title={setTitle().title as string} cancelButtonName={"Exit"} >
+        <ModalTemplate title={setTitle().title as string} width={width} cancelButtonName={"Exit"} >
             <Box id="modal-description" sx={ModalBodySyntax}>
                 {setTitle().displayBody}
             </Box>

@@ -3,6 +3,7 @@ import { CreateAtInterface, IDInterface } from "./userSchemaInterface";
 
 interface BookInterface extends IDInterface, CreateAtInterface
 {
+    image: string;
     bookname: string;
     languageID: mongoose.Schema.Types.ObjectId;
     genreID: mongoose.Schema.Types.ObjectId;

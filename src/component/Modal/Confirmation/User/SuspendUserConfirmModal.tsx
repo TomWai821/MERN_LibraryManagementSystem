@@ -40,7 +40,7 @@ const SuspendUserConfirmModal:FC<BanModalInterface> = (banData) =>
     }
 
     return(
-        <ModalTemplate title={"Suspend User Confirmation"} cancelButtonName={"No"}  cancelButtonEvent={returnBanUserModal}>
+        <ModalTemplate title={"Suspend User Confirmation"} width="400px" cancelButtonName={"No"}  cancelButtonEvent={returnBanUserModal}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>Do you want to ban {username}?</Typography>
                 <Typography>Duration: {dateOption[durationOption as number].label}</Typography>

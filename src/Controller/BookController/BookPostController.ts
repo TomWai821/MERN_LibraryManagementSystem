@@ -1,20 +1,35 @@
 const localhost:string = 'http://localhost:5000/api/book';
-const contentType:string = "application/json";
 
-export const createBookRecord = async (authToken:string, bookname:string, genreID:string, languageID:string, pages:number, description:string) => 
+export const createBookRecord = async (authToken:string, image:File, bookname:string, genreID:string, languageID:string, pages:number, description:string) => 
 {
-    const data = {bookname, genreID, languageID, pages, description}
+    const formData = createFormData(image, bookname, genreID, languageID, pages, description);
+    
     const response = await fetch(`${localhost}/bookData`,
         {
             method: 'POST',
-            headers: { 'content-type': contentType, 'authToken': authToken },
-            body: JSON.stringify(data)
+            headers: { 'authToken': authToken },
+            body: formData
         }
     );
+
+    console.log(response);
 
     if(response.ok)
     {
         const result = await response.json();
         return response.ok;
     }
+}
+
+const createFormData = (image:File, bookname:string, genreID:string, languageID:string, pages:number, description:string) => 
+{
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('bookname', bookname);
+    formData.append('genreID', genreID);
+    formData.append('languageID', languageID);
+    formData.append('pages', pages.toString());
+    formData.append('description',description);
+
+    return formData;
 }

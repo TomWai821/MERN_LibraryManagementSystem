@@ -3,7 +3,6 @@ import { UserInterface } from '../../model/userSchemaInterface';
 import { printError } from '../../controller/Utils';
 import { userRole, userStatus } from '../../Arrays/TypeArrayForUser';
 
-
 const UserSchema = new mongoose.Schema<UserInterface>
 (
     {
@@ -14,8 +13,7 @@ const UserSchema = new mongoose.Schema<UserInterface>
         role: { type: String, required: true, default: 'User', enum: userRole },
         status: { type: String, required: true, default: 'Normal', enum: userStatus },
         birthDay: { type: String, required: true },
-        avatarUrl: { type:String, required: true },
-        createdAt: { type: Date, default: Date.now, immutable: true }
+        avatarUrl: { type:String, required: true }
     }
 );
 

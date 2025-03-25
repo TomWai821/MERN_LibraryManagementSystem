@@ -11,31 +11,43 @@ import CreateBookConfirmModal from '../Confirmation/Book/CreateBookConfirmModal'
 import { useModal } from '../../../Context/ModalContext';
 
 // Models
-import { BookDataInterface } from '../../../Model/BookTableModel';
+import { BookTableDataInterface } from '../../../Model/BookTableModel';
 import { CreateBookModalInterface } from '../../../Model/ModelForModal';
 
 // Data (CSS Syntax and dropdown data)
-import { useDefinationContext } from '../../../Context/Book/DefinationContext';
+import { useDefinitionContext } from '../../../Context/Book/DefinitionContext';
 import { BookImageFormat, DeleteButton, displayAsColumn, displayAsRow, ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
+import { useContactContext } from '../../../Context/Book/ContactContext';
+import { ContactInterface, DefinitionInterface } from '../../../Model/ResultModel';
 
 const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) => 
 {
-    const { image, imageURL, bookname, language, languageID, genre, genreID, pages, description } = bookData;
-    const [imageFile, setImageFile] = useState<File | null>(image as File || null);
-    const [previewUrl, setPreviewUrl] = useState<string | null>(imageURL as string || null);
-    const [ book, setBook ] = useState({ bookname: bookname || "", language: language || "", languageID: languageID || "", genre: genre || "", genreID: genreID || "", pages: pages || 0, description: description || ""});
+    const { image, imageURL, bookname, language, languageID, genre, genreID, author, authorID, publisher, publisherID, description } = bookData;
+
+    const [ imageFile, setImageFile ] = useState<File | null>(image as File || null);
+    const [ previewUrl, setPreviewUrl ] = useState<string | null>(imageURL as string || null);
+    const [ book, setBook ] = useState(
+        { 
+            bookname: bookname || "", language: language || "", languageID: languageID || "", 
+            genre: genre || "", genreID: genreID || "",  author: author || "", authorID: authorID || "", 
+            publisher: publisher || "", publisherID: publisherID || "", description: description || ""
+        }
+    );
+    
     const { handleOpen } = useModal();
-    const { defination } = useDefinationContext();
+    const { definition } = useDefinitionContext();
+    const { contact } = useContactContext();
 
     // For book filter
     const CreateBookInputField = useMemo(() => 
     [
         {name: "bookname", label: "Book Name", type:"text", select: false, slotProps: {}, multiline: false, rows: 1 },
-        {name: "language", label: "Language", type:"text", select: true, options:defination.Language, slotProps: {}, multiline: false, rows: 1},
-        {name: "genre", label: "Genre", type:"text", select: true, options:defination.Genre, slotProps:{}, multiline: false, rows: 1},
-        {name: "pages", label: "Pages", type: "number", slotProps: {htmlInput:{min: 0}}, multiline: false, rows: 1},
+        {name: "language", label: "Language", type:"text", select: true, options:definition.Language, slotProps: {}, multiline: false, rows: 1},
+        {name: "genre", label: "Genre", type:"text", select: true, options:definition.Genre, slotProps:{}, multiline: false, rows: 1},
+        {name: "author", label: "Author", type:"text", select: true, options:contact.Author, slotProps:{}, multiline: false, rows: 1},
+        {name: "publisher", label: "Publisher", type:"text", select: true, options:contact.Publisher, slotProps:{}, multiline: false, rows: 1},
         {name: "description", label: "Description", type: "text", select:false, slotProps:{}, multiline: true, rows: 8}
-    ],[defination])
+    ],[definition])
 
     const onSelectChange = (event: ChangeEvent<HTMLInputElement>, index?:number) => 
     {
@@ -43,11 +55,11 @@ const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) =>
 
         if(name === "genre")
         {
-            setBook({...book, genre: value, genreID: defination.Genre[index as number]._id});
+            setBook({...book, genre: value, genreID: definition.Genre[index as number]._id});
         }
         else if(name === "language")
         {
-            setBook({...book, language: value, languageID: defination.Language[index as number]._id});
+            setBook({...book, language: value, languageID: definition.Language[index as number]._id});
         }
         else
         {
@@ -87,7 +99,7 @@ const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) =>
         <ModalTemplate title={"Create Book Record"} minWidth="500px" maxWidth="750px" width="100%" cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Box sx={{...displayAsRow, marginBottom: '10px'}}>
-                    <Box sx={{...displayAsColumn, justifyContent: 'center', alignItems: 'center', minWidth: '200px', maxWidth: '350px', width: '40%'}}>
+                    <Box sx={{...displayAsColumn, justifyContent: 'center', alignItems: 'center', width: '40%'}}>
                         {previewUrl ?
                             (
                             /*
@@ -112,33 +124,72 @@ const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) =>
                         }
                     </Box>
 
-                    <Box sx={{...displayAsColumn, marginLeft: '20px', gap: '20px 100px', minWidth: '200px', maxWidth: '400px', width: '60%'}}>
+                    <Box sx={{...displayAsColumn, marginLeft: '20px', gap: '20px 100px', width: '60%'}}>
                     {
                         CreateBookInputField.map((field, index) => 
                         (
-                            <TextField key={index} label={field.label} name={field.name} value={book[field.name as keyof BookDataInterface]} 
+                            <TextField key={index} label={field.label} name={field.name} value={book[field.name as keyof BookTableDataInterface]} 
                                 type={field.type} size="small" 
                                 select={field.select} slotProps={field.slotProps} multiline={field.multiline} rows={field.rows} 
                                 onChange={(event) => 
                                     {
                                         const selectedIndex = field.options?.findIndex
                                         (
-                                            (option) =>
-                                                (field.name === "genre" && option.genre === event.target.value) ||
-                                                (field.name === "language" && option.language === event.target.value)
+                                            (option) => 
+                                            {
+                                                const definitionOption = option as DefinitionInterface;
+                                                const contactOption = option as ContactInterface;
+                                                
+                                                switch(field.name)
+                                                {
+                                                    case "genre":
+                                                        return definitionOption.genre === event.target.value;
+                                      
+                                                    case "language":
+                                                        return definitionOption.language === event.target.value;
+                                                    
+                                                    case "author":
+                                                        return contactOption.author === event.target.value;
+                                                    
+                                                    case "publisher":
+                                                        return contactOption.publisher === event.target.value;
+                                                }
+                                            }
                                         );
                                         onSelectChange(event as ChangeEvent<HTMLInputElement>, selectedIndex as number);
                                     }
                                 }
                             >
+                            {
+                                field.options && field.options.map((option, index) => 
                                     {
-                                        field.options && field.options.map((option, index) => 
-                                            {
-                                                const value = field.name === "genre" ? option.genre: option.language;
-                                                return(<MenuItem key={index} value={value}>{value}</MenuItem> )
-                                            }
-                                        )
+                                        let value = "";
+                                        const definitionOption = option as DefinitionInterface;
+                                        const contactOption = option as ContactInterface;
+
+                                        switch(field.name)
+                                        {
+                                            case "genre":
+                                                value = definitionOption.genre as string;
+                                                break;
+
+                                            case "language":
+                                                value = definitionOption.language as string;
+                                                break;
+                                            
+                                            case "author":
+                                                value = contactOption.author as string;
+                                                break;
+                                            
+                                            case "publisher":
+                                                value = contactOption.publisher as string;
+                                                break;
+                                        }
+
+                                        return(<MenuItem key={index} value={value}>{value}</MenuItem> )
                                     }
+                                )
+                            }
                             </TextField>
                         ))
                     }

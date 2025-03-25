@@ -15,7 +15,7 @@ import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../
 
 const DeleteBookModal:FC<BookDataInterfaceForDelete> = ({...bookData}) => 
 {  
-    const { bookID, bookname, language, genre, pages } = bookData;
+    const { bookID, bookname, language, genre, author, publisher } = bookData;
     const {deleteBook} = useBookContext();
     const {handleClose} = useModal();
 
@@ -32,7 +32,8 @@ const DeleteBookModal:FC<BookDataInterfaceForDelete> = ({...bookData}) =>
                 <Typography>Name: {bookname}</Typography>
                 <Typography>Language: {language}</Typography>
                 <Typography>Genre: {genre}</Typography>
-                <Typography>Pages: {pages}</Typography>
+                <Typography>Author: {author}</Typography>
+                <Typography>Publisher: {publisher}</Typography>
             </Box>
 
             <DeleteTypography/>

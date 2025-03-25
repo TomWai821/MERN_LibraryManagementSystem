@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 import { UserDataInterface } from "./UserTableModel";
-import { BookDataInterface } from "./BookTableModel";
+import { BookTableDataInterface } from "./BookTableModel";
 
 interface FirstRow 
 { 
@@ -14,25 +14,25 @@ interface SecondRow
     newPassword: string;
 }
 
-interface ViewProfileModel extends SecondRow, FirstRow
+export interface ViewProfileModel extends SecondRow, FirstRow
 {
     email: string;
     gender: string;
 };
 
-interface LoginModel
+export interface LoginModel
 {
     email:string,
     password:string
 }
 
-interface RegisterModel extends LoginModel
+export interface RegisterModel extends LoginModel
 {
     username: string; 
     birthDay: string;
 }
 
-interface OptionFieldModel
+export interface OptionFieldModel
 {
     optionVisiable: boolean;
     onChange:(event: ChangeEvent<HTMLInputElement>) => void
@@ -40,11 +40,9 @@ interface OptionFieldModel
     searchData: UserDataInterface;
 }
 
-interface BookOptionFieldModal
+export interface BookOptionFieldModal
 {
     optionVisiable: boolean;
     onChange:(event: ChangeEvent<HTMLInputElement>, index:number) => void
-    searchData: BookDataInterface;
+    searchData: BookTableDataInterface;
 }
-
-export type {ViewProfileModel, LoginModel, RegisterModel, OptionFieldModel, BookOptionFieldModal}

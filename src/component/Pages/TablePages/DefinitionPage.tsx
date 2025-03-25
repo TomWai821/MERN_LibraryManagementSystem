@@ -3,14 +3,14 @@ import { Box, Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 
 // Context
-import { useDefinationContext } from "../../../Context/Book/DefinationContext";
+import { useDefinitionContext } from "../../../Context/Book/DefinitionContext";
 import { useModal } from "../../../Context/ModalContext";
 
-// Modaks
-import CreateDefinationModal from "../../Modal/Defination/CreateDefinationModal";
-import EditGenreDataModal from "../../Modal/Defination/EditGenreDataModal";
-import EditLanguageDataModal from "../../Modal/Defination/EditLanguageDataModal";
-import DeleteDefinationConfirmModal from "../../Modal/Confirmation/Defination/DeleteDefinationdataConfirmModal";
+// Modals
+import CreateDefinitionModal from "../../Modal/Definition/CreateDefinitionModal";
+import EditGenreDataModal from "../../Modal/Definition/EditGenreDataModal";
+import EditLanguageDataModal from "../../Modal/Definition/EditLanguageDataModal";
+import DeleteDefinitionConfirmModal from "../../Modal/Confirmation/Definition/DeleteDefinitionConfirmModal";
 
 // Useful function
 import { ChangePage } from "../../../Controller/OtherController";
@@ -25,12 +25,12 @@ import TableTitle from "../../UIFragment/TableTitle";
 const DefinitionPage:FC<PagesInterface>  = (loginData) => 
 {
     const {isAdmin} = loginData;
-    const {defination} = useDefinationContext();
+    const {definition} = useDefinitionContext();
     const {handleOpen} = useModal();
 
     const openCreateModal = (value: number) => 
     {
-        handleOpen(<CreateDefinationModal value={value} />);
+        handleOpen(<CreateDefinitionModal value={value} />);
     }
 
     const openEditModel = (type: string, data: any) => 
@@ -48,9 +48,9 @@ const DefinitionPage:FC<PagesInterface>  = (loginData) =>
 
     }
 
-    const handleDelete = (value:number, data:any) =>
+    const handleDelete = (type:string, data:any) =>
     {
-        handleOpen(<DeleteDefinationConfirmModal _id={data._id} value={value} data={data}/>);
+        handleOpen(<DeleteDefinitionConfirmModal _id={data._id} type={type} data={data}/>);
     }
 
     useEffect(() => 
@@ -63,17 +63,17 @@ const DefinitionPage:FC<PagesInterface>  = (loginData) =>
 
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
-            <Typography sx={{fontSize: '24px'}}>Manage Defination</Typography>
+            <Typography sx={{fontSize: '24px'}}>Manage Definition</Typography>
 
             <Box sx={{ paddingTop: '50px', minHeight: '100px' }}>
-            <TableTitle title={"Genre"} dataLength={defination.Genre.length}/>
-                {   defination.Genre.map((genreData, index) => 
+            <TableTitle title={"Genre"} dataLength={definition.Genre.length}/>
+                {   definition.Genre.map((genreData, index) => 
                     (
                         <Chip sx={{marginRight: '10px'}} key={index} label={`${genreData.genre} (${genreData.shortName})`} variant="outlined" 
-                            onClick={() => openEditModel("Genre", genreData)}onDelete={() => handleDelete(0, genreData)}/>
+                            onClick={() => openEditModel("Genre", genreData)}onDelete={() => handleDelete("Genre", genreData)}/>
                     ))
                 }
-                <Tooltip title={"Create Genre Defination Data"}>
+                <Tooltip title={"Create Genre Definition Data"}>
                     <IconButton onClick={() => openCreateModal(0)}>
                         <AddIcon/>
                     </IconButton>
@@ -81,14 +81,14 @@ const DefinitionPage:FC<PagesInterface>  = (loginData) =>
             </Box>
 
             <Box sx={{ paddingTop: '50px', minHeight: '100px' }}>
-                <TableTitle title={"Language"} dataLength={defination.Language.length}/>
-                {   defination.Language.map((languageData, index) => 
+                <TableTitle title={"Language"} dataLength={definition.Language.length}/>
+                {   definition.Language.map((languageData, index) => 
                     (
                         <Chip sx={{marginRight: '10px'}} key={index} label={`${languageData.language} (${languageData.shortName})`} variant="outlined" 
-                            onClick={() => openEditModel("Language", languageData)} onDelete={() => handleDelete(1, languageData)}/>
+                            onClick={() => openEditModel("Language", languageData)} onDelete={() => handleDelete("Language", languageData)}/>
                     ))
                 }
-                <Tooltip title={"Create Language Defination Data"}>
+                <Tooltip title={"Create Language Definition Data"}>
                     <IconButton onClick={() => openCreateModal(1)}>
                         <AddIcon/>
                     </IconButton>

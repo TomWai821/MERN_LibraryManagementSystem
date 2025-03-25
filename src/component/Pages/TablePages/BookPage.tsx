@@ -3,7 +3,7 @@ import { Box, TableContainer, Paper } from "@mui/material";
 
 // Context
 import { useBookContext } from "../../../Context/Book/BookContext";
-import { useDefinationContext } from "../../../Context/Book/DefinationContext";
+import { useDefinitionContext } from "../../../Context/Book/DefinitionContext";
 
 // Another Component
 import BookFilter from "./Filter/BookFilter";
@@ -23,14 +23,14 @@ const BookPage:FC<PagesInterface> = (loginData) =>
 {
     const { isLoggedIn, isAdmin } = loginData;
     const { bookData, fetchBookWithFliterData } = useBookContext();
-    const { defination } = useDefinationContext();
+    const { definition } = useDefinitionContext();
     const SetTitle:string = isAdmin ? "Manage Books Record": "View Books";
 
-    const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", language: "All", languageID: "", genre: "All", genreID: ""});
+    const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", language: "All", languageID: "", genre: "All", genreID: "", author: "All", authorID: "", publisher: "All", publisherID: ""});
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
 
-    const defaultValue = { bookname: "", language: "All", languageID: "", genre: "All", genreID: ""};
+    const defaultValue = { bookname: "", language: "All", languageID: "", genre: "All", genreID: "",  author: "All", authorID: "", publisher: "All", publisherID: ""};
 
     const onChange = (event: ChangeEvent<HTMLInputElement>, index?: number) => 
     {
@@ -38,11 +38,11 @@ const BookPage:FC<PagesInterface> = (loginData) =>
     
         if (name === "genre") 
         {
-            setSearchBook({...searchBook,genre: value, genreID: index !== undefined && defination.Genre[index]?._id ? defination.Genre[index]._id : ""});
+            setSearchBook({...searchBook,genre: value, genreID: index !== undefined && definition.Genre[index]?._id ? definition.Genre[index]._id : ""});
         } 
         else if (name === "language") 
         {
-            setSearchBook({...searchBook, language: value, languageID: index !== undefined && defination.Language[index]?._id ? defination.Language[index]._id : ""});
+            setSearchBook({...searchBook, language: value, languageID: index !== undefined && definition.Language[index]?._id ? definition.Language[index]._id : ""});
         } 
         else 
         {

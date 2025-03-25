@@ -10,8 +10,7 @@ const BanListSchema = new mongoose.Schema<DeleteAndBannedListInterface>
         description: { type: String, required: true },
         startDate: { type: Date, required: true, immutable: true },
         dueDate: { type: Date },
-        status: { type: String, require: true, default:'Banned', enum: userBannedListStatus },
-        createdAt: { type: Date, default: Date.now, immutable: true }
+        status: { type: String, require: true, default:'Banned', enum: userBannedListStatus }
     }
 )
 

@@ -1,21 +1,56 @@
+import fs from 'fs'
 import { Request, Response } from 'express'
 import { CreateBook, FindBookByIDAndDelete, FindBookByIDAndUpdate, GetBook } from '../schema/book/book';
 import { AuthRequest } from '../model/requestInterface';
 
-export const GetBookRecord = async (req:AuthRequest, res:Response) => 
+export const GetBookRecord = async (req: AuthRequest, res: Response) => 
 {
     let success = false;
-    const foundBook = req.foundBook;
 
-    try
+    try 
     {
+        const foundBook = req.foundBook;
+
+        if (!foundBook) 
+        {
+            return res.status(404).json({ success: false, error: "Book record not found!" });
+        }
+
+        // Ensure `foundBook` is always an array
+        const books = Array.isArray(foundBook) ? foundBook : [foundBook];
+
+        // Add imageUrl to each book
+        const booksWithImageUrls = books.map((book) => 
+        (
+            {
+                ...book, imageUrl: book.image?.filename ? `http://localhost:5000/api/book/uploads/${book.image.filename}`: null,
+            }
+        ));
+
         success = true;
-        res.json({ success, foundBook })
-    }
-    catch(error)
+        return res.json({ success, foundBook: booksWithImageUrls });
+    } 
+    catch (error) 
     {
-        res.status(500).json({ success, error: 'Internal Server Error!' });
+        console.error("Error in GetBookRecord:", error);
+        res.status(500).json({ success: false, error: "Internal Server Error!" });
     }
+};
+
+export const GetBookImage = async(req:Request, res:Response) => 
+{
+    const { filename } = req.params; 
+    const filePath = `./backend/upload/${filename}`;
+
+    fs.access(filePath, fs.constants.F_OK, (err) => 
+    {
+        if (err) 
+        {
+            return res.status(404).json({ error: "File not found" });
+        }
+
+        res.sendFile(filePath, { root: "." });
+    });
 }
 
 export const CreateBookRecord = async (req:Request, res:Response) => 
@@ -27,8 +62,7 @@ export const CreateBookRecord = async (req:Request, res:Response) =>
     {
         const imagePath = req.file?.path;
         const imageName = req.file?.filename;
-        const imageSize = req.file?.size;
-        const createBook = await CreateBook({ image: {path:imagePath, filename:imageName, size: imageSize}, bookname, languageID, genreID, pages, description });
+        const createBook = await CreateBook({ image: {path:imagePath, filename:imageName}, bookname, languageID, genreID, pages, description });
 
         if(!createBook)
         {

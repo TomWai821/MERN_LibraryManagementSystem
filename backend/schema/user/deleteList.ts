@@ -11,8 +11,7 @@ const DeleteListSchema = new mongoose.Schema<DeleteAndBannedListInterface>
         startDate: { type: Date, required: true, immutable: true  },
         dueDate: { type: Date, required: true },
         description: { type: String, required: true, enum: userDeleteListDescription },
-        status: { type: String, require: true, default:'Pending', enum: userDeleteListStatus },
-        createdAt: { type: Date, default: Date.now, immutable: true }
+        status: { type: String, require: true, default:'Pending', enum: userDeleteListStatus }
     }
 )
 

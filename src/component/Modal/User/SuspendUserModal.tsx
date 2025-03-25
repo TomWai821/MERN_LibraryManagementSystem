@@ -54,7 +54,7 @@ const BanUserModal:FC<BanModalInterface> = ({...userData}) =>
                 <TextField size="small" rows={5} name="description" onChange={onChange} label={"description"} value={banData.description} multiline/>
             </Box>
             
-            <ModalConfirmButton clickEvent={OpenBanUserConfirmModal} name={"Ban"} buttonType={"Important"}/>
+            <ModalConfirmButton clickEvent={OpenBanUserConfirmModal} name={"Suspend"} buttonType={"Important"}/>
         </ModalTemplate>
     )
 }

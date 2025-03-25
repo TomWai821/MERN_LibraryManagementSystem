@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 // Models
 import { DeleteModalInterface } from "../../../../Model/ModelForModal";
-import { DefinationInterface } from "../../../../Model/ResultModel";
+import { DefinitionInterface } from "../../../../Model/ResultModel";
 
 // UI Fragment
 import ModalTemplate from "../../../Templates/ModalTemplate";
@@ -11,31 +11,31 @@ import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 import DeleteTypography from "../../../UIFragment/DeleteTypography";
 
 // Contexts
-import { useDefinationContext } from "../../../../Context/Book/DefinationContext";
+import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext";
 import { useModal } from "../../../../Context/ModalContext";
 
 // Useful Object/Array Data
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
-const DeleteDefinationConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
+const DeleteDefinitionConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
 {
     const {type, data} = deleteData;
     const {handleClose} = useModal();
-    const { deleteDefination } = useDefinationContext();
-    const Data = data as DefinationInterface;
+    const { deleteDefinition } = useDefinitionContext();
+    const Data = data as DefinitionInterface;
 
     const setTitle = () => 
     {
         let setTitle = {title:"", subTitle:""};
         
-        setTitle.title = `Delete ${type} Defination`;
+        setTitle.title = `Delete ${type} Definition`;
         setTitle.subTitle = "Do you want to delete this defination?"
         return setTitle;
     }
 
-    const DeleteDefinationAction = () => 
+    const DeleteDefinitionAction = () => 
     {
-        deleteDefination(type as string, deleteData._id);
+        deleteDefinition(type as string, deleteData._id);
         handleClose();
     }
 
@@ -50,9 +50,9 @@ const DeleteDefinationConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
             </Box>
             
             <DeleteTypography/>
-            <ModalConfirmButton clickEvent={DeleteDefinationAction} name={"Yes"} buttonType={"Important"}/>
+            <ModalConfirmButton clickEvent={DeleteDefinitionAction} name={"Yes"} buttonType={"Important"}/>
         </ModalTemplate>
     );
 }
 
-export default DeleteDefinationConfirmModal
+export default DeleteDefinitionConfirmModal

@@ -7,7 +7,7 @@ const ActionTableCellForUser = () =>
 {
     return(
         <TableCell sx={{marginLeft: '20px'}}>
-            <Tooltip title={"Issue Book"} arrow>
+            <Tooltip title={"Loan Book"} arrow>
                 <IconButton>
                     <EventAvailableIcon />
                 </IconButton>

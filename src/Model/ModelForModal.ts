@@ -1,12 +1,12 @@
-import { BookResultDataInterface, DefinationInterface, DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "./ResultModel";
+import { BookDataInterface, BookDataInterfaceForEdit, DefinitionInterface, DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "./ResultModel";
 
-interface CreateModalInterface
+export interface CreateModalInterface
 {
     value?: number;
     data?: any;
 }
 
-interface CreateBookModalInterface
+export interface CreateBookModalInterface
 {
     image?:File;
     imageURL?:string;
@@ -15,18 +15,21 @@ interface CreateBookModalInterface
     languageID?:string;
     genre?:string;
     genreID?:string;
-    pages?:number;
+    author?:string; 
+    authorID?:string; 
+    publisher?:string; 
+    publisherID?:string;
     description?:string;
 }
 
-interface EditModalInterface
+export interface EditModalInterface
 {
     value?: number;
-    editData: UserResultDataInterface | DetailsInterfaceForBannedAndDelete | DefinationInterface | BookResultDataInterface | CreateBookModalInterface;
-    compareData: UserResultDataInterface | DetailsInterfaceForBannedAndDelete | DefinationInterface | BookResultDataInterface | CreateBookModalInterface;
+    editData: UserResultDataInterface | DetailsInterfaceForBannedAndDelete | DefinitionInterface | BookDataInterfaceForEdit | CreateBookModalInterface;
+    compareData: UserResultDataInterface | DetailsInterfaceForBannedAndDelete | DefinitionInterface | BookDataInterfaceForEdit | CreateBookModalInterface;
 }
 
-interface BanModalInterface
+export interface BanModalInterface
 {
     _id:string;
     username:string;
@@ -34,32 +37,30 @@ interface BanModalInterface
     description?:string;
 }
 
-interface DeleteModalInterface
+export interface DeleteModalInterface
 {
     _id:string;
     value?: number;
     type?: string;
-    data: UserResultDataInterface | DefinationInterface | DefinationInterface;
+    data: UserResultDataInterface | DefinitionInterface | DefinitionInterface;
 }
 
-interface DisplayDataModalInterface
+export interface DisplayDataModalInterface
 {
     value:number;
     isAdmin:boolean;
-    data: UserResultDataInterface | BookResultDataInterface;
+    data: UserResultDataInterface | BookDataInterface;
 }
 
-interface ModalConfirmButtonInterface
+export interface ModalConfirmButtonInterface
 {
     clickEvent:() => void;
     name:string;
     buttonType:string;
 }
 
-interface DisplayDataModalBody
+export interface DisplayDataModalBody
 {
     isAdmin?:boolean;
-    data: UserResultDataInterface | BookResultDataInterface;
+    data: UserResultDataInterface | BookDataInterface;
 }
-
-export type {CreateModalInterface, CreateBookModalInterface, EditModalInterface, BanModalInterface, DeleteModalInterface, DisplayDataModalInterface, ModalConfirmButtonInterface, DisplayDataModalBody}

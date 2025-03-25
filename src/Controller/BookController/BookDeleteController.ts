@@ -5,7 +5,6 @@ export const deleteBookRecord = async (authToken:string, bookID:string) =>
 {
     try
     {
-        console.log(bookID);
         const response = await fetch(`${localhost}/bookData/id=${bookID}`,
             {
                 method: 'DELETE',

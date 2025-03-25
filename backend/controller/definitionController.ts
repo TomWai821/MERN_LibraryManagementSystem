@@ -1,0 +1,126 @@
+import { Request, Response } from "express"
+import { CreateGenre, FindGenreByIDAndDelete, FindGenreByIDAndUpdate, GetGenre } from "../schema/book/genre";
+import { CreateLanguage, FindLanguageByIDAndDelete, FindLanguageByIDAndUpdate, GetLanguage } from "../schema/book/language";
+
+export const GetDefinition = async (req: Request, res: Response) => 
+{
+    const definitionType = req.params.type as keyof typeof definitionHandlers;
+    let success = false;
+
+    try 
+    {
+        const getData = await definitionHandlers[definitionType].getAll();
+        
+        if (!getData) 
+        {
+            return res.status(400).json({ success, error: `Failed to get ${definitionType} data` });
+        }
+
+        success = true;
+        return res.json({ success, foundDefinition: getData });
+    } 
+    catch (error) 
+    {
+        return res.status(500).json({ success, error: "Internal Server Error" });
+    }
+};
+
+export const CreateDefinitionData = async (req: Request, res: Response) => 
+{
+    const definitionType = req.params.type as keyof typeof definitionHandlers;
+    const { genre, language, shortName } = req.body;
+    let success = false;
+   
+    try 
+    {
+        const createData = await definitionHandlers[definitionType].create({ genre, language, shortName });
+
+        if (!createData) 
+        {
+            return res.status(400).json({ success, error: `Failed to create ${definitionType}` });
+        }
+
+        success = true;
+        return res.json({ success, message: `Create ${definitionType} successfully!` });
+    } 
+    catch (error) 
+    {
+        return res.status(500).json({ success, error: "Internal Server Error" });
+    }
+};
+
+export const EditDefinitionData = async (req: Request, res: Response) => 
+{
+    const definitionType = req.params.type as keyof typeof definitionHandlers;
+    const { id, genre, language, shortName } = req.body;
+    let success = false;
+
+    try 
+    {
+        if (definitionType === "Genre" && language) 
+        {
+            return res.status(400).json({ success, error: `Invalid data type in JSON file: language` });
+        }
+
+        if (definitionType === "Language" && genre) 
+        {
+            return res.status(400).json({ success, error: `Invalid data type in JSON file: genre` });
+        }
+
+        const editData = await definitionHandlers[definitionType].update(id, { genre, language, shortName });
+
+        if (!editData) 
+        {
+            return res.status(400).json({ success, error: `Failed to Edit ${definitionType} data!` });
+        }
+
+        success = true;
+        return res.json({ success, message: `Update ${definitionType} data successfully!` });
+    } 
+    catch (error) 
+    {
+        return res.status(500).json({ success, error: "Internal Server Error" });
+    }
+};
+    
+export const DeleteDefinitionData = async (req: Request, res: Response) => 
+{
+    const definitionType = req.params.type as keyof typeof definitionHandlers;
+    const { id } = req.body;
+    let success = false;
+
+    try 
+    {
+        const deleteData = await definitionHandlers[definitionType].delete(id);
+
+        if (!deleteData) 
+        {
+            return res.status(400).json({ success, error: `Failed to Delete ${definitionType} data!` });
+        }
+
+        success = true;
+        return res.json({ success, message: `Delete ${definitionType} data successfully!` });
+    } 
+    catch (error) 
+    {
+        return res.status(500).json({ success, error: "Internal Server Error" });
+    }
+};
+
+export const definitionHandlers = 
+{
+    Genre:
+    {
+        getAll:GetGenre,
+        create:CreateGenre,
+        update:FindGenreByIDAndUpdate,
+        delete:FindGenreByIDAndDelete
+    },
+    Language:
+    {
+        getAll:GetLanguage,
+        create:CreateLanguage,
+        update:FindLanguageByIDAndUpdate,
+        delete:FindLanguageByIDAndDelete
+    }
+}

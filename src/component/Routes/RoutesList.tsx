@@ -8,7 +8,7 @@ import RegisterPage from "../Pages/RegisterPage"
 import BookPage from "../Pages/TablePages/BookPage"
 import UserPage from "../Pages/TablePages/UserPage"
 import ViewProfilePage from "../Pages/ViewProfilePage"
-import DefinitionPage from "../Pages/TablePages/DefinationPage"
+import DefinitionPage from "../Pages/TablePages/DefinitionPage"
 
 import { PagesInterface } from "../../Model/TablePagesAndModalModel"
 

@@ -3,10 +3,9 @@ import { GetResultInterface } from "../../Model/ResultModel";
 const localhost:string = 'http://localhost:5000/api/book';
 const contentType:string = "application/json";
 
-export const fetchBook = async (tableName:string, bookname?:string, languageID?:string, genreID?:string) => 
+export const fetchBook = async (tableName:string, bookname?:string, genreID?:string, languageID?:string, publisherID?:string, authorID?:string) => 
 {
-    const queryString = BuildQuery({bookname, languageID, genreID});
-    console.log(queryString);
+    const queryString = BuildQuery({bookname, languageID, genreID, publisherID, authorID});
 
     const response = await fetch(`${localhost}/bookData/tableName=${queryString ? `${tableName}?${queryString}` : `${tableName}`}`,
         {

@@ -17,12 +17,10 @@ import BanUserModal from "../../../../Modal/User/SuspendUserModal";
 import UndoUserActivityModal from "../../../../Modal/Confirmation/User/UndoUserActivityModal";
 
 // Model
-import { BookDataInterface } from "../../../../../Model/BookTableModel";
 import { ActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel"
-import { BookResultDataInterface, DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "../../../../../Model/ResultModel";
+import { BookDataInterface, DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "../../../../../Model/ResultModel";
 
 // Data(CSS Syntax)
-
 import EditBanUserModal from "../../../../Modal/User/EditBanUserModal";
 import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 
@@ -38,9 +36,14 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         switch (TableName) 
         {
             case "Book":
-                const data = Information as BookResultDataInterface;
-                const bookData = {_id: data._id, bookname: data.bookname, language: data.languageDetails.language, languageID: data.languageDetails._id, genre: data.genreDetails.genre, genreID: data.genreDetails._id, pages: data.pages, description: data.description}
-                handleOpen(<EditBookModal value={value} editData={bookData} compareData={bookData}/>);
+                const data = Information as BookDataInterface;
+                const Data = { _id: data._id, bookname: data.bookname, 
+                                language: data.languageDetails.language as string, languageID: data.languageDetails._id, 
+                                genre: data.genreDetails.genre as string, genreID: data.genreDetails._id, 
+                                author: data.authorDetails.author as string, authorID: data.authorDetails._id,
+                                publisher: data.publisherDetails.publisher as string, publisherID: data.publisherDetails._id, 
+                                description: data.description, imageUrl: data.imageUrl, filename: data.image?.filename}
+                handleOpen(<EditBookModal value={value} editData={Data} compareData={Data}/>);
                 break;
                 
             case "User":
@@ -54,11 +57,15 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         switch (TableName) 
         {
             case "Book":
-                const data = Information as BookResultDataInterface;
-                handleOpen(<DeleteBookModal 
-                    bookID={data._id} description={data.description} bookname={data.bookname}
-                    language={data.languageDetails.language as string} genre={data.genreDetails.genre as string}
-                    pages={data.pages}/>
+                const data = Information as BookDataInterface;
+                handleOpen(
+                    <DeleteBookModal 
+                        bookID={data._id} description={data.description} bookname={data.bookname}
+                        language={data.languageDetails.language as string} 
+                        genre={data.genreDetails.genre as string} 
+                        author={data.authorDetails.author as string} 
+                        publisher={data.publisherDetails.publisher as string}
+                    />
                 );
                 break;
 
@@ -104,7 +111,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
     const BookActionTableCellForAdmin = 
     [
         {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openEditModal, icon:<EditIcon />},
-        {title: "Delete(Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
+        {title: "Delete (Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
     ]
 
     let actionsToRender: any[] = [];

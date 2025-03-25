@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 
 // Models
-import { DefinationInterface } from "../../../../Model/ResultModel";
+import { DefinitionInterface } from "../../../../Model/ResultModel";
 import { EditModalInterface } from "../../../../Model/ModelForModal";
 
 // UI fragment
@@ -11,25 +11,25 @@ import ModalTemplate from "../../../Templates/ModalTemplate";
 
 // Context
 import { useModal } from "../../../../Context/ModalContext";
-import { useDefinationContext } from "../../../../Context/Book/DefinationContext";
+import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext";
 
 // Another Modals
-import EditGenreDataModal from "../../Defination/EditGenreDataModal";
-import EditLanguageDataModal from "../../Defination/EditLanguageDataModal";
+import EditGenreDataModal from "../../Definition/EditGenreDataModal";
+import EditLanguageDataModal from "../../Definition/EditLanguageDataModal";
 
 // useful Array/Objects(Data)
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
-const EditDefinationConfirmModal:FC<EditModalInterface>  = (data) =>
+const EditDefinitionConfirmModal:FC<EditModalInterface>  = (data) =>
 {
     const { value, compareData, editData } = data;
     const { handleOpen, handleClose } = useModal();
-    const { editDefination } = useDefinationContext();
+    const { editDefinition } = useDefinitionContext();
 
     const [differences, setDifferences] = useState<string[]>([]);
     const type = value === 0 ? "Genre" : "Language";
 
-    const returnEditDefinationModal = () => 
+    const returnEditDefinitionModal = () => 
     {
         switch(value)
         {
@@ -43,32 +43,32 @@ const EditDefinationConfirmModal:FC<EditModalInterface>  = (data) =>
         }
     }
 
-    const editDefinationAction = () => 
+    const editDefinitionAction = () => 
     {
-        const EditData = editData as DefinationInterface;
+        const EditData = editData as DefinitionInterface;
         switch(type)
         {
             case "Genre":
-                editDefination(type, EditData._id, EditData.shortName, EditData.genre as string);
+                editDefinition(type, EditData._id, EditData.shortName, EditData.genre as string);
                 break;
 
             case "Language":
-                editDefination(type, EditData._id, EditData.shortName, EditData.language as string);
+                editDefinition(type, EditData._id, EditData.shortName, EditData.language as string);
                 break;
         }
         
         handleClose();
     }
 
-    const compareDifference = (editData: DefinationInterface, compareData: DefinationInterface) => 
+    const compareDifference = (editData: DefinitionInterface, compareData: DefinitionInterface) => 
     {
         const newDifferences = [];
         for(const key in editData)
         {
-            if(editData[key as keyof DefinationInterface] != compareData[key as keyof DefinationInterface])
+            if(editData[key as keyof DefinitionInterface] != compareData[key as keyof DefinitionInterface])
             {
                 const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
-                newDifferences.push(`${capitalizedKey}: ${compareData[key as keyof DefinationInterface]} -> ${editData[key as keyof DefinationInterface]}`);
+                newDifferences.push(`${capitalizedKey}: ${compareData[key as keyof DefinitionInterface]} -> ${editData[key as keyof DefinitionInterface]}`);
             }
         }
         setDifferences(newDifferences);
@@ -76,11 +76,11 @@ const EditDefinationConfirmModal:FC<EditModalInterface>  = (data) =>
 
     useEffect(() => 
     {
-        compareDifference(editData as DefinationInterface, compareData as DefinationInterface);
+        compareDifference(editData as DefinitionInterface, compareData as DefinitionInterface);
     },[editData, compareData]);
     
     return(
-        <ModalTemplate title={`Edit ${type} Confirmation`} width="400px"  cancelButtonName={"No"} cancelButtonEvent={returnEditDefinationModal}>
+        <ModalTemplate title={`Edit ${type} Confirmation`} width="400px"  cancelButtonName={"No"} cancelButtonEvent={returnEditDefinitionModal}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>{`Do you want to edit this ${type} record?`}</Typography>
                 <Typography sx={ModalRemarkSyntax}>Changes:</Typography>
@@ -95,9 +95,9 @@ const EditDefinationConfirmModal:FC<EditModalInterface>  = (data) =>
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
             </Box>
             
-            <ModalConfirmButton clickEvent={editDefinationAction} name={"Yes"} buttonType={""}/>
+            <ModalConfirmButton clickEvent={editDefinitionAction} name={"Yes"} buttonType={""}/>
         </ModalTemplate>
     );
 }
 
-export default EditDefinationConfirmModal
+export default EditDefinitionConfirmModal

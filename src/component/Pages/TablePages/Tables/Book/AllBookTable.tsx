@@ -8,11 +8,7 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 // Models
 import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
 import { AllBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
-import { BookImageFormat, ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
-
-// Data (CSS Syntax and table header)
-
-
+import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
@@ -63,13 +59,14 @@ const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                 <TableCell sx={{fontSize: "16px", "&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
-                                    <Avatar src={data.image.path} alt="Preview" variant="rounded" sx={BookImageFormat}/>
+                                    <Avatar src={data.imageUrl} alt="Preview" variant="rounded" sx={{width: "150px", height: "225px"}}/>
                                 </ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.bookname}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.genreDetails?.genre}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.languageDetails?.language}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.authorDetails?.author}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.publisherDetails?.publisher}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.status}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.pages}</ContentTableCell>
                                 {isAdmin && (<ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin}/>)}
                             </TableRow>
                         )

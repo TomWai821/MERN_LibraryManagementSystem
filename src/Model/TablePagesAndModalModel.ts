@@ -1,14 +1,14 @@
 import { ChangeEvent } from "react";
-import { BookResultDataInterface, UserResultDataInterface } from "./ResultModel";
+import { BookDataInterface, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
-import { BookDataInterface, BookSearchInterface } from "./BookTableModel"
+import { BookTableDataInterface, BookSearchInterface } from "./BookTableModel"
 
-interface IsAdminInterface
+export interface IsAdminInterface
 {
     isAdmin:boolean;
 }
 
-interface PagesInterface extends IsAdminInterface
+export interface PagesInterface extends IsAdminInterface
 {
     role?: string;
     isLoggedIn: boolean;
@@ -17,7 +17,7 @@ interface PagesInterface extends IsAdminInterface
     username?:string;
 }
 
-interface FilterInterface extends IsAdminInterface
+export interface FilterInterface extends IsAdminInterface
 {
     value:number;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -25,20 +25,20 @@ interface FilterInterface extends IsAdminInterface
     Search: () => void;
 }
 
-interface ActionTableCellInterface extends IsAdminInterface
+export interface ActionTableCellInterface extends IsAdminInterface
 {
     value: number;
     TableName: string;
-    Information: UserResultDataInterface | BookResultDataInterface | BookDataInterface;
+    Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface;
 }
 
 
-interface TableInterface extends IsAdminInterface
+export interface TableInterface extends IsAdminInterface
 {
     isLoggedIn: boolean;
 }
 
-interface TabInterface extends IsAdminInterface
+export interface TabInterface extends IsAdminInterface
 {
     tabLabel: { label: string; }[];
     value: number;
@@ -47,7 +47,7 @@ interface TabInterface extends IsAdminInterface
     paginationOption: number[];
 }
 
-interface OptionFieldsInterface
+export interface OptionFieldsInterface
 {
     value: number; 
     type:string; 
@@ -56,11 +56,9 @@ interface OptionFieldsInterface
     searchData: any;
 }
 
-interface TableTitleInterface
+export interface TableTitleInterface
 {
     title:string;
     dataLength:number;
 }
-
-export type {IsAdminInterface, PagesInterface, ActionTableCellInterface, FilterInterface, TableInterface, TabInterface, OptionFieldsInterface, TableTitleInterface}
 

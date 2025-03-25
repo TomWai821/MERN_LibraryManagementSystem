@@ -1,9 +1,9 @@
 const localhost:string = 'http://localhost:5000/api/book';
 const contentType:string = "application/json";
 
-export const updateBookRecord = async (authToken:string, bookID:string, bookname:string, genreID:string, languageID:string, pages:number, description: string) => 
+export const updateBookRecord = async (authToken:string, bookID:string, bookname:string, genreID:string, languageID:string, description: string) => 
 {
-    const data = {bookname, genreID, languageID, pages, description}
+    const data = {bookname, genreID, languageID, description}
     const response = await fetch(`${localhost}/bookData/id=${bookID}`,
         {
             method: 'PUT',

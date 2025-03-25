@@ -6,8 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { AlertProvider } from './Context/AlertContext';
 import { ModalProvider } from './Context/ModalContext';
 import { UserProvider } from './Context/User/UserContext';
-import { DefinationProvider } from './Context/Book/DefinationContext';
 import { BookProvider } from './Context/Book/BookContext';
+import { DefinitionProvider } from './Context/Book/DefinitionContext';
+import { ContactProvider } from './Context/Book/ContactContext';
 
 const root = ReactDOM.createRoot
 (
@@ -16,19 +17,21 @@ const root = ReactDOM.createRoot
 
 root.render
 (
-    <DefinationProvider>
-        <BookProvider>
-            <UserProvider>
-                <AlertProvider>
-                    <ModalProvider>
-                        <BrowserRouter>
-                            <App />
-                        </BrowserRouter>
-                    </ModalProvider>
-                </AlertProvider>
-            </UserProvider>
-        </BookProvider>
-    </DefinationProvider>
+    <ContactProvider>
+        <DefinitionProvider>
+            <BookProvider>
+                <UserProvider>
+                    <AlertProvider>
+                        <ModalProvider>
+                            <BrowserRouter>
+                                <App />
+                            </BrowserRouter>
+                        </ModalProvider>
+                    </AlertProvider>
+                </UserProvider>
+            </BookProvider>
+        </DefinitionProvider>
+    </ContactProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

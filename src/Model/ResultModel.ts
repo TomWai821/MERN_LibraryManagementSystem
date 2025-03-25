@@ -1,11 +1,11 @@
 import { UserDataInterface } from "./UserTableModel";
 
-interface ResultInterface
+export interface ResultInterface
 {
     data: RegisterDataInterface;
 }
 
-interface RegisterDataInterface
+export interface RegisterDataInterface
 {
     authToken: string;
     username: string;
@@ -14,16 +14,17 @@ interface RegisterDataInterface
     status: string;
 }
 
-interface GetResultInterface
+export interface GetResultInterface
 {
     success:boolean;
     authtoken?:string;
     foundUser?: UserResultDataInterface | UserResultDataInterface[];
-    foundBook?: BookResultDataInterface | BookResultDataInterface[];
-    foundDefination?: DefinationInterface | DefinationInterface[];
+    foundBook?: BookDataInterface | BookDataInterface[];
+    foundDefinition?: DefinitionInterface | DefinitionInterface[];
+    foundContact?: ContactInterface | ContactInterface[];
 }
 
-interface UserResultDataInterface extends UserDataInterface
+export interface UserResultDataInterface extends UserDataInterface
 {
     _id:string;
     avatarUrl?:string;
@@ -31,29 +32,53 @@ interface UserResultDataInterface extends UserDataInterface
     deleteDetails?: DetailsInterfaceForBannedAndDelete;
 }
 
-interface BookResultDataInterface
+export interface BookDataInterface
 {
     _id:string;
-    image: ImageInterface;
+    image?: ImageInterface;
     bookname:string;
     genreID:string;
-    languageID:string;
-    pages: number;
-    description: string;
-    status:string;
     genre?:string;
     language?:string;
-    genreDetails: DefinationInterface;
-    languageDetails: DefinationInterface;
+    languageID:string;
+    author?:string;
+    authorID:string;
+    publisher?:string;
+    publisherID:string;
+    status:string;
+    description: string;
+    genreDetails: DefinitionInterface;
+    languageDetails: DefinitionInterface;
+    authorDetails: ContactInterface;
+    publisherDetails: ContactInterface;
+    imageUrl:string;
 }
 
-interface ImageInterface
+export interface BookDataInterfaceForEdit
+{
+    _id:string;
+    bookname:string;
+    genre?:string;
+    genreID:string;
+    language?:string;
+    languageID:string;
+    author?:string;
+    authorID:string;
+    publisher?:string;
+    publisherID:string;
+    description: string;
+    status:string;
+    filename:string;
+    imageUrl:string;
+}
+
+export interface ImageInterface
 {
     path?:string;
     filename?:string;
 }
 
-interface DetailsInterfaceForBannedAndDelete
+export interface DetailsInterfaceForBannedAndDelete
 {
     _id:string;
     userID:string;
@@ -63,13 +88,13 @@ interface DetailsInterfaceForBannedAndDelete
     status:string;
 }
 
-interface DefinationResultInterface
+export interface DefinitionResultInterface
 {
     success:boolean;
-    foundData: DefinationInterface | DefinationInterface[];
+    foundData: DefinitionInterface | DefinitionInterface[];
 }
 
-interface DefinationInterface
+export interface DefinitionInterface
 {
     _id:string;
     shortName:string;
@@ -77,10 +102,24 @@ interface DefinationInterface
     genre?:string;
 }
 
-interface DefinationState
+export interface DefinitionState
 {
-    Genre: DefinationInterface[];
-    Language: DefinationInterface[];
+    Genre: DefinitionInterface[];
+    Language: DefinitionInterface[];
 }
 
-export type {ResultInterface, RegisterDataInterface, GetResultInterface, UserResultDataInterface, BookResultDataInterface, DetailsInterfaceForBannedAndDelete, DefinationResultInterface, DefinationInterface, DefinationState}
+export interface ContactInterface
+{
+    _id:string;
+    publisher?:string;
+    author?:string;
+    address?:string;
+    email:string;
+    phoneNumber:string;
+}
+
+export interface ContactState
+{
+    Publisher: ContactInterface[];
+    Author: ContactInterface[];
+}

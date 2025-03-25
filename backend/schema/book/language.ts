@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 import { LanguageInterface } from '../../model/bookSchemaInterface';
 import { printError } from '../../controller/Utils';
 
@@ -6,8 +6,7 @@ const languageSchema = new mongoose.Schema<LanguageInterface>
 (
     {
         language: { type: String, required:true },
-        shortName: { type:String, require: true },
-        createdAt: { type: Date, default: Date.now, immutable: true }
+        shortName: { type:String, require: true }
     }
 )
 
@@ -54,15 +53,15 @@ export const FindLanguage = async (data: Record<string, any>) =>
     }
 }
 
-export const FindLanguageByID = async (language: string, select?: Record<string, any>) => 
+export const FindLanguageByID = async (languageID: string, select?: Record<string, any>) => 
 {
     try
     {
         if(select)
         {
-            return await Language.findById(language).select(select);
+            return await Language.findById(languageID).select(select);
         }
-        return await Language.findById(language);
+        return await Language.findById(languageID);
     }
     catch(error)
     {
@@ -70,11 +69,11 @@ export const FindLanguageByID = async (language: string, select?: Record<string,
     }
 }
 
-export const FindLanguageByIDAndUpdate = async (language: string, data: Record<string, any>) => 
+export const FindLanguageByIDAndUpdate = async (languageID: string, data: Record<string, any>) => 
 {
     try
     {
-        return await Language.findByIdAndUpdate(language, data);
+        return await Language.findByIdAndUpdate(languageID, data);
     }
     catch(error)
     {
@@ -82,11 +81,11 @@ export const FindLanguageByIDAndUpdate = async (language: string, data: Record<s
     }
 }
 
-export const FindLanguageByIDAndDelete = async (language: string) =>
+export const FindLanguageByIDAndDelete = async (languageID: ObjectId) =>
 {
     try
     {
-        return await Language.findByIdAndDelete(language);
+        return await Language.findByIdAndDelete(languageID);
     }
     catch(error)
     {

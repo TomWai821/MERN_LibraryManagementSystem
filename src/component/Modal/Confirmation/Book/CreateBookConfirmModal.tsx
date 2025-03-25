@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { Avatar, Box, Button, Typography } from "@mui/material"
 
 // Template
@@ -13,23 +13,28 @@ import { CreateModalInterface } from "../../../../Model/ModelForModal"
 
 // Data(CSS Syntax)
 import { useBookContext } from "../../../../Context/Book/BookContext"
-import { BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects"
+import { BookDescriptionDisplayFormat, BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects"
 
 const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) => 
 {
-    const { image, imageURL, bookname, genre, genreID, language, languageID, pages, description} = bookData.data;
+    const { image, imageURL, bookname, genre, genreID, language, languageID, author, authorID, publisher, publisherID, description} = bookData.data;
     
     const { handleOpen, handleClose } = useModal();
     const { createBook } = useBookContext();
 
     const backToCreateModal = () => 
     {
-        handleOpen(<CreateBookModal image={image} imageURL={imageURL} bookname={bookname} language={language} languageID={languageID} genre={genre} genreID={genreID} pages={pages} description={description}  />);
+        handleOpen(
+        <CreateBookModal image={image} imageURL={imageURL} bookname={bookname} 
+            language={language} languageID={languageID} genre={genre} genreID={genreID} 
+            author={author} authorID={authorID} publisher={publisher} publisherID={publisherID}
+            description={description} />
+        );
     }
 
     const CreateBook = () => 
     {
-        createBook(image, bookname, genreID, languageID, pages, description);
+        createBook(image, bookname, genreID, languageID, description);
         handleClose();
     }
 
@@ -53,10 +58,9 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
                         <Typography>BookName: {bookname}</Typography>
                         <Typography>Language: {language}</Typography>
                         <Typography>Genre: {genre}</Typography>
-                        <Typography>Pages: {pages}</Typography>
                         <Box sx={{ maxWidth: '350px', display: 'inline-block'}}>
                             <Typography>Description:</Typography>
-                            <Typography sx={{ overflow: 'hidden', whiteSpace: 'normal',  wordWrap: 'break-word', maxWidth: '100%'}}>{description}</Typography>
+                            <Typography sx={BookDescriptionDisplayFormat}>{description}</Typography>
                         </Box>
                     </Box>
 

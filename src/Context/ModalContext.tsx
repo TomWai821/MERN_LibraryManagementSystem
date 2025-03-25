@@ -10,7 +10,6 @@ const ModalProvider:FC<ChildProps> = ({children}) =>
 
     const handleOpen = (newContext: ReactNode) => 
     {
-        console.log(newContext);
         setContent(newContext);
         setOpen(true);
     }

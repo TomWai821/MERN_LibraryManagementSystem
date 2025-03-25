@@ -14,7 +14,7 @@ import CreateBookModal from "../../../Modal/Book/CreateBookModal";
 
 // Models
 import { FilterInterface } from "../../../../Model/TablePagesAndModalModel";
-import { BookDataInterface } from "../../../../Model/BookTableModel";
+import { BookTableDataInterface } from "../../../../Model/BookTableModel";
 import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 // Data(CSS Syntax and dropdown data)
@@ -23,8 +23,8 @@ import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const BookFilter: FC<FilterInterface> = (filterData) => 
 {
-    const {value, onChange, searchData, Search} = filterData;
-    const bookData = searchData as unknown as BookDataInterface;
+    const {value, searchData, onChange, Search} = filterData;
+    const bookData = searchData as unknown as BookTableDataInterface;
 
     const [optionVisiable, setOptionVisiable] = useState(false);
     const [actionMenu, openActionMenu] = useState<HTMLElement | null>(null);

@@ -6,7 +6,7 @@ import { Box,  TextField } from '@mui/material'
 import { useModal } from '../../../Context/ModalContext';
 
 // Another Modal
-import CreateDefinationConfirmModal from '../Confirmation/Defination/CreateDefinationConfirmModal';
+import CreateDefinitionConfirmModal from '../Confirmation/Definition/CreateDefinitionConfirmModal';
 
 // Models
 import { CreateModalInterface } from '../../../Model/ModelForModal';
@@ -18,24 +18,23 @@ import ModalConfirmButton from '../../UIFragment/ModalConfirmButton';
 // Useful Array/Object (data)
 import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 
-
-const CreateDefinationModal:FC<CreateModalInterface> = (createModalData) => 
+const CreateDefinitionModal:FC<CreateModalInterface> = (createModalData) => 
 {
     const {value, data} = createModalData;
     const {handleOpen} = useModal();
     const type = value === 0 ? "Genre": "Language";
 
-    const [defination, setDefination] = useState({ genre: data?.genre ?? "", language: data?.language ?? "", shortName: data?.shortName ?? ""});
+    const [definition, setDefinition] = useState({ genre: data?.genre ?? "", language: data?.language ?? "", shortName: data?.shortName ?? ""});
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
         const {name, value} = event.target;
-        setDefination({...defination, [name]: value})
+        setDefinition({...definition, [name]: value})
     }
 
     const OpenConfirmModal = () => 
     {
-       handleOpen(<CreateDefinationConfirmModal value={value} data={defination}/>);
+       handleOpen(<CreateDefinitionConfirmModal value={value} data={definition}/>);
     }
     
     return(
@@ -43,11 +42,11 @@ const CreateDefinationModal:FC<CreateModalInterface> = (createModalData) =>
             <Box id="modal-description" sx={ModalBodySyntax}>
             {
                 value === 0 ?
-                <TextField label="Genre" name="genre" value={defination.genre} type="text" size="small" onChange={onChange}/>
+                <TextField label="Genre" name="genre" value={definition.genre} type="text" size="small" onChange={onChange}/>
                 :
-                <TextField label="Language" name="language" value={defination.language} type="text" size="small" onChange={onChange}/>
+                <TextField label="Language" name="language" value={definition.language} type="text" size="small" onChange={onChange}/>
             }
-                <TextField label="Short Name" name="shortName" value={defination.shortName} type="text" size="small" onChange={onChange}/>
+                <TextField label="Short Name" name="shortName" value={definition.shortName} type="text" size="small" onChange={onChange}/>
             </Box>
             
             <ModalConfirmButton clickEvent={OpenConfirmModal} name={"Create"} buttonType={""}/>
@@ -55,4 +54,4 @@ const CreateDefinationModal:FC<CreateModalInterface> = (createModalData) =>
     );
 }
 
-export default CreateDefinationModal;
+export default CreateDefinitionModal;

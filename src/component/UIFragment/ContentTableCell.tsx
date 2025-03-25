@@ -9,7 +9,7 @@ import { useModal } from "../../Context/ModalContext";
 
 // Models
 import { ContentTableCellProps } from "../../Model/ContextAndProviderModel";
-import { BookResultDataInterface, UserResultDataInterface } from "../../Model/ResultModel";
+import { BookDataInterface, UserResultDataInterface } from "../../Model/ResultModel";
 import DisplayBookDataModal from "../Modal/Book/DisplayBookDataModal";
 
 const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) => 
@@ -26,7 +26,7 @@ const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) =>
                 break;
             
             case "Book":
-                handleOpen(<DisplayBookDataModal value={value} data={Information as BookResultDataInterface} isAdmin={isAdmin}/>);
+                handleOpen(<DisplayBookDataModal value={value} data={Information as BookDataInterface} isAdmin={isAdmin}/>);
                 break;
         }
     }

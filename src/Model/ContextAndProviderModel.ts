@@ -1,15 +1,15 @@
 import { ReactNode } from "react";
-import { BookResultDataInterface, DefinationState, UserResultDataInterface } from "./ResultModel";
+import { BookDataInterface, ContactState, DefinitionState, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
-import { BookDataInterface } from "./BookTableModel";
+import { BookTableDataInterface } from "./BookTableModel";
 
-interface ChildProps
+export interface ChildProps
 {
     children: ReactNode;
 }
 
 // For Alert
-interface AlertConfig
+export interface AlertConfig
 {
     AlertType: 'success' | 'info' | 'warning' | 'error';
     Message: string;
@@ -17,13 +17,13 @@ interface AlertConfig
     onClose?: () => void;
 }
 
-interface AlertContextProps
+export interface AlertContextProps
 {
     setAlertConfig: (config: AlertConfig | null) => void;
 }
 
 // For modal
-interface ModalContextProps
+export interface ModalContextProps
 {
     open: boolean;
     handleOpen: (content: ReactNode) => void;
@@ -31,7 +31,7 @@ interface ModalContextProps
     content: ReactNode;
 }
 
-interface ModalTemplateProps extends ChildProps
+export interface ModalTemplateProps extends ChildProps
 {
     title: string;
     minWidth?: string;
@@ -42,7 +42,7 @@ interface ModalTemplateProps extends ChildProps
 }
 
 // For Context
-interface UserContextProps
+export interface UserContextProps
 {
     userData: UserResultDataInterface[][];
     fetchAllUser: () => Promise<void>;
@@ -54,39 +54,46 @@ interface UserContextProps
     actualDeleteUser: (userId:string, deleteListID:string, status:string) => void;
 }
 
-interface BookContextProps
+export interface BookContextProps
 {
-    bookData: BookResultDataInterface[][];
+    bookData: BookDataInterface[][];
     fetchAllBook: () => Promise<void>;
     fetchBookWithFliterData: (tablename:string, bookname?:string, genreID?:string, languageID?:string) => Promise<void>;
-    createBook: (image:File, bookname:string, genreID:string, languageID:string, page:number, description:string) => void;
-    editBook: (bookID:string, bookname:string, genreID:string, languageID:string, page:number, description:string) => void;
+    createBook: (image:File, bookname:string, genreID:string, languageID:string, description:string) => void;
+    editBook: (bookID:string, bookname:string, genreID:string, languageID:string, description:string) => void;
     deleteBook: (bookID:string) => void;
 }
 
-interface DefinatonProps
+export interface DefinatonProps
 {
-    defination: DefinationState;
-    fetchAllDefination: () => Promise<void>;
-    createDefination:(type:string, shortName:string, detailsName:string) => void;
-    editDefination:(type:string, id:string, shortName:string, detailsName:string) => void;
-    deleteDefination:(type:string, id:string) => void;
+    definition: DefinitionState;
+    fetchAllDefinition: () => Promise<void>;
+    createDefinition:(type:string, shortName:string, detailsName:string) => void;
+    editDefinition:(type:string, id:string, shortName:string, detailsName:string) => void;
+    deleteDefinition:(type:string, id:string) => void;
+}
+
+export interface ContactProps
+{
+    contact: ContactState;
+    fetchAllContactData: () => Promise<void>;
+    createContactData:(type:string, shortName:string, detailsName:string) => void;
+    editContactData:(type:string, id:string, shortName:string, detailsName:string) => void;
+    deleteContactData:(type:string, id:string) => void;
 }
 
 // For Tab Panel
-interface TabPanelProps extends ChildProps
+export interface TabPanelProps extends ChildProps
 {
     index: number;
     value: number;
 }
 
 // For ContentTableCell
-interface ContentTableCellProps extends ChildProps
+export interface ContentTableCellProps extends ChildProps
 {
     TableName: string;
     value: number;
     isAdmin: boolean;
-    Information: UserResultDataInterface | BookResultDataInterface | BookDataInterface;
+    Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface;
 }
-
-export type {ChildProps, AlertConfig, AlertContextProps, ModalContextProps, ModalTemplateProps, UserContextProps, BookContextProps, TabPanelProps, ContentTableCellProps, DefinatonProps}

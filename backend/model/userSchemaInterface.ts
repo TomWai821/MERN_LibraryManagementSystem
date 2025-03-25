@@ -6,16 +6,10 @@ interface IDInterface
     _id: mongoose.Schema.Types.ObjectId;
 }
 
-interface CreateAtInterface
-{
-    createdAt: Date;
-}
-
 interface UserInterface extends IDInterface, CreateUserInterface
 {
     email: string;
     password: string;
-    createdAt: Date;
 }
 
 interface RoleInterface extends IDInterface
@@ -34,7 +28,7 @@ interface StatusInterface extends IDInterface
     description:string;
 }
 
-interface DeleteAndBannedListInterface extends IDInterface, CreateAtInterface
+interface DeleteAndBannedListInterface extends IDInterface
 {
     userID: mongoose.Schema.Types.ObjectId;
     startDate: Date;
@@ -43,4 +37,4 @@ interface DeleteAndBannedListInterface extends IDInterface, CreateAtInterface
     status:string;
 }
 
-export {IDInterface, CreateAtInterface, UserInterface, RoleInterface, GenderInterface, StatusInterface, DeleteAndBannedListInterface}
+export {IDInterface, UserInterface, RoleInterface, GenderInterface, StatusInterface, DeleteAndBannedListInterface}

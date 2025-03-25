@@ -6,20 +6,14 @@ import { bookStatusArray } from '../../Arrays/TypeArrayForBook';
 const BookSchema = new mongoose.Schema<BookInterface>
 (
     {
-        image: 
-        {  
-            path: { type: String }, 
-            filename: { type: String }, 
-            size: { type: Number },  
-            uploadedAt: { type: Date, default: Date.now }
-        },  
+        image: {  path: { type: String }, filename: { type: String }},
         bookname: { type: String, required: true },
         languageID: { type: mongoose.Types.ObjectId, ref: 'Language', required: true },
         genreID: { type: mongoose.Types.ObjectId, ref: 'Genre', required: true },
-        pages: { type: Number, required: true, min: 1 },
-        status: { type: String, required: true , default: 'OnShelf', enum:bookStatusArray},
-        description: { type: String, default: '' },
-        createdAt: { type: Date, default: Date.now, immutable: true }
+        authorID: { type: mongoose.Types.ObjectId, ref: 'Author', required: true },
+        publisherID: { type: mongoose.Types.ObjectId, ref: 'Publusher', required: true },
+        status: { type: String, required: true , default: 'OnShelf', enum: bookStatusArray},
+        description: { type: String, default: '' }
     }
 )
 
@@ -45,7 +39,7 @@ export const GetBook = async (data?:Record<string, any>) =>
         {
             return await GetBooksWithOtherDetails();
         }
-        return await Book.find(data);
+        return await GetBooksWithOtherDetails(data);
     }
     catch(error)
     {
@@ -54,41 +48,26 @@ export const GetBook = async (data?:Record<string, any>) =>
 };
 
 // Local variable(For get banned user data)
-const GetBooksWithOtherDetails = async () => 
+const GetBooksWithOtherDetails = async (data?:Record<string, any>) => 
 {
     let pipeline:PipelineStage[] = [];
 
-    pipeline.push(
-        {
-            $lookup: {
-                from: 'genres',
-                localField: 'genreID',
-                foreignField: '_id',
-                as: 'genreDetails'
-            }
-        },
-        {
-            $unwind: {
-                path: '$genreDetails',
-                preserveNullAndEmptyArrays: true 
-            }
-        },
-        {
-            $lookup: {
-                from: 'languages',
-                localField: 'languageID',
-                foreignField: '_id',
-                as: 'languageDetails'
-            }
-        },
-        {
-            $unwind: {
-                path: '$languageDetails', // Specify the field to unwind
-                preserveNullAndEmptyArrays: true // Optional: Keeps documents without a match
-            }
-        },
-    );
+    if (data) { pipeline.push( {$match: {...data}} )}
 
+    const lookupAndUnwind = (from:string, localField:string, foreignField:string, asField:string) => 
+    (
+        [
+            { $lookup: { from, localField, foreignField, as: asField } },
+            { $unwind: { path: `$${asField}`, preserveNullAndEmptyArrays: true } }
+        ]
+    );
+    
+    pipeline.push(
+        ...lookupAndUnwind('genres', 'genreID', '_id', 'genreDetails'),
+        ...lookupAndUnwind('languages', 'languageID', '_id', 'languageDetails'),
+        ...lookupAndUnwind('authors', 'authorID', '_id', 'authorDetails'),
+        ...lookupAndUnwind('publishers', 'publisherID', '_id', 'publisherDetails'),
+    );
     return await Book.aggregate(pipeline);
 }
         

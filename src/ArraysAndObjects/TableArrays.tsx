@@ -49,11 +49,13 @@ const DeleteUserTableHeader =
 const AllBookTableHeader = 
 [
     {label:"No."},
+    {label:"Image"},
     {label:"BookName"},
     {label:"Genre"},
     {label:"Language"},
+    {label:"Author"},
+    {label:"Publisher"},
     {label:"Status"},
-    {label:"Pages"},
     {label:"Actions"}
 ]
 
@@ -66,8 +68,8 @@ const BookTabLabel =
 const UserTabLabel = 
 [
     {label: 'All User'},
-    {label: 'Suspend User'},
-    {label: 'Deleted User'}
+    {label: 'Suspend List User'},
+    {label: 'Deleted List User'}
 ]
 
 const UserDataTableName = ["AllUser", "BannedUser", "DeleteUser"];

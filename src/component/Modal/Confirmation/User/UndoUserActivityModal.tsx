@@ -49,12 +49,12 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
         switch(value)
         {
             case 1:
-                Titles.Title = "UnBan User Confirmation";
-                Titles.subTitle = "Do you want to unban this account?"
+                Titles.Title = "Unsuspend User Confirmation";
+                Titles.subTitle = "Do you want to unsuspend this account?"
                 break;
             
             case 2:
-                Titles.Title = "UnDelete User Confirmation";
+                Titles.Title = "Remove User From Delete List Confirmation";
                 Titles.subTitle = "Do you want to undelete this user?";
         }
         return Titles;

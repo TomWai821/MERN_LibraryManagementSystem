@@ -1,7 +1,8 @@
 import { NextFunction, Response } from "express";
 import { AuthRequest } from "../../../model/requestInterface";
 import { BookInterface } from "../../../model/bookSchemaInterface";
-import {  GetBook } from "../../../schema/book/book";
+import { GetBook } from "../../../schema/book/book";
+import { ObjectId } from "mongodb";
 
 // for build query (GET method in user, which require login)
 export const BuildBookQueryAndGetData = async (req: AuthRequest, res: Response, next: NextFunction) => 
@@ -12,18 +13,11 @@ export const BuildBookQueryAndGetData = async (req: AuthRequest, res: Response, 
 
     const hasBodyParameter = Object.keys(queryParams).length > 0;
 
-    if (hasBodyParameter && tableName) 
-    {
-        foundBook = await fetchBookData(queryParams); 
-    } 
-    else 
-    {
-        foundBook = await GetBook();
-    }
+    foundBook = (hasBodyParameter && tableName) ? await fetchBookData(queryParams) : foundBook = await GetBook();
 
     if (!foundBook) 
     {
-        return res.status(400).json({success: false, message:"Could not found user"});
+        return res.status(404).json({success: false, message:"Could not found book"});
     }
 
     req.foundBook = foundBook;
@@ -33,20 +27,20 @@ export const BuildBookQueryAndGetData = async (req: AuthRequest, res: Response, 
 const fetchBookData = async (queryParams: any) => 
 {
     const query = buildQuery(queryParams);
-    return await GetBook(query) as BookInterface[];
+    return await GetBook(query);
 };
 
 const buildQuery = (queryParams: any) => 
 {
-    const { bookname, genreID, languageID } = queryParams;
+    const { bookname, genreID, languageID, publisherID, authorID } = queryParams;
 
-    console.log(genreID);
-    const query =  {
+    const query = 
+    {
         ...(bookname && { "bookname": { $regex: bookname, $options: "i" } }),
-        ...(genreID && { "genreID":  genreID }),
-        ...(languageID && { "languageID": languageID }),
+        ...(genreID && { "genreID": new ObjectId(genreID) }),
+        ...(languageID && { "languageID": new ObjectId(languageID) }),
+        ...(publisherID && { "publisherID": new ObjectId(publisherID) }),
+        ...(authorID && { "authorID": new ObjectId(authorID) }),
     };
-
-    console.log(query);
     return query;
 };

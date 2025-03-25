@@ -1,4 +1,4 @@
-import { BookResultDataInterface } from "./ResultModel";
+import { BookDataInterface } from "./ResultModel";
 import { TableInterface } from "./TablePagesAndModalModel";
 
 interface BookSearchInterface
@@ -8,18 +8,23 @@ interface BookSearchInterface
     languageID:string;
     genre:string;
     genreID:string;
+    author:string;
+    authorID:string;
+    publisher:string; 
+    publisherID:string;
 }
 
-interface BookDataInterface 
+interface BookTableDataInterface 
 {
     bookname:string;
     language:string;
     genre:string;
-    pages:number;
+    author:string;
+    publisher:string;
     description:string;
 }
 
-interface BookDataInterfaceForDelete extends BookDataInterface
+interface BookDataInterfaceForDelete extends BookTableDataInterface
 {
     bookID:string;
 }
@@ -27,7 +32,7 @@ interface BookDataInterfaceForDelete extends BookDataInterface
 interface BookRecordTableInterface extends TableInterface
 {
     value: number;
-    bookData: BookResultDataInterface[][];
+    bookData: BookDataInterface[][];
     paginationValue:number;
 }
-export type {BookSearchInterface, BookDataInterface, BookDataInterfaceForDelete, BookRecordTableInterface}
+export type {BookSearchInterface, BookTableDataInterface, BookDataInterfaceForDelete, BookRecordTableInterface}

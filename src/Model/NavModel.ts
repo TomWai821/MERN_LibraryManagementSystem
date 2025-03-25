@@ -1,12 +1,12 @@
 import { MouseEvent, ReactElement } from "react";
 import { PagesInterface } from "./TablePagesAndModalModel";
 
-interface NavInterface extends PagesInterface
+export interface NavInterface extends PagesInterface
 {
     AvatarSize: string;
 }
 
-interface NavSyntaxInterface
+export interface NavSyntaxInterface
 {
     fontSize?: number;
     transition?: string;
@@ -17,13 +17,13 @@ interface NavSyntaxInterface
     };
 }
 
-interface MenuItemSyntaxInterface
+export interface MenuItemSyntaxInterface
 {
     margin: number;
     padding: number;
 }
 
-interface ProfileMenuInterface extends NavInterface
+export interface ProfileMenuInterface extends NavInterface
 {
     username:string;
     anchorElUser: HTMLElement | null;
@@ -33,7 +33,7 @@ interface ProfileMenuInterface extends NavInterface
 }
 
 
-interface NavMenuInterface extends NavInterface
+export interface NavMenuInterface extends NavInterface
 {
     anchorElNav: HTMLElement | null;
     handleNavMenu: (event: React.MouseEvent<HTMLElement>) => void;
@@ -41,9 +41,7 @@ interface NavMenuInterface extends NavInterface
     MenuItemSyntax: MenuItemSyntaxInterface;
 }
 
-interface MenuItemInterface
+export interface MenuItemInterface
 {
     pages: { name: string, clickEvent:() => void, icon: ReactElement }[]
 }
-
-export type {NavSyntaxInterface, MenuItemSyntaxInterface, ProfileMenuInterface, NavMenuInterface, MenuItemInterface}

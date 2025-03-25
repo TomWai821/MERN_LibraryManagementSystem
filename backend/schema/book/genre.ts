@@ -6,8 +6,7 @@ const GenreSchema = new mongoose.Schema<GenreInterface>
 (
     {
         genre: { type: String, required: true },
-        shortName: { type:String, require: true },
-        createdAt: { type: Date, default: Date.now, immutable: true }
+        shortName: { type:String, require: true }
     }
 )
 

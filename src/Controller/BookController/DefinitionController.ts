@@ -1,9 +1,9 @@
 import { GetResultInterface } from "../../Model/ResultModel";
 
-const url = "http://localhost:5000/api/book/defination/";
+const url = "http://localhost:5000/api/book/definition/";
 const contentType = "application/json";
 
-const GetDefination = async (type:string) => 
+export const GetDefinition = async (type:string) => 
 {
     try
     {
@@ -26,7 +26,7 @@ const GetDefination = async (type:string) =>
     }
 }
 
-const CreateDefinationData = async (type:string, authToken:string, shortName:string, detailsName:string) => 
+export const CreateDefinitionData = async (type:string, authToken:string, shortName:string, detailsName:string) => 
 {
     try
     {
@@ -52,7 +52,7 @@ const CreateDefinationData = async (type:string, authToken:string, shortName:str
     }
 }
 
-const EditDefinationData = async (type:string, authToken:string, id:string, shortName:string, detailsName:string) => 
+export const EditDefinitionData = async (type:string, authToken:string, id:string, shortName:string, detailsName:string) => 
 {        
     const data = BuildBodyData(type, shortName, id, detailsName);
 
@@ -78,7 +78,7 @@ const EditDefinationData = async (type:string, authToken:string, id:string, shor
     }
 }
 
-const DeleteDefinationData = async (type:string, authToken:string, id:string) => 
+export const DeleteDefinitionData = async (type:string, authToken:string, id:string) => 
 {
     try
     {
@@ -126,5 +126,3 @@ const BuildBodyData = (type:string, shortName:string, detailsName:string, id?:st
     }
     return data;
 }
-
-export {GetDefination, CreateDefinationData, EditDefinationData, DeleteDefinationData}

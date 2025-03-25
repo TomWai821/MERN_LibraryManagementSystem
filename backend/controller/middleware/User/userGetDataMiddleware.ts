@@ -12,8 +12,6 @@ export const BuildUserQueryAndGetData = async (req: AuthRequest, res: Response, 
     const queryParams = req.query;
     let foundUser: UserInterface | UserInterface[] | null | undefined;
 
-    console.log(queryParams);
-
     if (userId) 
     {
         const hasBodyParameter = Object.keys(queryParams).length > 0;

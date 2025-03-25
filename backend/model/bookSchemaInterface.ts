@@ -1,27 +1,46 @@
-import mongoose from "mongoose";
-import { CreateAtInterface, IDInterface } from "./userSchemaInterface";
+import mongoose, { Document } from "mongoose";
+import { IDInterface } from "./userSchemaInterface";
 
-interface BookInterface extends IDInterface, CreateAtInterface
+interface BookInterface extends IDInterface
 {
-    image: string;
+    image: ImageInterface;
     bookname: string;
     languageID: mongoose.Schema.Types.ObjectId;
     genreID: mongoose.Schema.Types.ObjectId;
+    authorID: mongoose.Schema.Types.ObjectId;
+    publisherID: mongoose.Schema.Types.ObjectId;
     status:string;
     pages:number;
     description:string;
 }
 
-interface GenreInterface extends IDInterface, CreateAtInterface
+interface ImageInterface
+{
+    path:string;
+    filename:string;
+}
+
+interface GenreInterface extends IDInterface
 {
     genre:string,
     shortName:string;
 }
 
-interface LanguageInterface extends IDInterface, CreateAtInterface
+interface LanguageInterface extends IDInterface
 {
     shortName:string;
     language:string;
+}
+
+interface PublisherInterface extends IDInterface, ContractDataInterface
+{
+    publisher:string;
+    address:string;
+}
+
+interface AuthorInterface extends IDInterface, ContractDataInterface
+{
+    author:string;
 }
 
 interface ContractDataInterface
@@ -30,34 +49,23 @@ interface ContractDataInterface
     email:string;
 }
 
-interface PublisherInterface extends IDInterface, ContractDataInterface, CreateAtInterface
-{
-    publisher:string;
-    address:string;
-}
-
-interface AuthorInterface extends IDInterface, ContractDataInterface, CreateAtInterface
-{
-    author:string;
-}
-
-interface BookFavouriteInterface extends IDInterface, CreateAtInterface
+interface BookFavouriteInterface extends IDInterface
 {
     bookID: mongoose.Schema.Types.ObjectId;
     userID: mongoose.Schema.Types.ObjectId;
 }
 
-interface BookIssuedInterface extends IDInterface, BookFavouriteInterface, CreateAtInterface
+interface BookIssuedInterface extends IDInterface, BookFavouriteInterface
 {
     dueDate: Date;
     issueDate: Date;
     status: string;
 }
 
-interface BookReturnInterface extends IDInterface, CreateAtInterface
+interface BookReturnInterface extends IDInterface
 {
     issueID: mongoose.Schema.Types.ObjectId;
     returnDate: Date;
 }
 
-export { BookInterface, GenreInterface, LanguageInterface, PublisherInterface, AuthorInterface, BookFavouriteInterface, BookIssuedInterface, BookReturnInterface}
+export { BookInterface, ImageInterface, GenreInterface, LanguageInterface, PublisherInterface, AuthorInterface, BookFavouriteInterface, BookIssuedInterface, BookReturnInterface}

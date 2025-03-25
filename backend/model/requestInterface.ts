@@ -1,6 +1,6 @@
 import { UserInterface } from "./userSchemaInterface";
 import { Request } from 'express'
-import { BookInterface } from "./bookSchemaInterface";
+import { AuthorInterface, BookInterface, PublisherInterface } from "./bookSchemaInterface";
 
 interface LoginInterface
 {
@@ -36,6 +36,8 @@ interface AuthRequest extends Request
     foundUser?: UserInterface | UserInterface[] | null;
     updateData?: Record<string, any> | null;
     foundBook?: BookInterface | BookInterface[] | null;
+    foundAuthor?: AuthorInterface | AuthorInterface[] | null;
+    foundPublisher?: PublisherInterface | PublisherInterface[] | null;
 }
 
 export type {LoginInterface, CreateUserInterface, ModifyUserDataInterface, AuthRequest}

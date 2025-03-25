@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 // Context
 import { useModal } from '../../../../Context/ModalContext';
-import { useDefinationContext } from "../../../../Context/Book/DefinationContext";
+import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext";
 
 // UI Fragment
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
@@ -12,40 +12,41 @@ import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 import ModalTemplate from '../../../Templates/ModalTemplate';
 
 // Another Modal
-import CreateDefinationModal from "../../Defination/CreateDefinationModal";
+
 
 // Data (CSS Synxax)
 import { ModalBodySyntax, ModalSubTitleSyntax, ModalRemarkSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 // Models
 import { CreateModalInterface } from "../../../../Model/ModelForModal";
-import { DefinationInterface } from "../../../../Model/ResultModel";
+import { DefinitionInterface } from "../../../../Model/ResultModel";
+import CreateDefinitionModal from "../../Definition/CreateDefinitionModal";
 
 
-const CreateDefinationConfirmModal:FC<CreateModalInterface> = (definationData) => 
+const CreateDefinitionConfirmModal:FC<CreateModalInterface> = (definationData) => 
 {
     const {value, data} = definationData;
-    const Data = data as DefinationInterface;
+    const Data = data as DefinitionInterface;
     const type = value === 0 ? "Genre" : "Language";
  
     const { handleOpen, handleClose } = useModal();
-    const { createDefination } = useDefinationContext();
+    const { createDefinition } = useDefinitionContext();
 
     const returnCreateUserModal = () => 
     {
-        handleOpen(<CreateDefinationModal {...definationData}/>);
+        handleOpen(<CreateDefinitionModal {...definationData}/>);
     }
 
-    const createDefinationData = () => 
+    const createDefinitionData = () => 
     {
         switch(value)
         {
             case 0:
-                createDefination(type, Data.shortName, Data.genre as string);
+                createDefinition(type, Data.shortName, Data.genre as string);
                 break;
 
             case 1:
-                createDefination(type, Data.shortName, Data.language as string);
+                createDefinition(type, Data.shortName, Data.language as string);
                 break;
         }
         handleClose();
@@ -56,15 +57,15 @@ const CreateDefinationConfirmModal:FC<CreateModalInterface> = (definationData) =
             <Box id="modal-description" sx={ModalBodySyntax}>
             <Typography sx={ModalSubTitleSyntax}>Do you want to create this {type}?</Typography>
                 {
-                    value === 0 ?<Typography>Genre: {Data.genre}</Typography>:<Typography>Language: {Data.language}</Typography>
+                    value === 0 ? <Typography>Genre: {Data.genre}</Typography>:<Typography>Language: {Data.language}</Typography>
                 }
                 <Typography>ShortName: {Data.shortName}</Typography>
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
             </Box>
             
-            <ModalConfirmButton clickEvent={createDefinationData} name={"Yes"} buttonType={""}/>
+            <ModalConfirmButton clickEvent={createDefinitionData} name={"Yes"} buttonType={""}/>
         </ModalTemplate>
     );
 }
 
-export default CreateDefinationConfirmModal;
+export default CreateDefinitionConfirmModal;

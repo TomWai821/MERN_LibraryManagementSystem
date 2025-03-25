@@ -1,8 +1,8 @@
 const localhost:string = 'http://localhost:5000/api/book';
 
-export const createBookRecord = async (authToken:string, image:File, bookname:string, genreID:string, languageID:string, pages:number, description:string) => 
+export const createBookRecord = async (authToken:string, image:File, bookname:string, genreID:string, languageID:string, description:string) => 
 {
-    const formData = createFormData(image, bookname, genreID, languageID, pages, description);
+    const formData = createFormData(image, bookname, genreID, languageID, description);
     
     const response = await fetch(`${localhost}/bookData`,
         {
@@ -12,8 +12,6 @@ export const createBookRecord = async (authToken:string, image:File, bookname:st
         }
     );
 
-    console.log(response);
-
     if(response.ok)
     {
         const result = await response.json();
@@ -21,14 +19,13 @@ export const createBookRecord = async (authToken:string, image:File, bookname:st
     }
 }
 
-const createFormData = (image:File, bookname:string, genreID:string, languageID:string, pages:number, description:string) => 
+const createFormData = (image:File, bookname:string, genreID:string, languageID:string, description:string) => 
 {
     const formData = new FormData();
     formData.append('image', image);
     formData.append('bookname', bookname);
     formData.append('genreID', genreID);
     formData.append('languageID', languageID);
-    formData.append('pages', pages.toString());
     formData.append('description',description);
 
     return formData;

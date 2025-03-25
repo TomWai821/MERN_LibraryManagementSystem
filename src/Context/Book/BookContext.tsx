@@ -1,7 +1,7 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
 import { BookContextProps, ChildProps } from "../../Model/ContextAndProviderModel";
 import { GetData } from "../../Controller/OtherController";
-import { BookResultDataInterface, GetResultInterface } from "../../Model/ResultModel";
+import { BookDataInterface, GetResultInterface } from "../../Model/ResultModel";
 import { fetchBook } from "../../Controller/BookController/BookGetController";
 import { createBookRecord } from "../../Controller/BookController/BookPostController";
 import { updateBookRecord } from "../../Controller/BookController/BookPutController";
@@ -11,8 +11,8 @@ const BookContext = createContext<BookContextProps | undefined>(undefined);
 
 export const BookProvider:FC<ChildProps> = ({children}) => 
 {
-    const [AllBook, setAllBook] = useState<BookResultDataInterface[]>([]);
-    const [OnLoanBook, setOnLoanBook] = useState<BookResultDataInterface[]>([]);
+    const [AllBook, setAllBook] = useState<BookDataInterface[]>([]);
+    const [OnLoanBook, setOnLoanBook] = useState<BookDataInterface[]>([]);
     const authToken = GetData("authToken") as string;
     const bookData = [AllBook, OnLoanBook];
 
@@ -36,9 +36,9 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         */
     },[])
 
-    const fetchBookWithFliterData = useCallback(async (tableName:string, bookname?:string, genreID?:string, languageID?:string) => 
+    const fetchBookWithFliterData = useCallback(async (tableName:string, bookname?:string, genreID?:string, languageID?:string, publisherID?:string, authorID?:string) => 
     {
-        const result: GetResultInterface | undefined = await fetchBook(tableName, bookname, genreID, languageID);
+        const result: GetResultInterface | undefined = await fetchBook(tableName, bookname, genreID, languageID, publisherID, authorID);
 
         if(result && Array.isArray(result.foundBook))
         {
@@ -57,9 +57,9 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         }
     },[])
 
-    const createBook = useCallback(async (image:File, bookname:string, genreID:string, languageID:string, page:number, description:string) => 
+    const createBook = useCallback(async (image:File, bookname:string, genreID:string, languageID:string, description:string) => 
     {
-        const result = await createBookRecord(authToken, image, bookname, genreID, languageID, page, description);
+        const result = await createBookRecord(authToken, image, bookname, genreID, languageID, description);
 
         if(result)
         {
@@ -67,9 +67,9 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         }
     },[fetchAllBook])
 
-    const editBook = useCallback(async (bookID:string, bookname:string, genreID:string, languageID:string, pages:number, description: string) => 
+    const editBook = useCallback(async (bookID:string, bookname:string, genreID:string, languageID:string,description: string) => 
         {
-            const result = await updateBookRecord(authToken, bookID, bookname, genreID, languageID, pages, description)
+            const result = await updateBookRecord(authToken, bookID, bookname, genreID, languageID, description)
 
             if(result)
             {

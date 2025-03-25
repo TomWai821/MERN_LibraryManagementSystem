@@ -5,7 +5,6 @@ const fetchData = async (authToken:string, url: string, data: Record<string, any
 {
     try 
     {
-        console.log(data);
         const response = await fetch(url, 
         {
             method: 'PUT',

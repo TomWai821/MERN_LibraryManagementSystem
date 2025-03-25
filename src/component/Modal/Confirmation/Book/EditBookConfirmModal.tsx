@@ -14,7 +14,7 @@ import { EditModalInterface } from "../../../../Model/ModelForModal";
 import EditBookModal from "../../Book/EditBookModal";
 
 // Data (CSS Syntax)
-import { BookResultDataInterface } from "../../../../Model/ResultModel";
+import { BookDataInterfaceForEdit } from "../../../../Model/ResultModel";
 import { useBookContext } from "../../../../Context/Book/BookContext";
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
@@ -25,46 +25,55 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
     const {handleOpen, handleClose} = useModal();
     const {editBook} = useBookContext();
 
-    useEffect(() => 
-    {
-        generateChangeTypography(editData as BookResultDataInterface, compareData as BookResultDataInterface);
-    },[editData, compareData]);
+    const CompareData = compareData as BookDataInterfaceForEdit;
+    const EditData = editData as BookDataInterfaceForEdit;
 
-    const generateChangeTypography = (editData: BookResultDataInterface, compareData: BookResultDataInterface) => 
+    const generateChangeTypography = (editData:BookDataInterfaceForEdit, compareData:BookDataInterfaceForEdit) => 
     {
         let differences: JSX.Element[] = [];
-        for (const key in editData) 
+        const ignoreList = ["languageID", "genreID", "publisherID", "authorID", "imageUrl"]
+    
+        for (const key in compareData) 
         {
-            if (editData[key as keyof BookResultDataInterface] !== compareData[key as keyof BookResultDataInterface]) 
+            if(ignoreList.includes(key))
+            {
+                continue;
+            }
+
+            if (editData[key as keyof BookDataInterfaceForEdit] !== compareData[key as keyof BookDataInterfaceForEdit]) 
             {
                 differences.push(
                     <Typography key={key}>
-                        {`- ${key}: ${compareData[key as keyof BookResultDataInterface]} -> ${editData[key as keyof BookResultDataInterface]}`}
+                        {`- ${key}: ${compareData[key as keyof BookDataInterfaceForEdit]} -> ${editData[key as keyof BookDataInterfaceForEdit]}`}
                     </Typography>
                 );
             }
         }
-
-        if(differences.length == 0)
+    
+        if (differences.length === 0) 
         {
-            differences.push(<Typography>- Nothing Change</Typography>);
+            differences.push(<Typography key={"nothingChange"}>- Nothing Changed</Typography>);
         }
-
+    
         setDifferences(differences);
-    }
+    };
    
     const returnEditBookModal = () => 
     {
         setDifferences([]);
-        handleOpen(<EditBookModal editData={editData} compareData={compareData} value={value} />);
+        handleOpen(<EditBookModal value={value} editData={EditData} compareData={CompareData} />);
     }
     
     const editBookData = () => 
     {
-        const EditData = editData as BookResultDataInterface;
-        editBook(EditData._id, EditData.bookname, EditData.genreID, EditData.languageID, EditData.pages, EditData.description);
+        editBook(EditData._id, EditData.bookname, EditData.genreID, EditData.languageID, EditData.description);
         handleClose();
     }
+
+    useEffect(() => 
+        {
+            generateChangeTypography(EditData, CompareData);
+        },[editData, compareData]);
 
     return(
         <ModalTemplate title={"Edit Book Record Confirmation"} cancelButtonName={"No"} cancelButtonEvent={returnEditBookModal}>

@@ -6,7 +6,6 @@ import UserFilter from "./Filter/UserFilter";
 import CustomTab from "../../UIFragment/CustomTab";
 import UserTabPanel from "./Tabs/UserTabPanel";
 
-
 // Model
 import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 

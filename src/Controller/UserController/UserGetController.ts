@@ -21,7 +21,6 @@ export const FetchUserData = async(tableName?: string, authToken?:string,  usern
 
         const queryString = queryParams.toString();
         const url = `${localhost}/userData/tableName=${queryString ? `${tableName}?${queryString}` : `${tableName}`}`;
-        console.log(url);
 
         const response = await fetch(url,
             {

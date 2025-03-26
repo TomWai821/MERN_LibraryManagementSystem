@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 import { GenreInterface } from '../../model/bookSchemaInterface';
 import { printError } from '../../controller/Utils';
 
@@ -73,7 +73,7 @@ export const FindGenreByIDAndUpdate  = async (genreId: string, data: Record<stri
 {
     try
     {
-        return await Genre.findByIdAndUpdate(genreId, data);
+        return await Genre.findByIdAndUpdate(genreId as unknown as ObjectId, data);
     }
     catch(error)
     {
@@ -85,7 +85,7 @@ export const FindGenreByIDAndDelete = async (genreId: string) =>
 {
     try
     {
-        return await Genre.findByIdAndDelete(genreId);
+        return await Genre.findByIdAndDelete(genreId as unknown as ObjectId);
     }
     catch(error)
     {

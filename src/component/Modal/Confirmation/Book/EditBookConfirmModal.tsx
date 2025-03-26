@@ -66,7 +66,7 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
     
     const editBookData = () => 
     {
-        editBook(EditData._id, EditData.bookname, EditData.genreID, EditData.languageID, EditData.description);
+        editBook(EditData._id, EditData.bookname, EditData.genreID, EditData.languageID, EditData.publisherID, EditData.authorID, EditData.description);
         handleClose();
     }
 

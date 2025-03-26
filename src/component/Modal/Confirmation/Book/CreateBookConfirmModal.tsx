@@ -17,7 +17,7 @@ import { BookDescriptionDisplayFormat, BookImageFormat, displayAsColumn, display
 
 const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) => 
 {
-    const { image, imageURL, bookname, genre, genreID, language, languageID, author, authorID, publisher, publisherID, description} = bookData.data;
+    const { image, imageURL, bookname, genre, genreID, language, languageID, author, authorID, publisher, publisherID, description, publishDate} = bookData.data;
     
     const { handleOpen, handleClose } = useModal();
     const { createBook } = useBookContext();
@@ -28,13 +28,13 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
         <CreateBookModal image={image} imageURL={imageURL} bookname={bookname} 
             language={language} languageID={languageID} genre={genre} genreID={genreID} 
             author={author} authorID={authorID} publisher={publisher} publisherID={publisherID}
-            description={description} />
+            description={description} publishDate={publishDate}/>
         );
     }
 
     const CreateBook = () => 
     {
-        createBook(image, bookname, genreID, languageID, description);
+        createBook(image, bookname, genreID, languageID, publisherID, authorID, description, publishDate);
         handleClose();
     }
 
@@ -58,6 +58,9 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
                         <Typography>BookName: {bookname}</Typography>
                         <Typography>Language: {language}</Typography>
                         <Typography>Genre: {genre}</Typography>
+                        <Typography>Publisher: {publisher}</Typography>
+                        <Typography>Author: {author}</Typography>
+                        <Typography>Publish Date: {publishDate}</Typography>
                         <Box sx={{ maxWidth: '350px', display: 'inline-block'}}>
                             <Typography>Description:</Typography>
                             <Typography sx={BookDescriptionDisplayFormat}>{description}</Typography>

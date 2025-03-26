@@ -54,20 +54,20 @@ export const EditDefinitionData = async (req: Request, res: Response) =>
     const definitionType = req.params.type as keyof typeof definitionHandlers;
     const { id, genre, language, shortName } = req.body;
     let success = false;
+    let editData:any;
 
     try 
     {
-        if (definitionType === "Genre" && language) 
+        switch(definitionType)
         {
-            return res.status(400).json({ success, error: `Invalid data type in JSON file: language` });
-        }
+            case "Genre":
+                editData = await FindGenreByIDAndUpdate(id, {genre, shortName});
+                break;
 
-        if (definitionType === "Language" && genre) 
-        {
-            return res.status(400).json({ success, error: `Invalid data type in JSON file: genre` });
+            case "Language":
+                editData = await FindLanguageByIDAndUpdate(id, {language, shortName});
+                break;
         }
-
-        const editData = await definitionHandlers[definitionType].update(id, { genre, language, shortName });
 
         if (!editData) 
         {
@@ -113,14 +113,12 @@ export const definitionHandlers =
     {
         getAll:GetGenre,
         create:CreateGenre,
-        update:FindGenreByIDAndUpdate,
         delete:FindGenreByIDAndDelete
     },
     Language:
     {
         getAll:GetLanguage,
         create:CreateLanguage,
-        update:FindLanguageByIDAndUpdate,
         delete:FindLanguageByIDAndDelete
     }
 }

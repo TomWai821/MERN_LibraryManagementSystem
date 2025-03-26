@@ -48,16 +48,29 @@ const DeleteUserTableHeader =
 // Table Cell Header for Book tables
 const AllBookTableHeader = 
 [
+    {label:"No.", isLoggedIn: false},
+    {label:"Image", isLoggedIn: false},
+    {label:"BookName", isLoggedIn: false},
+    {label:"Genre", isLoggedIn: false},
+    {label:"Language", isLoggedIn: false},
+    {label:"Author", isLoggedIn: false},
+    {label:"Publisher", isLoggedIn: false},
+    {label:"Status", isLoggedIn: true},
+    {label:"Actions", isLoggedIn: true}
+]
+
+const LoanBookTableHeader = 
+[
     {label:"No."},
     {label:"Image"},
     {label:"BookName"},
-    {label:"Genre"},
-    {label:"Language"},
-    {label:"Author"},
-    {label:"Publisher"},
+    {label:"Username"},
+    {label:"Loan Date"},
+    {label:"Due Date"},
     {label:"Status"},
     {label:"Actions"}
 ]
+
 
 const BookTabLabel = 
 [
@@ -90,4 +103,4 @@ const StatusFilterOption = [...StatusOption, ...EmptyOption];
 
 const GenderFilterOption = [...GenderOption, ...EmptyOption];
 
-export {BookRecordTableHeader, AllUserTableHeader, BannedUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, BookTabLabel, UserTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption}
+export {BookRecordTableHeader, AllUserTableHeader, BannedUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, BookTabLabel, UserTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption}

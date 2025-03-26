@@ -16,19 +16,8 @@ export const GetBookRecord = async (req: AuthRequest, res: Response) =>
             return res.status(404).json({ success: false, error: "Book record not found!" });
         }
 
-        // Ensure `foundBook` is always an array
-        const books = Array.isArray(foundBook) ? foundBook : [foundBook];
-
-        // Add imageUrl to each book
-        const booksWithImageUrls = books.map((book) => 
-        (
-            {
-                ...book, imageUrl: book.image?.filename ? `http://localhost:5000/api/book/uploads/${book.image.filename}`: null,
-            }
-        ));
-
         success = true;
-        return res.json({ success, foundBook: booksWithImageUrls });
+        return res.json({ success, foundBook: foundBook });
     } 
     catch (error) 
     {
@@ -55,14 +44,17 @@ export const GetBookImage = async(req:Request, res:Response) =>
 
 export const CreateBookRecord = async (req:Request, res:Response) => 
 {
-    const { bookname, languageID, genreID, pages, description } = req.body;
+    const { bookname, languageID, genreID, authorID, publisherID, pages, description, publishDate } = req.body;
     let success = false;
 
     try
     {
-        const imagePath = req.file?.path;
         const imageName = req.file?.filename;
-        const createBook = await CreateBook({ image: {path:imagePath, filename:imageName}, bookname, languageID, genreID, pages, description });
+        const imageUrl = imageName ? `http://localhost:5000/api/book/uploads/${imageName}`: null;
+        const mongoDate = new Date(publishDate);
+
+        // Add imageUrl to each book
+        const createBook = await CreateBook({ image: {url:imageUrl, filename:imageName}, bookname, languageID, genreID, authorID, publisherID, pages, description, publishDate:mongoDate });
 
         if(!createBook)
         {

@@ -74,7 +74,7 @@ const ModalBodySyntax =
 // For Action Table Cell
 const ImportantActionButtonSyntax = { color: 'red', "&:hover": { color: DeleteButton.backgroundColor, backgroundColor: 'lightGray' } };
 
-const BookImageFormat = { minHeight: '225px', maxHeight: '350px', width: 'auto', height: '100%' };
+const BookImageFormat = { minHeight: '225px', maxHeight: '350px', width: '200px', height: '100%', objectFit: 'contain' };
 
 const BookDescriptionDisplayFormat = { overflow: 'hidden', whiteSpace: 'normal',  wordWrap: 'break-word', maxWidth: '100%'};
 

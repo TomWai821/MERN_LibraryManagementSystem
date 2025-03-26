@@ -19,10 +19,11 @@ import { useDefinitionContext } from '../../../Context/Book/DefinitionContext';
 import { BookImageFormat, DeleteButton, displayAsColumn, displayAsRow, ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 import { useContactContext } from '../../../Context/Book/ContactContext';
 import { ContactInterface, DefinitionInterface } from '../../../Model/ResultModel';
+import { GetCurrentDate } from '../../../Controller/OtherController';
 
 const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) => 
 {
-    const { image, imageURL, bookname, language, languageID, genre, genreID, author, authorID, publisher, publisherID, description } = bookData;
+    const { image, imageURL, bookname, language, languageID, genre, genreID, author, authorID, publisher, publisherID, description, publishDate } = bookData;
 
     const [ imageFile, setImageFile ] = useState<File | null>(image as File || null);
     const [ previewUrl, setPreviewUrl ] = useState<string | null>(imageURL as string || null);
@@ -30,7 +31,7 @@ const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) =>
         { 
             bookname: bookname || "", language: language || "", languageID: languageID || "", 
             genre: genre || "", genreID: genreID || "",  author: author || "", authorID: authorID || "", 
-            publisher: publisher || "", publisherID: publisherID || "", description: description || ""
+            publisher: publisher || "", publisherID: publisherID || "", description: description || "", publishDate: publishDate || GetCurrentDate("String") as string
         }
     );
     
@@ -46,24 +47,36 @@ const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) =>
         {name: "genre", label: "Genre", type:"text", select: true, options:definition.Genre, slotProps:{}, multiline: false, rows: 1},
         {name: "author", label: "Author", type:"text", select: true, options:contact.Author, slotProps:{}, multiline: false, rows: 1},
         {name: "publisher", label: "Publisher", type:"text", select: true, options:contact.Publisher, slotProps:{}, multiline: false, rows: 1},
-        {name: "description", label: "Description", type: "text", select:false, slotProps:{}, multiline: true, rows: 8}
+        {name: "publishDate", label: "Publish Date", type:"Date", select: false, slotProps:{}, multiline: false, rows: 1},
+        {name: "description", label: "Description", type: "text", select: false, slotProps:{}, multiline: true, rows: 8}
     ],[definition])
 
     const onSelectChange = (event: ChangeEvent<HTMLInputElement>, index?:number) => 
     {
         const {name, value} = event.target;
 
-        if(name === "genre")
+
+        switch(name)
         {
-            setBook({...book, genre: value, genreID: definition.Genre[index as number]._id});
-        }
-        else if(name === "language")
-        {
-            setBook({...book, language: value, languageID: definition.Language[index as number]._id});
-        }
-        else
-        {
-            setBook({ ...book, [name]: value });
+            case "genre":
+                setBook({...book, genre: value, genreID: definition.Genre[index as number]._id});
+                break;
+
+            case "language":
+                setBook({...book, language: value, languageID: definition.Language[index as number]._id});
+                break;
+
+            case "author":
+                setBook({...book, author: value, authorID: contact.Author[index as number]._id});
+                break;
+                
+            case "publisher":
+                setBook({...book, publisher: value, publisherID: contact.Publisher[index as number]._id});
+                break;
+
+            default:
+                setBook({ ...book, [name]: value });
+                break;
         }
     }
 

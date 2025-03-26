@@ -1,4 +1,4 @@
-import mongoose, { Document } from "mongoose";
+import mongoose from "mongoose";
 import { IDInterface } from "./userSchemaInterface";
 
 interface BookInterface extends IDInterface
@@ -12,11 +12,12 @@ interface BookInterface extends IDInterface
     status:string;
     pages:number;
     description:string;
+    publishDate:Date;
 }
 
 interface ImageInterface
 {
-    path:string;
+    url:string;
     filename:string;
 }
 
@@ -58,7 +59,7 @@ interface BookFavouriteInterface extends IDInterface
 interface BookIssuedInterface extends IDInterface, BookFavouriteInterface
 {
     dueDate: Date;
-    issueDate: Date;
+    loanDate: Date;
     status: string;
 }
 

@@ -24,6 +24,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
     const { isLoggedIn, isAdmin } = loginData;
     const { bookData, fetchBookWithFliterData } = useBookContext();
     const { definition } = useDefinitionContext();
+
     const SetTitle:string = isAdmin ? "Manage Books Record": "View Books";
 
     const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", language: "All", languageID: "", genre: "All", genreID: "", author: "All", authorID: "", publisher: "All", publisherID: ""});
@@ -77,7 +78,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
         { 
             if(!isAdmin) 
             { 
-                setTabValue(1); 
+                setTabValue(0); 
             }
         },[isAdmin]
     )

@@ -13,7 +13,7 @@ interface CreateUserInterface extends LoginInterface
     username: string;
     gender: string;
     role: string;
-    birthDay: string;
+    birthDay: Date;
     status: string;
     avatarUrl: string;
 }

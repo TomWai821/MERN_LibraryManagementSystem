@@ -9,6 +9,7 @@ import { UserProvider } from './Context/User/UserContext';
 import { BookProvider } from './Context/Book/BookContext';
 import { DefinitionProvider } from './Context/Book/DefinitionContext';
 import { ContactProvider } from './Context/Book/ContactContext';
+import { SuggestBookProvider } from './Context/Book/SuggestBookContext';
 
 const root = ReactDOM.createRoot
 (
@@ -17,21 +18,23 @@ const root = ReactDOM.createRoot
 
 root.render
 (
-    <ContactProvider>
-        <DefinitionProvider>
-            <BookProvider>
-                <UserProvider>
-                    <AlertProvider>
-                        <ModalProvider>
-                            <BrowserRouter>
-                                <App />
-                            </BrowserRouter>
-                        </ModalProvider>
-                    </AlertProvider>
-                </UserProvider>
-            </BookProvider>
-        </DefinitionProvider>
-    </ContactProvider>
+    <SuggestBookProvider>
+        <ContactProvider>
+            <DefinitionProvider>
+                <BookProvider>
+                    <UserProvider>
+                        <AlertProvider>
+                            <ModalProvider>
+                                <BrowserRouter>
+                                    <App />
+                                </BrowserRouter>
+                            </ModalProvider>
+                        </AlertProvider>
+                    </UserProvider>
+                </BookProvider>
+            </DefinitionProvider>
+        </ContactProvider>
+    </SuggestBookProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

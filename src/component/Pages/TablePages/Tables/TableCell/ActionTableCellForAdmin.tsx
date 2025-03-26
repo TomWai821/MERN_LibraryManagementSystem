@@ -42,7 +42,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
                                 genre: data.genreDetails.genre as string, genreID: data.genreDetails._id, 
                                 author: data.authorDetails.author as string, authorID: data.authorDetails._id,
                                 publisher: data.publisherDetails.publisher as string, publisherID: data.publisherDetails._id, 
-                                description: data.description, imageUrl: data.imageUrl, filename: data.image?.filename}
+                                description: data.description, imageUrl: data.image?.url, filename: data.image?.filename}
                 handleOpen(<EditBookModal value={value} editData={Data} compareData={Data}/>);
                 break;
                 

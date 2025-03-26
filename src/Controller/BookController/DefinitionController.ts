@@ -54,7 +54,7 @@ export const CreateDefinitionData = async (type:string, authToken:string, shortN
 
 export const EditDefinitionData = async (type:string, authToken:string, id:string, shortName:string, detailsName:string) => 
 {        
-    const data = BuildBodyData(type, shortName, id, detailsName);
+    const data = BuildBodyData(type, shortName, detailsName, id);
 
     try
     {

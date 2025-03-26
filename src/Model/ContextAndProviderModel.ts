@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
-import { BookDataInterface, ContactState, DefinitionState, UserResultDataInterface } from "./ResultModel";
+import { BookDataInterface, ContactState, DefinitionState, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
 import { BookTableDataInterface } from "./BookTableModel";
+import { IsAdminInterface } from "./TablePagesAndModalModel";
 
 export interface ChildProps
 {
@@ -56,12 +57,17 @@ export interface UserContextProps
 
 export interface BookContextProps
 {
-    bookData: BookDataInterface[][];
+    bookData:(BookDataInterface[] | LoanBookInterface[])[];
     fetchAllBook: () => Promise<void>;
     fetchBookWithFliterData: (tablename:string, bookname?:string, genreID?:string, languageID?:string) => Promise<void>;
-    createBook: (image:File, bookname:string, genreID:string, languageID:string, description:string) => void;
-    editBook: (bookID:string, bookname:string, genreID:string, languageID:string, description:string) => void;
+    createBook: (image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => void;
+    editBook: (bookID:string, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string) => void;
     deleteBook: (bookID:string) => void;
+}
+
+export interface SuggestBookContextProps
+{
+    suggestBook: (BookDataInterface[] | LoanBookInterface[])[];
 }
 
 export interface DefinatonProps
@@ -90,10 +96,10 @@ export interface TabPanelProps extends ChildProps
 }
 
 // For ContentTableCell
-export interface ContentTableCellProps extends ChildProps
+export interface ContentTableCellProps extends ChildProps, IsAdminInterface
 {
     TableName: string;
     value: number;
-    isAdmin: boolean;
-    Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface;
+    isLoggedIn?: boolean;
+    Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface;
 }

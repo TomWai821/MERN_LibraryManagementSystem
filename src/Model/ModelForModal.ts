@@ -1,4 +1,5 @@
 import { BookDataInterface, BookDataInterfaceForEdit, DefinitionInterface, DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "./ResultModel";
+import { IsAdminInterface } from "./TablePagesAndModalModel";
 
 export interface CreateModalInterface
 {
@@ -20,6 +21,7 @@ export interface CreateBookModalInterface
     publisher?:string; 
     publisherID?:string;
     description?:string;
+    publishDate?:Date;
 }
 
 export interface EditModalInterface
@@ -45,11 +47,11 @@ export interface DeleteModalInterface
     data: UserResultDataInterface | DefinitionInterface | DefinitionInterface;
 }
 
-export interface DisplayDataModalInterface
+export interface DisplayDataModalInterface extends IsAdminInterface
 {
     value:number;
-    isAdmin:boolean;
     data: UserResultDataInterface | BookDataInterface;
+    isLoggedIn?: boolean;
 }
 
 export interface ModalConfirmButtonInterface
@@ -62,5 +64,6 @@ export interface ModalConfirmButtonInterface
 export interface DisplayDataModalBody
 {
     isAdmin?:boolean;
+    isLoggedIn?:boolean;
     data: UserResultDataInterface | BookDataInterface;
 }

@@ -5,10 +5,11 @@ import { LoginAndFindUser } from '../Arrays/routesMap';
 import { CreateBookRecord, DeleteBookRecord, EditBookRecord, GetBookImage, GetBookRecord } from '../controller/bookController';
 import { BookGenreIDAndLanguageIDValidation, BookNameValidation, BookRecordIDValidation } from '../controller/middleware/Book/BookvalidationMiddleware';
 import { BookCreateRules } from '../model/expressBodyRules';
-import { BuildBookQueryAndGetData } from '../controller/middleware/Book/bookGetDataMiddleware';
+import { BuildBookQueryAndGetData, BuildSuggestBookQueryAndGetData } from '../controller/middleware/Book/bookGetDataMiddleware';
 import { DefinitionDataValidation, DefinitionTypeValidation } from '../controller/middleware/Definition/DefinitonValidationMiddleware';
 import { CreateContactRecord, DeleteContactRecord, GetContactRecord, UpdateContactRecord } from '../controller/contactController';
 import { ContactDataValidation, ContactTypeValidation } from '../controller/middleware/Contract/ContactValidationMiddleware';
+import { CreateLoanBookRecord, GetLoanBookRecord, UpdateLoanBookRecord } from '../controller/loanBookController';
 
 const router = express.Router();
 
@@ -19,10 +20,19 @@ router.put('/definition/type=:type', ...LoginAndFindUser, DefinitionTypeValidati
 router.delete('/definition/type=:type', ...LoginAndFindUser, DefinitionTypeValidation, DeleteDefinitionData);
 
 // For book records
-router.get('/BookData/tableName=:tableName', BuildBookQueryAndGetData, GetBookRecord);
+router.get('/BookData', BuildBookQueryAndGetData, GetBookRecord);
 router.post('/BookData', upload.single("image"), BookCreateRules, ...LoginAndFindUser, BookNameValidation, BookGenreIDAndLanguageIDValidation, CreateBookRecord);
 router.put('/BookData/id=:id', ...LoginAndFindUser, BookRecordIDValidation, BookGenreIDAndLanguageIDValidation, EditBookRecord);
 router.delete('/BookData/id=:id', ...LoginAndFindUser, BookRecordIDValidation, DeleteBookRecord);
+
+// For book records
+router.get('/LoanBook', GetLoanBookRecord);
+router.post('/LoanBook', ...LoginAndFindUser, CreateLoanBookRecord);
+router.put('/LoanBook/id=:id', ...LoginAndFindUser, UpdateLoanBookRecord);
+
+// For Suggest Book
+router.get('/BookData/type=:type', BuildSuggestBookQueryAndGetData, GetBookRecord);
+router.get('/LoanBook/type=:type', GetLoanBookRecord);
 
 // For publisher and author
 router.get('/contact/type=:type', ContactTypeValidation, GetContactRecord);
@@ -30,6 +40,7 @@ router.post('/contact/type=:type', ...LoginAndFindUser, ContactTypeValidation, C
 router.put('/contact/type=:type', ...LoginAndFindUser, ContactTypeValidation, ContactDataValidation, UpdateContactRecord);
 router.delete('/contact/type=:type', ...LoginAndFindUser, ContactTypeValidation, ContactDataValidation, DeleteContactRecord);
 
+// For image
 router.get("/uploads/:filename", GetBookImage);
 
 module.exports = router;

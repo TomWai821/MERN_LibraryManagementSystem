@@ -1,4 +1,4 @@
-import { BookDataInterface } from "./ResultModel";
+import { BookDataInterface, LoanBookInterface } from "./ResultModel";
 import { TableInterface } from "./TablePagesAndModalModel";
 
 interface BookSearchInterface
@@ -32,7 +32,7 @@ interface BookDataInterfaceForDelete extends BookTableDataInterface
 interface BookRecordTableInterface extends TableInterface
 {
     value: number;
-    bookData: BookDataInterface[][];
+    bookData: (BookDataInterface[] | LoanBookInterface[])[];
     paginationValue:number;
 }
 export type {BookSearchInterface, BookTableDataInterface, BookDataInterfaceForDelete, BookRecordTableInterface}

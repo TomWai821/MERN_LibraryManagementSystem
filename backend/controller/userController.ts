@@ -17,9 +17,10 @@ export const UserRegister = async(req: Request, res: Response) =>
     {   
         // Hash password with bcrypt after validate email and username
         const hashedPassword = await bcryptHash(password); 
+        const mongoDate = new Date(birthDay);
     
         // Create a new user after hashing the password
-        const newUser = await CreateUser({ email, username, password: hashedPassword, gender, role, status, birthDay, avatarUrl});
+        const newUser = await CreateUser({ email, username, password: hashedPassword, gender, role, status, birthDay: mongoDate, avatarUrl});
 
         if(!newUser)
         {

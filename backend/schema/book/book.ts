@@ -6,14 +6,19 @@ import { bookStatusArray } from '../../Arrays/TypeArrayForBook';
 const BookSchema = new mongoose.Schema<BookInterface>
 (
     {
-        image: {  path: { type: String }, filename: { type: String }},
+        image: 
+        {  
+            url: { type: String }, 
+            filename: { type: String }
+        },
         bookname: { type: String, required: true },
         languageID: { type: mongoose.Types.ObjectId, ref: 'Language', required: true },
         genreID: { type: mongoose.Types.ObjectId, ref: 'Genre', required: true },
         authorID: { type: mongoose.Types.ObjectId, ref: 'Author', required: true },
         publisherID: { type: mongoose.Types.ObjectId, ref: 'Publusher', required: true },
         status: { type: String, required: true , default: 'OnShelf', enum: bookStatusArray},
-        description: { type: String, default: '' }
+        description: { type: String, default: '' },
+        publishDate: { type: Date, default: Date.now, immutable: true  }
     }
 )
 
@@ -31,15 +36,11 @@ export const CreateBook = async (data:Record<string, any>) =>
     }
 }
 
-export const GetBook = async (data?:Record<string, any>) =>
+export const GetBook = async (data?:Record<string, any>, sortRequirement?:Record<string, any>, limit?:number) =>
 {
     try
     {
-        if(!data)
-        {
-            return await GetBooksWithOtherDetails();
-        }
-        return await GetBooksWithOtherDetails(data);
+        return await GetBooksWithOtherDetails(data, sortRequirement, limit);
     }
     catch(error)
     {
@@ -48,11 +49,18 @@ export const GetBook = async (data?:Record<string, any>) =>
 };
 
 // Local variable(For get banned user data)
-const GetBooksWithOtherDetails = async (data?:Record<string, any>) => 
+const GetBooksWithOtherDetails = async (data?:Record<string, any>, sortRequirement?:Record<string, any>, limit?:number) => 
 {
     let pipeline:PipelineStage[] = [];
 
-    if (data) { pipeline.push( {$match: {...data}} )}
+    const otherRequirement = 
+    [
+        ...(data ? [{ $match: {...data} }]: []),
+        ...(sortRequirement ? [{ $sort: sortRequirement }]: []),
+        ...(limit ? [{ $limit: limit }] : []),
+    ];
+
+    pipeline.push(...otherRequirement);
 
     const lookupAndUnwind = (from:string, localField:string, foreignField:string, asField:string) => 
     (

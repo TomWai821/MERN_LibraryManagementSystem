@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema<UserInterface>
         gender: { type: String, required: true },
         role: { type: String, required: true, default: 'User', enum: userRole },
         status: { type: String, required: true, default: 'Normal', enum: userStatus },
-        birthDay: { type: String, required: true },
+        birthDay: { type: Date, default: Date.now ,required: true },
         avatarUrl: { type:String, required: true }
     }
 );

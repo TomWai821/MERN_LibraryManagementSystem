@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { BookDataInterface, UserResultDataInterface } from "./ResultModel";
+import { BookDataInterface, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
 import { BookTableDataInterface, BookSearchInterface } from "./BookTableModel"
 
@@ -27,9 +27,10 @@ export interface FilterInterface extends IsAdminInterface
 
 export interface ActionTableCellInterface extends IsAdminInterface
 {
+    isLoggedIn?: boolean;
     value: number;
     TableName: string;
-    Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface;
+    Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface;
 }
 
 

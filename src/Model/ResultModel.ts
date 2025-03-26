@@ -22,6 +22,7 @@ export interface GetResultInterface
     foundBook?: BookDataInterface | BookDataInterface[];
     foundDefinition?: DefinitionInterface | DefinitionInterface[];
     foundContact?: ContactInterface | ContactInterface[];
+    foundLoanBook?: LoanBookInterface | LoanBookInterface[];
 }
 
 export interface UserResultDataInterface extends UserDataInterface
@@ -51,7 +52,7 @@ export interface BookDataInterface
     languageDetails: DefinitionInterface;
     authorDetails: ContactInterface;
     publisherDetails: ContactInterface;
-    imageUrl:string;
+    publishDate: Date | string;
 }
 
 export interface BookDataInterfaceForEdit
@@ -74,7 +75,7 @@ export interface BookDataInterfaceForEdit
 
 export interface ImageInterface
 {
-    path?:string;
+    url?:string;
     filename?:string;
 }
 
@@ -116,6 +117,17 @@ export interface ContactInterface
     address?:string;
     email:string;
     phoneNumber:string;
+}
+
+export interface LoanBookInterface
+{
+    _id:string;
+    userDetails?: UserDataInterface;
+    bookDetails?: BookDataInterface;
+    loanDate:string;
+    dueDate:string;
+    status:string;
+    count?:string;
 }
 
 export interface ContactState

@@ -30,5 +30,7 @@ export const BookCreateRules =
 [
     body("bookname").notEmpty().withMessage("bookname is required").isLength({min: 6}).withMessage("bookname require at least 6 characters"),
     body("languageID").notEmpty().withMessage("languageID is required"),
-    body("genreID").notEmpty().withMessage("genreID is required")
+    body("genreID").notEmpty().withMessage("genreID is required"),
+    body("publisherID").notEmpty().withMessage("publisherID is required"),
+    body("authorID").notEmpty().withMessage("authorID is required")
 ]

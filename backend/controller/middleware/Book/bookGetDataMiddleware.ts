@@ -7,13 +7,12 @@ import { ObjectId } from "mongodb";
 // for build query (GET method in user, which require login)
 export const BuildBookQueryAndGetData = async (req: AuthRequest, res: Response, next: NextFunction) => 
 {
-    const tableName = req.params.tableName;
     const queryParams = req.query;
     let foundBook: BookInterface | BookInterface[] | null | undefined;
 
     const hasBodyParameter = Object.keys(queryParams).length > 0;
 
-    foundBook = (hasBodyParameter && tableName) ? await fetchBookData(queryParams) : foundBook = await GetBook();
+    foundBook = (hasBodyParameter) ? await fetchBookData(queryParams) : foundBook = await GetBook();
 
     if (!foundBook) 
     {
@@ -23,6 +22,27 @@ export const BuildBookQueryAndGetData = async (req: AuthRequest, res: Response, 
     req.foundBook = foundBook;
     next();
 };
+
+export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Response, next: NextFunction) => 
+{
+    const suggestType = req.params.type
+    let foundBook: BookInterface | BookInterface[] | null | undefined;
+
+    if(suggestType !== "newPublish")
+    {
+        return res.status(400).json({success: false, message:`Invalid Suggest Type: ${suggestType}`});
+    }
+
+    foundBook = await GetBook(undefined, { publishDate: -1 } , 8);
+
+    if (!foundBook) 
+    {
+        return res.status(404).json({success: false, message:"Could not found suggested book"});
+    }
+
+    req.foundBook = foundBook;
+    next();
+}
 
 const fetchBookData = async (queryParams: any) => 
 {

@@ -34,7 +34,7 @@ const adminPage =
 const settings =
 [
     { label: 'View Profile', clickEvent: () => ChangePage("/profile"), icon: <AccountCircleIcon /> },
-    { label: 'Issue Record', clickEvent: () => ChangePage(""), icon: <AssignmentIcon /> },
+    { label: 'Loan Record', clickEvent: () => ChangePage("/loanRecord"), icon: <AssignmentIcon /> },
     { label: 'Favourite', clickEvent: () => ChangePage(""), icon: <StarIcon/>},
     { label: 'Logout', clickEvent: () => handleLogout(GetData("username") as string | null), icon: <ExitToAppIcon /> }
 ];

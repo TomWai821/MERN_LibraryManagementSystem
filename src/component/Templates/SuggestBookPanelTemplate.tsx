@@ -2,11 +2,13 @@ import { Avatar, Box, Typography } from "@mui/material"
 import { FC, Fragment } from "react"
 import { BookDataInterface, LoanBookInterface } from "../../Model/ResultModel"
 import { TransferDateToISOString } from "../../Controller/OtherController";
-import { Margin } from "@mui/icons-material";
+import { useModal } from "../../Context/ModalContext";
+import DisplayBookDataModal from "../Modal/Book/DisplayBookDataModal";
 
 const SuggestBookPanelTemplate:FC<{title:string, data:BookDataInterface[] | LoanBookInterface[]}> = (suggestBookPanelData) => 
 {
-    const {title, data} = suggestBookPanelData;
+    const { title, data } = suggestBookPanelData;
+    const { handleOpen } = useModal();
 
     const PublishPanelSyntax = 
     {
@@ -17,13 +19,15 @@ const SuggestBookPanelTemplate:FC<{title:string, data:BookDataInterface[] | Loan
 
     const ImageSyntax = { width: "175px", height: "250px" }
 
-    const PanelOnHoverSyntax = {cursor: 'pointer', backgroundColor: 'white', opacity: '50%', borderRadius: '5px'}
+    const PanelHoverSyntax = { backgroundColor: 'white', opacity: '60%', cursor: 'pointer', borderRadius: '10px'}
 
-    const PanelSyntax = {display: 'grid',textAlign: 'center', justifyContent: 'center', width: "220px", height: "320px"}
+    const PanelSyntax = {display: 'grid',textAlign: 'center', justifyContent: 'center', width: "220px", height: "320px", padding: '10px 0'}
 
-    const isBookDataInterface = (book:any): book is BookDataInterface => 
+    const isBookDataInterface = (book:any): book is BookDataInterface => { return 'image' in book && 'bookname' in book }
+
+    const openDisplayBookDataModal = (data: BookDataInterface | LoanBookInterface) => 
     {
-        return 'image' in book && 'bookname' in book;
+        handleOpen(<DisplayBookDataModal value={0} data={data}/>);
     }
     
     return(
@@ -33,7 +37,7 @@ const SuggestBookPanelTemplate:FC<{title:string, data:BookDataInterface[] | Loan
                 {
                     data.map((book, index) => 
                     (
-                        <Box key={index} sx={{ ...PanelSyntax, "&:hover": PanelOnHoverSyntax}}>
+                        <Box key={index} sx={{ ...PanelSyntax, "&:hover": PanelHoverSyntax }} onClick={() => openDisplayBookDataModal(book)}>
                             {
                                 isBookDataInterface(book) ? 
                                 (

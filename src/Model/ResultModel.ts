@@ -124,6 +124,10 @@ export interface LoanBookInterface
     _id:string;
     userDetails?: UserDataInterface;
     bookDetails?: BookDataInterface;
+    authorDetails?: any;
+    languageDetails?:any;
+    publisherDetails?:any;
+    genreDetails?:any;
     loanDate:string;
     dueDate:string;
     status:string;

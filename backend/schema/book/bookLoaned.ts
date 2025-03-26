@@ -1,8 +1,8 @@
 import mongoose, { PipelineStage } from "mongoose";
-import { BookIssuedInterface } from "../../model/bookSchemaInterface";
+import { BookLoanedInterface } from "../../model/bookSchemaInterface";
 import { printError } from "../../controller/Utils";
 
-const BookLoanedSchema = new mongoose.Schema<BookIssuedInterface>
+const BookLoanedSchema = new mongoose.Schema<BookLoanedInterface>
 (   
     {
         userID: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
@@ -13,7 +13,7 @@ const BookLoanedSchema = new mongoose.Schema<BookIssuedInterface>
     }
 )
 
-const BookLoaned = mongoose.model<BookIssuedInterface>('BookLoaned', BookLoanedSchema);
+const BookLoaned = mongoose.model<BookLoanedInterface>('BookLoaned', BookLoanedSchema);
 
 export const CreateBookLoaned = async (data:Record<string, any>) =>
 {
@@ -44,6 +44,14 @@ export const GetBookLoaned = async (data?:Record<string, any>, limit?:number) =>
 
 };
 
+const lookupAndUnwind = (from:string, localField:string, foreignField:string, asField:string) => 
+(
+    [
+        { $lookup: { from, localField, foreignField, as: asField } },
+        { $unwind: { path: `$${asField}`, preserveNullAndEmptyArrays: true } }
+    ]
+);
+
 // Local variable(For get banned user data)
 const GetBooksWithOtherDetails = async (data?:Record<string, any>) => 
 {
@@ -51,14 +59,6 @@ const GetBooksWithOtherDetails = async (data?:Record<string, any>) =>
 
     if (data) { pipeline.push( {$match: {...data}} )}
 
-    const lookupAndUnwind = (from:string, localField:string, foreignField:string, asField:string) => 
-    (
-        [
-            { $lookup: { from, localField, foreignField, as: asField } },
-            { $unwind: { path: `$${asField}`, preserveNullAndEmptyArrays: true } }
-        ]
-    );
-    
     pipeline.push(
         ...lookupAndUnwind('users', 'userID', '_id', 'userDetails'),
         ...lookupAndUnwind('books', 'bookID', '_id', 'bookDetails'),
@@ -79,15 +79,12 @@ const GetSuggestBookDetails = async (data?: Record<string, any>, limit?: number)
     if (limit) {pipeline.push({ $limit: limit });}
 
     pipeline.push(
-        {
-            $lookup: 
-            {
-                from: "books",         // Reference the 'books' collection
-                localField: "_id",     // Match grouped _id (bookID)
-                foreignField: "_id",   // Match with books collection _id
-                as: "bookDetails"      // Include book details in the result
-            }
-        }
+        ...lookupAndUnwind('users', '_id', '_id', 'userDetails'),
+        ...lookupAndUnwind('books', '_id', '_id', 'bookDetails'),
+        ...lookupAndUnwind('authors', 'bookDetails.authorID', '_id', 'authorDetails'),
+        ...lookupAndUnwind('publishers', 'bookDetails.publisherID', '_id', 'publisherDetails'),
+        ...lookupAndUnwind('genres', 'bookDetails.genreID', '_id', 'genreDetails'),
+        ...lookupAndUnwind('languages', 'bookDetails.languageID', '_id', 'languageDetails'),
     );
 
     // Unwind bookDetails array to simplify the results

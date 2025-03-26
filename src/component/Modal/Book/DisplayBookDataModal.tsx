@@ -7,13 +7,12 @@ import { DisplayDataModalInterface } from "../../../Model/ModelForModal";
 
 import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 import AllBookDataBody from "./DisplayBookDataBody/AllBookDataBody";
-import { BookDataInterface } from "../../../Model/ResultModel";
+import { BookDataInterface, LoanBookInterface } from "../../../Model/ResultModel";
 
 const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 
 {
     const {value, data} = displayUserData;
-    const BookData = data as BookDataInterface;
-    const width = BookData.image?.url ? '600px' : '400px';
+    const width = ((data as BookDataInterface).image?.url || (data as LoanBookInterface).bookDetails?.image?.url) ? '600px' : '400px';
 
     const setTitle = () => 
     {
@@ -22,7 +21,7 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
         {
             case 0:
                 displayData.title = "Book Information";
-                displayData.displayBody = <AllBookDataBody data={data as BookDataInterface}/>
+                displayData.displayBody = <AllBookDataBody data={data}/>
                 break;
 
             case 1:

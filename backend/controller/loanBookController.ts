@@ -1,6 +1,11 @@
 import { Request, Response } from 'express'
 import { CreateBookLoaned, GetBookLoaned } from '../schema/book/bookLoaned';
 import { AuthRequest } from '../model/requestInterface';
+import { GetAuthor } from '../schema/book/author';
+import { BookLoanedInterface } from '../model/bookSchemaInterface';
+import { Schema } from 'mongoose';
+import { GetGenre } from '../schema/book/genre';
+import { GetLanguage } from '../schema/book/language';
 
 export const GetLoanBookRecord = async (req: Request, res:Response) => 
 {
@@ -23,7 +28,7 @@ export const GetLoanBookRecord = async (req: Request, res:Response) =>
 
         if(!getLoanRecord)
         {
-            return res.status(400).json("Failed to Get Loaned Book Record")
+            return res.status(400).json("Failed to Get Loaned Book Record");
         }
 
         success = true;
@@ -75,3 +80,4 @@ export const UpdateLoanBookRecord = async (req: Request, res:Response) =>
         return res.status(500).json({success, error: "Internal Server Error!" })
     }
 }
+

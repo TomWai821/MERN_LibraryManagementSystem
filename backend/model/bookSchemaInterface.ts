@@ -56,11 +56,12 @@ interface BookFavouriteInterface extends IDInterface
     userID: mongoose.Schema.Types.ObjectId;
 }
 
-interface BookIssuedInterface extends IDInterface, BookFavouriteInterface
+interface BookLoanedInterface extends IDInterface, BookFavouriteInterface
 {
     dueDate: Date;
     loanDate: Date;
     status: string;
+    bookDetails?: BookInterface;
 }
 
 interface BookReturnInterface extends IDInterface
@@ -69,4 +70,4 @@ interface BookReturnInterface extends IDInterface
     returnDate: Date;
 }
 
-export { BookInterface, ImageInterface, GenreInterface, LanguageInterface, PublisherInterface, AuthorInterface, BookFavouriteInterface, BookIssuedInterface, BookReturnInterface}
+export { BookInterface, ImageInterface, GenreInterface, LanguageInterface, PublisherInterface, AuthorInterface, BookFavouriteInterface, BookLoanedInterface, BookReturnInterface}

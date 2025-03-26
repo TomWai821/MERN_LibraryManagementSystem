@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { Routes, Route } from "react-router-dom"
 
-// Another Component
+// Another Pages
 import LoginPage from "../Pages/LoginPage"
 import MainPage from "../Pages/MainPage"
 import RegisterPage from "../Pages/RegisterPage"
@@ -9,6 +9,7 @@ import BookPage from "../Pages/TablePages/BookPage"
 import UserPage from "../Pages/TablePages/UserPage"
 import ViewProfilePage from "../Pages/ViewProfilePage"
 import DefinitionPage from "../Pages/TablePages/DefinitionPage"
+import SelfLoanRecordPage from "../Pages/TablePages/SelfLoanRecordPage"
 
 import { PagesInterface } from "../../Model/TablePagesAndModalModel"
 
@@ -24,6 +25,7 @@ const RoutesList:FC<PagesInterface> = (loginData) =>
             <Route path="/profile" element={<ViewProfilePage/>}/>
             <Route path="/viewBook" element={<BookPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
             <Route path="/viewUser" element={<UserPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
+            <Route path="/loanRecord" element={<SelfLoanRecordPage/>}/>
             <Route path="/defination" element={<DefinitionPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
         </Routes>
     )

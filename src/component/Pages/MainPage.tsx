@@ -6,6 +6,7 @@ import SuggestBookPanelTemplate from "../Templates/SuggestBookPanelTemplate";
 const MainPage = () =>
 {
     const { suggestBook } = useSuggestBookContext();
+    
     const titles = ["New Publish", "Most Popular"]
     
     return(

@@ -3,6 +3,7 @@ import { FindBook, FindBookByID } from "../../../schema/book/book";
 import { FindGenreByID } from "../../../schema/book/genre";
 import { FindLanguageByID } from "../../../schema/book/language";
 import { AuthRequest } from '../../../model/requestInterface';
+import { GetBookLoaned } from '../../../schema/book/bookLoaned';
 
 export const BookNameValidation = async (req:Request, res:Response, next: NextFunction) => 
 {
@@ -76,5 +77,28 @@ export const BookGenreIDAndLanguageIDValidation = async (req:Request, res:Respon
         console.log(error);
         res.status(500).json({ success, error: 'Internal Server Error!' });
     }
+}
 
+export const FoundBookLoanRecord = async (req:AuthRequest, res:Response, next: NextFunction) => 
+{
+    const { id } = req.body;
+    let success = false;
+
+    try
+    {
+        const foundLoanRecord = await GetBookLoaned(id);
+
+        if(!foundLoanRecord)
+        {
+            return res.status(404).json({success, error: `Could not found Loan R!`});
+        }
+
+        req.foundLoanedRecord = foundLoanRecord;
+        next();
+    }
+    catch(error)
+    {
+        console.log(error);
+        res.status(500).json({ success, error: 'Internal Server Error!' });
+    }
 }

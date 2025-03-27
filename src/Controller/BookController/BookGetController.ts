@@ -21,7 +21,7 @@ export const fetchBook = async (bookname?:string, genreID?:string, languageID?:s
     }
 }
 
-export const fetchSuggestBook = async (type:string, authToken?:string) => 
+export const fetchSuggestBook = async (type:string, authToken?:string, data?:Record<string,any>) => 
 {
     const headers: Record<string, string> = 
     {
@@ -33,7 +33,10 @@ export const fetchSuggestBook = async (type:string, authToken?:string) =>
         headers['authToken'] = authToken;
     }
 
-    const url = type === "newPublish" ? `${localhost}/bookData/type=${type}` : `${localhost}/loanBook/type=${type}`
+    // Build query parameters if data exists
+    const queryParams = data ? '?' + Object.entries(data).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&'): '';
+
+    const url = type === "mostPopular" ? `${localhost}/loanBook/type=${type}${queryParams}` : `${localhost}/bookData/type=${type}${queryParams}`
 
     const response = await fetch(url,
         {
@@ -49,19 +52,28 @@ export const fetchSuggestBook = async (type:string, authToken?:string) =>
     }
 }
 
-export const fetchLoanBook = async() => 
+export const fetchLoanBook = async(authToken?:string) => 
 {
+    const headers: Record<string, string> = 
+    {
+        'content-type': contentType
+    }
+
+    if(authToken)
+    {
+        headers['authToken'] = authToken;
+    }
+
     const response = await fetch(`${localhost}/loanBook`,
         {
             method: 'GET',
-            headers: { 'content-type': contentType },
+            headers: headers
         }
     );
 
     if(response.ok)
     {
         const result: GetResultInterface = await response.json();
-        console.log(result);
         return result;
     }
 }

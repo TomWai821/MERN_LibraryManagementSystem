@@ -62,7 +62,12 @@ const GetBooksWithOtherDetails = async (data?:Record<string, any>) =>
     pipeline.push(
         ...lookupAndUnwind('users', 'userID', '_id', 'userDetails'),
         ...lookupAndUnwind('books', 'bookID', '_id', 'bookDetails'),
+        ...lookupAndUnwind('authors', 'bookDetails.authorID', '_id', 'authorDetails'),
+        ...lookupAndUnwind('publishers', 'bookDetails.publisherID', '_id', 'publisherDetails'),
+        ...lookupAndUnwind('genres', 'bookDetails.genreID', '_id', 'genreDetails'),
+        ...lookupAndUnwind('languages', 'bookDetails.languageID', '_id', 'languageDetails'),
     );
+
     return await BookLoaned.aggregate(pipeline);
 }
  

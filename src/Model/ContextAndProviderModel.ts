@@ -68,6 +68,7 @@ export interface BookContextProps
 export interface SuggestBookContextProps
 {
     suggestBook: (BookDataInterface[] | LoanBookInterface[])[];
+    SelfLoanBook: LoanBookInterface[];
 }
 
 export interface DefinatonProps

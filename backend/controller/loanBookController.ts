@@ -1,20 +1,27 @@
 import { Request, Response } from 'express'
-import { CreateBookLoaned, GetBookLoaned } from '../schema/book/bookLoaned';
+import { CreateBookLoaned, FindBookLoanedByIDAndUpdate, GetBookLoaned } from '../schema/book/bookLoaned';
 import { AuthRequest } from '../model/requestInterface';
-import { GetAuthor } from '../schema/book/author';
+import { FindBookByIDAndUpdate } from '../schema/book/book';
 import { BookLoanedInterface } from '../model/bookSchemaInterface';
-import { Schema } from 'mongoose';
-import { GetGenre } from '../schema/book/genre';
-import { GetLanguage } from '../schema/book/language';
+import { jwtVerify } from './hashing';
+import { ObjectId } from 'mongodb';
 
-export const GetLoanBookRecord = async (req: Request, res:Response) => 
+export const GetLoanBookRecord = async (req: AuthRequest, res:Response) => 
 {
     const suggestType = req.params.type;
+    const authToken = req.header("authToken");
     let success = false;
     
     try
     {
         let getLoanRecord:any[] | undefined;
+        let data:any;
+
+        if(authToken)
+        {
+            data = await jwtVerify(authToken);
+            req.user = data.user;
+        }
 
         switch(suggestType)
         {
@@ -23,7 +30,8 @@ export const GetLoanBookRecord = async (req: Request, res:Response) =>
                 break;
 
             default:
-                getLoanRecord = await GetBookLoaned();
+                getLoanRecord = req.user ? await GetBookLoaned({userID: new ObjectId(req.user._id as unknown as ObjectId)}) : await GetBookLoaned();
+                break;
         }
 
         if(!getLoanRecord)
@@ -36,6 +44,7 @@ export const GetLoanBookRecord = async (req: Request, res:Response) =>
     }
     catch(error)
     {
+        console.log(error);
         return res.status(500).json({success, error: "Internal Server Error!" })
     }
 }
@@ -53,7 +62,14 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
 
         if(!createLoanRecord)
         {
-            return res.status(400).json({success, error:"Failed to create Loaned Book Record"})
+            return res.status(400).json({success, error:"Failed to create Loaned Book Record"});
+        }
+
+        const changeBookState = await FindBookByIDAndUpdate(bookID, {status: 'Loaned'})
+
+        if(!changeBookState)
+        {
+            return res.status(400).json({success, error:"Failed to change Book status"});
         }
 
         success = true;
@@ -65,15 +81,34 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
     }
 }
 
-export const UpdateLoanBookRecord = async (req: Request, res:Response) => 
+export const UpdateLoanBookRecord = async (req: AuthRequest, res:Response) => 
 {
-    const {id, userID, bookID, loanDate, dueDate, status} = req.body;
+    const { bookID } = req.body;
+    const foundLoanedRecord = req.foundLoanedRecord as BookLoanedInterface;
     let success = false;
 
     try
     {
+        const currentDate = new Date();
+        const dueDate = foundLoanedRecord.dueDate;
+        const status = dueDate && currentDate <= dueDate ? 'Returned' : 'Returned(Late)'
+
+        const changeLoanRecordStatus = await FindBookLoanedByIDAndUpdate(bookID, {status: status})
+
+        if(!changeLoanRecordStatus)
+        {
+            return res.status(400).json({success, error:"Failed to return Book"});
+        }
+
+        const changeBookStatus = await FindBookByIDAndUpdate(bookID, {status: 'OnShelf'});
+
+        if(!changeBookStatus)
+        {
+            return res.status(400).json({success, error:"Failed to change Book status!"});
+        }
+
         success = true;
-        res.json({success, message: "Update Loan Book Record Successfully!"})
+        res.json({success, message: "Return Loan Book Successfully!"})
     }
     catch(error)
     {

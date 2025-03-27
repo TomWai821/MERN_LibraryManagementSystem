@@ -14,7 +14,7 @@ import DisplayBookDataModal from "../Modal/Book/DisplayBookDataModal";
 
 const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) => 
 {
-    const {children, TableName, value, isAdmin, Information} = contentTableCellData;
+    const {children, TableName, value, isAdmin, Information, isLoggedIn} = contentTableCellData;
     const {handleOpen} = useModal();
 
     const onClick = () => 
@@ -26,7 +26,7 @@ const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) =>
                 break;
             
             case "Book":
-                handleOpen(<DisplayBookDataModal value={value} data={Information as BookDataInterface} isAdmin={isAdmin} isLoggedIn={false}/>);
+                handleOpen(<DisplayBookDataModal value={value} data={Information as BookDataInterface} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>);
                 break;
         }
     }

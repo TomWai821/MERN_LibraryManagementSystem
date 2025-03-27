@@ -3,7 +3,7 @@ import upload from '../storage';
 import { GetDefinition, CreateDefinitionData, EditDefinitionData, DeleteDefinitionData } from '../controller/definitionController';
 import { LoginAndFindUser } from '../Arrays/routesMap';
 import { CreateBookRecord, DeleteBookRecord, EditBookRecord, GetBookImage, GetBookRecord } from '../controller/bookController';
-import { BookGenreIDAndLanguageIDValidation, BookNameValidation, BookRecordIDValidation } from '../controller/middleware/Book/BookvalidationMiddleware';
+import { BookGenreIDAndLanguageIDValidation, BookNameValidation, BookRecordIDValidation, FoundBookLoanRecord } from '../controller/middleware/Book/BookvalidationMiddleware';
 import { BookCreateRules } from '../model/expressBodyRules';
 import { BuildBookQueryAndGetData, BuildSuggestBookQueryAndGetData } from '../controller/middleware/Book/bookGetDataMiddleware';
 import { DefinitionDataValidation, DefinitionTypeValidation } from '../controller/middleware/Definition/DefinitonValidationMiddleware';
@@ -28,7 +28,7 @@ router.delete('/BookData/id=:id', ...LoginAndFindUser, BookRecordIDValidation, D
 // For book records
 router.get('/LoanBook', GetLoanBookRecord);
 router.post('/LoanBook', ...LoginAndFindUser, CreateLoanBookRecord);
-router.put('/LoanBook/id=:id', ...LoginAndFindUser, UpdateLoanBookRecord);
+router.put('/LoanBook/id=:id', ...LoginAndFindUser, FoundBookLoanRecord, UpdateLoanBookRecord);
 
 // For Suggest Book
 router.get('/BookData/type=:type', BuildSuggestBookQueryAndGetData, GetBookRecord);

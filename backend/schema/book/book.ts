@@ -48,6 +48,14 @@ export const GetBook = async (data?:Record<string, any>, sortRequirement?:Record
     }
 };
 
+const lookupAndUnwind = (from:string, localField:string, foreignField:string, asField:string) => 
+(
+    [
+        { $lookup: { from, localField, foreignField, as: asField } },
+        { $unwind: { path: `$${asField}`, preserveNullAndEmptyArrays: true } }
+    ]
+);
+
 // Local variable(For get banned user data)
 const GetBooksWithOtherDetails = async (data?:Record<string, any>, sortRequirement?:Record<string, any>, limit?:number) => 
 {
@@ -59,16 +67,6 @@ const GetBooksWithOtherDetails = async (data?:Record<string, any>, sortRequireme
         ...(sortRequirement ? [{ $sort: sortRequirement }]: []),
         ...(limit ? [{ $limit: limit }] : []),
     ];
-
-    pipeline.push(...otherRequirement);
-
-    const lookupAndUnwind = (from:string, localField:string, foreignField:string, asField:string) => 
-    (
-        [
-            { $lookup: { from, localField, foreignField, as: asField } },
-            { $unwind: { path: `$${asField}`, preserveNullAndEmptyArrays: true } }
-        ]
-    );
     
     pipeline.push(
         ...lookupAndUnwind('genres', 'genreID', '_id', 'genreDetails'),
@@ -76,6 +74,9 @@ const GetBooksWithOtherDetails = async (data?:Record<string, any>, sortRequireme
         ...lookupAndUnwind('authors', 'authorID', '_id', 'authorDetails'),
         ...lookupAndUnwind('publishers', 'publisherID', '_id', 'publisherDetails'),
     );
+
+    pipeline.push(...otherRequirement);
+
     return await Book.aggregate(pipeline);
 }
         

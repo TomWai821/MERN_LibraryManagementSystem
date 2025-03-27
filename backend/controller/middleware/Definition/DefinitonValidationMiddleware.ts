@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { definitionHandlers } from "../../definitionController";
-import { GetGenre } from "../../../schema/book/genre";
-import { GetLanguage } from "../../../schema/book/language";
 
 export const DefinitionTypeValidation = async (req: Request, res: Response, next:NextFunction) => 
 {

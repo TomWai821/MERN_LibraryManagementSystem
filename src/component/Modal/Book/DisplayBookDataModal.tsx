@@ -8,10 +8,11 @@ import { DisplayDataModalInterface } from "../../../Model/ModelForModal";
 import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 import AllBookDataBody from "./DisplayBookDataBody/AllBookDataBody";
 import { BookDataInterface, LoanBookInterface } from "../../../Model/ResultModel";
+import LoanBookDataBody from "./DisplayBookDataBody/LoanBookDataBody";
 
 const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 
 {
-    const {value, data} = displayUserData;
+    const {value, data, isLoggedIn} = displayUserData;
     const width = ((data as BookDataInterface).image?.url || (data as LoanBookInterface).bookDetails?.image?.url) ? '600px' : '400px';
 
     const setTitle = () => 
@@ -21,11 +22,12 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
         {
             case 0:
                 displayData.title = "Book Information";
-                displayData.displayBody = <AllBookDataBody data={data}/>
+                displayData.displayBody = <AllBookDataBody data={data} isLoggedIn={isLoggedIn}/>
                 break;
 
             case 1:
                 displayData.title = "OnLoan Book Information";
+                displayData.displayBody = <LoanBookDataBody data={data} isLoggedIn={isLoggedIn}/>
                 break;
 
         }

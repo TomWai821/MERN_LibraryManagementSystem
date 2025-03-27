@@ -128,8 +128,8 @@ export interface LoanBookInterface
     languageDetails?:any;
     publisherDetails?:any;
     genreDetails?:any;
-    loanDate:string;
-    dueDate:string;
+    loanDate?:string | Date;
+    dueDate?:string | Date;
     status:string;
     count?:string;
 }

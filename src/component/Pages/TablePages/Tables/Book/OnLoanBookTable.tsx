@@ -12,6 +12,7 @@ import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
 import { LoanBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
 import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
+import { TransferDateToISOString } from "../../../../../Controller/OtherController";
 
 const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
@@ -57,8 +58,7 @@ const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                 </TableHead>
 
                 <TableBody>
-                    
-                    {
+                {
                     paginatedData.map((data, index) => 
                         (
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
@@ -68,15 +68,14 @@ const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                 </ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.bookDetails?.bookname}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.userDetails?.username}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.loanDate}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.dueDate}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.loanDate as Date)}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.status}</ContentTableCell>
                                 {isAdmin && (<ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>)}
                             </TableRow>
                         )
                     )
-                    }
-                    
+                }
                 </TableBody>
             </Table>
 

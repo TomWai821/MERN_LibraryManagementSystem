@@ -14,6 +14,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
     const [AllBook, setAllBook] = useState<BookDataInterface[]>([]);
     const [OnLoanBook, setOnLoanBook] = useState<LoanBookInterface[]>([]);
     const bookData = [AllBook, OnLoanBook];
+    
     const authToken = GetData("authToken") as string;
 
     const fetchAllBook = useCallback(async () => 
@@ -21,7 +22,6 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         const resultForAllBook: GetResultInterface | undefined = await fetchBook();
         const resultForLoanBook: GetResultInterface | undefined = await fetchLoanBook();
         
-
         if(resultForAllBook && Array.isArray(resultForAllBook.foundBook))
         {
             setAllBook(resultForAllBook.foundBook);

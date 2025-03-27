@@ -5,15 +5,15 @@ import { TransferDateToISOString } from "../../Controller/OtherController";
 import { useModal } from "../../Context/ModalContext";
 import DisplayBookDataModal from "../Modal/Book/DisplayBookDataModal";
 
-const SuggestBookPanelTemplate:FC<{title:string, data:BookDataInterface[] | LoanBookInterface[]}> = (suggestBookPanelData) => 
+const SuggestBookPanelTemplate:FC<{title:string, data:BookDataInterface[] | LoanBookInterface[], IsLoggedIn:boolean}> = (suggestBookPanelData) => 
 {
-    const { title, data } = suggestBookPanelData;
+    const { title, data, IsLoggedIn } = suggestBookPanelData;
     const { handleOpen } = useModal();
 
     const PublishPanelSyntax = 
     {
-        padding: '25px', display: 'grid', justifyContent: 'center', 
-        alignItems: 'center', gap: '15px 50px', gridTemplateColumns: 'repeat(8, 10%)', 
+        padding: '20px', display: 'grid', justifyContent: 'center', 
+        alignItems: 'center', gap: '15px 30px', gridTemplateColumns: 'repeat(8, 10%)', 
         backgroundColor: 'lightgray', borderRadius: '10px'
     }
 
@@ -21,13 +21,16 @@ const SuggestBookPanelTemplate:FC<{title:string, data:BookDataInterface[] | Loan
 
     const PanelHoverSyntax = { backgroundColor: 'white', opacity: '60%', cursor: 'pointer', borderRadius: '10px'}
 
-    const PanelSyntax = {display: 'grid',textAlign: 'center', justifyContent: 'center', width: "220px", height: "320px", padding: '10px 0'}
+    const PanelSyntax = {display: 'grid', textAlign: 'center', justifyContent: 'center', width: "200px", height: "320px", padding: '10px 0'}
 
-    const isBookDataInterface = (book:any): book is BookDataInterface => { return 'image' in book && 'bookname' in book }
+    const isBookDataInterface = (book:any): book is BookDataInterface => 
+    {
+        return 'image' in book && 'bookname' in book 
+    }
 
     const openDisplayBookDataModal = (data: BookDataInterface | LoanBookInterface) => 
     {
-        handleOpen(<DisplayBookDataModal value={0} data={data}/>);
+        handleOpen(<DisplayBookDataModal value={0} data={data} isLoggedIn={IsLoggedIn}/>);
     }
     
     return(

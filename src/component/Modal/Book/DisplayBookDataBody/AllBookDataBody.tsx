@@ -13,22 +13,19 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
 
     const bookData = () => 
     {
-        const defaults = { imageUrl: "", bookname: "", genre: "", status: "",language: "",author: "", publisher: "", publishDate: "", description: ""};
+        const defaults = { imageUrl: "", bookname: "", genre: "", status: "", language: "",author: "", publisher: "", publishDate: "", description: ""};
     
-        const getValue = (primary: any, secondary: any, transform?: (value: any) => any) =>
-            transform ? transform(primary || secondary) : primary || secondary || "";
-    
-        const BookData = 
+        const BookData =
         {
-            imageUrl: getValue(Data.image?.url, LoanData.bookDetails?.image?.url),
-            bookname: getValue(Data.bookname, LoanData.bookDetails?.bookname),
-            genre: getValue(Data.genreDetails?.genre, LoanData.genreDetails?.genre),
-            status: getValue(Data.status, LoanData.bookDetails?.status),
-            language: getValue(Data.languageDetails?.language, LoanData.languageDetails?.language),
-            author: getValue(Data.authorDetails?.author, LoanData.authorDetails?.author),
-            publisher: getValue(Data.publisherDetails?.publisher, LoanData.publisherDetails?.publisher),
-            publishDate: getValue(Data.publishDate, LoanData.bookDetails?.publishDate, TransferDateToISOString),
-            description: getValue(Data.description, LoanData.bookDetails?.description),
+            imageUrl: Data.image?.url || LoanData.bookDetails?.image?.url,
+            bookname: Data.bookname || LoanData.bookDetails?.bookname,
+            genre: Data.genreDetails?.genre || LoanData.genreDetails?.genre,
+            status: Data.status || LoanData.bookDetails?.status,
+            language: Data.languageDetails?.language || LoanData.languageDetails?.language,
+            author: Data.authorDetails?.author || LoanData.authorDetails?.author,
+            publisher: Data.publisherDetails?.publisher || LoanData.publisherDetails?.publisher,
+            publishDate: Data.publishDate ? TransferDateToISOString(Data.publishDate as Date) : TransferDateToISOString(LoanData.bookDetails?.publishDate as string),
+            description: Data.description || LoanData.bookDetails?.description
         };
     
         return { ...defaults, ...BookData };
@@ -39,10 +36,13 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
             <Avatar src={bookData().imageUrl} alt="Preview" variant="rounded" sx={BookImageFormat}/>
             
             <Box sx={{ display: 'grid', gap: '20px 50px', width:'350px', gridTemplateColumns: '100%'}}>
-                <Typography>Bookname: {bookData().bookname}</Typography>
+                <Box sx={{display: 'inline-block'}}>
+                    <Typography>Bookname:</Typography>
+                    <Typography>{bookData().bookname}</Typography>
+                </Box>
+                {isLoggedIn && <Typography>Status: {bookData().status}</Typography>}
                 <Typography>Genre: {bookData().genre}</Typography>
                 <Typography>Language: {bookData().language}</Typography>
-                {isLoggedIn && <Typography>Status: {bookData().status}</Typography>}
                 <Typography>Author: {bookData().author}</Typography>
                 <Typography>Publisher: {bookData().publisher}</Typography>
                 <Typography>Publish Date: {bookData().publishDate}</Typography>

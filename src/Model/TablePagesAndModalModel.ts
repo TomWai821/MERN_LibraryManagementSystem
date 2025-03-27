@@ -36,7 +36,7 @@ export interface ActionTableCellInterface extends IsAdminInterface
 
 export interface TableInterface extends IsAdminInterface
 {
-    isLoggedIn: boolean;
+    isLoggedIn?: boolean;
 }
 
 export interface TabInterface extends IsAdminInterface

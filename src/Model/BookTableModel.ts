@@ -32,7 +32,7 @@ interface BookDataInterfaceForDelete extends BookTableDataInterface
 interface BookRecordTableInterface extends TableInterface
 {
     value: number;
-    bookData: (BookDataInterface[] | LoanBookInterface[])[];
+    bookData: (BookDataInterface[] | LoanBookInterface[])[] | LoanBookInterface[];
     paginationValue:number;
 }
 export type {BookSearchInterface, BookTableDataInterface, BookDataInterfaceForDelete, BookRecordTableInterface}

@@ -25,15 +25,24 @@ export const BuildBookQueryAndGetData = async (req: AuthRequest, res: Response, 
 
 export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Response, next: NextFunction) => 
 {
-    const suggestType = req.params.type
+    const suggestType = req.params.type;
+    const { topAuthors, topGenres, topPublishers } = req.query;
     let foundBook: BookInterface | BookInterface[] | null | undefined;
 
-    if(suggestType !== "newPublish")
+    switch(suggestType)
     {
-        return res.status(400).json({success: false, message:`Invalid Suggest Type: ${suggestType}`});
-    }
+        case "newPublish":
+            foundBook = await GetBook(undefined, { publishDate: -1 } , 8);
+            break;
 
-    foundBook = await GetBook(undefined, { publishDate: -1 } , 8);
+        case "forUser":
+            const query = buildSuggestQuery({ topAuthors, topGenres, topPublishers });
+            foundBook = await GetBook(query , { publishDate: -1 }, 8);
+            break;
+
+        default:
+            return res.status(400).json({success: false, message:`Invalid Suggest Type: ${suggestType}`});
+    }
 
     if (!foundBook) 
     {
@@ -62,5 +71,24 @@ const buildQuery = (queryParams: any) =>
         ...(publisherID && { "publisherID": new ObjectId(publisherID) }),
         ...(authorID && { "authorID": new ObjectId(authorID) }),
     };
+
     return query;
 };
+
+const buildSuggestQuery = (queryParams: any) => 
+{
+    const { topAuthors, topGenres, topPublishers } = queryParams;
+
+    const query = 
+    {
+        status: { $ne: "Loaned" },
+        $or: 
+        [
+            ...(topAuthors ? [{ "authorDetails.author": { $in: topAuthors.split(",") } }] : []),
+            ...(topGenres ? [{ "genreDetails.genre": { $in: topGenres.split(",") } }] : []),
+            ...(topPublishers ? [{ "publisherDetails.publisher": { $in: topPublishers.split(",") } }] : []),
+        ],
+    };
+
+    return query;
+}

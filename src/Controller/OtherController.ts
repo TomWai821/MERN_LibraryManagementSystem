@@ -48,6 +48,7 @@ const IsAdmin = (role: string | undefined): boolean =>
 const GetCurrentDate = (type:string): Date | string => 
 { 
     const date = new Date();
+
     switch(type)
     {
         case "String":
@@ -71,10 +72,23 @@ const CalculateDueDate = (duration:number): Date =>
     return dueDate;
 }
 
-const TransferDateToISOString = (date:Date):string => 
+const TransferDateToISOString = (date: Date | string): string => 
 {
-    return new Date(date).toISOString().split('T')[0];
-}
+    if (date instanceof Date) 
+    {
+        return date.toISOString().split("T")[0];
+    }
+
+    // Validate string input to ensure it's a valid ISO date format
+    const parsedDate = new Date(date);
+    
+    if (!isNaN(parsedDate.getTime())) 
+    {
+        return parsedDate.toISOString().split("T")[0];
+    }
+
+    return "Invalid Date";
+};
 
 const TransferDateToString = (date: Date | undefined):string => 
 {

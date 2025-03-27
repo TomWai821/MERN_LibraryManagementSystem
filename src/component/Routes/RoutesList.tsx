@@ -25,7 +25,7 @@ const RoutesList:FC<PagesInterface> = (loginData) =>
             <Route path="/profile" element={<ViewProfilePage/>}/>
             <Route path="/viewBook" element={<BookPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
             <Route path="/viewUser" element={<UserPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
-            <Route path="/loanRecord" element={<SelfLoanRecordPage isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>}/>
+            <Route path="/records" element={<SelfLoanRecordPage isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>}/>
             <Route path="/defination" element={<DefinitionPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
         </Routes>
     )

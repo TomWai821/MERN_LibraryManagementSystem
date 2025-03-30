@@ -8,46 +8,46 @@ import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
 // Model
-import { BanModalInterface } from "../../../../Model/ModelForModal";
+import { SuspendModalInterface } from "../../../../Model/ModelForModal";
 
 // Context
 import { useModal } from "../../../../Context/ModalContext";
 import { useUserContext } from "../../../../Context/User/UserContext";
 
 // Another Modal
-import BanUserModal from "../../User/SuspendUserModal";
+import SuspendUserModal from "../../User/SuspendUserModal";
 
 // Data (CSS Syntax and dropdown data)
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { dateOption } from "../../../../ArraysAndObjects/TextFieldsArrays";
 
-const SuspendUserConfirmModal:FC<BanModalInterface> = (banData) => 
+const SuspendUserConfirmModal:FC<SuspendModalInterface> = (banData) => 
 {
     const { _id, username, durationOption, description } = banData;
     const { handleOpen, handleClose } = useModal();
     const { changeUserStatus } = useUserContext();
 
-    const returnBanUserModal = () => 
+    const returnSuspendUserModal = () => 
     {
-        handleOpen(<BanUserModal username={username} _id={_id} durationOption={durationOption} description={description}/>);
+        handleOpen(<SuspendUserModal username={username} _id={_id} durationOption={durationOption} description={description}/>);
     }
 
 
-    const BanUser = (_id:string, duration:number, description:string) => 
+    const SuspendUser = (_id:string, duration:number, description:string) => 
     {
-        changeUserStatus("Banned", _id, "Banned", undefined, duration, description);
+        changeUserStatus("Suspend", _id, "Suspend", undefined, duration, description);
         handleClose();
     }
 
     return(
-        <ModalTemplate title={"Suspend User Confirmation"} width="400px" cancelButtonName={"No"}  cancelButtonEvent={returnBanUserModal}>
+        <ModalTemplate title={"Suspend User Confirmation"} width="400px" cancelButtonName={"No"}  cancelButtonEvent={returnSuspendUserModal}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>Do you want to ban {username}?</Typography>
                 <Typography>Duration: {dateOption[durationOption as number].label}</Typography>
                 <Typography>Description: {description}</Typography>
             </Box>
             
-            <ModalConfirmButton clickEvent={() => BanUser(_id, dateOption[durationOption as number].value, description as string)} name={"Yes"} buttonType={"Important"}/>
+            <ModalConfirmButton clickEvent={() => SuspendUser(_id, dateOption[durationOption as number].value, description as string)} name={"Yes"} buttonType={"Important"}/>
         </ModalTemplate>
     );
 }

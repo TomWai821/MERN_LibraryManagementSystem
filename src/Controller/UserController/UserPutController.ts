@@ -16,6 +16,8 @@ const fetchData = async (authToken:string, url: string, data: Record<string, any
             body: JSON.stringify(data)
         });
 
+        console.log(response);
+
         if (response.ok) 
         {
             const result = await response.json();
@@ -40,10 +42,10 @@ const ModifyUserDataController = async (authToken:string, userId: string, userna
     return await fetchData(authToken, url, data);
 };
 
-const ModifyBanListDataController = async(authToken:string, userId:string, banListID:string, dueDate:Date, description:string) => 
+const ModifySuspendListDataController = async(authToken:string, userId:string, banListID:string, dueDate:Date, description:string) => 
 {
     const data = { banListID, dueDate, description }
-    const url = `${localhost}/BanListData/id=${userId}`;
+    const url = `${localhost}/SuspendListData/id=${userId}`;
     return await fetchData(authToken, url, data);
 }
 
@@ -51,10 +53,10 @@ const ModifyStatusController = async (type:string, authToken:string, userId: str
 {
     const statusDataConfig =
     {
-        Banned: { banListID: ListID, statusForUserList, startDate, dueDate, description },
+        Suspend: { banListID: ListID, statusForUserList, startDate, dueDate, description },
         Delete: { deleteListID: ListID, statusForUserList, startDate, dueDate, description },
         UnDelete: { statusForUserList, deleteListID: ListID },
-        UnBanned: { statusForUserList, banListID: ListID }
+        UnSuspend: { statusForUserList, banListID: ListID }
     };
 
     console.log(statusForUserList);
@@ -65,4 +67,4 @@ const ModifyStatusController = async (type:string, authToken:string, userId: str
     return await fetchData(authToken, url, statusData);
 };
 
-export { ModifyUserDataController, ModifyBanListDataController, ModifyStatusController };
+export { ModifyUserDataController, ModifySuspendListDataController, ModifyStatusController };

@@ -3,7 +3,7 @@ import { createContext, FC, useCallback, useContext, useEffect, useState } from 
 // Another Useful Function
 import { FetchUserData } from "../../Controller/UserController/UserGetController";
 import { CalculateDueDate, GetCurrentDate, GetData } from "../../Controller/OtherController";
-import { ModifyBanListDataController, ModifyStatusController, ModifyUserDataController } from "../../Controller/UserController/UserPutController";
+import { ModifySuspendListDataController, ModifyStatusController, ModifyUserDataController } from "../../Controller/UserController/UserPutController";
 import { RegisterController } from "../../Controller/UserController/UserPostController";
 
 // Models
@@ -17,10 +17,10 @@ const UserContext = createContext<UserContextProps | undefined>(undefined);
 export const UserProvider: FC<ChildProps> = ({ children }) =>
 {
     const [AllUser, setAllUser] = useState<UserResultDataInterface[]>([]);
-    const [BannedUser, setBannedUser] = useState<UserResultDataInterface[]>([]);
+    const [SuspendUser, setSuspendUser] = useState<UserResultDataInterface[]>([]);
     const [DeleteUser, setDeleteUser] = useState<UserResultDataInterface[]>([]);
     const authToken = GetData("authToken") as string;
-    const userData = [AllUser, BannedUser, DeleteUser];
+    const userData = [AllUser, SuspendUser, DeleteUser];
 
     // For init
     const fetchAllUser = useCallback(async () => 
@@ -28,7 +28,7 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
         try
         {
             const resultForAllUser: GetResultInterface | undefined = await FetchUserData("AllUser", authToken);
-            const resultForBannedUser: GetResultInterface | undefined = await FetchUserData("BannedUser", authToken);
+            const resultForSuspendUser: GetResultInterface | undefined = await FetchUserData("SuspendUser", authToken);
             const resultForDeleteUser: GetResultInterface | undefined = await FetchUserData("DeleteUser", authToken);
 
             if(resultForAllUser && Array.isArray(resultForAllUser.foundUser))
@@ -36,9 +36,9 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
                 setAllUser(resultForAllUser.foundUser);
             }
 
-            if(resultForBannedUser && Array.isArray(resultForBannedUser.foundUser))
+            if(resultForSuspendUser && Array.isArray(resultForSuspendUser.foundUser))
             {
-                setBannedUser(resultForBannedUser.foundUser);
+                setSuspendUser(resultForSuspendUser.foundUser);
             }
 
             if(resultForDeleteUser && Array.isArray(resultForDeleteUser.foundUser))
@@ -68,8 +68,8 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
                         setAllUser(result.foundUser);
                         break;
 
-                    case "BannedUser":
-                        setBannedUser(result.foundUser);
+                    case "SuspendUser":
+                        setSuspendUser(result.foundUser);
                         break;
 
                     case "DeleteUser":
@@ -118,9 +118,9 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[fetchAllUser])
     
-    const editBannedUserData = useCallback(async (userId:string, bannedListID:string, dueDate:Date, description:string) => 
+    const editSuspendUserData = useCallback(async (userId:string, bannedListID:string, dueDate:Date, description:string) => 
     {
-        const result : GetResultInterface | undefined = await ModifyBanListDataController(authToken, userId, bannedListID, dueDate, description);
+        const result : GetResultInterface | undefined = await ModifySuspendListDataController(authToken, userId, bannedListID, dueDate, description);
 
         try
         {
@@ -144,7 +144,7 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
         {
             switch(type)
             {
-                case "UnBanned":
+                case "UnSuspend":
                     result = await ModifyStatusController(type, authToken, userId, status, ListID);
                     break;
                 
@@ -153,7 +153,7 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
                     break;
 
                 default:
-                    if(type !== "Banned" && type !== "Delete")
+                    if(type !== "Suspend" && type !== "Delete")
                     {
                         return console.log(`Invalid type: ${type}`);
                     }
@@ -196,7 +196,7 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
     )
 
     return (
-        <UserContext.Provider value={{ userData, fetchAllUser, fetchUser, createUser, editUserData, editBannedUserData, changeUserStatus, actualDeleteUser }}>
+        <UserContext.Provider value={{ userData, fetchAllUser, fetchUser, createUser, editUserData, editSuspendUserData, changeUserStatus, actualDeleteUser }}>
             {children}
         </UserContext.Provider>
     );

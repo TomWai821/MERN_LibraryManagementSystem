@@ -3,10 +3,11 @@ import { AuthRequest, CreateUserInterface } from '../model/requestInterface';
 import { jwtSign, bcryptHash } from './hashing'
 import { UserInterface } from '../model/userSchemaInterface';
 import { CreateUser, FindUserByIDAndDelete, FindUserByIDAndUpdate } from '../schema/user/user';
-import { FindBanListByIDAndUpdate } from '../schema/user/banList';
+
 import { ObjectId } from 'mongoose';
 import { CreateStatusList } from './middleware/User/userUpdateDataMiddleware';
 import { FindDeleteListByIDAndDelete } from '../schema/user/deleteList';
+import { FindSuspendListByIDAndUpdate } from '../schema/user/suspendList';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {
@@ -63,7 +64,7 @@ export const UserLogin = async (req: AuthRequest, res: Response) =>
     }
 };
 
-export const BuildGetUserDataMessage = async (req: AuthRequest, res: Response) =>
+export const GetUserData = async (req: AuthRequest, res: Response) =>
 {
     try 
     {
@@ -76,7 +77,7 @@ export const BuildGetUserDataMessage = async (req: AuthRequest, res: Response) =
     }
 };
 
-export const ModifyUserData = async (req: AuthRequest, res: Response) => 
+export const ChangeUserData = async (req: AuthRequest, res: Response) => 
 {
     const foundUser = req.foundUser as UserInterface;
     const updateData = req.updateData as Record<string, any>;
@@ -103,6 +104,7 @@ export const ModifyUserData = async (req: AuthRequest, res: Response) =>
 export const ChangeStatus = async (req:AuthRequest, res:Response) => 
 {
     const { statusForUserList, description, startDate, dueDate } = req.body;
+    console.log(req.body)
     const foundUser = req.foundUser as UserInterface;
     const userId = foundUser._id as ObjectId;
     let success = false;
@@ -115,7 +117,7 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
 
             if(!createStatusData)
             {
-                return res.status(400).json({success, message:"Fail to Create Record in Delete List/Ban List"});
+                return res.status(400).json({success, message:"Fail to Create Record in Delete List/Suspend List"});
             }
         }
 
@@ -131,26 +133,27 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
     }
     catch (error) 
     {
+        console.log(error);
         res.status(500).json({ success, error: "Internal Server Error!" });
     }
 }
 
-export const ModifyBanListData = async (req: AuthRequest, res:Response) => 
+export const ModifySuspendListData = async (req: AuthRequest, res:Response) => 
 {
     const { banListID, dueDate, description } = req.body;
     let success = false;
 
     try
     {
-        const modifyBanList = await FindBanListByIDAndUpdate(banListID as ObjectId, {dueDate, description});
+        const modifySuspendList = await FindSuspendListByIDAndUpdate(banListID as ObjectId, {dueDate, description});
 
-        if(!modifyBanList)
+        if(!modifySuspendList)
         {
-            return res.status(400).json({ success, error: "Failed to update Ban List record!"});
+            return res.status(400).json({ success, error: "Failed to update Suspend List record!"});
         }
 
         success = true;
-        res.json({ success, message: "Ban List Record Update Successfully!"});
+        res.json({ success, message: "Suspend List Record Update Successfully!"});
     }
     catch(error)
     {

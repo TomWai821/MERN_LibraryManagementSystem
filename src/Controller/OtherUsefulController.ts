@@ -43,17 +43,5 @@ const StatusDetectionForAllUser = (status: string) =>
         banned: { disable: !isNormal },
     }
 }
-
-const StatusDetectionForBannedUser = (status: string) => 
-{
-    const isBanned = status !== "Banned";
-    return isBanned;
-}
-
-const StatusDetectionForDeleteUser = (status: string) => 
-{
-    const isPending = status !== "Pending";
-    return isPending;
-}
     
-export {handleLogout, handleSuccess, StatusDetectionForAllUser, StatusDetectionForBannedUser, StatusDetectionForDeleteUser}
+export {handleLogout, handleSuccess, StatusDetectionForAllUser}

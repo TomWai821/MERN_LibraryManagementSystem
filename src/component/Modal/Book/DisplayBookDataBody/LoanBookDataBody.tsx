@@ -32,11 +32,14 @@ const LoanBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
             <Avatar src={bookData().imageUrl} alt="Preview" variant="rounded" sx={BookImageFormat}/>
             
             <Box sx={{ display: 'grid', gap: '20px 50px', width:'350px', gridTemplateColumns: '100%'}}>
-                <Typography>Bookname: {bookData().bookname}</Typography>
-                <Typography>Genre: {bookData().username}</Typography>
-                <Typography>Language: {bookData().loanDate}</Typography>
-                <Typography>Author: {bookData().dueDate}</Typography>
-                <Typography>Publisher: {bookData().status}</Typography>
+                <Box sx={{display: 'inline-block'}}>
+                    <Typography>Bookname:</Typography>
+                    <Typography>{bookData().bookname}</Typography>
+                </Box>
+                <Typography>Username: {bookData().username}</Typography>
+                <Typography>Loan Date: {bookData().loanDate}</Typography>
+                <Typography>Due Date: {bookData().dueDate}</Typography>
+                <Typography>Status: {bookData().status}</Typography>
             </Box>
         </Box>
     );

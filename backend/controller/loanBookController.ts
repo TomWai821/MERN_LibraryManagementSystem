@@ -1,27 +1,19 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import { CreateBookLoaned, FindBookLoanedByIDAndUpdate, GetBookLoaned } from '../schema/book/bookLoaned';
 import { AuthRequest } from '../model/requestInterface';
 import { FindBookByIDAndUpdate } from '../schema/book/book';
 import { BookLoanedInterface } from '../model/bookSchemaInterface';
-import { jwtVerify } from './hashing';
 import { ObjectId } from 'mongodb';
 
 export const GetLoanBookRecord = async (req: AuthRequest, res:Response) => 
 {
     const suggestType = req.params.type;
-    const authToken = req.header("authToken");
+    const userId = req.user?._id;
     let success = false;
     
     try
     {
         let getLoanRecord:any[] | undefined;
-        let data:any;
-
-        if(authToken)
-        {
-            data = await jwtVerify(authToken);
-            req.user = data.user;
-        }
 
         switch(suggestType)
         {
@@ -30,7 +22,8 @@ export const GetLoanBookRecord = async (req: AuthRequest, res:Response) =>
                 break;
 
             default:
-                getLoanRecord = req.user ? await GetBookLoaned({userID: new ObjectId(req.user._id as unknown as ObjectId)}) : await GetBookLoaned();
+                let userObjectId = new ObjectId(userId as unknown as ObjectId);
+                getLoanRecord = userId ? await GetBookLoaned({userID: userObjectId}) : await GetBookLoaned();
                 break;
         }
 
@@ -83,7 +76,6 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
 
 export const UpdateLoanBookRecord = async (req: AuthRequest, res:Response) => 
 {
-    const { bookID } = req.body;
     const foundLoanedRecord = req.foundLoanedRecord as BookLoanedInterface;
     let success = false;
 
@@ -93,14 +85,14 @@ export const UpdateLoanBookRecord = async (req: AuthRequest, res:Response) =>
         const dueDate = foundLoanedRecord.dueDate;
         const status = dueDate && currentDate <= dueDate ? 'Returned' : 'Returned(Late)'
 
-        const changeLoanRecordStatus = await FindBookLoanedByIDAndUpdate(bookID, {status: status})
+        const changeLoanRecordStatus = await FindBookLoanedByIDAndUpdate(foundLoanedRecord._id as unknown as string, {status: status})
 
         if(!changeLoanRecordStatus)
         {
-            return res.status(400).json({success, error:"Failed to return Book"});
+            return res.status(400).json({success, error: "Failed to return Book"});
         }
 
-        const changeBookStatus = await FindBookByIDAndUpdate(bookID, {status: 'OnShelf'});
+        const changeBookStatus = await FindBookByIDAndUpdate(foundLoanedRecord.bookID as unknown as string, {status: 'OnShelf'});
 
         if(!changeBookStatus)
         {

@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { contactHandler } from "../../contactController";
-import { GetPublisher } from "../../../schema/book/publisher";
-import { GetAuthor } from "../../../schema/book/author";
 
 export const ContactTypeValidation = async (req: Request, res: Response, next:NextFunction) => 
 {

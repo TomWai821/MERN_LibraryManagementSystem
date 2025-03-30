@@ -19,9 +19,7 @@ const DeleteUserDataBody:FC<DisplayDataModalBody>  = (DeleteUserData) =>
             <Typography>Username: {Data.username}</Typography>
             <Typography>Email: {Data.email}</Typography>
             <Typography>Gender: {Data.gender}</Typography>
-            <Typography>Status: {Data.status} ({Data.deleteDetails?.status})</Typography>
             <Typography>Description: {Data.deleteDetails?.description}</Typography>
-            <Divider/>
             <Typography>Start Date: {TransferDateToString(Data.deleteDetails?.startDate as Date)}</Typography>
             <Typography>Due Date: {TransferDateToString(Data.deleteDetails?.dueDate as Date)}</Typography>
             <Typography>Count: {CountDuration(Data.deleteDetails?.dueDate as Date)}</Typography>

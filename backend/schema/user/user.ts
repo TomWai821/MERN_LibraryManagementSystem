@@ -77,8 +77,8 @@ export const FindUserWithData = async (tableName:string, data: Record<string, an
         
         switch(tableName)
         {
-            case "BannedUser":
-                return await GetUsersWithBannedDetails(data);
+            case "SuspendUser":
+                return await GetUsersWithSuspendnedDetails(data);
 
             case "DeleteUser":
                 return await GetUsersWithDeleteDetails(data);
@@ -97,7 +97,7 @@ export const FindUserWithData = async (tableName:string, data: Record<string, an
 }
 
 // Local variable(For get banned user data)
-const GetUsersWithBannedDetails = async (data: any) => 
+const GetUsersWithSuspendnedDetails = async (data: any) => 
 {
     let pipeline:PipelineStage[] = [];
 
@@ -110,7 +110,7 @@ const GetUsersWithBannedDetails = async (data: any) =>
     (
         {
             $lookup: {
-                from: 'banlists',
+                from: 'suspendlists',
                 localField: '_id',
                 foreignField: 'userID',
                 as: 'bannedDetails'

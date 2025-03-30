@@ -75,7 +75,7 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
                 <Typography>Gender: {Data.gender}</Typography>
             </Box>
             
-            <DeleteTypography/>
+            {value === 2 && <DeleteTypography/>}
             <ModalConfirmButton clickEvent={DeleteUserAction} name={"Yes"} buttonType={"Important"}/>
         </ModalTemplate>
     );

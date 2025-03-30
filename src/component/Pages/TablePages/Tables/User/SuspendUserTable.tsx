@@ -11,9 +11,9 @@ import { UserDataTableInterface } from "../../../../../Model/UserTableModel";
 
 // Data (CSS Syntax and table header)
 import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
-import { BannedUserTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
+import { SuspendUserTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
 
-import { CalculateDuration } from "../../../../../Controller/OtherController";
+import { CalculateDuration, TransferDateToString } from "../../../../../Controller/OtherController";
 
 
 
@@ -23,19 +23,18 @@ const SuspendUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
     const TableName = "User";
 
     const currentTableData = userData[value];
-    const BannedData = currentTableData.filter((data) => data.bannedDetails?.status === "Banned");
 
     const [page, setPage] = useState<number>(1);
 
     const startIndex = (page - 1) * paginationValue;
     const endIndex = startIndex + paginationValue;
 
-    const paginatedData = BannedData.slice(startIndex, endIndex);
-    const count = Math.ceil(BannedData.length / paginationValue);
+    const paginatedData = currentTableData.slice(startIndex, endIndex);
+    const count = Math.ceil(currentTableData.length / paginationValue);
 
     const getCountPage = () : void | number => 
     {
-        return BannedData.length > paginationValue ? count + 1 : count;
+        return currentTableData.length > paginationValue ? count + 1 : count;
     }
 
     const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => 
@@ -54,7 +53,7 @@ const SuspendUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
             <Table>
                 <TableHead>
                     <TableRow>
-                        {BannedUserTableHeader.map((header, index) =>
+                        {SuspendUserTableHeader.map((header, index) =>
                             (
                                 (header.isAdmin && !isAdmin) ? null : <TableCell key={index} sx={{fontSize: '16px'}}>{header.label}</TableCell>
                             ) 
@@ -71,12 +70,10 @@ const SuspendUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
                                     <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.username} </ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.role} </ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.bannedDetails?.description} </ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.bannedDetails?.status} </ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {TransferDateToString(data.bannedDetails?.startDate as Date)} </ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {TransferDateToString(data.bannedDetails?.dueDate as Date)} </ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> 
-                                        {  
-                                            data.bannedDetails?.status === "Banned" ?
-                                            CalculateDuration(data.bannedDetails?.startDate as Date, data.bannedDetails?.dueDate as Date) : "N/A"
-                                        } 
+                                        {CalculateDuration(data.bannedDetails?.startDate as Date, data.bannedDetails?.dueDate as Date)}
                                     </ContentTableCell>
                                     {isAdmin && (<ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin}/>)}
                                 </TableRow>

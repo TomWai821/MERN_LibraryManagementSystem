@@ -23,7 +23,7 @@ import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const BookFilter: FC<FilterInterface> = (filterData) => 
 {
-    const {value, searchData, onChange, Search} = filterData;
+    const {value, searchData, onChange, Search, isAdmin} = filterData;
     const bookData = searchData as unknown as BookTableDataInterface;
 
     const [optionVisiable, setOptionVisiable] = useState(false);
@@ -57,17 +57,23 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
                 </IconButton>
 
                 <Button variant='contained' sx={{marginLeft: '10px'}} onClick={Search}>Search</Button>
-                    <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={handleActionMenu}>Action</Button>
-                    <Menu open={Boolean(actionMenu)} anchorEl={actionMenu} onClose={handleActionMenu}>
-                    {
-                        ActionMenu.map((action, index) =>(
-                            <MenuItem key={index}>
-                                <Typography onClick={action.clickEvent}>{action.label}</Typography>
-                            </MenuItem>
-                            )
+                    { isAdmin && 
+                        (
+                            <Fragment>
+                                <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={handleActionMenu}>Action</Button>
+                                <Menu open={Boolean(actionMenu)} anchorEl={actionMenu} onClose={handleActionMenu}>
+                                {
+                                    ActionMenu.map((action, index) =>(
+                                        <MenuItem key={index}>
+                                            <Typography onClick={action.clickEvent}>{action.label}</Typography>
+                                        </MenuItem>
+                                        )
+                                    )
+                                }
+                                </Menu> 
+                            </Fragment>
                         )
                     }
-                    </Menu>
             </Box>
 
             <OptionFields value={value} type={"Book"} optionVisiable={optionVisiable} onChange={onChange} searchData={searchData}/>

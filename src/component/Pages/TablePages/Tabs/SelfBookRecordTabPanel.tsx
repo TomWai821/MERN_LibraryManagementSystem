@@ -13,11 +13,11 @@ const SelfBookRecordTabPanel:FC<BookRecordTableInterface> = (TabData) =>
     
     return(
         <Fragment>
-            <CustomTabPanel index={0} value={0}>
-                <SelfLoanBookTable value={0} bookData={bookData} paginationValue={paginationValue} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>
+            <CustomTabPanel index={0} value={value}>
+                <SelfLoanBookTable value={value} bookData={bookData} paginationValue={paginationValue} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>
             </CustomTabPanel>
 
-            <CustomTabPanel index={1} value={1}>
+            <CustomTabPanel index={1} value={value}>
                 <></>
             </CustomTabPanel>
         </Fragment>

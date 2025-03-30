@@ -18,12 +18,14 @@ import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 // Data (CSS SYntax and dropdown)
 import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects";
 import { BookTabLabel, PaginationOption } from "../../../ArraysAndObjects/TableArrays";
+import { useContactContext } from "../../../Context/Book/ContactContext";
 
 const BookPage:FC<PagesInterface> = (loginData) =>
 {
     const { isLoggedIn, isAdmin } = loginData;
     const { bookData, fetchBookWithFliterData } = useBookContext();
     const { definition } = useDefinitionContext();
+    const { contact } = useContactContext();
 
     const SetTitle:string = isAdmin ? "Manage Books Record": "View Books";
 
@@ -37,17 +39,32 @@ const BookPage:FC<PagesInterface> = (loginData) =>
     {
         const { name, value } = event.target;
     
-        if (name === "genre") 
-        {
-            setSearchBook({...searchBook,genre: value, genreID: index !== undefined && definition.Genre[index]?._id ? definition.Genre[index]._id : ""});
-        } 
-        else if (name === "language") 
-        {
-            setSearchBook({...searchBook, language: value, languageID: index !== undefined && definition.Language[index]?._id ? definition.Language[index]._id : ""});
-        } 
-        else 
-        {
-            setSearchBook({ ...searchBook, [name]: value });
+        switch(name)
+        {   
+            case "genre":
+                setSearchBook({...searchBook,genre: value, genreID: index !== undefined && definition.Genre[index]?._id ? definition.Genre[index]._id : ""});
+                break;
+
+            case "language":
+                setSearchBook({...searchBook, language: value, languageID: index !== undefined && definition.Language[index]?._id ? definition.Language[index]._id : ""});
+                break;
+
+            case "publisher":
+                console.log(`publisher:${contact.Publisher[index as number]?.publisher}`)
+                console.log(`publisherID:${contact.Publisher[index as number]?._id}`)
+                setSearchBook({...searchBook, publisher: value, publisherID: index !== undefined && contact.Publisher[index]?._id ? contact.Publisher[index]._id : ""});
+                break;
+
+            case "author":
+                console.log(`author:${contact.Author[index as number]?.author}`)
+                console.log(`author:${contact.Author[index as number]?._id}`)
+                setSearchBook({...searchBook, author: value, authorID: index !== undefined && contact.Author[index]?._id ? contact.Author[index]._id : ""});
+                break;
+
+            default:
+                setSearchBook({ ...searchBook, [name]: value });
+                break;
+
         }
     };
 
@@ -71,7 +88,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
     const SearchBook = () => 
     {
         const TableName=["AllBook", "OnLoanBook"]
-        fetchBookWithFliterData(TableName[tabValue], searchBook.bookname, searchBook.genreID, searchBook.languageID);
+        fetchBookWithFliterData(TableName[tabValue], searchBook.bookname, searchBook.genreID, searchBook.languageID, searchBook.authorID, searchBook.publisherID);
     }
 
     useEffect(() => 

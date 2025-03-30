@@ -22,26 +22,22 @@ const UserPage:FC<PagesInterface> = (loginData) =>
     const { isAdmin } = loginData;
     const { userData, fetchUser } = useUserContext();
 
-    const SetTitle = isAdmin ? "User Management Page" : "View BanList";
+    const SetTitle = isAdmin ? "User Management Page" : "View Suspend List";
 
     const [searchUserData, setSearchUserData] = useState({ username: "", email: "", role: "All", status: "All", gender: "All" });
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
 
-    // Reset data while tab is change
-    const defaultSearchUser = {username: "", email:"", role:"All", status:"All", gender:"All"};
-
     // useCallback could avoid unnecessary re-rendering
-    const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => 
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
         const { name, value } = event.target;
         setSearchUserData({ ...searchUserData, [name]: value });
-    }
-    ,[paginationValue]);
+    };
 
     const SearchUser = useCallback(() => 
     {
-        const TableName = ["AllUser", "BannedUser", "DeleteUser"];
+        const TableName = ["AllUser", "SuspendUser", "DeleteUser"];
         fetchUser(TableName[tabValue], searchUserData);
     }
     ,[searchUserData])
@@ -70,12 +66,6 @@ const UserPage:FC<PagesInterface> = (loginData) =>
             setTabValue(1); 
         }
     },[isAdmin])
-
-    useEffect(() => 
-    {
-        // Reset while value change
-        setSearchUserData(defaultSearchUser);
-    },[tabValue])
     
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>

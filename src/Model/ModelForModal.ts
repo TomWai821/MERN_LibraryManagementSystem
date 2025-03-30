@@ -1,4 +1,4 @@
-import { BookDataInterface, BookDataInterfaceForEdit, DefinitionInterface, DetailsInterfaceForBannedAndDelete, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
+import { BookDataInterface, BookDataInterfaceForEdit, DefinitionInterface, DetailsInterfaceForSuspendAndDelete, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
 import { IsAdminInterface } from "./TablePagesAndModalModel";
 
 export interface CreateModalInterface
@@ -27,11 +27,11 @@ export interface CreateBookModalInterface
 export interface EditModalInterface
 {
     value?: number;
-    editData: UserResultDataInterface | DetailsInterfaceForBannedAndDelete | DefinitionInterface | BookDataInterfaceForEdit | CreateBookModalInterface;
-    compareData: UserResultDataInterface | DetailsInterfaceForBannedAndDelete | DefinitionInterface | BookDataInterfaceForEdit | CreateBookModalInterface;
+    editData: UserResultDataInterface | DetailsInterfaceForSuspendAndDelete | DefinitionInterface | BookDataInterfaceForEdit | CreateBookModalInterface;
+    compareData: UserResultDataInterface | DetailsInterfaceForSuspendAndDelete | DefinitionInterface | BookDataInterfaceForEdit | CreateBookModalInterface;
 }
 
-export interface BanModalInterface
+export interface SuspendModalInterface
 {
     _id:string;
     username:string;

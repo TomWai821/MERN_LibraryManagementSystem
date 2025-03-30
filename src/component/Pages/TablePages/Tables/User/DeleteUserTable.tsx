@@ -19,7 +19,6 @@ const DeleteUserTable:FC<UserDataTableInterface> = (DataForDeleteUserTable) =>
     const TableName = "User";
 
     const currentTableData = userData[value];
-    const deleteData = currentTableData.filter((data) => data.deleteDetails?.status === "Pending")
     const [page, setPage] = useState<number>(1);
 
     // For pagination slicing
@@ -27,12 +26,12 @@ const DeleteUserTable:FC<UserDataTableInterface> = (DataForDeleteUserTable) =>
     const endIndex = startIndex + paginationValue;
 
     // For pagination
-    const paginatedData = deleteData.slice(startIndex, endIndex);
-    const count = Math.ceil(deleteData.length / paginationValue);
+    const paginatedData = currentTableData.slice(startIndex, endIndex);
+    const count = Math.ceil(currentTableData.length / paginationValue);
 
     const getCountPage = () : void | number => 
     {
-        return deleteData.length > paginationValue ? count + 1 : count;
+        return currentTableData.length > paginationValue ? count + 1 : count;
     }
 
     const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => 
@@ -69,7 +68,6 @@ const DeleteUserTable:FC<UserDataTableInterface> = (DataForDeleteUserTable) =>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.gender}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{TransferDateToString(data.deleteDetails?.startDate as Date)}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{TransferDateToString(data.deleteDetails?.dueDate as Date)}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.deleteDetails?.status}</ContentTableCell>
                                 {isAdmin && (<ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin}/>)}
                             </TableRow>
                         )

@@ -5,9 +5,9 @@ import { TransferDateToISOString } from "../../Controller/OtherController";
 import { useModal } from "../../Context/ModalContext";
 import DisplayBookDataModal from "../Modal/Book/DisplayBookDataModal";
 
-const SuggestBookPanelTemplate:FC<{title:string, data:BookDataInterface[] | LoanBookInterface[], IsLoggedIn:boolean}> = (suggestBookPanelData) => 
+const SuggestBookPanelTemplate:FC<{value:number, title:string, data:BookDataInterface[] | LoanBookInterface[], IsLoggedIn:boolean}> = (suggestBookPanelData) => 
 {
-    const { title, data, IsLoggedIn } = suggestBookPanelData;
+    const { value, title, data, IsLoggedIn } = suggestBookPanelData;
     const { handleOpen } = useModal();
 
     const PublishPanelSyntax = 
@@ -34,6 +34,7 @@ const SuggestBookPanelTemplate:FC<{title:string, data:BookDataInterface[] | Loan
     }
     
     return(
+        data.length > 0 ?
         <Box sx={{padding: '20px 0'}}>
             <Typography sx={{fontSize: '24px', paddingBottom: '10px'}}>{title}</Typography>
             <Box sx={PublishPanelSyntax}>
@@ -47,7 +48,11 @@ const SuggestBookPanelTemplate:FC<{title:string, data:BookDataInterface[] | Loan
                                     <Fragment>
                                         <Avatar src={book.image?.url} alt="Preview" variant="rounded"sx={ImageSyntax} />
                                         <Typography sx={{width: "175px"}}>{book.bookname}</Typography>
-                                        <Typography>{`(${TransferDateToISOString(book.publishDate as Date)})`}</Typography>
+                                        {value === 0 ?
+                                            <Typography>{`(${TransferDateToISOString(book.publishDate as Date)})`}</Typography>
+                                            :
+                                            <Typography>{`(${book.genreDetails.genre})`}</Typography>
+                                        }
                                     </Fragment>
                                 ) 
                                 : 
@@ -63,7 +68,7 @@ const SuggestBookPanelTemplate:FC<{title:string, data:BookDataInterface[] | Loan
                     ))
                 }
             </Box>
-        </Box>
+        </Box>:<></>
     )
 }
 

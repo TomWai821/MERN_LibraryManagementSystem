@@ -1,22 +1,21 @@
 import { NextFunction, Response } from "express";
 import { AuthRequest } from "../../../model/requestInterface";
-import { FindBanListByIDAndDelete } from "../../../schema/user/banList";
+import { FindSuspendListByIDAndDelete } from "../../../schema/user/suspendList";
 import { FindDeleteListByIDAndDelete } from "../../../schema/user/deleteList";
 
-export const DeleteBanListRecord = async (req:AuthRequest, res:Response, next:NextFunction) => 
+export const DeleteSuspendListRecord = async (req:AuthRequest, res:Response, next:NextFunction) => 
 {
     const {banListID, statusForUserList} = req.body;
 
     if(banListID && statusForUserList === "Normal")
     {
-        const deleteBanListRecord = await FindBanListByIDAndDelete(banListID);
+        const deleteSuspendListRecord = await FindSuspendListByIDAndDelete(banListID);
 
-        if(!deleteBanListRecord)
+        if(!deleteSuspendListRecord)
         {
-            return res.status(400).json({success: false, message: "Failed to delete Ban List Record"});
+            return res.status(400).json({success: false, message: "Failed to delete Suspend List Record"});
         }
     }
-
 }
 
 export const RemoveDeleteListRecord = async (req:AuthRequest, res:Response, next:NextFunction) => 

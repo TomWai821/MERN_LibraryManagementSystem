@@ -24,21 +24,17 @@ const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) =>
                         </Fragment>
                     )
                 }
-                <Typography>Status: {Data.bannedDetails?.status}</Typography>
-                {
-                    Data.bannedDetails?.status === "Banned" && 
-                    (
-                        <Fragment>
-                            <Typography>Description: {Data.bannedDetails?.description}</Typography>
-                            <Typography>Date: {TransferDateToString(Data.bannedDetails?.startDate as Date)} - {TransferDateToString(Data.bannedDetails?.dueDate as Date)}</Typography>
-                            <Typography>Duration: {CalculateDuration(Data.bannedDetails?.startDate as Date, Data.bannedDetails?.dueDate as Date)}</Typography>
-                        </Fragment>
-                    )
-                }
+                <Fragment>
+                    <Typography>Description: {Data.bannedDetails?.description}</Typography>
+                    <Typography>Date: {TransferDateToString(Data.bannedDetails?.startDate as Date)} - {TransferDateToString(Data.bannedDetails?.dueDate as Date)}</Typography>
+                    <Typography>Duration: {CalculateDuration(Data.bannedDetails?.startDate as Date, Data.bannedDetails?.dueDate as Date)}</Typography>
+                </Fragment>
                 {
                     isAdmin && 
                     (
-                        <Typography>Count: {CountDuration(Data.bannedDetails?.dueDate as Date)}</Typography>
+                        <Fragment>
+                            <Typography>Count: {CountDuration(Data.bannedDetails?.dueDate as Date)}</Typography>
+                        </Fragment>
                     )
                 }
             </Box>

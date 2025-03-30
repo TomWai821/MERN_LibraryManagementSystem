@@ -67,7 +67,7 @@ const EditUserInputField =
     {name: "role", label: "Role", type: "text", select: true, options: RoleOption}
 ]
 
-const EditBanUserInputField = 
+const EditSuspendUserInputField = 
 [
     {name: "startDate", label: "Start Date", type:"Date", select:false, slotProps: {}, options: [], rows: 1, disable: true},
     {name: "dueDate", label: "Due Date", type:"Date", select:false, slotProps: {}, options: [], rows: 1, disable: false},
@@ -95,4 +95,4 @@ const EditGenreInputField =
     {name: "shortName", label: "Short Name", type:"text"}
 ]
 
-export {RegisterField, LoginField, ViewProfileField, AllUserSearchField, OtherUserSearchField, CreateUserInputField, EditUserInputField, EditBanUserInputField, dateOption, EditLanguageInputField, EditGenreInputField}
+export {RegisterField, LoginField, ViewProfileField, AllUserSearchField, OtherUserSearchField, CreateUserInputField, EditUserInputField, EditSuspendUserInputField, dateOption, EditLanguageInputField, EditGenreInputField}

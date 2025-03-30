@@ -6,23 +6,24 @@ import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as
 import { useModal } from "../../../../../Context/ModalContext";
 
 // Useful function 
-import { StatusDetectionForAllUser, StatusDetectionForBannedUser, StatusDetectionForDeleteUser } from "../../../../../Controller/OtherUsefulController";
+import { StatusDetectionForAllUser } from "../../../../../Controller/OtherUsefulController";
 
 // Another Modal
 import EditUserModal from "../../../../Modal/User/EditUserModal";
 import EditBookModal from "../../../../Modal/Book/EditBookModal";
 import DeleteUserConfirmModal from "../../../../Modal/Confirmation/User/DeleteUserConfirmModal";
 import DeleteBookModal from "../../../../Modal/Confirmation/Book/DeleteBookConfirmModal";
-import BanUserModal from "../../../../Modal/User/SuspendUserModal";
+import SuspendUserModal from "../../../../Modal/User/SuspendUserModal";
 import UndoUserActivityModal from "../../../../Modal/Confirmation/User/UndoUserActivityModal";
 
 // Model
 import { ActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel"
-import { BookDataInterface, DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "../../../../../Model/ResultModel";
+import { BookDataInterface, DetailsInterfaceForSuspendAndDelete, UserResultDataInterface } from "../../../../../Model/ResultModel";
 
 // Data(CSS Syntax)
-import EditBanUserModal from "../../../../Modal/User/EditBanUserModal";
+
 import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
+import EditSuspendUserModal from "../../../../Modal/User/EditSuspendUserModal";
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
 {
@@ -75,15 +76,15 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         }
     }
 
-    const openBannedModal = () => 
+    const openSuspendModal = () => 
     {
-        handleOpen(<BanUserModal {...Information as UserResultDataInterface}/>);
+        handleOpen(<SuspendUserModal {...Information as UserResultDataInterface}/>);
     }
 
-    const openEditBanDataModal = () => 
+    const openEditSuspendDataModal = () => 
     {
-        const banData = userData.bannedDetails as DetailsInterfaceForBannedAndDelete;
-        handleOpen(<EditBanUserModal value={value} editData={banData} compareData={banData}/>)
+        const banData = userData.bannedDetails as DetailsInterfaceForSuspendAndDelete;
+        handleOpen(<EditSuspendUserModal value={value} editData={banData} compareData={banData}/>)
     } 
 
     const openUndoActionModal = () => 
@@ -95,16 +96,16 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
     [
         [
             {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />},
-            {title: "Suspend User" , syntax:ImportantActionButtonSyntax, clickEvent:openBannedModal, icon:<BlockIcon />, disable: StatusDetectionForAllUser(userData.status).banned.disable},
+            {title: "Suspend User" , syntax:ImportantActionButtonSyntax, clickEvent:openSuspendModal, icon:<BlockIcon />, disable: StatusDetectionForAllUser(userData.status).banned.disable},
             {title: "Move To Delete List", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />, disable: StatusDetectionForAllUser(userData.status).delete.disable}
         ],
         [
-            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditBanDataModal, icon:<EditIcon />, disable:StatusDetectionForBannedUser(userData.bannedDetails?.status as string)},
-            {title: "Unban User", syntax:ImportantActionButtonSyntax, clickEvent:openUndoActionModal , icon:<LockOpenIcon />, disable:StatusDetectionForBannedUser(userData.bannedDetails?.status as string)},
+            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditSuspendDataModal, icon:<EditIcon />},
+            {title: "Unsuspend User", syntax:ImportantActionButtonSyntax, clickEvent:openUndoActionModal , icon:<LockOpenIcon />},
         ],
         [
-            {title: "UnDelete user", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openUndoActionModal, icon:<RestoreIcon />, disable:StatusDetectionForDeleteUser(userData.deleteDetails?.status as string)},
-            {title: "Delete(Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />, disable:StatusDetectionForDeleteUser(userData.deleteDetails?.status as string)},
+            {title: "UnDelete user", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openUndoActionModal, icon:<RestoreIcon />},
+            {title: "Delete(Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
         ]
     ]
 

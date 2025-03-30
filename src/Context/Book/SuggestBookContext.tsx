@@ -1,5 +1,5 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
-import { SuggestBookContextProps, ChildProps } from "../../Model/ContextAndProviderModel";
+import { SuggestBookContextProps, ChildProps, SuggestionData } from "../../Model/ContextAndProviderModel";
 import { BookDataInterface, GetResultInterface, LoanBookInterface } from "../../Model/ResultModel";
 import { fetchLoanBook, fetchSuggestBook } from "../../Controller/BookController/BookGetController";
 import { GetData } from "../../Controller/OtherController";
@@ -15,51 +15,62 @@ export const SuggestBookProvider:FC<ChildProps> = ({children}) =>
     const suggestBook = [newPublishBook, mostPopularBook, bookForUser];
 
     const authToken = GetData("authToken") as string;
-    let dataForSuggestion = {};
 
-    const fetchAllSuggestBook = useCallback(async() => 
-    {
+    const fetchAllSuggestBook = useCallback(async () => {
+        // Fetch initial suggestions
         const resultForNewPublishBook: GetResultInterface | undefined = await fetchSuggestBook("newPublish");
         const resultForMostPopularBook: GetResultInterface | undefined = await fetchSuggestBook("mostPopular");
-        const resultForSelfLoanBook: GetResultInterface | undefined = await fetchLoanBook(authToken);
-
-        if(resultForNewPublishBook && Array.isArray(resultForNewPublishBook.foundBook))
+    
+        if (resultForNewPublishBook && Array.isArray(resultForNewPublishBook.foundBook))
         {
             setNewPublishBook(resultForNewPublishBook.foundBook);
         }
     
-        if(resultForMostPopularBook && Array.isArray(resultForMostPopularBook.foundLoanBook))
+        if (resultForMostPopularBook && Array.isArray(resultForMostPopularBook.foundLoanBook)) 
         {
             setMostPopularBook(resultForMostPopularBook.foundLoanBook);
         }
-
-        if(resultForSelfLoanBook && Array.isArray(resultForSelfLoanBook.foundLoanBook))
+    
+        // Check if user is authenticated
+        if (authToken) 
         {
-            setSelfLoanBook(resultForSelfLoanBook.foundLoanBook);
-            dataForSuggestion = countAttributes(resultForSelfLoanBook.foundLoanBook);
+            const resultForSelfLoanBook: GetResultInterface | undefined = await fetchLoanBook(authToken);
+    
+            if (resultForSelfLoanBook && Array.isArray(resultForSelfLoanBook.foundLoanBook)) {
+                // Set loaned books
+                setSelfLoanBook(resultForSelfLoanBook.foundLoanBook);
+    
+                // Count attributes for suggestions
+                const suggestionData = countAttributes(resultForSelfLoanBook.foundLoanBook);
+    
+                // Only proceed if suggestionData has meaningful values
+                if (suggestionData.topAuthors.length > 0 || suggestionData.topGenres.length > 0 || suggestionData.topPublishers.length > 0) 
+                {
+                    // Update `dataForSuggestion`
+                    const dataForSuggestion = suggestionData;
+    
+                    // Fetch books for the user
+                    const resultForUser: GetResultInterface | undefined = await fetchSuggestBook("forUser", authToken, dataForSuggestion);
+    
+                    if (resultForUser && Array.isArray(resultForUser.foundBook)) 
+                    {
+                        setBookForUser(resultForUser.foundBook);
+                    }
+                }
+            }
         }
+    }, []);
 
-        const resultForUser: GetResultInterface | undefined = await fetchSuggestBook("forUser", authToken, dataForSuggestion);
-
-        if(resultForUser && Array.isArray(resultForUser.foundBook))
-        {
-            console.log(resultForUser)
-            setBookForUser(resultForUser.foundBook);
-        }
-    },[])
-
-    const getTopThree = (countObj: Record<string, number>) => 
+    const getTopThree = (countObject: Record<string, number>) => 
     {
-        return Object.entries(countObj)
-            .sort(([, a], [, b]) => b - a) // Sort by count in descending order
-            .slice(0, 3) // Get top 3 entries
-            .map(([key]) => key); // Extract only the names (keys)
+        return Object.entries(countObject)
+            .sort(([, first], [, second]) => second - first)
+            .slice(0, 3)
+            .map(([key]) => key);
     };
 
-
-    const countAttributes = (books: LoanBookInterface[]) => 
+    const countAttributes = (books: LoanBookInterface[]): SuggestionData  => 
     {
-        // Create objects to store counts
         const genreCount: Record<string, number> = {};
         const authorCount: Record<string, number> = {};
         const publisherCount: Record<string, number> = {};
@@ -85,14 +96,8 @@ export const SuggestBookProvider:FC<ChildProps> = ({children}) =>
             }
         });
 
-        // Get top 3 genres, authors, and publishers
-        const topGenres = getTopThree(genreCount);
-        const topAuthors = getTopThree(authorCount);
-        const topPublishers = getTopThree(publisherCount);
-
-        return { topGenres, topAuthors, topPublishers };
+        return { topGenres: getTopThree(genreCount), topAuthors: getTopThree(authorCount),topPublishers: getTopThree(publisherCount) };
     };
-
 
     useEffect(() => 
     {

@@ -26,9 +26,10 @@ export const BuildBookQueryAndGetData = async (req: AuthRequest, res: Response, 
 export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Response, next: NextFunction) => 
 {
     const suggestType = req.params.type;
+    const userId = req.user?._id;
     const { topAuthors, topGenres, topPublishers } = req.query;
     let foundBook: BookInterface | BookInterface[] | null | undefined;
-
+    
     switch(suggestType)
     {
         case "newPublish":
@@ -36,6 +37,10 @@ export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Resp
             break;
 
         case "forUser":
+            if(!userId)
+            {
+                return res.status(400).json({success: false, message:`This suggestion type require authToken!`});
+            }
             const query = buildSuggestQuery({ topAuthors, topGenres, topPublishers });
             foundBook = await GetBook(query , { publishDate: -1 }, 8);
             break;

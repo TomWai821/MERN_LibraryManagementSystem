@@ -50,7 +50,7 @@ export interface UserContextProps
     fetchUser: (type:string, UserData: UserDataInterface | undefined) => Promise<void>;
     createUser: (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string) => void;
     editUserData: (userId:string, username: string, email: string, gender: string, role: string) => void;
-    editBannedUserData: (userId:string, bannedListID: string, dueDate: Date, description: string) => void;
+    editSuspendUserData: (userId:string, bannedListID: string, dueDate: Date, description: string) => void;
     changeUserStatus: (type:string, userId:string, status:string, ListID?:string, duration?:number, description?:string) => void;
     actualDeleteUser: (userId:string, deleteListID:string, status:string) => void;
 }
@@ -59,7 +59,7 @@ export interface BookContextProps
 {
     bookData:(BookDataInterface[] | LoanBookInterface[])[];
     fetchAllBook: () => Promise<void>;
-    fetchBookWithFliterData: (tablename:string, bookname?:string, genreID?:string, languageID?:string) => Promise<void>;
+    fetchBookWithFliterData: (tablename:string, bookname?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => Promise<void>;
     createBook: (image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => void;
     editBook: (bookID:string, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string) => void;
     deleteBook: (bookID:string) => void;
@@ -104,3 +104,11 @@ export interface ContentTableCellProps extends ChildProps, IsAdminInterface
     isLoggedIn?: boolean;
     Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface;
 }
+
+export interface SuggestionData 
+{
+    topGenres: string[];
+    topAuthors: string[];
+    topPublishers: string[];
+}
+

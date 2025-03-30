@@ -28,7 +28,7 @@ interface StatusInterface extends IDInterface
     description:string;
 }
 
-interface DeleteAndBannedListInterface extends IDInterface
+interface DeleteAndSuspendListInterface extends IDInterface
 {
     userID: mongoose.Schema.Types.ObjectId;
     startDate: Date;
@@ -37,4 +37,4 @@ interface DeleteAndBannedListInterface extends IDInterface
     status:string;
 }
 
-export {IDInterface, UserInterface, RoleInterface, GenderInterface, StatusInterface, DeleteAndBannedListInterface}
+export {IDInterface, UserInterface, RoleInterface, GenderInterface, StatusInterface, DeleteAndSuspendListInterface}

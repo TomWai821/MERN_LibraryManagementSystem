@@ -3,9 +3,10 @@ import { GetResultInterface } from "../../Model/ResultModel";
 const localhost:string = 'http://localhost:5000/api/book';
 const contentType:string = "application/json";
 
-export const fetchBook = async (bookname?:string, genreID?:string, languageID?:string, publisherID?:string, authorID?:string) => 
+export const fetchBook = async (bookname?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => 
 {
     const queryString = BuildQuery({bookname, languageID, genreID, publisherID, authorID});
+    console.log(queryString);
 
     const response = await fetch(`${localhost}/bookData${queryString ? `?${queryString}` : ``}`,
         {
@@ -13,6 +14,8 @@ export const fetchBook = async (bookname?:string, genreID?:string, languageID?:s
             headers: { 'content-type': contentType },
         }
     );
+
+    console.log(response);
 
     if(response.ok)
     {

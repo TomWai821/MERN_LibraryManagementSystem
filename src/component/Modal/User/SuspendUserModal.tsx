@@ -8,33 +8,33 @@ import ModalTemplate from "../../Templates/ModalTemplate"
 import ModalConfirmButton from "../../UIFragment/ModalConfirmButton";
 
 // Another Modal
-import BanUserConfirmModal from "../Confirmation/User/SuspendUserConfirmModal";
+import SuspendUserConfirmModal from "../Confirmation/User/SuspendUserConfirmModal";
 
 // Modals
 import { useModal } from "../../../Context/ModalContext";
 
 // Model
-import { BanModalInterface } from "../../../Model/ModelForModal";
+import { SuspendModalInterface } from "../../../Model/ModelForModal";
 
 // Data (CSS Syntax and dropdown option)
 import { ModalBodySyntax } from "../../../ArraysAndObjects/FormatSyntaxObjects";
 import { dateOption } from "../../../ArraysAndObjects/TextFieldsArrays";
 
-const BanUserModal:FC<BanModalInterface> = ({...userData}) => 
+const SuspendUserModal:FC<SuspendModalInterface> = ({...userData}) => 
 {
-    const { _id, username, durationOption, description} = userData as BanModalInterface;
-    const [banData, setBanData] = useState({durationOption: durationOption ?? 0, description: description});
+    const { _id, username, durationOption, description} = userData as SuspendModalInterface;
+    const [banData, setSuspendData] = useState({durationOption: durationOption ?? 0, description: description});
     const {handleOpen} = useModal();
 
     const onChange = (event:ChangeEvent<HTMLInputElement>) => 
     {
         const {name, value} = event.target;
-        setBanData({...banData, [name] : value});
+        setSuspendData({...banData, [name] : value});
     }
 
-    const OpenBanUserConfirmModal = () => 
+    const OpenSuspendUserConfirmModal = () => 
     {
-        handleOpen(<BanUserConfirmModal _id={_id} username={username} durationOption={banData.durationOption} description={banData.description}/>)
+        handleOpen(<SuspendUserConfirmModal _id={_id} username={username} durationOption={banData.durationOption} description={banData.description}/>)
     }
 
     return(
@@ -54,9 +54,9 @@ const BanUserModal:FC<BanModalInterface> = ({...userData}) =>
                 <TextField size="small" rows={5} name="description" onChange={onChange} label={"description"} value={banData.description} multiline/>
             </Box>
             
-            <ModalConfirmButton clickEvent={OpenBanUserConfirmModal} name={"Suspend"} buttonType={"Important"}/>
+            <ModalConfirmButton clickEvent={OpenSuspendUserConfirmModal} name={"Suspend"} buttonType={"Important"}/>
         </ModalTemplate>
     )
 }
 
-export default BanUserModal
+export default SuspendUserModal

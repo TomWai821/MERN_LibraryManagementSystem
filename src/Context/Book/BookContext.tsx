@@ -33,9 +33,9 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         }
     },[])
 
-    const fetchBookWithFliterData = useCallback(async (tableName:string, bookname?:string, genreID?:string, languageID?:string, publisherID?:string, authorID?:string) => 
+    const fetchBookWithFliterData = useCallback(async (tableName:string, bookname?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => 
     {
-        const result: GetResultInterface | undefined = await fetchBook(bookname as string, genreID as string, languageID as string, publisherID as string, authorID as string);
+        const result: GetResultInterface | undefined = await fetchBook(bookname as string, genreID as string, languageID as string, authorID as string, publisherID as string);
 
         if(result && Array.isArray(result.foundBook))
         {

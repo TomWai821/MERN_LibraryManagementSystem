@@ -4,7 +4,7 @@ import { FindUser, FindUserByID } from "../../../schema/user/user";
 import { ObjectId } from "mongoose";
 import { comparePassword } from "../../hashing";
 import { UserInterface } from "../../../model/userSchemaInterface";
-import { FindBanListByID } from "../../../schema/user/banList";
+import { FindSuspendListByID } from "../../../schema/user/suspendList";
 import { FindDeleteListByID } from "../../../schema/user/deleteList";
 
 // For user register (not require login)
@@ -41,7 +41,7 @@ export const UserLoginDataValidation = async (req: AuthRequest, res: Response, n
         return res.status(400).json({ success: false, error: 'Invalid email address' });
     }
 
-    if (user.status === "Banned") 
+    if (user.status === "Suspendned") 
     {
         return res.status(401).json({ successs: false, error: 'This user was banned' });
     }
@@ -86,18 +86,18 @@ export const CompareUserStatus = async (req: AuthRequest, res: Response, next:Ne
     next();
 }
 
-// BanList ID validation before doing some action
-export const BanListValidation = async (req: AuthRequest, res: Response, next:NextFunction) => 
+// SuspendList ID validation before doing some action
+export const SuspendListValidation = async (req: AuthRequest, res: Response, next:NextFunction) => 
 {
     const { banListID } = req.body;
 
     if(banListID)
     {
-        const foundBanList = await FindBanListByID(banListID);
+        const foundSuspendList = await FindSuspendListByID(banListID);
 
-        if(!foundBanList)
+        if(!foundSuspendList)
         {
-            return res.status(404).json({ success: false, error:"Invalid Ban List ID!"});
+            return res.status(404).json({ success: false, error:"Invalid Suspend List ID!"});
         }
     }
     next();

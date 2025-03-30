@@ -21,7 +21,7 @@ const externalUserPage =
 const userPage = 
 [
     ...externalUserPage,
-    {name: 'BanList', clickEvent: () => ChangePage("./viewUser"), icon: <BlockIcon/>}
+    {name: 'Suspend User', clickEvent: () => ChangePage("./viewUser"), icon: <BlockIcon/>}
 ];
 
 const adminPage = 

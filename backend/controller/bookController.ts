@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { Request, Response } from 'express'
-import { CreateBook, FindBookByIDAndDelete, FindBookByIDAndUpdate, GetBook } from '../schema/book/book';
+import { CreateBook, FindBookByIDAndDelete, FindBookByIDAndUpdate } from '../schema/book/book';
 import { AuthRequest } from '../model/requestInterface';
 
 export const GetBookRecord = async (req: AuthRequest, res: Response) => 

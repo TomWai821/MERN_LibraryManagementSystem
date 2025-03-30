@@ -14,31 +14,31 @@ import EditUserConfirmModal from '../Confirmation/User/EditUserConfirmModal';
 import { useModal } from '../../../Context/ModalContext';
 
 // Models
-import { DetailsInterfaceForBannedAndDelete } from '../../../Model/ResultModel';
+import { DetailsInterfaceForSuspendAndDelete } from '../../../Model/ResultModel';
 import { EditModalInterface } from '../../../Model/ModelForModal';
 
 // Data (Dropdown option and CSS Syntax)
 
 import { TransferDateToISOString } from '../../../Controller/OtherController';
 import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
-import { EditBanUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
+import { EditSuspendUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
 
-const EditBanUserModal:FC<EditModalInterface> = (editModalData) => 
+const EditSuspendUserModal:FC<EditModalInterface> = (editModalData) => 
 {
     const { value, editData, compareData } = editModalData;
     const {handleOpen} = useModal();
     
-    const { _id, userID, description, startDate, dueDate, status } = editData as DetailsInterfaceForBannedAndDelete;
+    const { _id, userID, description, startDate, dueDate, status } = editData as DetailsInterfaceForSuspendAndDelete;
     const bannedIDToString = _id.toString() as string;
     const startDateToString = TransferDateToISOString(startDate as Date) as string;
     const dueDateToString = TransferDateToISOString(dueDate as Date) as string;
     const descriptionToString = description.toString() as string;
-    const [banData, setBanData] = useState<DetailsInterfaceForBannedAndDelete>({_id: bannedIDToString, userID:userID, startDate: startDateToString, dueDate: dueDateToString, description: descriptionToString, status: status });
+    const [banData, setSuspendData] = useState<DetailsInterfaceForSuspendAndDelete>({_id: bannedIDToString, userID:userID, startDate: startDateToString, dueDate: dueDateToString, description: descriptionToString, status: status });
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
         const {name, value} = event.target;
-        setBanData({...banData, [name] : value})
+        setSuspendData({...banData, [name] : value})
     }
 
     const openConfirmModal = () => 
@@ -47,11 +47,11 @@ const EditBanUserModal:FC<EditModalInterface> = (editModalData) =>
     }
     
     return(
-        <ModalTemplate title={"Edit Ban Record"} width="400px" cancelButtonName={"Exit"}>
+        <ModalTemplate title={"Edit Suspend Record"} width="400px" cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 {
-                    EditBanUserInputField.map((field, index) => (
-                        <TextField key={index} label={field.label} name={field.name} value={banData[field.name as keyof DetailsInterfaceForBannedAndDelete]}
+                    EditSuspendUserInputField.map((field, index) => (
+                        <TextField key={index} label={field.label} name={field.name} value={banData[field.name as keyof DetailsInterfaceForSuspendAndDelete]}
                             type={field.type} size="small" onChange={onChange} select={field.select} multiline={field.rows > 1} rows={field.rows} disabled={field.disable}>
                             {
                                 field.select && field.options.map((option, index) => 
@@ -69,4 +69,4 @@ const EditBanUserModal:FC<EditModalInterface> = (editModalData) =>
     );
 }
 
-export default EditBanUserModal;
+export default EditSuspendUserModal;

@@ -22,13 +22,14 @@ const AllUserTableHeader =
     {label:"Actions"}
 ]
 
-const BannedUserTableHeader = 
+const SuspendUserTableHeader = 
 [
     {label:"No.", isAdmin: false},
     {label:"Username", isAdmin: false},
     {label:"Role", isAdmin: false},
     {label:"Description", isAdmin: false},
-    {label:"Status", isAdmin: false},
+    {label:"StartDate", isAdmin: false},
+    {label:"DueDate", isAdmin: false},
     {label:"Duration", isAdmin: false},
     {label:"Actions", isAdmin: true}
 ]
@@ -41,7 +42,6 @@ const DeleteUserTableHeader =
     {label:"Gender"},
     {label:"Start Date"},
     {label:"Due Date"},
-    {label:"Status"},
     {label:"Actions"}
 ]
 
@@ -101,7 +101,7 @@ const LoanBookTabLabel =
     {label: 'Favourite Book'}
 ]
 
-const UserDataTableName = ["AllUser", "BannedUser", "DeleteUser"];
+const UserDataTableName = ["AllUser", "SuspendUser", "DeleteUser"];
 
 const PaginationOption = [10, 20, 50, 100];
 
@@ -109,7 +109,7 @@ const EmptyOption = ["All"];
 
 const RoleOption = ["User", "Admin"];
 
-const StatusOption = ["Normal", "Banned", "Delete"];
+const StatusOption = ["Normal", "Suspend", "Delete"];
 
 const GenderOption = ["Male", "Female"];
 
@@ -119,4 +119,4 @@ const StatusFilterOption = [...StatusOption, ...EmptyOption];
 
 const GenderFilterOption = [...GenderOption, ...EmptyOption];
 
-export {BookRecordTableHeader, AllUserTableHeader, BannedUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, BookTabLabel, UserTabLabel, LoanBookTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption}
+export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, BookTabLabel, UserTabLabel, LoanBookTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption}

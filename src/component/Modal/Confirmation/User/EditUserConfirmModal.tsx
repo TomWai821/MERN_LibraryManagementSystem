@@ -6,7 +6,7 @@ import { useModal } from "../../../../Context/ModalContext";
 import { useUserContext } from "../../../../Context/User/UserContext";
 
 // Models
-import { DetailsInterfaceForBannedAndDelete, UserResultDataInterface } from "../../../../Model/ResultModel";
+import { DetailsInterfaceForSuspendAndDelete, UserResultDataInterface } from "../../../../Model/ResultModel";
 import { UserDataInterface } from "../../../../Model/UserTableModel";
 import { EditModalInterface } from "../../../../Model/ModelForModal";
 
@@ -15,7 +15,7 @@ import ModalTemplate from "../../../Templates/ModalTemplate";
 
 // Another Modal
 import EditUserModal from "../../User/EditUserModal";
-import EditBanUserModal from "../../User/EditBanUserModal";
+import EditSuspendUserModal from "../../User/EditSuspendUserModal";
 
 // Useful function
 import { TransferDateToISOString } from "../../../../Controller/OtherController";
@@ -33,10 +33,10 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
     const [differences, setDifferences] = useState<string[]>([]);
 
     const {handleOpen, handleClose} = useModal();
-    const {editUserData, editBannedUserData} = useUserContext();
+    const {editUserData, editSuspendUserData} = useUserContext();
 
     // editData = use modify, compareData = vanilla one(Before change)
-    const compareDifference = (editData: UserDataInterface | DetailsInterfaceForBannedAndDelete, compareData: UserDataInterface | DetailsInterfaceForBannedAndDelete) => 
+    const compareDifference = (editData: UserDataInterface | DetailsInterfaceForSuspendAndDelete, compareData: UserDataInterface | DetailsInterfaceForSuspendAndDelete) => 
     {
         const newDifferences: string[] = [];
 
@@ -74,7 +74,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
                 break;
             
             case 1:
-                handleOpen(<EditBanUserModal editData={editData} compareData={compareData} value={value}/>);
+                handleOpen(<EditSuspendUserModal editData={editData} compareData={compareData} value={value}/>);
                 break;
         }
         
@@ -93,9 +93,9 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
                     break;
 
                 case 1:
-                    const CompareBanUserData = compareData as DetailsInterfaceForBannedAndDelete;
-                    const EditBanUserData = editData as DetailsInterfaceForBannedAndDelete;
-                    editBannedUserData(EditBanUserData.userID as string, CompareBanUserData._id, EditBanUserData.dueDate as Date, EditBanUserData.description);
+                    const CompareSuspendUserData = compareData as DetailsInterfaceForSuspendAndDelete;
+                    const EditSuspendUserData = editData as DetailsInterfaceForSuspendAndDelete;
+                    editSuspendUserData(EditSuspendUserData.userID as string, CompareSuspendUserData._id, EditSuspendUserData.dueDate as Date, EditSuspendUserData.description);
                     break;
             }
         }
@@ -104,7 +104,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
 
     useEffect(() => 
     {
-        compareDifference(editData as UserDataInterface | DetailsInterfaceForBannedAndDelete, compareData as UserDataInterface | DetailsInterfaceForBannedAndDelete);
+        compareDifference(editData as UserDataInterface | DetailsInterfaceForSuspendAndDelete, compareData as UserDataInterface | DetailsInterfaceForSuspendAndDelete);
     },
     [editData, compareData]);
 

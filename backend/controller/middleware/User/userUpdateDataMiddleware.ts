@@ -2,7 +2,7 @@ import { NextFunction, Response } from "express";
 import { AuthRequest } from "../../../model/requestInterface";
 import { FindUser } from "../../../schema/user/user";
 import { ObjectId } from "mongoose";
-import { CreateBanList, FindBanList, FindBanListByIDAndDelete } from "../../../schema/user/banList";
+import { CreateSuspendList, FindSuspendList, FindSuspendListByIDAndDelete } from "../../../schema/user/suspendList";
 import { CreateDeleteList, FindDeleteList,  FindDeleteListByIDAndDelete } from "../../../schema/user/deleteList";
 import { UserInterface } from "../../../model/userSchemaInterface";
 
@@ -55,7 +55,7 @@ export const BuildUpdateData = async (req: AuthRequest, res:Response, next:NextF
     next();
 }
 
-export const DeleteBanListOrDeleteListData = async (req: AuthRequest, res: Response, next:NextFunction) => 
+export const DeleteSuspendListOrDeleteListData = async (req: AuthRequest, res: Response, next:NextFunction) => 
 {
     const {deleteListID, banListID, statusForUserList} = req.body;
 
@@ -73,11 +73,11 @@ export const DeleteBanListOrDeleteListData = async (req: AuthRequest, res: Respo
         
         if(banListID)
         {
-            const deleteDataFromBanList = await FindBanListByIDAndDelete(banListID);
+            const deleteDataFromSuspendList = await FindSuspendListByIDAndDelete(banListID);
 
-            if(!deleteDataFromBanList)
+            if(!deleteDataFromSuspendList)
             {
-                return res.status(400).json({ success: false, error:"Invalid Delete Ban List Data!"});
+                return res.status(400).json({ success: false, error:"Invalid Delete Suspend List Data!"});
             }
         }
     }
@@ -89,9 +89,9 @@ export const CreateStatusList = async (statusForUserList:string, userId:ObjectId
 {
     const ListHandlers:Record<string, { find: () => Promise<any>; create: () => Promise<any>; }> = 
     {
-        "Banned":
+        "Suspend":
         {
-            find: () => FindBanList({ userId }), create: () => CreateBanList({ userID: userId, description, startDate, dueDate }) 
+            find: () => FindSuspendList({ userId }), create: () => CreateSuspendList({ userID: userId, description, startDate, dueDate }) 
         },
         "Delete":
         {

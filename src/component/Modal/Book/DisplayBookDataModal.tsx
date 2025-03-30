@@ -13,7 +13,7 @@ import LoanBookDataBody from "./DisplayBookDataBody/LoanBookDataBody";
 const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 
 {
     const {value, data, isLoggedIn} = displayUserData;
-    const width = ((data as BookDataInterface).image?.url || (data as LoanBookInterface).bookDetails?.image?.url) ? '600px' : '400px';
+    const width = '600px';
 
     const setTitle = () => 
     {

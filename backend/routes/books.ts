@@ -3,13 +3,15 @@ import upload from '../storage';
 import { GetDefinition, CreateDefinitionData, EditDefinitionData, DeleteDefinitionData } from '../controller/definitionController';
 import { LoginAndFindUser } from '../Arrays/routesMap';
 import { CreateBookRecord, DeleteBookRecord, EditBookRecord, GetBookImage, GetBookRecord } from '../controller/bookController';
-import { BookGenreIDAndLanguageIDValidation, BookNameValidation, BookRecordIDValidation, FoundBookLoanRecord } from '../controller/middleware/Book/BookvalidationMiddleware';
+
 import { BookCreateRules } from '../model/expressBodyRules';
 import { BuildBookQueryAndGetData, BuildSuggestBookQueryAndGetData } from '../controller/middleware/Book/bookGetDataMiddleware';
 import { DefinitionDataValidation, DefinitionTypeValidation } from '../controller/middleware/Definition/DefinitonValidationMiddleware';
 import { CreateContactRecord, DeleteContactRecord, GetContactRecord, UpdateContactRecord } from '../controller/contactController';
 import { ContactDataValidation, ContactTypeValidation } from '../controller/middleware/Contract/ContactValidationMiddleware';
 import { CreateLoanBookRecord, GetLoanBookRecord, UpdateLoanBookRecord } from '../controller/loanBookController';
+import { BookGenreIDAndLanguageIDValidation, BookNameValidation, BookRecordIDValidation, FoundBookLoanRecord } from '../controller/middleware/Book/bookValidationMiddleware';
+import { FetchUserFromHeader } from '../controller/middleware/User/authMiddleware';
 
 const router = express.Router();
 
@@ -26,13 +28,13 @@ router.put('/BookData/id=:id', ...LoginAndFindUser, BookRecordIDValidation, Book
 router.delete('/BookData/id=:id', ...LoginAndFindUser, BookRecordIDValidation, DeleteBookRecord);
 
 // For book records
-router.get('/LoanBook', GetLoanBookRecord);
+router.get('/LoanBook', FetchUserFromHeader, GetLoanBookRecord);
 router.post('/LoanBook', ...LoginAndFindUser, CreateLoanBookRecord);
 router.put('/LoanBook/id=:id', ...LoginAndFindUser, FoundBookLoanRecord, UpdateLoanBookRecord);
 
 // For Suggest Book
-router.get('/BookData/type=:type', BuildSuggestBookQueryAndGetData, GetBookRecord);
-router.get('/LoanBook/type=:type', GetLoanBookRecord);
+router.get('/BookData/type=:type', FetchUserFromHeader, BuildSuggestBookQueryAndGetData, GetBookRecord);
+router.get('/LoanBook/type=:type', FetchUserFromHeader, GetLoanBookRecord);
 
 // For publisher and author
 router.get('/contact/type=:type', ContactTypeValidation, GetContactRecord);

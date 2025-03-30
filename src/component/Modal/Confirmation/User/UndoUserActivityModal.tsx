@@ -33,7 +33,7 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
         switch(value)
         {
             case 1:
-                changeUserStatus("UnBanned", _id, "Normal", Data.bannedDetails?._id as string);
+                changeUserStatus("UnSuspend", _id, "Normal", Data.bannedDetails?._id as string);
                 break;
             
             case 2:

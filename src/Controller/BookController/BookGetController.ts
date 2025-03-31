@@ -6,7 +6,6 @@ const contentType:string = "application/json";
 export const fetchBook = async (bookname?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => 
 {
     const queryString = BuildQuery({bookname, languageID, genreID, publisherID, authorID});
-    console.log(queryString);
 
     const response = await fetch(`${localhost}/bookData${queryString ? `?${queryString}` : ``}`,
         {
@@ -55,8 +54,10 @@ export const fetchSuggestBook = async (type:string, authToken?:string, data?:Rec
     }
 }
 
-export const fetchLoanBook = async(authToken?:string) => 
+export const fetchLoanBook = async(authToken?:string, bookname?:string, username?:string, status?:string) => 
 {
+    const data = {bookname, username, status};
+
     const headers: Record<string, string> = 
     {
         'content-type': contentType
@@ -67,12 +68,16 @@ export const fetchLoanBook = async(authToken?:string) =>
         headers['authToken'] = authToken;
     }
 
-    const response = await fetch(`${localhost}/loanBook`,
+    const queryParams = "?" + BuildQuery(data);
+
+    const response = await fetch(`${localhost}/loanBook${queryParams}`,
         {
             method: 'GET',
             headers: headers
         }
     );
+
+    console.log(response);
 
     if(response.ok)
     {
@@ -81,7 +86,7 @@ export const fetchLoanBook = async(authToken?:string) =>
     }
 }
 
-const BuildQuery = (params:Record<string, number | string | Date | undefined>) =>
+const BuildQuery = (params:Record<string, number | string | Date | boolean | undefined>) =>
 {
     let queryParams = new URLSearchParams();
     for(const key in params)
@@ -90,7 +95,8 @@ const BuildQuery = (params:Record<string, number | string | Date | undefined>) =
         {
             continue; 
         }
-        else if(params[key] instanceof Date)
+        
+        if(params[key] instanceof Date)
         {
             queryParams.append(key, (params[key] as Date).toISOString());
         }

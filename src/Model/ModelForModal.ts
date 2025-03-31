@@ -1,5 +1,4 @@
 import { BookDataInterface, BookDataInterfaceForEdit, DefinitionInterface, DetailsInterfaceForSuspendAndDelete, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
-import { IsAdminInterface } from "./TablePagesAndModalModel";
 
 export interface CreateModalInterface
 {
@@ -29,6 +28,13 @@ export interface EditModalInterface
     value?: number;
     editData: UserResultDataInterface | DetailsInterfaceForSuspendAndDelete | DefinitionInterface | BookDataInterfaceForEdit | CreateBookModalInterface;
     compareData: UserResultDataInterface | DetailsInterfaceForSuspendAndDelete | DefinitionInterface | BookDataInterfaceForEdit | CreateBookModalInterface;
+}
+
+export interface ReturnBookInterface
+{
+    modalOpenPosition:string;
+    isAdmin: boolean;
+    data:LoanBookInterface;
 }
 
 export interface SuspendModalInterface

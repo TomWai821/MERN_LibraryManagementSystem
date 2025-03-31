@@ -134,4 +134,20 @@ const CountDuration = (dueDate: Date | string) =>
     return days.toLocaleString('en-US') + " Days ";
 }
 
-export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate, CalculateDueDate, TransferDateToISOString, TransferDateToString, CalculateDuration, CountDuration}
+const countLateReturn = (dueDate: Date | string) => 
+{
+    const currentDate = new Date();
+    const endDate = new Date(dueDate);
+
+    const durationInMilliseconds = currentDate.getTime() - endDate.getTime() ;
+    const days = Math.floor(durationInMilliseconds / MillionSecondsToDay);
+
+    if(days < 0)
+    {
+        return "No";
+    }
+
+    return `Yes (${days.toLocaleString('en-US')} Days)`;
+}
+
+export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate, CalculateDueDate, TransferDateToISOString, TransferDateToString, CalculateDuration, CountDuration, countLateReturn}

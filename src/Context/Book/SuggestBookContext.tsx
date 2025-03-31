@@ -12,7 +12,7 @@ export const SuggestBookProvider:FC<ChildProps> = ({children}) =>
     const [mostPopularBook, setMostPopularBook] = useState<LoanBookInterface[]>([]);
     const [SelfLoanBook, setSelfLoanBook] = useState<LoanBookInterface[]>([]);
     const [bookForUser, setBookForUser] = useState<BookDataInterface[]>([]);
-    const suggestBook = [newPublishBook, mostPopularBook, bookForUser];
+    const suggestBook = [bookForUser, newPublishBook, mostPopularBook];
 
     const authToken = GetData("authToken") as string;
 

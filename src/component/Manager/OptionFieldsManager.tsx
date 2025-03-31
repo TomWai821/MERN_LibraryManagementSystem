@@ -3,7 +3,7 @@ import SearchOptionField from "../UIFragment/SearchOptionField";
 import { OptionFieldsInterface } from "../../Model/TablePagesAndModalModel";
 
 import SearchOptionFieldForBook from "../UIFragment/SearchOptionFieldForBook";
-import { AllUserSearchField, OtherUserSearchField } from "../../ArraysAndObjects/TextFieldsArrays";
+import { AllUserSearchField, OtherUserSearchField, SearchLoanBookInputField } from "../../ArraysAndObjects/TextFieldsArrays";
 
 
 const OptionFieldsManager:FC<OptionFieldsInterface> = (searchOptionFieldData) => 
@@ -15,8 +15,7 @@ const OptionFieldsManager:FC<OptionFieldsInterface> = (searchOptionFieldData) =>
         Book:
         [
             <SearchOptionFieldForBook optionVisiable={optionVisiable} onChange={onChange} searchData={searchData}/>,
-            <SearchOptionFieldForBook optionVisiable={optionVisiable} onChange={onChange} searchData={searchData}/>,
-            <SearchOptionFieldForBook optionVisiable={optionVisiable} onChange={onChange} searchData={searchData} />
+            <SearchOptionFieldForBook optionVisiable={optionVisiable} onChange={onChange} SearchField={SearchLoanBookInputField} searchData={searchData}/>,
         ],
         User:
         [

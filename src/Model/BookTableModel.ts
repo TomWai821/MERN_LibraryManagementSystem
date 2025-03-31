@@ -4,6 +4,8 @@ import { TableInterface } from "./TablePagesAndModalModel";
 interface BookSearchInterface
 {
     bookname:string;
+    username:string;
+    status:string;
     language:string;
     languageID:string;
     genre:string;

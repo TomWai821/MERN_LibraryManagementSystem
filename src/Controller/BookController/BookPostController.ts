@@ -3,11 +3,6 @@ const localhost:string = 'http://localhost:5000/api/book';
 export const createBookRecord = async (authToken:string, image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => 
 {
     const formData = createFormData(image, bookname, genreID, languageID, publisherID, authorID, description, publishDate);
-
-    for (const key of formData.keys()) {
-        console.log(`${key}: ${formData.get(key)}`);
-    }
-
     
     const response = await fetch(`${localhost}/bookData`,
         {
@@ -17,8 +12,29 @@ export const createBookRecord = async (authToken:string, image:File, bookname:st
         }
     );
 
-    console.log(response);
+    if(response.ok)
+    {
+        const result = await response.json();
+        return response.ok;
+    }
+}
 
+export const createLoanBookRecord = async (authToken:string, bookID:string, userID?:string) => 
+{
+    const loanBookBody:Record<string, any> =
+    {
+        ...(bookID && {bookID}),
+        ...(userID && {userID})
+    }
+
+    const response = await fetch(`${localhost}/bookData`,
+        {
+            method: 'POST',
+            headers: { 'authToken': authToken },
+            body: JSON.stringify(loanBookBody)
+        }
+    );
+    
     if(response.ok)
     {
         const result = await response.json();

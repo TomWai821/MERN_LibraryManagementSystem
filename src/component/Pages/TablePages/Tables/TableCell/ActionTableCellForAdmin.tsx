@@ -1,12 +1,12 @@
 import { FC } from "react"
 import { IconButton, TableCell, Tooltip } from "@mui/material";
-import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon } from '@mui/icons-material';
+import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon, History as HistoryIcon } from '@mui/icons-material';
 
 // Context
 import { useModal } from "../../../../../Context/ModalContext";
 
 // Useful function 
-import { StatusDetectionForAllUser } from "../../../../../Controller/OtherUsefulController";
+import { StatusDetectionForAllUser, StatusDetectionForLoanedBook } from "../../../../../Controller/OtherUsefulController";
 
 // Another Modal
 import EditUserModal from "../../../../Modal/User/EditUserModal";
@@ -18,16 +18,17 @@ import UndoUserActivityModal from "../../../../Modal/Confirmation/User/UndoUserA
 
 // Model
 import { ActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel"
-import { BookDataInterface, DetailsInterfaceForSuspendAndDelete, UserResultDataInterface } from "../../../../../Model/ResultModel";
+import { BookDataInterface, DetailsInterfaceForSuspendAndDelete, LoanBookInterface, UserResultDataInterface } from "../../../../../Model/ResultModel";
 
 // Data(CSS Syntax)
 
 import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 import EditSuspendUserModal from "../../../../Modal/User/EditSuspendUserModal";
+import ReturnBookConfirmModal from "../../../../Modal/Confirmation/Book/ReturnBookConfirmModal";
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
 {
-    const { value, TableName, Information} = tableCellData;
+    const { isAdmin, value, TableName, Information } = tableCellData;
     const userData = Information as UserResultDataInterface;
 
     const { handleOpen } = useModal();
@@ -91,6 +92,11 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
     {
         handleOpen(<UndoUserActivityModal value={value} _id={userData._id} data={userData} />)
     }
+
+    const openReturnBookModal = () => 
+    {
+        handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} isAdmin={isAdmin} modalOpenPosition={"AdminTableCell"}/>);
+    }
     
     const UserActionTableCellForAdmin = 
     [
@@ -111,8 +117,13 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
 
     const BookActionTableCellForAdmin = 
     [
-        {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openEditModal, icon:<EditIcon />},
-        {title: "Delete (Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
+        [
+            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openEditModal, icon:<EditIcon />},
+            {title: "Delete (Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
+        ],
+        [
+            {title: "Return Book", syntax:ImportantActionButtonSyntax, clickEvent:openReturnBookModal, icon:<HistoryIcon />, disable: StatusDetectionForLoanedBook((Information as LoanBookInterface).status)},
+        ]
     ]
 
     let actionsToRender: any[] = [];
@@ -122,9 +133,9 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         actionsToRender = UserActionTableCellForAdmin[value] || [];
     }
     else if
-    (TableName === "Book" && value === 0)
+    (TableName === "Book")
     {
-        actionsToRender = BookActionTableCellForAdmin;
+        actionsToRender = BookActionTableCellForAdmin[value];
     }
 
     return(

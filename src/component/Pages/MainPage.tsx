@@ -10,7 +10,7 @@ const MainPage:FC<PagesInterface> = (pageData) =>
     const {isLoggedIn} = pageData;
     const { suggestBook } = useSuggestBookContext();
     
-    const titles = ["New Publish", "Most Popular", "Recommand For You"]
+    const titles = ["Recommand For You","New Publish", "Most Popular"]
     
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 25px'}}>

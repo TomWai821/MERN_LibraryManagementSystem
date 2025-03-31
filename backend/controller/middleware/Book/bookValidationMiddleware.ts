@@ -90,7 +90,7 @@ export const FoundBookLoanRecord = async (req:AuthRequest, res:Response, next: N
 
         if(!foundLoanRecord)
         {
-            return res.status(404).json({success, error: `Could not found Loan R!`});
+            return res.status(404).json({success, error: `Could not found Loan Record!`});
         }
 
         req.foundLoanedRecord = foundLoanRecord;
@@ -101,4 +101,18 @@ export const FoundBookLoanRecord = async (req:AuthRequest, res:Response, next: N
         console.log(error);
         res.status(500).json({ success, error: 'Internal Server Error!' });
     }
+}
+
+export const buildLoanedQuery = (queryParams: any) => 
+{
+    const { bookname, username, status } = queryParams;
+
+    const query = 
+    {
+        ...(bookname && { "bookDetails.bookname": { $regex: bookname, $options: "i" } }),
+        ...(username && { "userDetails.username": { $regex: username, $options: "i" } }),
+        ...(status && { "status": status }),
+    };
+
+    return query;
 }

@@ -18,3 +18,21 @@ export const updateBookRecord = async (authToken:string, bookID:string, bookname
         return response.ok;
     }
 }
+
+export const returnBookAndChangeStatus = async (authToken:string, loanBookRecord:string) => 
+{
+    const response = await fetch(`${localhost}/LoanBook/id=${loanBookRecord}`,
+        {
+            method: 'PUT',
+            headers: { 'content-type': contentType, 'authToken': authToken }
+        }
+    );
+
+    console.log(response);
+
+    if(response.ok)
+    {
+        const result = await response.json();
+        return response.ok;
+    }
+}

@@ -57,7 +57,6 @@ const GetBooksWithOtherDetails = async (data?:Record<string, any>) =>
 {
     let pipeline:PipelineStage[] = [];
 
-    if (data) { pipeline.push( {$match: {...data}} )}
 
     pipeline.push(
         ...lookupAndUnwind('users', 'userID', '_id', 'userDetails'),
@@ -67,6 +66,8 @@ const GetBooksWithOtherDetails = async (data?:Record<string, any>) =>
         ...lookupAndUnwind('genres', 'bookDetails.genreID', '_id', 'genreDetails'),
         ...lookupAndUnwind('languages', 'bookDetails.languageID', '_id', 'languageDetails'),
     );
+
+    if (data) { pipeline.push( {$match: {...data}} )}
 
     return await BookLoaned.aggregate(pipeline);
 }

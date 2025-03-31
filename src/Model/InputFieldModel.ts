@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 import { UserDataInterface } from "./UserTableModel";
 import { BookTableDataInterface } from "./BookTableModel";
+import { ContactInterface, DefinitionInterface } from "./ResultModel";
 
 interface FirstRow 
 { 
@@ -43,6 +44,7 @@ export interface OptionFieldModel
 export interface BookOptionFieldModal
 {
     optionVisiable: boolean;
-    onChange:(event: ChangeEvent<HTMLInputElement>, index:number) => void
+    onChange:(event: ChangeEvent<HTMLInputElement>, index?:number) => void;
+    SearchField?: { label: string; name: string; type: string; select?: boolean; slotProps?: object, options?: string[]} [];
     searchData: BookTableDataInterface;
 }

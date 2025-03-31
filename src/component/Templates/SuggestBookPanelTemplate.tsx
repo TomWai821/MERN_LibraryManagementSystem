@@ -48,7 +48,7 @@ const SuggestBookPanelTemplate:FC<{value:number, title:string, data:BookDataInte
                                     <Fragment>
                                         <Avatar src={book.image?.url} alt="Preview" variant="rounded"sx={ImageSyntax} />
                                         <Typography sx={{width: "175px"}}>{book.bookname}</Typography>
-                                        {value === 0 ?
+                                        {value === 1 ?
                                             <Typography>{`(${TransferDateToISOString(book.publishDate as Date)})`}</Typography>
                                             :
                                             <Typography>{`(${book.genreDetails.genre})`}</Typography>

@@ -7,7 +7,6 @@ import { DisplayDataModalInterface } from "../../../Model/ModelForModal";
 
 import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 import AllBookDataBody from "./DisplayBookDataBody/AllBookDataBody";
-import { BookDataInterface, LoanBookInterface } from "../../../Model/ResultModel";
 import LoanBookDataBody from "./DisplayBookDataBody/LoanBookDataBody";
 
 const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 

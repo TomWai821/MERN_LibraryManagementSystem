@@ -7,7 +7,6 @@ export const GetContact = async (type:string) =>
 {
     try
     {
-        console.log(`${url}type=${type}`)
         const response = await fetch(`${url}type=${type}`,
             {
                 method: 'GET',

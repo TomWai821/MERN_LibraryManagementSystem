@@ -15,11 +15,9 @@ import CreateBookModal from "../../../Modal/Book/CreateBookModal";
 // Models
 import { FilterInterface } from "../../../../Model/TablePagesAndModalModel";
 import { BookTableDataInterface } from "../../../../Model/BookTableModel";
-import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 // Data(CSS Syntax and dropdown data)
-
-
+import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const BookFilter: FC<FilterInterface> = (filterData) => 
 {
@@ -46,11 +44,12 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
     {
         openActionMenu(actionMenu ? null : event?.currentTarget);
     };
-
+    
     return (
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{ ...ItemToCenter, paddingBottom: '25px', alignItems: 'center' }}>
-                <TextField label="Book Name" name="bookname" value={bookData["bookname"]} onChange={onChange} size="small" sx={{ width: '75%' }}/>
+               
+                <TextField label="Book Name" name="bookname" value={bookData.bookname} onChange={onChange} size="small" sx={{ width: '70%' }}/>
 
                 <IconButton onClick={toggleCardVisibility}>
                     {optionVisiable ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
@@ -60,7 +59,7 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
                     { isAdmin && 
                         (
                             <Fragment>
-                                <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={handleActionMenu}>Action</Button>
+                                {value === 0 && <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={handleActionMenu}>Action</Button>}
                                 <Menu open={Boolean(actionMenu)} anchorEl={actionMenu} onClose={handleActionMenu}>
                                 {
                                     ActionMenu.map((action, index) =>(

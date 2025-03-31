@@ -43,5 +43,10 @@ const StatusDetectionForAllUser = (status: string) =>
         banned: { disable: !isNormal },
     }
 }
+
+const StatusDetectionForLoanedBook = (status:string) =>
+{
+    return status === "Returned";
+}
     
-export {handleLogout, handleSuccess, StatusDetectionForAllUser}
+export {handleLogout, handleSuccess, StatusDetectionForAllUser, StatusDetectionForLoanedBook}

@@ -6,6 +6,7 @@ import ContentTableCell from "../../../../UIFragment/ContentTableCell";
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
 import { TransferDateToISOString } from "../../../../../Controller/OtherController";
+import ReturnBookTableCell from "../TableCell/ReturnBookTableCell";
 
 const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
@@ -64,6 +65,7 @@ const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                     <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.loanDate as Date)}</ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.status}</ContentTableCell>
+                                    <ReturnBookTableCell isAdmin={isAdmin} Information={data}/>
                                 </TableRow>
                             )
                         )

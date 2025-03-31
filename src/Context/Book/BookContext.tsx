@@ -3,8 +3,8 @@ import { BookContextProps, ChildProps } from "../../Model/ContextAndProviderMode
 import { GetData } from "../../Controller/OtherController";
 import { BookDataInterface, GetResultInterface, LoanBookInterface } from "../../Model/ResultModel";
 import { fetchBook, fetchLoanBook } from "../../Controller/BookController/BookGetController";
-import { createBookRecord } from "../../Controller/BookController/BookPostController";
-import { updateBookRecord } from "../../Controller/BookController/BookPutController";
+import { createBookRecord, createLoanBookRecord } from "../../Controller/BookController/BookPostController";
+import { returnBookAndChangeStatus, updateBookRecord } from "../../Controller/BookController/BookPutController";
 import { deleteBookRecord } from "../../Controller/BookController/BookDeleteController";
 
 const BookContext = createContext<BookContextProps | undefined>(undefined);
@@ -33,26 +33,25 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         }
     },[])
 
-    const fetchBookWithFliterData = useCallback(async (tableName:string, bookname?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => 
+    const fetchAllBookWithFliterData = useCallback(async (bookname?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => 
     {
         const result: GetResultInterface | undefined = await fetchBook(bookname as string, genreID as string, languageID as string, authorID as string, publisherID as string);
 
         if(result && Array.isArray(result.foundBook))
         {
-            switch(tableName)
-            {
-                case "AllBook":
-                    setAllBook(result.foundBook);
-                    break;
-
-                /*
-                case "OnLoanBook":
-                    setLoanBook(result.foundBook);
-                    break;
-                */
-            }
+            setAllBook(result.foundBook);
         }
-    },[])
+    },[fetchAllBook])
+
+    const fetchLoanBookWithFliterData = useCallback(async (bookname?:string, username?:string, status?:string) => 
+    {
+        const result: GetResultInterface | undefined = await fetchLoanBook(authToken, bookname, username, status);
+
+        if(result && Array.isArray(result.foundLoanBook))
+        {
+            setOnLoanBook(result.foundLoanBook);
+        }
+    },[fetchAllBook])
 
     const createBook = useCallback(async (image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => 
     {
@@ -66,7 +65,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
 
     const editBook = useCallback(async (bookID:string, bookname:string, genreID:string, languageID:string, description: string) => 
         {
-            const result = await updateBookRecord(authToken, bookID, bookname, genreID, languageID, description)
+            const result = await updateBookRecord(authToken, bookID, bookname, genreID, languageID, description);
 
             if(result)
             {
@@ -75,9 +74,29 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         },[fetchAllBook]
     )
 
+    const loanBook = useCallback(async(userID:string, bookID:string) => 
+    {
+        const result = await createLoanBookRecord(authToken, userID, bookID);
+
+        if(result)
+        {
+            fetchAllBook()
+        }
+    },[fetchAllBook])
+
+    const returnBook = useCallback(async(loanRecordID:string) =>
+    {
+        const result = await returnBookAndChangeStatus(authToken, loanRecordID);
+
+        if(result)
+        {
+            fetchAllBook()
+        }
+    },[])
+
     const deleteBook = useCallback(async (bookID:string) => 
     {
-        const result = await deleteBookRecord(authToken, bookID)
+        const result = await deleteBookRecord(authToken, bookID);
 
         if(result)
         {
@@ -92,7 +111,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
     },[])
 
     return (
-        <BookContext.Provider value={{ bookData, fetchAllBook, fetchBookWithFliterData, createBook, editBook, deleteBook }}>
+        <BookContext.Provider value={{ bookData, fetchAllBook, fetchAllBookWithFliterData, fetchLoanBookWithFliterData, createBook, editBook, loanBook, returnBook, deleteBook }}>
             {children}
         </BookContext.Provider>
     );

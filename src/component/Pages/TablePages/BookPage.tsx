@@ -23,17 +23,17 @@ import { useContactContext } from "../../../Context/Book/ContactContext";
 const BookPage:FC<PagesInterface> = (loginData) =>
 {
     const { isLoggedIn, isAdmin } = loginData;
-    const { bookData, fetchBookWithFliterData } = useBookContext();
+    const { bookData, fetchAllBookWithFliterData, fetchLoanBookWithFliterData } = useBookContext();
     const { definition } = useDefinitionContext();
     const { contact } = useContactContext();
 
     const SetTitle:string = isAdmin ? "Manage Books Record": "View Books";
 
-    const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", language: "All", languageID: "", genre: "All", genreID: "", author: "All", authorID: "", publisher: "All", publisherID: ""});
+    const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", username: "", status:"All", language: "All", languageID: "", genre: "All", genreID: "", author: "All", authorID: "", publisher: "All", publisherID: ""});
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
 
-    const defaultValue = { bookname: "", language: "All", languageID: "", genre: "All", genreID: "",  author: "All", authorID: "", publisher: "All", publisherID: ""};
+    const defaultValue = { bookname: "", username: "", language: "All", status:"All", languageID: "", genre: "All", genreID: "",  author: "All", authorID: "", publisher: "All", publisherID: ""};
 
     const onChange = (event: ChangeEvent<HTMLInputElement>, index?: number) => 
     {
@@ -50,21 +50,16 @@ const BookPage:FC<PagesInterface> = (loginData) =>
                 break;
 
             case "publisher":
-                console.log(`publisher:${contact.Publisher[index as number]?.publisher}`)
-                console.log(`publisherID:${contact.Publisher[index as number]?._id}`)
                 setSearchBook({...searchBook, publisher: value, publisherID: index !== undefined && contact.Publisher[index]?._id ? contact.Publisher[index]._id : ""});
                 break;
 
             case "author":
-                console.log(`author:${contact.Author[index as number]?.author}`)
-                console.log(`author:${contact.Author[index as number]?._id}`)
                 setSearchBook({...searchBook, author: value, authorID: index !== undefined && contact.Author[index]?._id ? contact.Author[index]._id : ""});
                 break;
 
             default:
                 setSearchBook({ ...searchBook, [name]: value });
                 break;
-
         }
     };
 
@@ -87,8 +82,18 @@ const BookPage:FC<PagesInterface> = (loginData) =>
 
     const SearchBook = () => 
     {
-        const TableName=["AllBook", "OnLoanBook"]
-        fetchBookWithFliterData(TableName[tabValue], searchBook.bookname, searchBook.genreID, searchBook.languageID, searchBook.authorID, searchBook.publisherID);
+        switch(tabValue)
+        {
+            case 0:
+                fetchAllBookWithFliterData(searchBook.bookname, searchBook.genreID, searchBook.languageID, searchBook.authorID, searchBook.publisherID);
+                break;
+
+            case 1:
+                console.log(searchBook.bookname)
+                fetchLoanBookWithFliterData(searchBook.bookname, searchBook.username, searchBook.status)
+                break;
+        }
+        
     }
 
     useEffect(() => 
@@ -102,7 +107,6 @@ const BookPage:FC<PagesInterface> = (loginData) =>
 
     useEffect(() => 
         {
-            // Reset while value change
             setSearchBook(defaultValue);
         },[tabValue]
     )

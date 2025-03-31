@@ -33,6 +33,11 @@ export interface ActionTableCellInterface extends IsAdminInterface
     Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface;
 }
 
+export interface ReturnBookTableCellInterface extends IsAdminInterface
+{
+    isLoggedIn?: boolean;
+    Information: LoanBookInterface;
+}
 
 export interface TableInterface extends IsAdminInterface
 {

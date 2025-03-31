@@ -4,16 +4,20 @@ import { AuthRequest } from '../model/requestInterface';
 import { FindBookByIDAndUpdate } from '../schema/book/book';
 import { BookLoanedInterface } from '../model/bookSchemaInterface';
 import { ObjectId } from 'mongodb';
+import { buildLoanedQuery } from './middleware/Book/bookValidationMiddleware';
 
 export const GetLoanBookRecord = async (req: AuthRequest, res:Response) => 
 {
     const suggestType = req.params.type;
+    const {bookname, username, status} = req.query;
+    console.log(req.query);
     const userId = req.user?._id;
     let success = false;
     
     try
     {
         let getLoanRecord:any[] | undefined;
+        let query = {};
 
         switch(suggestType)
         {
@@ -22,8 +26,14 @@ export const GetLoanBookRecord = async (req: AuthRequest, res:Response) =>
                 break;
 
             default:
-                let userObjectId = new ObjectId(userId as unknown as ObjectId);
-                getLoanRecord = userId ? await GetBookLoaned({userID: userObjectId}) : await GetBookLoaned();
+                if(!req.query)
+                { 
+                    let userObjectId = new ObjectId(userId as unknown as ObjectId);
+                    getLoanRecord = userId ? await GetBookLoaned({userID: userObjectId}) : await GetBookLoaned();
+                    break;
+                }
+                query = buildLoanedQuery({bookname, username, status});
+                getLoanRecord = await GetBookLoaned(query);
                 break;
         }
 

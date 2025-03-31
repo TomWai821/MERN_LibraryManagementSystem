@@ -1,4 +1,4 @@
-import { GenderFilterOption, GenderOption, RoleFilterOption, RoleOption, StatusFilterOption } from "./TableArrays";
+import { GenderFilterOption, GenderOption, LoanBookStatusOption, RoleFilterOption, RoleOption, StatusFilterOption } from "./TableArrays";
 
 const RegisterField = 
 [
@@ -83,6 +83,12 @@ const dateOption =
     {label:'Forever', value: Infinity}
 ];
 
+const SearchLoanBookInputField = 
+[
+    {name: "username", label: "Username", type:"text", select:false, slotProps: {}, options: []},
+    {name: "status", label: "Status", type:"text", select:true, slotProps: {}, options: LoanBookStatusOption},
+]
+
 const EditLanguageInputField = 
 [
     {name: "language", label: "Language", type:"text"},
@@ -95,4 +101,4 @@ const EditGenreInputField =
     {name: "shortName", label: "Short Name", type:"text"}
 ]
 
-export {RegisterField, LoginField, ViewProfileField, AllUserSearchField, OtherUserSearchField, CreateUserInputField, EditUserInputField, EditSuspendUserInputField, dateOption, EditLanguageInputField, EditGenreInputField}
+export {RegisterField, LoginField, ViewProfileField, AllUserSearchField, OtherUserSearchField, CreateUserInputField, EditUserInputField, EditSuspendUserInputField, dateOption, SearchLoanBookInputField, EditLanguageInputField, EditGenreInputField}

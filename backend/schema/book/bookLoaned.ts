@@ -41,7 +41,6 @@ export const GetBookLoaned = async (data?:Record<string, any>, limit?:number) =>
     {
         printError(error);
     }
-
 };
 
 const lookupAndUnwind = (from:string, localField:string, foreignField:string, asField:string) => 
@@ -68,7 +67,6 @@ const GetBooksWithOtherDetails = async (data?:Record<string, any>) =>
     );
 
     if (data) { pipeline.push( {$match: {...data}} )}
-
     return await BookLoaned.aggregate(pipeline);
 }
  

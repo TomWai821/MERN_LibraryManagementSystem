@@ -1,11 +1,9 @@
 import { BookDataInterface, LoanBookInterface } from "./ResultModel";
 import { TableInterface } from "./TablePagesAndModalModel";
 
-interface BookSearchInterface
+interface BookSearchInterface extends SelfLoanBookSearchInterface
 {
-    bookname:string;
     username:string;
-    status:string;
     language:string;
     languageID:string;
     genre:string;
@@ -14,6 +12,12 @@ interface BookSearchInterface
     authorID:string;
     publisher:string; 
     publisherID:string;
+}
+
+interface SelfLoanBookSearchInterface
+{
+    bookname:string;
+    status:string;
 }
 
 interface BookTableDataInterface 
@@ -37,4 +41,4 @@ interface BookRecordTableInterface extends TableInterface
     bookData: (BookDataInterface[] | LoanBookInterface[])[] | LoanBookInterface[];
     paginationValue:number;
 }
-export type {BookSearchInterface, BookTableDataInterface, BookDataInterfaceForDelete, BookRecordTableInterface}
+export type {BookSearchInterface, SelfLoanBookSearchInterface, BookTableDataInterface, BookDataInterfaceForDelete, BookRecordTableInterface}

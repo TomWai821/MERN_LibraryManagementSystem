@@ -16,8 +16,8 @@ export const SuggestBookProvider:FC<ChildProps> = ({children}) =>
 
     const authToken = GetData("authToken") as string;
 
-    const fetchAllSuggestBook = useCallback(async () => {
-        // Fetch initial suggestions
+    const fetchAllSuggestBook = useCallback(async () => 
+    {
         const resultForNewPublishBook: GetResultInterface | undefined = await fetchSuggestBook("newPublish");
         const resultForMostPopularBook: GetResultInterface | undefined = await fetchSuggestBook("mostPopular");
     
@@ -31,26 +31,20 @@ export const SuggestBookProvider:FC<ChildProps> = ({children}) =>
             setMostPopularBook(resultForMostPopularBook.foundLoanBook);
         }
     
-        // Check if user is authenticated
         if (authToken) 
         {
             const resultForSelfLoanBook: GetResultInterface | undefined = await fetchLoanBook(authToken);
     
-            if (resultForSelfLoanBook && Array.isArray(resultForSelfLoanBook.foundLoanBook)) {
-                // Set loaned books
+            if (resultForSelfLoanBook && Array.isArray(resultForSelfLoanBook.foundLoanBook)) 
+            {
                 setSelfLoanBook(resultForSelfLoanBook.foundLoanBook);
-    
-                // Count attributes for suggestions
+
                 const suggestionData = countAttributes(resultForSelfLoanBook.foundLoanBook);
     
-                // Only proceed if suggestionData has meaningful values
                 if (suggestionData.topAuthors.length > 0 || suggestionData.topGenres.length > 0 || suggestionData.topPublishers.length > 0) 
                 {
-                    // Update `dataForSuggestion`
-                    const dataForSuggestion = suggestionData;
     
-                    // Fetch books for the user
-                    const resultForUser: GetResultInterface | undefined = await fetchSuggestBook("forUser", authToken, dataForSuggestion);
+                    const resultForUser: GetResultInterface | undefined = await fetchSuggestBook("forUser", authToken, suggestionData);
     
                     if (resultForUser && Array.isArray(resultForUser.foundBook)) 
                     {
@@ -60,6 +54,16 @@ export const SuggestBookProvider:FC<ChildProps> = ({children}) =>
             }
         }
     }, []);
+
+    const fetchSelfLoanBookWithFliterData = useCallback(async (bookname:string, status:string) => 
+    {
+        const result: GetResultInterface | undefined = await fetchLoanBook(authToken, bookname, undefined, status);
+    
+        if(result && Array.isArray(result.foundLoanBook))
+        {
+            setSelfLoanBook(result.foundLoanBook);
+        }
+    },[])
 
     const getTopThree = (countObject: Record<string, number>) => 
     {
@@ -105,7 +109,7 @@ export const SuggestBookProvider:FC<ChildProps> = ({children}) =>
     },[fetchAllSuggestBook])
 
     return (
-        <SuggestBookContext.Provider value={{ suggestBook, SelfLoanBook }}>
+        <SuggestBookContext.Provider value={{ suggestBook, SelfLoanBook, fetchSelfLoanBookWithFliterData }}>
             {children}
         </SuggestBookContext.Provider>
     );

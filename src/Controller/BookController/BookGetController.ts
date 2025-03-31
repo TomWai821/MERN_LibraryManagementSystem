@@ -68,16 +68,15 @@ export const fetchLoanBook = async(authToken?:string, bookname?:string, username
         headers['authToken'] = authToken;
     }
 
-    const queryParams = "?" + BuildQuery(data);
+    const queryParams =  BuildQuery(data);
+    const url = queryParams ? `${localhost}/LoanBook?${queryParams}` : `${localhost}/LoanBook`
 
-    const response = await fetch(`${localhost}/loanBook${queryParams}`,
+    const response = await fetch(url,
         {
             method: 'GET',
             headers: headers
         }
     );
-
-    console.log(response);
 
     if(response.ok)
     {

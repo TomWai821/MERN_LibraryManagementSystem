@@ -72,6 +72,7 @@ export interface SuggestBookContextProps
 {
     suggestBook: (BookDataInterface[] | LoanBookInterface[])[];
     SelfLoanBook: LoanBookInterface[];
+    fetchSelfLoanBookWithFliterData: (bookname:string, status:string) => Promise<void>;
 }
 
 export interface DefinatonProps

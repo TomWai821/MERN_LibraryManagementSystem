@@ -70,7 +70,7 @@ const DefinitionPage:FC<PagesInterface>  = (loginData) =>
                 {   definition.Genre.map((genreData, index) => 
                     (
                         <Chip sx={{marginRight: '10px'}} key={index} label={`${genreData.genre} (${genreData.shortName})`} variant="outlined" 
-                            onClick={() => openEditModel("Genre", genreData)}onDelete={() => handleDelete("Genre", genreData)}/>
+                            onClick={() => openEditModel("Genre", genreData)} onDelete={() => handleDelete("Genre", genreData)}/>
                     ))
                 }
                 <Tooltip title={"Create Genre Definition Data"}>

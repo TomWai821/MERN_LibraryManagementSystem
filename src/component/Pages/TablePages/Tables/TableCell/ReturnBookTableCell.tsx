@@ -7,6 +7,7 @@ import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { useModal } from "../../../../../Context/ModalContext";
 import { ReturnBookTableCellInterface } from "../../../../../Model/TablePagesAndModalModel";
 import { StatusDetectionForLoanedBook } from "../../../../../Controller/OtherUsefulController";
+import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const ReturnBookTableCell:FC<ReturnBookTableCellInterface> = (returnBookTableCellData) => 
 {
@@ -22,7 +23,6 @@ const ReturnBookTableCell:FC<ReturnBookTableCellInterface> = (returnBookTableCel
     const isDiable = () => 
     {
         const result = StatusDetectionForLoanedBook((Information as LoanBookInterface).status);
-        console.log(result);
         return result;
     }
 
@@ -30,7 +30,7 @@ const ReturnBookTableCell:FC<ReturnBookTableCellInterface> = (returnBookTableCel
     return(
         <TableCell>
             <Tooltip title={"Return Book"} arrow>
-                <IconButton disabled={isDiable()} onClick={openReturnBookModal}>
+                <IconButton disabled={isDiable()} sx={ImportantActionButtonSyntax} onClick={openReturnBookModal}>
                     <HistoryIcon />
                 </IconButton>
             </Tooltip>

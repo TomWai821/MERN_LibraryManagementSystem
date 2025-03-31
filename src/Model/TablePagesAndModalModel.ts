@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import { BookDataInterface, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
-import { BookTableDataInterface, BookSearchInterface } from "./BookTableModel"
+import { BookTableDataInterface, BookSearchInterface, SelfLoanBookSearchInterface } from "./BookTableModel"
 
 export interface IsAdminInterface
 {
@@ -21,7 +21,7 @@ export interface FilterInterface extends IsAdminInterface
 {
     value:number;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    searchData: UserDataInterface | BookSearchInterface;
+    searchData: UserDataInterface | BookSearchInterface | SelfLoanBookSearchInterface;
     Search: () => void;
 }
 

@@ -10,7 +10,6 @@ export const GetLoanBookRecord = async (req: AuthRequest, res:Response) =>
 {
     const suggestType = req.params.type;
     const {bookname, username, status} = req.query;
-    console.log(req.query);
     const userId = req.user?._id;
     let success = false;
     
@@ -26,14 +25,12 @@ export const GetLoanBookRecord = async (req: AuthRequest, res:Response) =>
                 break;
 
             default:
-                if(!req.query)
-                { 
-                    let userObjectId = new ObjectId(userId as unknown as ObjectId);
-                    getLoanRecord = userId ? await GetBookLoaned({userID: userObjectId}) : await GetBookLoaned();
-                    break;
+                if(req.query && Object.keys(req.query).length > 0)
+                {  
+                    query = buildLoanedQuery({bookname, username, status});
                 }
-                query = buildLoanedQuery({bookname, username, status});
-                getLoanRecord = await GetBookLoaned(query);
+                let userObjectId = new ObjectId(userId as unknown as ObjectId);
+                getLoanRecord = userId ? await GetBookLoaned({userID: userObjectId, ...query}) : await GetBookLoaned();
                 break;
         }
 

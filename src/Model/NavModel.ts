@@ -23,22 +23,23 @@ export interface MenuItemSyntaxInterface
     padding: number;
 }
 
-export interface ProfileMenuInterface extends NavInterface
+interface ProfileItemInterface
 {
-    username:string;
-    anchorElUser: HTMLElement | null;
-    handleUserMenu: (event: MouseEvent<HTMLElement>) => void;
     NavSyntax: NavSyntaxInterface;
     MenuItemSyntax: MenuItemSyntaxInterface;
 }
 
+export interface ProfileMenuInterface extends NavInterface, ProfileItemInterface
+{
+    username:string;
+    anchorElUser: HTMLElement | null;
+    handleUserMenu: (event: MouseEvent<HTMLElement>) => void;
+}
 
-export interface NavMenuInterface extends NavInterface
+export interface NavMenuInterface extends NavInterface, ProfileItemInterface
 {
     anchorElNav: HTMLElement | null;
     handleNavMenu: (event: React.MouseEvent<HTMLElement>) => void;
-    NavSyntax: NavSyntaxInterface;
-    MenuItemSyntax: MenuItemSyntaxInterface;
 }
 
 export interface MenuItemInterface

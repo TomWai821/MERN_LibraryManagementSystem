@@ -9,7 +9,6 @@ import CustomMenuItem from "../UIFragment/CustomMenuItem";
 
 const NavMenu:FC<NavMenuInterface> = ({isAdmin, isLoggedIn, role, AvatarSize, anchorElNav, handleNavMenu, NavSyntax}) => 
 {
-
     const SetNavName = isAdmin ? "Manage" : "View";
 
     return(

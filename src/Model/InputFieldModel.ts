@@ -1,7 +1,6 @@
 import { ChangeEvent } from "react";
 import { UserDataInterface } from "./UserTableModel";
 import { BookTableDataInterface } from "./BookTableModel";
-import { ContactInterface, DefinitionInterface } from "./ResultModel";
 
 interface FirstRow 
 { 
@@ -33,18 +32,20 @@ export interface RegisterModel extends LoginModel
     birthDay: string;
 }
 
-export interface OptionFieldModel
-{
-    optionVisiable: boolean;
-    onChange:(event: ChangeEvent<HTMLInputElement>) => void
-    SearchField: { label: string; name: string; type: string; select?: boolean; slotProps?: object, options?: string[]} [];
-    searchData: UserDataInterface;
-}
-
-export interface BookOptionFieldModal
+interface OptionInterface
 {
     optionVisiable: boolean;
     onChange:(event: ChangeEvent<HTMLInputElement>, index?:number) => void;
-    SearchField?: { label: string; name: string; type: string; select?: boolean; slotProps?: object, options?: string[]} [];
+}
+
+export interface OptionFieldModel extends OptionInterface
+{
+    searchData: UserDataInterface;
+    SearchField: { label: string; name: string; type: string; select?: boolean; slotProps?: object, options?: string[]} [];
+}
+
+export interface BookOptionFieldModal extends OptionInterface
+{
     searchData: BookTableDataInterface;
+    SearchField?: { label: string; name: string; type: string; select?: boolean; slotProps?: object, options?: string[]} [];
 }

@@ -26,8 +26,8 @@ export interface CreateBookModalInterface
 export interface EditModalInterface
 {
     value?: number;
-    editData: UserResultDataInterface | DetailsInterfaceForSuspendAndDelete | DefinitionInterface | BookDataInterfaceForEdit | CreateBookModalInterface;
-    compareData: UserResultDataInterface | DetailsInterfaceForSuspendAndDelete | DefinitionInterface | BookDataInterfaceForEdit | CreateBookModalInterface;
+    editData: any;
+    compareData: any;
 }
 
 export interface ReturnBookInterface
@@ -50,7 +50,7 @@ export interface DeleteModalInterface
     _id:string;
     value?: number;
     type?: string;
-    data: UserResultDataInterface | DefinitionInterface | DefinitionInterface;
+    data: any;
 }
 
 export interface DisplayDataModalInterface

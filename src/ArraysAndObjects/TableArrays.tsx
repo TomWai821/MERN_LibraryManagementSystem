@@ -82,12 +82,25 @@ const SelfLoanBookTableHeader =
     {label:"Actions"}
 ]
 
-const BookTabLabel = 
+const PublisherTableHeader = 
 [
-    {label: "All Book"},
-    {label: "OnLoan Book"}
+    {label:"No."},
+    {label:"Publisher"},
+    {label:"Email"},
+    {label:"Phone No."},
+    {label:"Action"}
 ]
 
+const AuthorTableHeader = 
+[
+    {label:"No."},
+    {label:"Author"},
+    {label:"Email"},
+    {label:"Phone No."},
+    {label:"Action"}
+]
+
+// For Tabs
 const UserTabLabel = 
 [
     {label: 'All User'},
@@ -95,10 +108,22 @@ const UserTabLabel =
     {label: 'Deleted List User'}
 ]
 
+const BookTabLabel = 
+[
+    {label: "All Book"},
+    {label: "OnLoan Book"}
+]
+
 const LoanBookTabLabel = 
 [
     {label: 'Loan Book'},
     {label: 'Favourite Book'}
+]
+
+const ContactTabLabel = 
+[
+    {label:"Author List"},
+    {label:"publisher List"},
 ]
 
 const UserDataTableName = ["AllUser", "SuspendUser", "DeleteUser"];
@@ -121,4 +146,4 @@ const GenderFilterOption = [...GenderOption, ...EmptyOption];
 
 const LoanBookStatusOption = ["Loaned", "Returned", "Returned (Late)", "All"];
 
-export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, BookTabLabel, UserTabLabel, LoanBookTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption}
+export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, PublisherTableHeader, AuthorTableHeader, BookTabLabel, UserTabLabel, LoanBookTabLabel, ContactTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption}

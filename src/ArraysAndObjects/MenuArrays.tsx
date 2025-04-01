@@ -10,7 +10,7 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import StarIcon from '@mui/icons-material/Star';
+import EmailIcon from '@mui/icons-material/Email';
 
 // For navigation bar
 const externalUserPage = 
@@ -28,6 +28,7 @@ const adminPage =
 [
     {name: 'Book Management', clickEvent: () => ChangePage("./viewBook"), icon: <MenuBookIcon/>},
     {name: 'User Management', clickEvent: () => ChangePage("./viewUser"), icon: <PersonIcon/>},
+    {name: 'Contact Data Management', clickEvent: () => ChangePage("./contact"), icon:<EmailIcon/>},
     {name: 'Definition Management', clickEvent: () => ChangePage("./defination"), icon:<BookmarkBorderIcon/>}
 ];
 

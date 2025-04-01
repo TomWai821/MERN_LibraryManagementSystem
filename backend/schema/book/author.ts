@@ -6,8 +6,8 @@ const publisherSchema = new mongoose.Schema<AuthorInterface>
 (
     {
         author: { type: String, required: true },
-        phoneNumber: { type: String },
-        email: { type:String }
+        phoneNumber: { type: String, default: "N/A" },
+        email: { type:String, default: "N/A" }
     }
 )
 

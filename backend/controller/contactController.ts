@@ -7,12 +7,24 @@ import { ObjectId } from 'mongoose';
 export const GetContactRecord = async (req: AuthRequest, res: Response) => 
 {
     const contactType = req.params.type as keyof typeof contactHandler;
+    const { author, publisher } = req.query;
     let success = false;
 
     try 
     {
-        const getData = await contactHandler[contactType].Get();
-        
+        let getData: any;
+
+        switch(contactType)
+        {
+            case "Author":
+                getData = author ? await GetAuthor({"author": { $regex: author, $options: "i" }}) : await GetAuthor();
+                break;
+
+            case "Publisher":
+                getData = publisher ? await GetPublisher({"publisher": { $regex: publisher, $options: "i" }}) : await GetPublisher();
+                break;
+        }
+
         if (!getData) 
         {
             return res.status(400).json({ success, error: `Failed to get ${contactType} data` });
@@ -145,7 +157,7 @@ const UpdatePublisherRecord = async (req: AuthRequest, res: Response) =>
     }
 }
 
-export const DeleteContactRecord = async (req: AuthRequest, res: Response) => 
+export const DeleteContactRecord = async (req: Request, res: Response) => 
 {
     const { id } = req.body;
     const contactType = req.params.type as keyof typeof contactHandler;

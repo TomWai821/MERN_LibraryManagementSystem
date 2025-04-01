@@ -23,6 +23,7 @@ export const ContactDataValidation = async (req: Request, res: Response, next:Ne
         {
             return res.status(400).json({ success: false, error: `Invalid data type in JSON file: ${invalidField}` });
         }
+        next();
     };
     
     if (contactType === "Author")
@@ -34,6 +35,21 @@ export const ContactDataValidation = async (req: Request, res: Response, next:Ne
     {
         isInvalidDataType("author");
     }
+};
 
+export const ContactQueryVadlidation = async (req: Request, res: Response, next:NextFunction) => 
+{
+    const {publisher, author} = req.query;
+    const contactType = req.params.type as keyof typeof contactHandler;
+    
+    if (contactType === "Author" && publisher)
+    {
+        return res.status(400).json({ success: false, error: `Invalid query data in JSON file: publisher` });
+    }
+
+    if (contactType === "Publisher" && author) 
+    {
+        return res.status(400).json({ success: false, error: `Invalid query data in JSON file: author` });
+    }
     next();
 };

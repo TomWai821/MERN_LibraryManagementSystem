@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
-import { BookDataInterface, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
+import { BookDataInterface, ContactInterface, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
-import { BookTableDataInterface, BookSearchInterface, SelfLoanBookSearchInterface } from "./BookTableModel"
+import { BookTableDataInterface, BookSearchInterface, SelfLoanBookSearchInterface, ContactSearchInterface } from "./BookTableModel"
 
 export interface IsAdminInterface
 {
@@ -17,12 +17,21 @@ export interface PagesInterface extends IsAdminInterface
     username?:string;
 }
 
-export interface FilterInterface extends IsAdminInterface
+interface AllFilterInterface
 {
     value:number;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    searchData: UserDataInterface | BookSearchInterface | SelfLoanBookSearchInterface;
     Search: () => void;
+}
+
+export interface FilterInterface extends IsAdminInterface, AllFilterInterface
+{
+    searchData: UserDataInterface | BookSearchInterface | SelfLoanBookSearchInterface;
+}
+
+export interface ContactFilterInterface extends AllFilterInterface
+{
+    searchData: ContactSearchInterface;
 }
 
 export interface ActionTableCellInterface extends IsAdminInterface
@@ -30,7 +39,7 @@ export interface ActionTableCellInterface extends IsAdminInterface
     isLoggedIn?: boolean;
     value: number;
     TableName: string;
-    Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface;
+    Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface | ContactInterface;
 }
 
 export interface ReturnBookTableCellInterface extends IsAdminInterface
@@ -49,7 +58,7 @@ export interface TabInterface extends IsAdminInterface
     tabLabel: { label: string; }[];
     value: number;
     paginationValue: number;
-    valueChange: (type:string ,newValue: number) => void;
+    valueChange: (type:string, newValue: number) => void;
     paginationOption: number[];
 }
 

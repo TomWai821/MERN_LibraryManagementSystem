@@ -74,12 +74,7 @@ const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                 </TableBody>
             </Table>
 
-            <Pagination
-                sx={{ ...ItemToCenter, alignItems: "center", paddingTop: "10px" }}
-                count={getCountPage() as number}
-                page={page}
-                onChange={handlePageChange}
-            />
+            <Pagination sx={{ ...ItemToCenter, alignItems: "center", paddingTop: "10px" }} count={getCountPage() as number} page={page} onChange={handlePageChange}/>
         </Fragment>
     );
 }

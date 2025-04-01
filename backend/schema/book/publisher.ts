@@ -5,10 +5,10 @@ import { printError } from '../../controller/Utils';
 const publisherSchema = new mongoose.Schema<PublisherInterface>
 (
     {
-        publisher: { type: String, required:true },
-        address: { type: String },
-        phoneNumber: { type: String },
-        email: { type:String }
+        publisher: { type: String, required: true },
+        address: { type: String, default: "N/A" },
+        phoneNumber: { type: String, default: "N/A" },
+        email: { type:String, default: "N/A" }
     }
 )
 

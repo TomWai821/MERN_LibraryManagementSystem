@@ -25,6 +25,8 @@ import { BookDataInterface, DetailsInterfaceForSuspendAndDelete, LoanBookInterfa
 import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 import EditSuspendUserModal from "../../../../Modal/User/EditSuspendUserModal";
 import ReturnBookConfirmModal from "../../../../Modal/Confirmation/Book/ReturnBookConfirmModal";
+import DeleteContactConfirmModal from "../../../../Modal/Confirmation/Contact/DeleteContactConfirmModal";
+import EditContactModal from "../../../../Modal/Contact/EditContactModal";
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
 {
@@ -77,6 +79,16 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         }
     }
 
+    const openEditContactModal = (value:number) => 
+    {
+        handleOpen(<EditContactModal value={value} editData={Information} compareData={Information}/>);
+    }
+
+    const openDeleteContactModal = (type:string) => 
+    {
+        handleOpen(<DeleteContactConfirmModal type={type} _id={(Information as LoanBookInterface)._id} data={Information}/>);
+    }
+
     const openSuspendModal = () => 
     {
         handleOpen(<SuspendUserModal {...Information as UserResultDataInterface}/>);
@@ -126,16 +138,33 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         ]
     ]
 
-    let actionsToRender: any[] = [];
+    const ContactActionTableCellForAdmin = 
+    [
+        [
+            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:() => openEditContactModal(0), icon:<EditIcon />},
+            {title: "Delete Author", syntax:ImportantActionButtonSyntax, clickEvent:() => openDeleteContactModal("Author") , icon:<DeleteIcon />},
+        ],
+        [
+            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:() =>  openEditContactModal(1), icon:<EditIcon />},
+            {title: "Delete Publisher", syntax:ImportantActionButtonSyntax, clickEvent:() => openDeleteContactModal("Publisher") , icon:<DeleteIcon />},
+        ],
+    ]
 
-    if(TableName === "User")
+    let actionsToRender: any[] = [];
+    
+    switch(TableName)
     {
-        actionsToRender = UserActionTableCellForAdmin[value] || [];
-    }
-    else if
-    (TableName === "Book")
-    {
-        actionsToRender = BookActionTableCellForAdmin[value];
+        case "User":
+            actionsToRender = UserActionTableCellForAdmin[value];
+            break;
+
+        case "Book":
+            actionsToRender = BookActionTableCellForAdmin[value];
+            break;
+
+        case "Contact":
+            actionsToRender = ContactActionTableCellForAdmin[value];
+            break;
     }
 
     return(

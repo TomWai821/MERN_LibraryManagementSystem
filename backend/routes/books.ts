@@ -8,7 +8,7 @@ import { BookCreateRules } from '../model/expressBodyRules';
 import { BuildBookQueryAndGetData, BuildSuggestBookQueryAndGetData } from '../controller/middleware/Book/bookGetDataMiddleware';
 import { DefinitionDataValidation, DefinitionTypeValidation } from '../controller/middleware/Definition/DefinitonValidationMiddleware';
 import { CreateContactRecord, DeleteContactRecord, GetContactRecord, UpdateContactRecord } from '../controller/contactController';
-import { ContactDataValidation, ContactTypeValidation } from '../controller/middleware/Contract/ContactValidationMiddleware';
+import { ContactDataValidation, ContactQueryVadlidation, ContactTypeValidation } from '../controller/middleware/Contract/ContactValidationMiddleware';
 import { CreateLoanBookRecord, GetLoanBookRecord, UpdateLoanBookRecord } from '../controller/loanBookController';
 import { BookGenreIDAndLanguageIDValidation, BookNameValidation, BookRecordIDValidation, FoundBookLoanRecord } from '../controller/middleware/Book/bookValidationMiddleware';
 import { FetchUserFromHeader } from '../controller/middleware/User/authMiddleware';
@@ -37,7 +37,7 @@ router.get('/BookData/type=:type', FetchUserFromHeader, BuildSuggestBookQueryAnd
 router.get('/LoanBook/type=:type', FetchUserFromHeader, GetLoanBookRecord);
 
 // For publisher and author
-router.get('/contact/type=:type', ContactTypeValidation, GetContactRecord);
+router.get('/contact/type=:type', ContactTypeValidation, ContactQueryVadlidation, GetContactRecord);
 router.post('/contact/type=:type', ...LoginAndFindUser, ContactTypeValidation, ContactDataValidation, CreateContactRecord);
 router.put('/contact/type=:type', ...LoginAndFindUser, ContactTypeValidation, ContactDataValidation, UpdateContactRecord);
 router.delete('/contact/type=:type', ...LoginAndFindUser, ContactTypeValidation, ContactDataValidation, DeleteContactRecord);

@@ -1,16 +1,15 @@
-import { BookDataInterface, LoanBookInterface } from "./ResultModel";
+import { ContactState } from "./ContextAndProviderModel";
+import { BookDataInterface, ContactInterface, LoanBookInterface } from "./ResultModel";
 import { TableInterface } from "./TablePagesAndModalModel";
 
-interface BookSearchInterface extends SelfLoanBookSearchInterface
+interface BookSearchInterface extends SelfLoanBookSearchInterface, ContactSearchInterface
 {
     username:string;
     language:string;
     languageID:string;
     genre:string;
     genreID:string;
-    author:string;
     authorID:string;
-    publisher:string; 
     publisherID:string;
 }
 
@@ -20,13 +19,17 @@ interface SelfLoanBookSearchInterface
     status:string;
 }
 
-interface BookTableDataInterface 
+interface ContactSearchInterface
+{
+    author:string;
+    publisher:string;
+}
+
+interface BookTableDataInterface extends ContactSearchInterface
 {
     bookname:string;
     language:string;
     genre:string;
-    author:string;
-    publisher:string;
     description:string;
 }
 
@@ -41,4 +44,12 @@ interface BookRecordTableInterface extends TableInterface
     bookData: (BookDataInterface[] | LoanBookInterface[])[] | LoanBookInterface[];
     paginationValue:number;
 }
-export type {BookSearchInterface, SelfLoanBookSearchInterface, BookTableDataInterface, BookDataInterfaceForDelete, BookRecordTableInterface}
+
+interface ContactTableInterface extends TableInterface
+{
+    value: number;
+    contactData: ContactState;
+    paginationValue:number;
+}
+
+export type {BookSearchInterface, SelfLoanBookSearchInterface, ContactSearchInterface, BookTableDataInterface, BookDataInterfaceForDelete, BookRecordTableInterface, ContactTableInterface}

@@ -28,6 +28,10 @@ const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) =>
             case "Book":
                 handleOpen(<DisplayBookDataModal value={value} data={Information as BookDataInterface} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>);
                 break;
+            
+            case "Contact":
+                handleOpen(<></>);
+                break;
         }
     }
     

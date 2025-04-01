@@ -34,10 +34,13 @@ const NavBar:FC<PagesInterface> = (loginData) =>
                 </Box>
 
                 <NavMenu isLoggedIn={isLoggedIn} role={role} AvatarSize={AvatarSize} NavSyntax={NavSyntax} anchorElNav={anchorElNav}
-                MenuItemSyntax={MenuItemSyntax} handleNavMenu={handleNavMenu} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status} />
+                    MenuItemSyntax={MenuItemSyntax} handleNavMenu={handleNavMenu} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status} 
+                />
 
                 <ProfileMenu isLoggedIn={isLoggedIn} role={role} AvatarSize={AvatarSize} NavSyntax={NavSyntax}
-                MenuItemSyntax={MenuItemSyntax} anchorElUser={anchorElUser} handleUserMenu={handleUserMenu} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status} username={username as string}/>
+                    MenuItemSyntax={MenuItemSyntax} anchorElUser={anchorElUser} handleUserMenu={handleUserMenu} isAdmin={isAdmin} avatarUrl={avatarUrl} 
+                    status={status} username={username as string}
+                />
 
             </Toolbar>
         </AppBar>

@@ -1,4 +1,3 @@
-import { BorderStyle } from "@mui/icons-material";
 import { NavSyntaxInterface } from "../Model/NavModel";
 
 // For View Profile Button

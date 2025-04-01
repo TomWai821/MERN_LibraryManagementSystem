@@ -133,9 +133,3 @@ export interface LoanBookInterface
     status:string;
     count?:string;
 }
-
-export interface ContactState
-{
-    Publisher: ContactInterface[];
-    Author: ContactInterface[];
-}

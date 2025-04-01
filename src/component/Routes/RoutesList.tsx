@@ -12,6 +12,7 @@ import DefinitionPage from "../Pages/TablePages/DefinitionPage"
 import SelfLoanRecordPage from "../Pages/TablePages/SelfLoanRecordPage"
 
 import { PagesInterface } from "../../Model/TablePagesAndModalModel"
+import ContactPage from "../Pages/TablePages/ContactPage"
 
 const RoutesList:FC<PagesInterface> = (loginData) => 
 {
@@ -27,6 +28,7 @@ const RoutesList:FC<PagesInterface> = (loginData) =>
             <Route path="/viewUser" element={<UserPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
             <Route path="/records" element={<SelfLoanRecordPage isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>}/>
             <Route path="/defination" element={<DefinitionPage role={role} isLoggedIn={isLoggedIn} isAdmin={isAdmin} avatarUrl={avatarUrl} status={status}/>}/>
+            <Route path="/contact" element={<ContactPage isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>}/>
         </Routes>
     )
     

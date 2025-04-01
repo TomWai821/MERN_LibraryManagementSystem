@@ -49,7 +49,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
 
                 let formattedCompareValue = compareValue;
 
-                if (["startDate","dueDate"].includes(key)) 
+                if (["startDate", "dueDate"].includes(key)) 
                 {
                     formattedCompareValue = TransferDateToISOString(compareValue);
                 }; 

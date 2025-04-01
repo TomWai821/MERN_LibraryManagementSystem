@@ -1,13 +1,41 @@
 import { GetResultInterface } from "../../Model/ResultModel";
 
-const url = "http://localhost:5000/api/book/contact/";
+const localhost = "http://localhost:5000/api/book/contact/";
 const contentType = "application/json";
 
-export const GetContact = async (type:string) => 
+export const GetContact = async (type:string, author?:string, publisher?:string) => 
 {
     try
     {
-        const response = await fetch(`${url}type=${type}`,
+        const invalidQuery = (type === "Author" && publisher) || (type === "Publisher" && author);
+        let query:string = "";
+
+        if (invalidQuery)
+        {
+            console.log(`Invalid query data: ${type === "Author" ? "publisher" : "author"}`);
+            return undefined;
+        }
+    
+        switch(type)
+        {
+            case "Author":
+                if(author)
+                {
+                    query = `?author=${author}`;
+                }
+                break;
+        
+            case "Publisher":
+                if(publisher)
+                {
+                    query = `?publisher=${publisher}`;
+                }
+                break;
+        }
+
+        const url = `${localhost}type=${type}${query}`;
+        
+        const response = await fetch(url,
             {
                 method: 'GET',
                 headers: { 'content-type': contentType }
@@ -26,13 +54,13 @@ export const GetContact = async (type:string) =>
     }
 }
 
-export const CreateContact = async (authToken:string, type:string, phoneNumber:string, email:string, contactName?:string, address?:string) => 
+export const CreateContact = async (authToken:string, type:string, contactName:string, phoneNumber:string, email:string, address?:string) => 
 {
-    const body = BuildBodyData(type, phoneNumber, email, contactName, address);
+    const body = BuildBodyData(type, contactName, phoneNumber, email, address);
 
     try
     {
-        const response = await fetch(`${url}type=${type}`,
+        const response = await fetch(`${localhost}type=${type}`,
             {
                 method: 'POST',
                 headers: { 'content-type': contentType, 'authToken': authToken },
@@ -52,13 +80,13 @@ export const CreateContact = async (authToken:string, type:string, phoneNumber:s
     }
 }
 
-export const EditContact = async (authToken:string, type:string, id:string, phoneNumber:string, email:string, contactName?:string, address?:string) => 
+export const EditContact = async (authToken:string, type:string, contactName:string, phoneNumber:string, email:string, address?:string, id?:string) => 
 {
-    const body = BuildBodyData(type, phoneNumber, email, contactName, address, id);
+    const body = BuildBodyData(type, contactName, phoneNumber, email, address, id);
 
     try
     {
-        const response = await fetch(`${url}type=${type}`,
+        const response = await fetch(`${localhost}type=${type}`,
             {
                 method: 'PUT',
                 headers: { 'content-type': contentType, 'authToken': authToken },
@@ -80,16 +108,17 @@ export const EditContact = async (authToken:string, type:string, id:string, phon
 
 export const DeleteContact= async (authToken:string, type:string, id:string) => 
 {
-
     try
     {
-        const response = await fetch(`${url}type=${type}`,
+        const response = await fetch(`${localhost}type=${type}`,
             {
-                method: 'PUT',
+                method: 'DELETE',
                 headers: { 'content-type': contentType, 'authToken': authToken },
-                body: JSON.stringify({id})
+                body: JSON.stringify({id: id})
             }
         );
+
+        console.log(response);
 
         if(response.ok)
         {
@@ -103,8 +132,9 @@ export const DeleteContact= async (authToken:string, type:string, id:string) =>
     }
 }
 
-const BuildBodyData = (type:string, phoneNumber:string, email:string, contactName?:string, address?:string, id?:string) => 
+const BuildBodyData = (type:string, contactName:string, phoneNumber:string, email:string,  address?:string, id?:string) => 
 {
+
     let data:Record<string, any> = 
     {
         ...(id && {id}),

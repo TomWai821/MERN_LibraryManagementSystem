@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { BookDataInterface, ContactState, DefinitionState, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
+import { BookDataInterface, ContactInterface, DefinitionState, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
 import { BookTableDataInterface } from "./BookTableModel";
 import { IsAdminInterface } from "./TablePagesAndModalModel";
@@ -88,8 +88,9 @@ export interface ContactProps
 {
     contact: ContactState;
     fetchAllContactData: () => Promise<void>;
-    createContactData:(type:string, shortName:string, detailsName:string) => void;
-    editContactData:(type:string, id:string, shortName:string, detailsName:string) => void;
+    fetchContactDataWithFilterData: (type:string, author:string, publisher:string) => Promise<void>;
+    createContactData:(type:string, contactName:string, phoneNumber:string, email:string, address?:string) => void;
+    editContactData:(type:string, id:string, contactName:string, phoneNumber:string, email:string, address?:string) => void;
     deleteContactData:(type:string, id:string) => void;
 }
 
@@ -106,7 +107,7 @@ export interface ContentTableCellProps extends ChildProps, IsAdminInterface
     TableName: string;
     value: number;
     isLoggedIn?: boolean;
-    Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface;
+    Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface | ContactInterface;
 }
 
 export interface SuggestionData 
@@ -116,3 +117,8 @@ export interface SuggestionData
     topPublishers: string[];
 }
 
+export interface ContactState
+{
+    Author: ContactInterface[];
+    Publisher: ContactInterface[];
+}

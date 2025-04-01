@@ -1,25 +1,20 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
 import { CreateContact, DeleteContact, EditContact, GetContact } from "../../Controller/BookController/ContactController";
-import { ChildProps, ContactProps } from "../../Model/ContextAndProviderModel";
-import { ContactInterface, ContactState, GetResultInterface } from "../../Model/ResultModel";
+import { ChildProps, ContactProps, ContactState } from "../../Model/ContextAndProviderModel";
+import { ContactInterface, GetResultInterface } from "../../Model/ResultModel";
 import { GetData } from "../../Controller/OtherController";
 
 const ContactContext = createContext<ContactProps | undefined>(undefined);
 
 export const ContactProvider:FC<ChildProps> = ({children}) => 
 {
-    const [contact, setContact] = useState<ContactState>(
-        {
-            Author:[],
-            Publisher:[]
-        }
-    );
+    const [contact, setContact] = useState<ContactState>({ Author:[], Publisher:[]});
     const authToken = GetData("authToken") as string;
 
     const fetchAllContactData = useCallback(async () => 
     {
-        const getAuthorData: GetResultInterface | undefined = await GetContact("Author");
-        const getPublisherData : GetResultInterface | undefined = await GetContact("Publisher");
+        const getAuthorData: GetResultInterface | undefined = await GetContact("Author", undefined, undefined);
+        const getPublisherData : GetResultInterface | undefined = await GetContact("Publisher", undefined, undefined);
 
         if(getAuthorData && Array.isArray(getAuthorData.foundContact as ContactInterface[]))
         {
@@ -33,9 +28,29 @@ export const ContactProvider:FC<ChildProps> = ({children}) =>
     }
     ,[])
 
-    const createContactData = useCallback(async (type:string, shortName:string, detailsName:string) => 
+    const fetchContactDataWithFilterData = useCallback(async (type:string, author:string, publisher:string) => 
     {
-        const createContactData = await CreateContact(type, authToken, shortName, detailsName);
+        const getData: GetResultInterface | undefined = await GetContact(type, author, publisher);
+
+        if(getData && Array.isArray(getData.foundContact as ContactInterface[]))
+        {
+            switch(type)
+            {
+                case "Author":
+                    setContact((prev) => ({...prev, Author:getData.foundContact as ContactInterface[]}));
+                    break;
+
+                case "Publisher":
+                    setContact((prev) => ({...prev, Publisher:getData.foundContact as ContactInterface[]}));
+                    break;
+            }
+        }
+    }
+    ,[])
+
+    const createContactData = useCallback(async (type:string, contactName:string, phoneNumber:string, email:string, address?:string) => 
+    {
+        const createContactData = await CreateContact(authToken, type, contactName, phoneNumber, email, address);
 
         if(createContactData)
         {
@@ -44,10 +59,9 @@ export const ContactProvider:FC<ChildProps> = ({children}) =>
     }
     ,[fetchAllContactData])
 
-    const editContactData = useCallback( async (type:string, id:string, shortName:string, detailsName:string) => 
+    const editContactData = useCallback( async (type:string, id:string, contactName:string, phoneNumber:string, email:string, address?:string) => 
     {
-        console.log(id);
-        const editContactData = await EditContact(type, authToken, id, shortName, detailsName);
+        const editContactData = await EditContact(authToken, type, contactName, phoneNumber, email, address, id);
 
         if(editContactData)
         {
@@ -58,7 +72,7 @@ export const ContactProvider:FC<ChildProps> = ({children}) =>
 
     const deleteContactData = useCallback(async (type:string, id:string) => 
     {
-        const deleteContactData = await DeleteContact(type, authToken, id);
+        const deleteContactData = await DeleteContact(authToken, type, id);
 
         if(deleteContactData)
         {
@@ -74,7 +88,7 @@ export const ContactProvider:FC<ChildProps> = ({children}) =>
     ,[fetchAllContactData])
 
     return (
-        <ContactContext.Provider value={{ contact, fetchAllContactData, createContactData, editContactData, deleteContactData}}>
+        <ContactContext.Provider value={{ contact, fetchAllContactData, fetchContactDataWithFilterData, createContactData, editContactData, deleteContactData}}>
             {children}
         </ContactContext.Provider>
     );

@@ -54,12 +54,12 @@ const DefinitionPage:FC<PagesInterface>  = (loginData) =>
     }
 
     useEffect(() => 
+    {
+        if(!isAdmin)
         {
-            if(!isAdmin)
-            {
-                ChangePage('/');
-            }
-        },[isAdmin])
+            ChangePage('/');
+        }
+    },[isAdmin])
 
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>

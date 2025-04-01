@@ -34,12 +34,16 @@ export interface ContactFilterInterface extends AllFilterInterface
     searchData: ContactSearchInterface;
 }
 
-export interface ActionTableCellInterface extends IsAdminInterface
+export interface UserActionTableCellInterface
+{
+    Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface | ContactInterface;
+}
+
+export interface ActionTableCellInterface extends IsAdminInterface, UserActionTableCellInterface
 {
     isLoggedIn?: boolean;
     value: number;
     TableName: string;
-    Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface | ContactInterface;
 }
 
 export interface ReturnBookTableCellInterface extends IsAdminInterface

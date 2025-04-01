@@ -1,3 +1,4 @@
+const contentType = "application/json";
 const localhost:string = 'http://localhost:5000/api/book';
 
 export const createBookRecord = async (authToken:string, image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => 
@@ -19,18 +20,22 @@ export const createBookRecord = async (authToken:string, image:File, bookname:st
     }
 }
 
-export const createLoanBookRecord = async (authToken:string, bookID:string, userID?:string) => 
+export const createLoanBookRecord = async (authToken:string, bookID:string, loanDate:Date, dueDate:Date, userID?:string) => 
 {
     const loanBookBody:Record<string, any> =
     {
         ...(bookID && {bookID}),
-        ...(userID && {userID})
+        ...(userID && {userID}),
+        ...(loanDate && {loanDate}),
+        ...(dueDate && {dueDate})
     }
 
-    const response = await fetch(`${localhost}/bookData`,
+    console.log(loanBookBody);
+
+    const response = await fetch(`${localhost}/LoanBook`,
         {
             method: 'POST',
-            headers: { 'authToken': authToken },
+            headers: { 'Content-Type': contentType, 'authToken': authToken },
             body: JSON.stringify(loanBookBody)
         }
     );

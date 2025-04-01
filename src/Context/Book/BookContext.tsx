@@ -1,6 +1,6 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
 import { BookContextProps, ChildProps } from "../../Model/ContextAndProviderModel";
-import { GetData } from "../../Controller/OtherController";
+import { CalculateDueDate, GetCurrentDate, GetData } from "../../Controller/OtherController";
 import { BookDataInterface, GetResultInterface, LoanBookInterface } from "../../Model/ResultModel";
 import { fetchBook, fetchLoanBook } from "../../Controller/BookController/BookGetController";
 import { createBookRecord, createLoanBookRecord } from "../../Controller/BookController/BookPostController";
@@ -73,9 +73,11 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         }
     },[fetchAllBook])
 
-    const loanBook = useCallback(async(userID:string, bookID:string) => 
+    const loanBook = useCallback(async(bookID:string, userID?:string) => 
     {
-        const result = await createLoanBookRecord(authToken, userID, bookID);
+        const loanDate = GetCurrentDate("Date") as Date
+        const dueDate = CalculateDueDate(7);
+        const result = await createLoanBookRecord(authToken, bookID, loanDate, dueDate, userID);
 
         if(result)
         {

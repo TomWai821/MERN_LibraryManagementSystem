@@ -9,7 +9,7 @@ const ActionTableCellManager: FC<ActionTableCellInterface> = (tableCellData) =>
     const { value, TableName, Information, isAdmin } = tableCellData;
 
     return (
-        isAdmin ? <ActionTableCellForAdmin value={value} TableName={TableName} Information={Information} isAdmin={isAdmin}/> : <ActionTableCellForUser/>
+        isAdmin ? <ActionTableCellForAdmin value={value} TableName={TableName} Information={Information} isAdmin={isAdmin}/> : <ActionTableCellForUser Information={Information}/>
     );
 }
 

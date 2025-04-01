@@ -6,7 +6,7 @@ import ReturnBookConfirmModal from "../../../../Modal/Confirmation/Book/ReturnBo
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { useModal } from "../../../../../Context/ModalContext";
 import { ReturnBookTableCellInterface } from "../../../../../Model/TablePagesAndModalModel";
-import { StatusDetectionForLoanedBook } from "../../../../../Controller/OtherUsefulController";
+import { StatusDetectionForBook } from "../../../../../Controller/OtherUsefulController";
 import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const ReturnBookTableCell:FC<ReturnBookTableCellInterface> = (returnBookTableCellData) => 
@@ -22,7 +22,7 @@ const ReturnBookTableCell:FC<ReturnBookTableCellInterface> = (returnBookTableCel
 
     const isDiable = () => 
     {
-        const result = StatusDetectionForLoanedBook((Information as LoanBookInterface).status);
+        const result = StatusDetectionForBook((Information as LoanBookInterface).status, "Returned");
         return result;
     }
 

@@ -58,9 +58,11 @@ const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                             (
                                 <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                     <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
+                                    
                                     <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
                                         <Avatar src={data.bookDetails?.image?.url} alt="Preview" variant="rounded" sx={{ width: "150px", height: "225px" }}/>
                                     </ContentTableCell>
+
                                     <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.bookDetails?.bookname}</ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.loanDate as Date)}</ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>

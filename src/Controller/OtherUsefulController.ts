@@ -44,9 +44,9 @@ const StatusDetectionForAllUser = (status: string) =>
     }
 }
 
-const StatusDetectionForLoanedBook = (status:string) =>
+const StatusDetectionForBook = (status:string, value:string) =>
 {
-    return status === "Returned";
+    return status === value;
 }
-    
-export {handleLogout, handleSuccess, StatusDetectionForAllUser, StatusDetectionForLoanedBook}
+
+export {handleLogout, handleSuccess, StatusDetectionForAllUser, StatusDetectionForBook}

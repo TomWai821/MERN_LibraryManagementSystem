@@ -1,4 +1,4 @@
-import { BookDataInterface, BookDataInterfaceForEdit, DefinitionInterface, DetailsInterfaceForSuspendAndDelete, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
+import { BookDataInterface, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
 
 export interface CreateModalInterface
 {
@@ -73,4 +73,14 @@ export interface DisplayDataModalBody
     isAdmin?:boolean;
     isLoggedIn?:boolean;
     data: UserResultDataInterface | BookDataInterface | LoanBookInterface;
+}
+
+export interface LoanBookModalInterface
+{
+    _id:string;
+    bookname:string;
+    language:string; 
+    genre:string; 
+    description:string; 
+    imageUrl:string
 }

@@ -1,12 +1,12 @@
 import { FC } from "react"
 import { IconButton, TableCell, Tooltip } from "@mui/material";
-import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon, History as HistoryIcon } from '@mui/icons-material';
+import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon, History as HistoryIcon, EventAvailable as EventAvailableIcon } from '@mui/icons-material';
 
 // Context
 import { useModal } from "../../../../../Context/ModalContext";
 
 // Useful function 
-import { StatusDetectionForAllUser, StatusDetectionForLoanedBook } from "../../../../../Controller/OtherUsefulController";
+import { StatusDetectionForAllUser, StatusDetectionForBook } from "../../../../../Controller/OtherUsefulController";
 
 // Another Modal
 import EditUserModal from "../../../../Modal/User/EditUserModal";
@@ -27,6 +27,7 @@ import EditSuspendUserModal from "../../../../Modal/User/EditSuspendUserModal";
 import ReturnBookConfirmModal from "../../../../Modal/Confirmation/Book/ReturnBookConfirmModal";
 import DeleteContactConfirmModal from "../../../../Modal/Confirmation/Contact/DeleteContactConfirmModal";
 import EditContactModal from "../../../../Modal/Contact/EditContactModal";
+import LoanBookConfirmationModal from "../../../../Modal/Confirmation/Book/LoanBookConfirmationModal";
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
 {
@@ -53,6 +54,10 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
             case "User":
                 handleOpen(<EditUserModal value={value} editData={userData} compareData={userData}/>);
                 break;
+
+            case "Contact":
+                handleOpen(<EditContactModal value={value} editData={Information} compareData={Information}/>);
+                break;
         }
     }
 
@@ -76,17 +81,11 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
             case "User":
                 handleOpen(<DeleteUserConfirmModal value={value} _id={userData._id} data={userData} />);
                 break;
+
+            case "Contact":
+                handleOpen(<DeleteContactConfirmModal value={value} _id={(Information as LoanBookInterface)._id} data={Information}/>);
+                break;
         }
-    }
-
-    const openEditContactModal = (value:number) => 
-    {
-        handleOpen(<EditContactModal value={value} editData={Information} compareData={Information}/>);
-    }
-
-    const openDeleteContactModal = (type:string) => 
-    {
-        handleOpen(<DeleteContactConfirmModal type={type} _id={(Information as LoanBookInterface)._id} data={Information}/>);
     }
 
     const openSuspendModal = () => 
@@ -108,6 +107,13 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
     const openReturnBookModal = () => 
     {
         handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} isAdmin={isAdmin} modalOpenPosition={"AdminTableCell"}/>);
+    }
+
+    const openLoanBookModal = () => 
+    {
+        const bookData = Information as BookDataInterface;
+        handleOpen(<LoanBookConfirmationModal _id={bookData._id} bookname={bookData.bookname} language={bookData.languageDetails.language as string} 
+            genre={bookData.genreDetails.genre as string} description={bookData.description as string} imageUrl={bookData.image?.url as string} />)
     }
     
     const UserActionTableCellForAdmin = 
@@ -132,21 +138,22 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         [
             {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openEditModal, icon:<EditIcon />},
             {title: "Delete (Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
+            {title: "Loan Book", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openLoanBookModal, icon:<EventAvailableIcon />, disable: StatusDetectionForBook((Information as LoanBookInterface).status, "Loaned")},
         ],
         [
-            {title: "Return Book", syntax:ImportantActionButtonSyntax, clickEvent:openReturnBookModal, icon:<HistoryIcon />, disable: StatusDetectionForLoanedBook((Information as LoanBookInterface).status)},
+            {title: "Return Book", syntax:ImportantActionButtonSyntax, clickEvent:openReturnBookModal, icon:<HistoryIcon />, disable: StatusDetectionForBook((Information as LoanBookInterface).status, "Returned")},
         ]
     ]
 
     const ContactActionTableCellForAdmin = 
     [
         [
-            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:() => openEditContactModal(0), icon:<EditIcon />},
-            {title: "Delete Author", syntax:ImportantActionButtonSyntax, clickEvent:() => openDeleteContactModal("Author") , icon:<DeleteIcon />},
+            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />},
+            {title: "Delete Author", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal , icon:<DeleteIcon />},
         ],
         [
-            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:() =>  openEditContactModal(1), icon:<EditIcon />},
-            {title: "Delete Publisher", syntax:ImportantActionButtonSyntax, clickEvent:() => openDeleteContactModal("Publisher") , icon:<DeleteIcon />},
+            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />},
+            {title: "Delete Publisher", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal , icon:<DeleteIcon />},
         ],
     ]
 

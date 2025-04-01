@@ -12,14 +12,16 @@ import { useContactContext } from "../../../../Context/Book/ContactContext";
 const DeleteContactConfirmModal:FC<DeleteModalInterface> = (deleteData) => 
 {
     
-    const {type, data} = deleteData;
+    const {value, data} = deleteData;
     const {deleteContactData} = useContactContext();
     const {handleClose} = useModal();
+
+    const type = value === 0 ? "Author" : "Publisher";
     
     const setTitle = () => 
     {
         let setTitle = {title:"", subTitle:""};
-        
+
         setTitle.title = `Delete ${type} Contact Data`;
         setTitle.subTitle = "Do you want to delete this defination?"
         return setTitle;

@@ -71,6 +71,7 @@ export interface BookDataInterfaceForEdit
     status:string;
     filename:string;
     imageUrl:string;
+    image?:File;
 }
 
 export interface ImageInterface

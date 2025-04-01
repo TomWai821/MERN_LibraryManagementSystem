@@ -63,16 +63,15 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         }
     },[fetchAllBook])
 
-    const editBook = useCallback(async (bookID:string, bookname:string, genreID:string, languageID:string, description: string) => 
-        {
-            const result = await updateBookRecord(authToken, bookID, bookname, genreID, languageID, description);
+    const editBook = useCallback(async (bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string) => 
+    {
+        const result = await updateBookRecord(authToken, bookID, imageName, newFile, bookname, genreID, languageID, publisherID, authorID, description);
 
-            if(result)
-            {
-                fetchAllBook();
-            }
-        },[fetchAllBook]
-    )
+        if(result)
+        {
+            fetchAllBook();
+        }
+    },[fetchAllBook])
 
     const loanBook = useCallback(async(userID:string, bookID:string) => 
     {

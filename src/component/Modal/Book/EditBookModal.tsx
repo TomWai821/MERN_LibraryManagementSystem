@@ -28,32 +28,22 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
 
     const { definition } = useDefinitionContext();
     const { contact } = useContactContext();
+    const { handleOpen } = useModal();
     
     const [ book, setBook ] = useState(
-                                        { _id: EditData._id, bookname: EditData.bookname, 
-                                            language: EditData.language as string, languageID: EditData.language, 
-                                            genre: EditData.genre, genreID: EditData.genreID, 
-                                            author: EditData.author, authorID: EditData.authorID,
-                                            publisher: EditData.publisher, publisherID: EditData.publisherID,
-                                            description: EditData.description, filename: EditData.filename, imageUrl: EditData.imageUrl 
-                                        }
-                                    );
+        {   
+            _id: EditData._id, bookname: EditData.bookname, language: EditData.language as string, languageID: EditData.languageID, 
+            genre: EditData.genre, genreID: EditData.genreID, author: EditData.author, authorID: EditData.authorID,
+            publisher: EditData.publisher, publisherID: EditData.publisherID, description: EditData.description, filename: EditData.filename, imageUrl: EditData.imageUrl, image: EditData.image
+        }
+    );
 
     const CompareBook = 
     { 
-        _id: CompareData._id, bookname: CompareData.bookname, 
-        language: CompareData.language as string, languageID: CompareData.language, 
-        genre: CompareData.genre, genreID: CompareData.genreID, 
-        author: CompareData.author, authorID: CompareData.authorID,
-        publisher: CompareData.publisher, publisherID: CompareData.publisherID,
-        description: CompareData.description, filename: CompareData.filename, imageUrl: CompareData.imageUrl 
+        _id: CompareData._id, bookname: CompareData.bookname, language: CompareData.language as string, languageID: CompareData.languageID, 
+        genre: CompareData.genre, genreID: CompareData.genreID, author: CompareData.author, authorID: CompareData.authorID,
+        publisher: CompareData.publisher, publisherID: CompareData.publisherID, description: CompareData.description, filename: CompareData.filename, imageUrl: CompareData.imageUrl 
     };
-
-
-    const [imageFile, setImageFile] = useState<File | null>(null); 
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
-    const { handleOpen } = useModal();
 
     const CreateBookInputField = useMemo(() => 
     [
@@ -65,24 +55,29 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
         {name: "description", label: "Description", type: "text", select:false, slotProps:{}, multiline: true, rows: 8}
     ],[definition])
 
+    const [imageFile, setImageFile] = useState<File | null>(book.image || null); 
+    const [previewUrl, setPreviewUrl] = useState<string | null>(book.imageUrl || null);
+
     const onSelectChange = (event: ChangeEvent<HTMLInputElement>, index?:number) => 
     {
         const {name, value} = event.target;
 
-        if(name === "genre")
+        switch(name)
         {
-            setBook({...book, genre: value, genreID: definition.Genre[index as number]._id});
-        }
-        else if(name === "language")
-        {
-            setBook({...book, language: value, languageID: definition.Language[index as number]._id});
-        }
-        else
-        {
-            setBook({ ...book, [name]: value });
+            case "genre":
+                setBook({...book, genre: value, genreID: definition.Genre[index as number]._id});
+                break;
+
+            case "language":
+                setBook({...book, language: value, languageID: definition.Language[index as number]._id});
+                break;
+
+            default:
+                setBook({ ...book, [name]: value });
+                break;
         }
     }
-
+    
     useEffect(() => 
     {
         const fetchImage = async (imageURL: string) => 
@@ -146,8 +141,8 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
 
     const OpenConfirmModal = () => 
     {
-        handleOpen(<EditBookConfirmModal editData={book} compareData={CompareBook} value={value}/>);
-    };
+        handleOpen(<EditBookConfirmModal editData={{...book, image: imageFile, imageURL: previewUrl}} compareData={CompareBook} value={value}/>);
+    }
 
     return (
         <ModalTemplate title={"Edit Book Record"} minWidth="500px" maxWidth="750px" width="100%" cancelButtonName={"Exit"}>

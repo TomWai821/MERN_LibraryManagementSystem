@@ -1,5 +1,5 @@
 import express from 'express';
-import upload from '../storage';
+import { upload } from '../storage';
 import { GetDefinition, CreateDefinitionData, EditDefinitionData, DeleteDefinitionData } from '../controller/definitionController';
 import { LoginAndFindUser } from '../Arrays/routesMap';
 import { CreateBookRecord, DeleteBookRecord, EditBookRecord, GetBookImage, GetBookRecord } from '../controller/bookController';
@@ -24,7 +24,7 @@ router.delete('/definition/type=:type', ...LoginAndFindUser, DefinitionTypeValid
 // For book records
 router.get('/BookData', BuildBookQueryAndGetData, GetBookRecord);
 router.post('/BookData', upload.single("image"), BookCreateRules, ...LoginAndFindUser, BookNameValidation, BookGenreIDAndLanguageIDValidation, CreateBookRecord);
-router.put('/BookData/id=:id', ...LoginAndFindUser, BookRecordIDValidation, BookGenreIDAndLanguageIDValidation, EditBookRecord);
+router.put('/BookData/id=:id', upload.single("image"), ...LoginAndFindUser, BookRecordIDValidation, BookGenreIDAndLanguageIDValidation, EditBookRecord);
 router.delete('/BookData/id=:id', ...LoginAndFindUser, BookRecordIDValidation, DeleteBookRecord);
 
 // For book records

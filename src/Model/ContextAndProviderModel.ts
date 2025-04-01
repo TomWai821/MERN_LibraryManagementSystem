@@ -62,7 +62,7 @@ export interface BookContextProps
     fetchAllBookWithFliterData: (bookname?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => Promise<void>;
     fetchLoanBookWithFliterData: (bookname?:string, username?:string, status?:string) => Promise<void>;
     createBook: (image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => void;
-    editBook: (bookID:string, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string) => void;
+    editBook: (bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string) => void;
     loanBook: (bookID:string, userID:string) => void;
     returnBook: (loanRecordID:string) => void;
     deleteBook: (bookID:string) => void;

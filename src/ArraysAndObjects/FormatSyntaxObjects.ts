@@ -75,6 +75,8 @@ const ImportantActionButtonSyntax = { color: 'red', "&:hover": { color: DeleteBu
 
 const BookImageFormat = { minHeight: '225px', maxHeight: '350px', width: '200px', height: '100%', objectFit: 'contain' };
 
+const BookImageFormatForEdit = { width: '250px', height: '350px', borderRadius: '10px' };
+
 const BookDescriptionDisplayFormat = { overflow: 'hidden', whiteSpace: 'normal',  wordWrap: 'break-word', maxWidth: '100%'};
 
-export {ViewProfileButton, buttonFontColor, DeleteButton, ItemToCenter, displayAsRow, displayAsColumn, PageItemToCenter, NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSubTitleSyntax, ModalSyntax, ModalRemarkSyntax, ModalBodySyntax, ImportantActionButtonSyntax, BookImageFormat, BookDescriptionDisplayFormat}
+export {ViewProfileButton, buttonFontColor, DeleteButton, ItemToCenter, displayAsRow, displayAsColumn, PageItemToCenter, NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSubTitleSyntax, ModalSyntax, ModalRemarkSyntax, ModalBodySyntax, ImportantActionButtonSyntax, BookImageFormat, BookImageFormatForEdit, BookDescriptionDisplayFormat}

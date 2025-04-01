@@ -14,8 +14,6 @@ export const fetchBook = async (bookname?:string, genreID?:string, languageID?:s
         }
     );
 
-    console.log(response);
-
     if(response.ok)
     {
         const result: GetResultInterface = await response.json();

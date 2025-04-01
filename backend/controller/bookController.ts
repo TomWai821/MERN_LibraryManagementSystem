@@ -1,7 +1,9 @@
-import fs from 'fs'
 import { Request, Response } from 'express'
 import { CreateBook, FindBookByIDAndDelete, FindBookByIDAndUpdate } from '../schema/book/book';
 import { AuthRequest } from '../model/requestInterface';
+import path from 'path';
+import fs from 'fs'
+import { deleteImage } from '../storage';
 
 export const GetBookRecord = async (req: AuthRequest, res: Response) => 
 {
@@ -71,29 +73,52 @@ export const CreateBookRecord = async (req:Request, res:Response) =>
     }
 }
 
-export const EditBookRecord = async(req:Request, res:Response) => 
+export const EditBookRecord = async (req: Request, res: Response) => 
 {
     const bookID = req.params.id;
-    const { bookname, languageID, genreID, pages, description } = req.body;
+    const { bookname, imageName, languageID, genreID, authorID, publisherID, description } = req.body;
     let success = false;
 
-    try
+    try 
     {
-        const updateBookRecord = await FindBookByIDAndUpdate(bookID, { bookname, languageID, genreID, pages, description });
+        // New image filename (if uploaded)
+        const newImageName = req.file?.filename;
+        const imageUrl = newImageName ? `http://localhost:5000/api/book/uploads/${newImageName}` : null;
 
-        if(!updateBookRecord)
+        if (imageName) {
+            try 
+            {
+                await deleteImage(imageName);
+            } 
+            catch (error) 
+            {
+                if (error instanceof Error) 
+                {
+                    return res.status(400).json({ success: false, error: error.message });
+                } 
+                else 
+                {
+                    return res.status(400).json({ success: false, error: 'An unknown error occurred during image deletion' });
+                }
+            }
+        }
+    
+        const updateBookRecord = await FindBookByIDAndUpdate(bookID, {image: { url: imageUrl, filename: newImageName }, bookname, languageID, genreID, authorID, publisherID, description});
+
+        if (!updateBookRecord) 
         {
-            return res.status(400).json({success, error: "Failed to Update book record"});
+            return res.status(400).json({ success, error: 'Failed to Update Book Record' });
         }
 
         success = true;
-        res.json({success, message: "Book Record Update Successfully!"});
-    }
-    catch(error)
+        return res.json({ success, message: 'Book Record Updated Successfully!' });
+    } 
+    catch (error) 
     {
-        res.status(500).json({ success, error: 'Internal Server Error!' });
+        console.error('Error updating book record:', error);
+        return res.status(500).json({ success, error: 'Internal Server Error!' });
     }
-}
+};
 
 export const DeleteBookRecord = async(req:Request, res:Response) => 
 {

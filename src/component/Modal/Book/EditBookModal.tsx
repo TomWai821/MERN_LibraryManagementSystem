@@ -19,32 +19,19 @@ import { useDefinitionContext } from '../../../Context/Book/DefinitionContext';
 import { BookDataInterfaceForEdit, ContactInterface, DefinitionInterface } from '../../../Model/ResultModel';
 import { BookTableDataInterface } from '../../../Model/BookTableModel';
 import { useContactContext } from '../../../Context/Book/ContactContext';
+import { DataValidateField } from '../../../Controller/ValidateController';
 
 const EditBookModal:FC<EditModalInterface> = (editModalData) => 
 {
+    const { definition } = useDefinitionContext();
+    const { contact } = useContactContext();
+    const { handleOpen } = useModal();
+
     const { value, editData, compareData } = editModalData;
     const EditData = editData as BookDataInterfaceForEdit;
     const CompareData = compareData as BookDataInterfaceForEdit;
 
-    const { definition } = useDefinitionContext();
-    const { contact } = useContactContext();
-    const { handleOpen } = useModal();
-    
-    const [ book, setBook ] = useState(
-        {   
-            _id: EditData._id, bookname: EditData.bookname, language: EditData.language as string, languageID: EditData.languageID, 
-            genre: EditData.genre, genreID: EditData.genreID, author: EditData.author, authorID: EditData.authorID,
-            publisher: EditData.publisher, publisherID: EditData.publisherID, description: EditData.description, filename: EditData.filename, imageUrl: EditData.imageUrl, image: EditData.image
-        }
-    );
-
-    const CompareBook = 
-    { 
-        _id: CompareData._id, bookname: CompareData.bookname, language: CompareData.language as string, languageID: CompareData.languageID, 
-        genre: CompareData.genre, genreID: CompareData.genreID, author: CompareData.author, authorID: CompareData.authorID,
-        publisher: CompareData.publisher, publisherID: CompareData.publisherID, description: CompareData.description, filename: CompareData.filename, imageUrl: CompareData.imageUrl 
-    };
-
+    // For UI Rendering
     const CreateBookInputField = useMemo(() => 
     [
         {name: "bookname", label: "Book Name", type:"text", select: false, slotProps: {}, multiline: false, rows: 1 },
@@ -54,28 +41,35 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
         {name: "publisher", label: "Publisher", type:"text", select: true, options:contact.Publisher, slotProps:{}, multiline: false, rows: 1},
         {name: "description", label: "Description", type: "text", select:false, slotProps:{}, multiline: true, rows: 8}
     ],[definition])
+    
+    const [book, setBook] = useState(
+        {   
+            _id: EditData._id, bookname: EditData.bookname, language: EditData.language as string,  
+            genre: EditData.genre, author: EditData.author, publisher: EditData.publisher, description: EditData.description, 
+            filename: EditData.filename, imageUrl: EditData.imageUrl, image: EditData.image
+        }
+    );
 
+    const CompareBook = 
+    { 
+        _id: CompareData._id, bookname: CompareData.bookname, language: CompareData.language as string,
+        genre: CompareData.genre, author: CompareData.author, publisher: CompareData.publisher, 
+        description: CompareData.description, filename: CompareData.filename, imageUrl: CompareData.imageUrl 
+    };
+
+    // For data validate
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errors, setErrors] = useState({bookname: "", author: "", genre: "", publisher: "", description: ""});
+    const [helperTexts, setHelperText] = useState({bookname: "", author: "", genre: "", publisher: "", description: ""});
+
+    // For Iamge input
     const [imageFile, setImageFile] = useState<File | null>(book.image || null); 
     const [previewUrl, setPreviewUrl] = useState<string | null>(book.imageUrl || null);
 
-    const onSelectChange = (event: ChangeEvent<HTMLInputElement>, index?:number) => 
+    const onSelectChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
         const {name, value} = event.target;
-
-        switch(name)
-        {
-            case "genre":
-                setBook({...book, genre: value, genreID: definition.Genre[index as number]._id});
-                break;
-
-            case "language":
-                setBook({...book, language: value, languageID: definition.Language[index as number]._id});
-                break;
-
-            default:
-                setBook({ ...book, [name]: value });
-                break;
-        }
+        setBook({ ...book, [name]: value });
     }
     
     useEffect(() => 
@@ -139,9 +133,36 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
         }
     };
 
-    const OpenConfirmModal = () => 
+    const HandleDataValidate = async () => 
     {
-        handleOpen(<EditBookConfirmModal editData={{...book, image: imageFile, imageURL: previewUrl}} compareData={CompareBook} value={value}/>);
+        let validationPassed = true;
+        const newErrors = { ...errors };
+        const newHelperTexts = { ...helperTexts };
+        setIsSubmitted(true);
+    
+        Object.keys(book).forEach((field) => 
+        {
+            if(["description", "publishDate"].includes(field))
+            {
+                return;
+            }
+            const { helperText, error, success } = DataValidateField(field, book[field as keyof BookTableDataInterface] as string) || {};
+            newHelperTexts[field as keyof typeof newHelperTexts] = helperText;
+            newErrors[field as keyof typeof newErrors] = error;
+    
+            if(!success) 
+            {
+                validationPassed = false;
+            }
+        });
+    
+        setHelperText(newHelperTexts);
+        setErrors(newErrors);
+
+        if(validationPassed)
+        {
+            handleOpen(<EditBookConfirmModal editData={{...book, image: imageFile, imageURL: previewUrl}} compareData={CompareBook} value={value}/>) 
+        }
     }
 
     return (
@@ -178,61 +199,26 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
                         CreateBookInputField.map((field, index) => 
                         (
                             <TextField key={index} label={field.label} name={field.name} value={book[field.name as keyof BookTableDataInterface]} 
-                                type={field.type} size="small" select={field.select} slotProps={field.slotProps} multiline={field.multiline} rows={field.rows} 
-                                onChange={(event) => 
-                                    {
-                                        const selectedIndex = field.options?.findIndex
-                                        (
-                                            (option) => 
-                                            {
-                                                const definitionOption = option as DefinitionInterface;
-                                                const contactOption = option as ContactInterface;
-
-                                                switch(field.name)
-                                                {
-                                                    case "genre":
-                                                        return definitionOption.genre === event.target.value;
-
-                                                    case "language":
-                                                        return definitionOption.language === event.target.value;
-                                                    
-                                                    case "author":
-                                                        return contactOption.author === event.target.value;
-                                                    
-                                                    case "publisher":
-                                                        return contactOption.publisher === event.target.value;
-                                                }
-                                            }
-                                        );
-                                        onSelectChange(event as ChangeEvent<HTMLInputElement>, selectedIndex as number);
-                                    }
-                                }
+                                type={field.type} size="small" select={field.select} slotProps={field.slotProps} multiline={field.multiline} rows={field.rows}
+                                helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
+                                error={isSubmitted && errors[field.name as keyof typeof errors] != ""}
+                                onChange={onSelectChange}
                             >
                                     {
                                         field.options && field.options.map((option, index) => 
                                             {
-                                                let value = "";
                                                 const definitionOption = option as DefinitionInterface;
                                                 const contactOption = option as ContactInterface;
 
-                                                switch(field.name)
+                                                const fieldMap: Record<string, string | undefined> = 
                                                 {
-                                                    case "genre":
-                                                        value = definitionOption.genre as string;
-                                                        break;
-
-                                                    case "language":
-                                                        value = definitionOption.language as string;
-                                                        break;
-                                                    
-                                                    case "author":
-                                                        value = contactOption.author as string;
-                                                        break;
-                                                    
-                                                    case "publisher":
-                                                        value = contactOption.publisher as string;
-                                                        break;
+                                                    "genre": definitionOption.genre as string,
+                                                    "language": definitionOption.language as string,
+                                                    "author": contactOption.author as string,
+                                                    "publisher": contactOption.publisher as string
                                                 }
+
+                                                let value = fieldMap[field.name];
 
                                                 return(<MenuItem key={index} value={value}>{value}</MenuItem> )
                                             }
@@ -244,7 +230,7 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
                     </Box>
                 </Box>
             </Box>
-            <Button variant='contained' onClick={OpenConfirmModal}>Edit</Button>
+            <Button variant='contained' onClick={HandleDataValidate}>Edit</Button>
         </ModalTemplate>
     );
 }

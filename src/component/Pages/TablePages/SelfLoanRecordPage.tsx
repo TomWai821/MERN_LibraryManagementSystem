@@ -6,14 +6,13 @@ import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 import CustomTab from "../../UIFragment/CustomTab";
 import { LoanBookTabLabel, PaginationOption } from "../../../ArraysAndObjects/TableArrays";
 import SelfBookRecordTabPanel from "./Tabs/SelfBookRecordTabPanel";
-import { useSuggestBookContext } from "../../../Context/Book/SuggestBookContext";
+import { useBookContext } from "../../../Context/Book/BookContext";
 import RecordFilter from "./Filter/RecordFilter";
 
 const SelfLoanRecordPage:FC<PagesInterface> = (pageData) => 
 {
     const { isAdmin } = pageData;
-    const { SelfLoanBook } = useSuggestBookContext();
-    const { fetchSelfLoanBookWithFliterData } = useSuggestBookContext();
+    const { SelfLoanBook, fetchLoanBookWithFliterData } = useBookContext();
 
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
@@ -39,7 +38,7 @@ const SelfLoanRecordPage:FC<PagesInterface> = (pageData) =>
 
     const search = () => 
     {
-        fetchSelfLoanBookWithFliterData(searchData.bookname, searchData.status);
+        fetchLoanBookWithFliterData("Self", searchData.bookname, undefined, searchData.status);
     }
 
     const onChange = (event:ChangeEvent<HTMLInputElement>) => 

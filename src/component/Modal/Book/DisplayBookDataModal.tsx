@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 import ModalTemplate from "../../Templates/ModalTemplate";
 
@@ -8,10 +8,15 @@ import { DisplayDataModalInterface } from "../../../Model/ModelForModal";
 import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 import AllBookDataBody from "./DisplayBookDataBody/AllBookDataBody";
 import LoanBookDataBody from "./DisplayBookDataBody/LoanBookDataBody";
+import { BookDataInterface, LoanBookInterface } from "../../../Model/ResultModel";
+import { StatusDetectionForBook } from "../../../Controller/OtherUsefulController";
+import { useModal } from "../../../Context/ModalContext";
+import LoanBookConfirmationModal from "../Confirmation/Book/LoanBookConfirmationModal";
 
 const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 
 {
-    const {value, data, isLoggedIn} = displayUserData;
+    const {position, value, data, isLoggedIn} = displayUserData;
+    const {handleOpen} = useModal();
     const width = '600px';
 
     const setTitle = () => 
@@ -33,11 +38,30 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
         return displayData;
     }
 
+    const bookStatusValidation = StatusDetectionForBook((data as BookDataInterface).status as string|| (data as LoanBookInterface).bookDetails?.status as string, "Loaned");
+
+    const openLoanBookModal = () => 
+    {
+        handleOpen(
+        <LoanBookConfirmationModal _id={data._id} 
+            bookname={(data as BookDataInterface).bookname || (data as LoanBookInterface).bookDetails?.bookname as string} 
+            language={(data as BookDataInterface).languageDetails.language as string || (data as LoanBookInterface).bookDetails?.languageDetails.language as string} 
+            genre={(data as BookDataInterface).genreDetails.genre as string || (data as LoanBookInterface).bookDetails?.genreDetails.genre as string} 
+            description={(data as BookDataInterface).description as string || (data as LoanBookInterface).bookDetails?.description as string} 
+            imageUrl={(data as BookDataInterface).image?.url as string || (data as LoanBookInterface).bookDetails?.image?.url as string}
+        />);
+    }
+
     return(
         <ModalTemplate title={setTitle().title as string} width={width} cancelButtonName={"Exit"} >
             <Box id="modal-description" sx={ModalBodySyntax}>
                 {setTitle().displayBody}
             </Box>
+
+            {
+                (position === "mainPage" && value === 0 && isLoggedIn) &&
+                <Button variant="contained" onClick={openLoanBookModal} disabled={bookStatusValidation}>Loan Book</Button>
+            }
         </ModalTemplate>
     );
 }

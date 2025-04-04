@@ -1,11 +1,12 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
-import { BookContextProps, ChildProps } from "../../Model/ContextAndProviderModel";
+import { BookContextProps, ChildProps, SuggestionData } from "../../Model/ContextAndProviderModel";
 import { CalculateDueDate, GetCurrentDate, GetData } from "../../Controller/OtherController";
 import { BookDataInterface, GetResultInterface, LoanBookInterface } from "../../Model/ResultModel";
-import { fetchBook, fetchLoanBook } from "../../Controller/BookController/BookGetController";
+import { fetchBook, fetchLoanBook, fetchSuggestBook } from "../../Controller/BookController/BookGetController";
 import { createBookRecord, createLoanBookRecord } from "../../Controller/BookController/BookPostController";
 import { returnBookAndChangeStatus, updateBookRecord } from "../../Controller/BookController/BookPutController";
 import { deleteBookRecord } from "../../Controller/BookController/BookDeleteController";
+import { countAttributes } from "../../Controller/OtherUsefulController";
 
 const BookContext = createContext<BookContextProps | undefined>(undefined);
 
@@ -14,6 +15,12 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
     const [AllBook, setAllBook] = useState<BookDataInterface[]>([]);
     const [OnLoanBook, setOnLoanBook] = useState<LoanBookInterface[]>([]);
     const bookData = [AllBook, OnLoanBook];
+
+    const [newPublishBook, setNewPublishBook] = useState<BookDataInterface[]>([]);
+    const [mostPopularBook, setMostPopularBook] = useState<LoanBookInterface[]>([]);
+    const [SelfLoanBook, setSelfLoanBook] = useState<LoanBookInterface[]>([]);
+    const [bookForUser, setBookForUser] = useState<BookDataInterface[]>([]);
+    const suggestBook = [bookForUser, newPublishBook, mostPopularBook];
     
     const authToken = GetData("authToken") as string;
 
@@ -31,6 +38,42 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         {
             setOnLoanBook(resultForLoanBook.foundLoanBook);
         }
+
+        const resultForNewPublishBook: GetResultInterface | undefined = await fetchSuggestBook("newPublish");
+        const resultForMostPopularBook: GetResultInterface | undefined = await fetchSuggestBook("mostPopular");
+    
+        if (resultForNewPublishBook && Array.isArray(resultForNewPublishBook.foundBook))
+        {
+            setNewPublishBook(resultForNewPublishBook.foundBook);
+        }
+    
+        if (resultForMostPopularBook && Array.isArray(resultForMostPopularBook.foundLoanBook)) 
+        {
+            setMostPopularBook(resultForMostPopularBook.foundLoanBook);
+        }
+    
+        if (authToken) 
+        {
+            const resultForSelfLoanBook: GetResultInterface | undefined = await fetchLoanBook(authToken);
+    
+            if (resultForSelfLoanBook && Array.isArray(resultForSelfLoanBook.foundLoanBook)) 
+            {
+                setSelfLoanBook(resultForSelfLoanBook.foundLoanBook);
+
+                const suggestionData = countAttributes(resultForSelfLoanBook.foundLoanBook);
+    
+                if (suggestionData.topAuthors.length > 0 || suggestionData.topGenres.length > 0 || suggestionData.topPublishers.length > 0) 
+                {
+    
+                    const resultForUser: GetResultInterface | undefined = await fetchSuggestBook("forUser", authToken, suggestionData);
+    
+                    if (resultForUser && Array.isArray(resultForUser.foundBook)) 
+                    {
+                        setBookForUser(resultForUser.foundBook);
+                    }
+                }
+            }
+        }
     },[])
 
     const fetchAllBookWithFliterData = useCallback(async (bookname?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => 
@@ -43,14 +86,31 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         }
     },[fetchAllBook])
 
-    const fetchLoanBookWithFliterData = useCallback(async (bookname?:string, username?:string, status?:string) => 
+    const fetchLoanBookWithFliterData = useCallback(async (type:string, bookname?:string, username?:string, status?:string) => 
     {
-        const result: GetResultInterface | undefined = await fetchLoanBook(authToken, bookname, username, status);
-
-        if(result && Array.isArray(result.foundLoanBook))
+        let result: GetResultInterface | undefined;
+        
+        switch(type)
         {
-            setOnLoanBook(result.foundLoanBook);
+            case "AllUser":
+                result = await fetchLoanBook(authToken, bookname, username, status);
+
+                if(result && Array.isArray(result.foundLoanBook))
+                {
+                    setOnLoanBook(result.foundLoanBook);
+                }
+                break;
+
+            case "Self":
+                result = await fetchLoanBook(authToken, bookname, undefined, status);
+
+                if(result && Array.isArray(result.foundLoanBook))
+                {
+                    setSelfLoanBook(result.foundLoanBook);
+                }
+                break;
         }
+        
     },[fetchAllBook])
 
     const createBook = useCallback(async (image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => 
@@ -112,7 +172,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
     },[])
 
     return (
-        <BookContext.Provider value={{ bookData, fetchAllBook, fetchAllBookWithFliterData, fetchLoanBookWithFliterData, createBook, editBook, loanBook, returnBook, deleteBook }}>
+        <BookContext.Provider value={{ bookData, suggestBook, SelfLoanBook, fetchAllBook, fetchAllBookWithFliterData, fetchLoanBookWithFliterData, createBook, editBook, loanBook, returnBook, deleteBook }}>
             {children}
         </BookContext.Provider>
     );

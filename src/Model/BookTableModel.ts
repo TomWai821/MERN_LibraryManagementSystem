@@ -47,7 +47,7 @@ interface BookRecordTableInterface extends TableInterface
 
 interface ContactTableInterface extends TableInterface
 {
-    value: number;
+    value?: number;
     contactData: ContactState;
     paginationValue:number;
 }

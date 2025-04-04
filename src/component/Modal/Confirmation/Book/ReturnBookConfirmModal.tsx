@@ -29,6 +29,14 @@ const ReturnBookConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) =>
         return (modalOpenPosition === "AdminTableCell" && isAdmin) ? `Loan Book Record for ${Data.userDetails?.username}` : "Do you want to return this book?";
     }
 
+    const ReturnBookData = 
+    [
+        {label: "Bookname:", value: Data.bookDetails?.bookname},
+        {label: "Loan Date:", value: TransferDateToISOString(Data.loanDate as Date)},
+        {label: "Due Date:", value: TransferDateToISOString(Data.dueDate as Date)},
+        {label: "Late Return", value: countLateReturn(Data.dueDate as string)}
+    ]
+
     return(
         <ModalTemplate title={"Return Book Confirmation"}  width="600px" cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
@@ -38,13 +46,14 @@ const ReturnBookConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) =>
                     <Avatar src={Data.bookDetails?.image?.url} alt="Preview" variant="rounded" sx={BookImageFormat}/>
 
                     <Box sx={{ display: 'grid', gap: '20px 50px', width:'350px', gridTemplateColumns: '100%'}}>
-                        <Box sx={{ display: 'inline-block'}}>
-                            <Typography>Bookname:</Typography>
-                            <Typography>{Data.bookDetails?.bookname}</Typography>
-                        </Box>
-                        <Typography>Loan Date: {TransferDateToISOString(Data.loanDate as Date)}</Typography>
-                        <Typography>Due Date: {TransferDateToISOString(Data.dueDate as Date)}</Typography>
-                        <Typography>Late Return: {countLateReturn(Data.dueDate as string)}</Typography>
+                        {
+                            ReturnBookData.map((data, index) => 
+                                (
+                                    <Typography key={index}>{data.label}: {data.value}</Typography>
+                                )
+                            )
+                        }
+                        
                     </Box>
                 </Box>
 

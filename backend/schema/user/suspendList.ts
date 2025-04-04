@@ -6,7 +6,7 @@ const SuspendListSchema = new mongoose.Schema<DeleteAndSuspendListInterface>
 (
     {
         userID: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
-        description: { type: String, required: true },
+        description: { type: String, default: "N/A" },
         startDate: { type: Date, required: true, immutable: true },
         dueDate: { type: Date }
     }

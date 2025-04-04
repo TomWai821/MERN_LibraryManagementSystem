@@ -58,9 +58,11 @@ export interface UserContextProps
 export interface BookContextProps
 {
     bookData:(BookDataInterface[] | LoanBookInterface[])[];
+    suggestBook: (BookDataInterface[] | LoanBookInterface[])[];
+    SelfLoanBook: LoanBookInterface[];
     fetchAllBook: () => Promise<void>;
     fetchAllBookWithFliterData: (bookname?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => Promise<void>;
-    fetchLoanBookWithFliterData: (bookname?:string, username?:string, status?:string) => Promise<void>;
+    fetchLoanBookWithFliterData: (type:string, bookname?:string, username?:string, status?:string) => Promise<void>;
     createBook: (image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => void;
     editBook: (bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string) => void;
     loanBook: (bookID:string, userID?:string) => void;
@@ -70,9 +72,7 @@ export interface BookContextProps
 
 export interface SuggestBookContextProps
 {
-    suggestBook: (BookDataInterface[] | LoanBookInterface[])[];
-    SelfLoanBook: LoanBookInterface[];
-    fetchSelfLoanBookWithFliterData: (bookname:string, status:string) => Promise<void>;
+    
 }
 
 export interface DefinatonProps

@@ -26,7 +26,7 @@ const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) =>
                 break;
             
             case "Book":
-                handleOpen(<DisplayBookDataModal value={value} data={Information as BookDataInterface} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>);
+                handleOpen(<DisplayBookDataModal position={"Table"} value={value} data={Information as BookDataInterface} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>);
                 break;
             
             case "Contact":

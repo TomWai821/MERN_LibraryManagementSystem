@@ -22,18 +22,23 @@ import { EditModalInterface } from '../../../Model/ModelForModal';
 import { TransferDateToISOString } from '../../../Controller/OtherController';
 import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 import { EditSuspendUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
+import { DataValidateField } from '../../../Controller/ValidateController';
 
 const EditSuspendUserModal:FC<EditModalInterface> = (editModalData) => 
 {
     const { value, editData, compareData } = editModalData;
-    const {handleOpen} = useModal();
-    
+    const {handleOpen} = useModal();    
     const { _id, userID, description, startDate, dueDate, status } = editData as DetailsInterfaceForSuspendAndDelete;
+
     const bannedIDToString = _id.toString() as string;
     const startDateToString = TransferDateToISOString(startDate as Date) as string;
     const dueDateToString = TransferDateToISOString(dueDate as Date) as string;
     const descriptionToString = description.toString() as string;
     const [banData, setSuspendData] = useState<DetailsInterfaceForSuspendAndDelete>({_id: bannedIDToString, userID:userID, startDate: startDateToString, dueDate: dueDateToString, description: descriptionToString, status: status });
+    
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errors, setErrors] = useState({description: ""});
+    const [helperTexts, setHelperText] = useState({description: ""});
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
@@ -41,18 +46,49 @@ const EditSuspendUserModal:FC<EditModalInterface> = (editModalData) =>
         setSuspendData({...banData, [name] : value})
     }
 
-    const openConfirmModal = () => 
+    const HandleDataValidate = async () => 
     {
-        handleOpen(<EditUserConfirmModal value={value} editData={banData} compareData={compareData} />);
-    }
+        let validationPassed = true;
+        const newErrors = { ...errors };
+        const newHelperTexts = { ...helperTexts };
+        setIsSubmitted(true);
     
+        Object.keys(banData).forEach((field) => 
+        {
+            if(["startDate", "dueDate"].includes(field))
+            {
+                return;
+            }
+            
+            const { helperText, error, success } = DataValidateField(field, banData[field as keyof DetailsInterfaceForSuspendAndDelete] as string);
+            newHelperTexts[field as keyof typeof newHelperTexts] = helperText;
+            newErrors[field as keyof typeof newErrors] = error;
+    
+            if(!success)
+            {
+                validationPassed = false;
+            }
+        });
+    
+        setHelperText(newHelperTexts);
+        setErrors(newErrors);
+
+        if(validationPassed)
+        {
+            handleOpen(<EditUserConfirmModal value={value} editData={banData} compareData={compareData} />)
+        }
+    }
+
     return(
         <ModalTemplate title={"Edit Suspend Record"} width="400px" cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 {
-                    EditSuspendUserInputField.map((field, index) => (
+                    EditSuspendUserInputField.map((field, index) => 
+                    (
                         <TextField key={index} label={field.label} name={field.name} value={banData[field.name as keyof DetailsInterfaceForSuspendAndDelete]}
-                            type={field.type} size="small" onChange={onChange} select={field.select} multiline={field.rows > 1} rows={field.rows} disabled={field.disable}>
+                            type={field.type} size="small" onChange={onChange} select={field.select} multiline={field.rows > 1} rows={field.rows} disabled={field.disable}
+                            helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
+                            error={isSubmitted && errors[field.name as keyof typeof errors] != ""}>
                             {
                                 field.select && field.options.map((option, index) => 
                                 (
@@ -64,7 +100,7 @@ const EditSuspendUserModal:FC<EditModalInterface> = (editModalData) =>
                 }
             </Box>
 
-            <ModalConfirmButton clickEvent={openConfirmModal} name={"Edit"} buttonType={""}/>
+            <ModalConfirmButton clickEvent={HandleDataValidate} name={"Edit"} buttonType={""}/>
         </ModalTemplate>
     );
 }

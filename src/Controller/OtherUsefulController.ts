@@ -1,4 +1,5 @@
-import { ResultInterface } from '../Model/ResultModel';
+import { SuggestionData } from '../Model/ContextAndProviderModel';
+import { LoanBookInterface, ResultInterface } from '../Model/ResultModel';
 import { SetUserCookie, DeleteUserCookie } from './CookieController'
 
 const mainPage:string = 'http://localhost:3000/';
@@ -12,7 +13,6 @@ const handleLogout = async(username: string | null) =>
     sessionStorage.clear();
     window.location.href = mainPage;
 }
-
 
 // For Register/Login
 const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =>
@@ -49,4 +49,52 @@ const StatusDetectionForBook = (status:string, value:string) =>
     return status === value;
 }
 
-export {handleLogout, handleSuccess, StatusDetectionForAllUser, StatusDetectionForBook}
+const getTopThree = (countObject: Record<string, number>) => 
+{
+    return Object.entries(countObject)
+        .sort(([, first], [, second]) => second - first)
+        .slice(0, 3)
+        .map(([key]) => key);
+};
+
+const countAttributes = (books: LoanBookInterface[]): SuggestionData  => 
+{
+    const genreCount: Record<string, number> = {};
+    const authorCount: Record<string, number> = {};
+    const publisherCount: Record<string, number> = {};
+
+    books.forEach((book) => 
+    {
+        const genre = book.genreDetails?.genre;
+
+        if (genre) 
+        {
+            genreCount[genre] = (genreCount[genre] || 0) + 1;
+        }
+        
+        const author = book.authorDetails?.author;
+
+        if (author) 
+        {
+            authorCount[author] = (authorCount[author] || 0) + 1;
+        }
+
+        const publisher = book.publisherDetails?.publisher;
+
+        if (publisher) 
+        {
+            publisherCount[publisher] = (publisherCount[publisher] || 0) + 1;
+        }
+    });
+    return { topGenres: getTopThree(genreCount), topAuthors: getTopThree(authorCount),topPublishers: getTopThree(publisherCount) };
+};
+
+const DisableValidationForLoanBook = (Information: LoanBookInterface) => 
+{
+    const returnedStatus = ["Returned", "Returned(Late)"];
+    const status = Information.status || Information.bookDetails?.status;
+    const result = returnedStatus.includes(status as string);
+    return result;
+}
+
+export {handleLogout, handleSuccess, StatusDetectionForAllUser, StatusDetectionForBook, countAttributes, DisableValidationForLoanBook}

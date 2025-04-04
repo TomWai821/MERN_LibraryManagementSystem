@@ -14,20 +14,41 @@ import { CreateModalInterface } from "../../../../Model/ModelForModal"
 // Data(CSS Syntax)
 import { useBookContext } from "../../../../Context/Book/BookContext"
 import { BookDescriptionDisplayFormat, BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects"
+import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext"
+import { useContactContext } from "../../../../Context/Book/ContactContext"
 
 const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) => 
 {
-    const { image, imageURL, bookname, genre, genreID, language, languageID, author, authorID, publisher, publisherID, description, publishDate} = bookData.data;
-    
     const { handleOpen, handleClose } = useModal();
     const { createBook } = useBookContext();
+    const { definition } = useDefinitionContext();
+    const { contact } = useContactContext();
+
+    const { image, imageURL, bookname, genre, language, author, publisher, description, publishDate} = bookData.data;
+
+    const languageID = definition.Language.find((languageData) => languageData.language === language)?._id as string;
+    const genreID = definition.Genre.find((genreData) => genreData.genre === genre)?._id as string;
+    const authorID = contact.Author.find((authorData) => authorData.author === author)?._id as string;
+    const publisherID = contact.Publisher.find((publisherData) => publisherData.publisher === publisher)?._id as string;
+    
+    // Data for rendering
+    const fieldData = 
+    [   
+        {label:"BookName", data: bookname},
+        {label:"Language", data: language},
+        {label:"Genre", data: genre},
+        {label:"Publisher", data: publisher},
+        {label:"Author", data: author},
+        {label:"Publish Date", data: publishDate},
+    ]
+
+    const width = image ? '600px': '400px';
 
     const backToCreateModal = () => 
     {
         handleOpen(
         <CreateBookModal image={image} imageURL={imageURL} bookname={bookname} 
-            language={language} languageID={languageID} genre={genre} genreID={genreID} 
-            author={author} authorID={authorID} publisher={publisher} publisherID={publisherID}
+            language={language} genre={genre} author={author} publisher={publisher}
             description={description} publishDate={publishDate}/>
         );
     }
@@ -37,8 +58,6 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
         createBook(image, bookname, genreID, languageID, publisherID, authorID, description, publishDate);
         handleClose();
     }
-
-    const width = image ? '600px': '400px';
 
     return(
         <ModalTemplate title={"Create Book Confirmation"} width={width} cancelButtonName={"No"} cancelButtonEvent={() => backToCreateModal()}>
@@ -55,12 +74,13 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
 
                     <Box sx={{...displayAsColumn, margin: '10px 0 0 20px', gap:"20px 50px"}}>
                         {!imageURL && <Typography>Image: N/A</Typography>}
-                        <Typography>BookName: {bookname}</Typography>
-                        <Typography>Language: {language}</Typography>
-                        <Typography>Genre: {genre}</Typography>
-                        <Typography>Publisher: {publisher}</Typography>
-                        <Typography>Author: {author}</Typography>
-                        <Typography>Publish Date: {publishDate}</Typography>
+                        {
+                            fieldData.map((field, index) => 
+                                (
+                                    <Typography key={index}>{field.label}: {field.data}</Typography>
+                                )
+                            )
+                        }
                         <Box sx={{ maxWidth: '350px', display: 'inline-block'}}>
                             <Typography>Description:</Typography>
                             <Typography sx={BookDescriptionDisplayFormat}>{description}</Typography>

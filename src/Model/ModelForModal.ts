@@ -6,21 +6,27 @@ export interface CreateModalInterface
     data?: any;
 }
 
+export interface CreateContactModalInterface
+{
+    value?: number;
+    author?: string;
+    publisher?:string;
+    email:string;
+    phoneNumber?:string;
+    address?:string;
+}
+
 export interface CreateBookModalInterface
 {
     image?:File;
     imageURL?:string;
     bookname?:string;
     language?:string;
-    languageID?:string;
     genre?:string;
-    genreID?:string;
     author?:string; 
-    authorID?:string; 
     publisher?:string; 
-    publisherID?:string;
-    description?:string;
     publishDate?:Date;
+    description?:string;
 }
 
 export interface EditModalInterface
@@ -55,6 +61,7 @@ export interface DeleteModalInterface
 
 export interface DisplayDataModalInterface
 {
+    position?: string;
     value: number;
     data: UserResultDataInterface | BookDataInterface | LoanBookInterface;
     isLoggedIn?: boolean;
@@ -82,5 +89,5 @@ export interface LoanBookModalInterface
     language:string; 
     genre:string; 
     description:string; 
-    imageUrl:string
+    imageUrl:string;
 }

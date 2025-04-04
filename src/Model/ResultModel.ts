@@ -60,13 +60,9 @@ export interface BookDataInterfaceForEdit
     _id:string;
     bookname:string;
     genre?:string;
-    genreID:string;
     language?:string;
-    languageID:string;
     author?:string;
-    authorID:string;
     publisher?:string;
-    publisherID:string;
     description: string;
     status:string;
     filename:string;

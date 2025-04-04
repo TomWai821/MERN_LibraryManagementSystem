@@ -24,16 +24,27 @@ const DeleteBookModal:FC<BookDataInterfaceForDelete> = ({...bookData}) =>
         deleteBook(bookID);
         handleClose();
     }
+
+    const fieldData = 
+    [   
+        {label:"BookName", data: bookname},
+        {label:"Language", data: language},
+        {label:"Genre", data: genre},
+        {label:"Author", data: author},
+        {label:"Publisher", data: publisher},
+    ]
         
     return(
         <ModalTemplate title={"Delete Book Record Confirmation"} width="400px" cancelButtonName="No">
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>Do you want to delete this book record?</Typography>
-                <Typography>Name: {bookname}</Typography>
-                <Typography>Language: {language}</Typography>
-                <Typography>Genre: {genre}</Typography>
-                <Typography>Author: {author}</Typography>
-                <Typography>Publisher: {publisher}</Typography>
+                {
+                    fieldData.map((field, index) => 
+                        (
+                            <Typography key={index}>{field.label}: {field.data}</Typography>
+                        )
+                    )
+                }
             </Box>
 
             <DeleteTypography/>

@@ -7,9 +7,6 @@ import ModalConfirmButton from '../../UIFragment/ModalConfirmButton';
 // Template
 import ModalTemplate from '../../Templates/ModalTemplate';
 
-// Another Modal
-
-
 // Context
 import { useModal } from '../../../Context/ModalContext';
 

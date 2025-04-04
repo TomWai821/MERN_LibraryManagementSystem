@@ -59,10 +59,10 @@ const AuthorTable:FC<ContactTableInterface> = (DataForAllUserTable) =>
                         (
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                 <TableCell sx={{fontSize: "16px", "&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.author}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.email}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.phoneNumber}</ContentTableCell>
-                                <ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={true} isLoggedIn={isLoggedIn}/>
+                                <ContentTableCell TableName={TableName} value={value as number} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.author}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value as number} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.email}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value as number} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.phoneNumber}</ContentTableCell>
+                                <ActionTableCell TableName={TableName} value={value as number} Information={data} isAdmin={true} isLoggedIn={isLoggedIn}/>
                             </TableRow>
                         )
                     )}

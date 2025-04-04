@@ -16,11 +16,11 @@ const ContactTabPanel:FC<ContactTableInterface> = (TabData) =>
     
     return(
         <Fragment>
-            <CustomTabPanel index={0} value={value}>
+            <CustomTabPanel index={0} value={value as number}>
                 <AuthorTable value={value} contactData={contactData} paginationValue={paginationValue} isAdmin={isAdmin}/>
             </CustomTabPanel>
 
-            <CustomTabPanel index={1} value={value}>
+            <CustomTabPanel index={1} value={value as number}>
                 <PublisherTable value={value} contactData={contactData} paginationValue={paginationValue} isAdmin={isAdmin}/>
             </CustomTabPanel>
         </Fragment>

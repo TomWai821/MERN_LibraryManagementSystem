@@ -5,7 +5,7 @@ import { BookTableDataInterface, BookSearchInterface, SelfLoanBookSearchInterfac
 
 export interface IsAdminInterface
 {
-    isAdmin:boolean;
+    isAdmin?:boolean;
 }
 
 export interface PagesInterface extends IsAdminInterface

@@ -37,11 +37,14 @@ const DeleteContactConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
         <ModalTemplate title={setTitle().title} width="400px" cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>{setTitle().subTitle}</Typography>
+
                 {
                     data.author ? <Typography>Author: {data.author}</Typography> : <Typography>Publisher: {data.publisher}</Typography>
                 }
+
                 <Typography>Phone No: {data.phoneNumber}</Typography>
                 <Typography>Email: {data.email}</Typography>
+                
                 { type === "Publisher" && <Typography>Address: {data.address}</Typography>}
             </Box>
             

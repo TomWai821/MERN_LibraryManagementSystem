@@ -20,25 +20,15 @@ const IsLoggedIn = () =>
 
 const GetData = (data:string): string | undefined | null=> 
 {
-    switch(data)
+    const DataList = ["authToken", "role", "username", "avatarUrl", "status"];
+
+    if(DataList.includes(data))
     {
-        case "authToken":
-            return GetUserCookie("authToken") || sessionStorage.getItem("authToken") || undefined;
-        
-        case "role":
-            return GetUserCookie("role") || sessionStorage.getItem("role") || undefined;
+        return GetUserCookie(data) || sessionStorage.getItem(data);
+    }
 
-        case "username":
-            return GetUserCookie("username") || sessionStorage.getItem("username") || undefined;
-        
-        case "avatarUrl":
-            return GetUserCookie("avatarUrl") || sessionStorage.getItem("avatarUrl") || undefined;
-
-        case "status":
-            return GetUserCookie("status") || sessionStorage.getItem("status") || undefined;
-    }   
+    return undefined;
 }
-
 
 const IsAdmin = (role: string | undefined): boolean => 
 {
@@ -60,7 +50,6 @@ const GetCurrentDate = (type:string): Date | string =>
         default:
             return `Invalid type: ${type}`;
     }
-
 }
 
 const CalculateDueDate = (duration:number): Date => 
@@ -79,7 +68,6 @@ const TransferDateToISOString = (date: Date | string): string =>
         return date.toISOString().split("T")[0];
     }
 
-    // Validate string input to ensure it's a valid ISO date format
     const parsedDate = new Date(date);
     
     if (!isNaN(parsedDate.getTime())) 

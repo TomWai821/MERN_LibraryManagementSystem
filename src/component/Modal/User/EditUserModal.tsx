@@ -19,9 +19,7 @@ import { UserDataInterface } from '../../../Model/UserTableModel';
 import { EditModalInterface } from '../../../Model/ModelForModal';
 import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 import { EditUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
-
-// Data (Dropdown option and CSS Syntax)
-
+import { DataValidateField } from '../../../Controller/ValidateController';
 
 const EditUserModal:FC<EditModalInterface> = (editModalData) => 
 {
@@ -29,7 +27,12 @@ const EditUserModal:FC<EditModalInterface> = (editModalData) =>
     const {handleOpen} = useModal();
     
     const {_id, username, email, role, status, gender} = editData as UserResultDataInterface;
+    
     const [user, setUser] = useState<UserResultDataInterface>({_id: _id, username: username, email:email, role:role, status:status, gender:gender});
+
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errors, setErrors] = useState({username: "", email: "", genre: "", role: "", status: "", gender: ""});
+    const [helperTexts, setHelperText] = useState({username: "", email: "", genre: "", role: "", status: "", gender: ""});
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
@@ -37,10 +40,39 @@ const EditUserModal:FC<EditModalInterface> = (editModalData) =>
         setUser({...user, [name] : value})
     }
 
-    const openConfirmModal = () => 
+    const HandleDataValidate = async () => 
     {
-        handleOpen(<EditUserConfirmModal value={value} editData={user} compareData={compareData} />);
+        let validationPassed = true;
+        const newErrors = { ...errors };
+        const newHelperTexts = { ...helperTexts };
+        setIsSubmitted(true);
+    
+        Object.keys(user).forEach((field) => 
+        {
+            if(["gender", "role"].includes(field))
+            {
+                return;
+            }
+
+            const { helperText, error, success } = DataValidateField(field, user[field as keyof UserDataInterface] as string);
+            newHelperTexts[field as keyof typeof newHelperTexts] = helperText;
+            newErrors[field as keyof typeof newErrors] = error;
+    
+            if(!success)
+            {
+                validationPassed = false;
+            }
+        });
+    
+        setHelperText(newHelperTexts);
+        setErrors(newErrors);
+
+        if(validationPassed)
+        {
+            handleOpen(<EditUserConfirmModal value={value} editData={user} compareData={compareData} />)
+        }
     }
+    
     
     return(
         <ModalTemplate title={"Edit User Record"} width="400px" cancelButtonName={"Exit"}>
@@ -48,7 +80,9 @@ const EditUserModal:FC<EditModalInterface> = (editModalData) =>
                 {
                     EditUserInputField.map((field, index) => (
                         <TextField key={index} label={field.label} name={field.name} value={user[field.name as keyof UserDataInterface]}
-                            type={field.type} size="small" onChange={onChange} select={field.select}>
+                            type={field.type} size="small" onChange={onChange} select={field.select} 
+                            helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
+                            error={isSubmitted && errors[field.name as keyof typeof errors] != ""}>
                             {
                                 field.select && field.options.map((option, index) => 
                                 (
@@ -60,7 +94,7 @@ const EditUserModal:FC<EditModalInterface> = (editModalData) =>
                 }
             </Box>
 
-            <ModalConfirmButton clickEvent={openConfirmModal} name={"Edit"} buttonType={""}/>
+            <ModalConfirmButton clickEvent={HandleDataValidate} name={"Edit"} buttonType={""}/>
         </ModalTemplate>
     );
 }

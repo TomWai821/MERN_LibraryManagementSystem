@@ -38,28 +38,24 @@ const BookPage:FC<PagesInterface> = (loginData) =>
     const onChange = (event: ChangeEvent<HTMLInputElement>, index?: number) => 
     {
         const { name, value } = event.target;
+
+        const fieldsMap: Record<string, {idKey: string, dataSource:any}> = 
+        {
+            "genre": {idKey: "genreID", dataSource: definition.Genre},
+            "language": {idKey: "languageID", dataSource: definition.Language},
+            "publisher": {idKey: "publisherID", dataSource: contact.Publisher},
+            "author": {idKey: "authorID", dataSource: contact.Author},
+        }
     
-        switch(name)
-        {   
-            case "genre":
-                setSearchBook({...searchBook,genre: value, genreID: index !== undefined && definition.Genre[index]?._id ? definition.Genre[index]._id : ""});
-                break;
+        if(fieldsMap[name])
+        {
+            const {idKey, dataSource} = fieldsMap[name];
 
-            case "language":
-                setSearchBook({...searchBook, language: value, languageID: index !== undefined && definition.Language[index]?._id ? definition.Language[index]._id : ""});
-                break;
-
-            case "publisher":
-                setSearchBook({...searchBook, publisher: value, publisherID: index !== undefined && contact.Publisher[index]?._id ? contact.Publisher[index]._id : ""});
-                break;
-
-            case "author":
-                setSearchBook({...searchBook, author: value, authorID: index !== undefined && contact.Author[index]?._id ? contact.Author[index]._id : ""});
-                break;
-
-            default:
-                setSearchBook({ ...searchBook, [name]: value });
-                break;
+            setSearchBook({...searchBook, [name]: value, [idKey]: index !== undefined && dataSource[index]?._id ? dataSource[index]._id : ""});
+        }
+        else
+        {
+            setSearchBook({ ...searchBook, [name]: value });
         }
     };
 
@@ -89,8 +85,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
                 break;
 
             case 1:
-                console.log(searchBook.bookname)
-                fetchLoanBookWithFliterData(searchBook.bookname, searchBook.username, searchBook.status)
+                fetchLoanBookWithFliterData("AllUser", searchBook.bookname, searchBook.username, searchBook.status)
                 break;
         }
         

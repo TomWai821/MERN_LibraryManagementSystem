@@ -1,9 +1,5 @@
-import {  ChangeEvent, FC, Fragment, useEffect, useState } from "react";
+import {  ChangeEvent, FC, useEffect, useState } from "react";
 import { Box, TableContainer, Paper } from "@mui/material";
-
-// Context
-import { useBookContext } from "../../../Context/Book/BookContext";
-import { useDefinitionContext } from "../../../Context/Book/DefinitionContext";
 
 // Another Component
 import ContactFilter from "./Filter/ContactFilter";
@@ -11,7 +7,6 @@ import CustomTab from "../../UIFragment/CustomTab";
 import TableTitle from "../../UIFragment/TableTitle";
 
 // Model
-import { BookSearchInterface } from "../../../Model/BookTableModel";
 import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 
 // Data (CSS SYntax and dropdown)

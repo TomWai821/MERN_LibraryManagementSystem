@@ -19,21 +19,54 @@ import ModalConfirmButton from '../../UIFragment/ModalConfirmButton';
 // Arrays And Object(For Dropdown Data and css syntax)
 import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 import { CreateUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
+import { DataValidateField } from '../../../Controller/ValidateController';
 
 const CreateUserModal:FC = ({}) => 
 {
+    const {handleOpen} = useModal();
+
     const [user, setUser] = useState({username: "", password: "", email: "", role: "User", status: "", gender: "Male", birthDay: GetCurrentDate("String") as Date});
 
-    const {handleOpen} = useModal();
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errors, setErrors] = useState({username: "", email: "", genre: "", role: "", status: "", gender: "", birthDay: ""});
+    const [helperTexts, setHelperText] = useState({username: "", email: "", genre: "", role: "", status: "", gender: "", birthDay: ""});
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
         setUser({...user, [event.target.name] : event.target.value})
     }
 
-    const OpenConfirmModal = () => 
+    const HandleDataValidate = async () => 
     {
-        handleOpen(<CreateUserConfirmModal {...user}/>);
+        let validationPassed = true;
+        const newErrors = { ...errors };
+        const newHelperTexts = { ...helperTexts };
+        setIsSubmitted(true);
+    
+        Object.keys(user).forEach((field) => 
+        {
+            if(["gender", "role"].includes(field))
+            {
+                return;
+            }
+
+            const { helperText, error, success } = DataValidateField(field, user[field as keyof UserDataInterface]);
+            newHelperTexts[field as keyof typeof newHelperTexts] = helperText;
+            newErrors[field as keyof typeof newErrors] = error;
+
+            if(!success)
+            {
+                validationPassed = false;
+            }
+        });
+    
+        setHelperText(newHelperTexts);
+        setErrors(newErrors);
+
+        if(validationPassed)
+        {
+            handleOpen(<CreateUserConfirmModal {...user}/>);
+        }
     }
     
     return(
@@ -43,7 +76,9 @@ const CreateUserModal:FC = ({}) =>
                 CreateUserInputField.map((field, index) => 
                 (
                     <TextField key={index} label={field.label} name={field.name} value={user[field.name as keyof UserDataInterface]}
-                        type={field.type} size="small" onChange={onChange} select={field.select}>
+                        type={field.type} size="small" onChange={onChange} select={field.select} 
+                        helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
+                        error={isSubmitted && errors[field.name as keyof typeof errors] != ""}>
                         {
                             field.select && field.options.map((option, index) => 
                             (
@@ -55,7 +90,7 @@ const CreateUserModal:FC = ({}) =>
             }
             </Box>
             
-            <ModalConfirmButton clickEvent={OpenConfirmModal} name={"Create"} buttonType={""}/>
+            <ModalConfirmButton clickEvent={HandleDataValidate} name={"Create"} buttonType={""}/>
         </ModalTemplate>
     );
 }

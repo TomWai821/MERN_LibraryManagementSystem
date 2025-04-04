@@ -30,7 +30,7 @@ const SuggestBookPanelTemplate:FC<{value:number, title:string, data:BookDataInte
 
     const openDisplayBookDataModal = (data: BookDataInterface | LoanBookInterface) => 
     {
-        handleOpen(<DisplayBookDataModal value={0} data={data} isLoggedIn={IsLoggedIn}/>);
+        handleOpen(<DisplayBookDataModal position={"mainPage"} value={0} data={data} isLoggedIn={IsLoggedIn}/>);
     }
     
     return(

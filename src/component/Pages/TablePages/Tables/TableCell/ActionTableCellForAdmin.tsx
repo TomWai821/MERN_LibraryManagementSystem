@@ -6,7 +6,7 @@ import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as
 import { useModal } from "../../../../../Context/ModalContext";
 
 // Useful function 
-import { StatusDetectionForAllUser, StatusDetectionForBook } from "../../../../../Controller/OtherUsefulController";
+import { DisableValidationForLoanBook, StatusDetectionForAllUser, StatusDetectionForBook } from "../../../../../Controller/OtherUsefulController";
 
 // Another Modal
 import EditUserModal from "../../../../Modal/User/EditUserModal";
@@ -42,12 +42,13 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         {
             case "Book":
                 const data = Information as BookDataInterface;
-                const Data = { _id: data._id, bookname: data.bookname, 
-                                language: data.languageDetails.language as string, languageID: data.languageDetails._id, 
-                                genre: data.genreDetails.genre as string, genreID: data.genreDetails._id, 
-                                author: data.authorDetails.author as string, authorID: data.authorDetails._id,
-                                publisher: data.publisherDetails.publisher as string, publisherID: data.publisherDetails._id, 
-                                description: data.description, imageUrl: data.image?.url, filename: data.image?.filename}
+                const Data = 
+                            { 
+                                _id: data._id, bookname: data.bookname, language: data.languageDetails.language as string,
+                                genre: data.genreDetails.genre as string, author: data.authorDetails.author as string,
+                                publisher: data.publisherDetails.publisher as string, description: data.description, 
+                                imageUrl: data.image?.url, filename: data.image?.filename
+                            }
                 handleOpen(<EditBookModal value={value} editData={Data} compareData={Data}/>);
                 break;
                 
@@ -106,7 +107,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
 
     const openReturnBookModal = () => 
     {
-        handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} isAdmin={isAdmin} modalOpenPosition={"AdminTableCell"}/>);
+        handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} isAdmin={isAdmin as boolean} modalOpenPosition={"AdminTableCell"}/>);
     }
 
     const openLoanBookModal = () => 
@@ -141,7 +142,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
             {title: "Loan Book", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openLoanBookModal, icon:<EventAvailableIcon />, disable: StatusDetectionForBook((Information as LoanBookInterface).status, "Loaned")},
         ],
         [
-            {title: "Return Book", syntax:ImportantActionButtonSyntax, clickEvent:openReturnBookModal, icon:<HistoryIcon />, disable: StatusDetectionForBook((Information as LoanBookInterface).status, "Returned")},
+            {title: "Return Book", syntax:ImportantActionButtonSyntax, clickEvent:openReturnBookModal, icon:<HistoryIcon />, disable: DisableValidationForLoanBook(Information as LoanBookInterface)},
         ]
     ]
 

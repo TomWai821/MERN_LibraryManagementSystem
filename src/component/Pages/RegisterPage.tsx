@@ -4,7 +4,7 @@ import { MenuItem, Button, Card, CardContent, Typography, TextField, Box, FormCo
 
 // Another Useful Function
 import { RegisterController } from '../../Controller/UserController/UserPostController';
-import { ValidateField } from '../../Controller/ValidateController'
+import { DataValidateField } from '../../Controller/ValidateController'
 import { ChangePage, GetCurrentDate } from '../../Controller/OtherController';
 
 // Context
@@ -21,39 +21,60 @@ const RegisterPage = () =>
 {
     const [Credentials, setCredentials] = useState({email: "", username: "", password: "", birthDay: GetCurrentDate("String") as string, gender: "Male"});
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [errors, setErrors] = useState({email: "", username: "", password: ""});
-    const [helperTexts, setHelperText] = useState({email: "", username: "", password: ""});
+    const [errors, setErrors] = useState({email: "", username: "", password: "", birthDay: ""});
+    const [helperTexts, setHelperText] = useState({email: "", username: "", password: "", birthDay: ""});
 
     const alertContext = useContext(AlertContext);
+
+    const handleDataValidate = async (event: FormEvent) => 
+    {
+        // Perform validation for all fields
+        let validationPassed = true;
+        const newErrors = { ...errors };
+        const newHelperTexts = { ...helperTexts };
+        setIsSubmitted(true);
+
+        Object.keys(Credentials).forEach((field) => 
+        {
+            const { helperText, error, success } = DataValidateField(field, Credentials[field as keyof RegisterModel]);
+            newHelperTexts[field as keyof typeof newHelperTexts] = helperText;
+            newErrors[field as keyof typeof newErrors] = error;
+
+            success ? handleRegister(event) : validationPassed = false;
+        });
+
+        setHelperText(newHelperTexts);
+        setErrors(newErrors);
+    }
 
     const handleRegister = async (event: FormEvent) => 
     {
         event.preventDefault();
         setIsSubmitted(true);
-        const response: boolean = await RegisterController("RegisterPanel", Credentials.username, Credentials.email, Credentials.password, "User", Credentials.gender, Credentials.birthDay);
-
-        if(alertContext && alertContext.setAlertConfig)
+    
+        const response: boolean = await RegisterController( 
+            "RegisterPanel", Credentials.username, Credentials.email, Credentials.password, 
+            "User", Credentials.gender, Credentials.birthDay
+        );
+    
+        if (alertContext && alertContext.setAlertConfig) 
         {
             if (response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: "Register Successfully!", open: true, onClose: () => alertContext.setAlertConfig(null)});
-                setTimeout(() => {ChangePage('/')}, 2000);
-            }
-            else
+                alertContext.setAlertConfig({ AlertType: "success", Message: "Registration successful! Redirecting...", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { ChangePage("/"); }, 2000);
+            } 
+            else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to login!", open: true, onClose: () => alertContext.setAlertConfig(null)});
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to register! Please try again.", open: true, onClose: () => alertContext.setAlertConfig(null) });
             }
         }
-    }
+    };
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
         const {name, value} = event.target;
         setCredentials({...Credentials, [name]: value});
-
-        const {helperText, error} = ValidateField(name, value);
-        setHelperText({...helperTexts, [name]: helperText});
-        setErrors({...errors, [name]: error});
     }
 
     return(
@@ -88,7 +109,7 @@ const RegisterPage = () =>
                         </TextField>
                     </FormControl>
 
-                    <Button variant='contained' onClick={handleRegister}>Register</Button>
+                    <Button variant='contained' onClick={handleDataValidate}>Register</Button>
                 </CardContent>
             </Card>
         </Box>

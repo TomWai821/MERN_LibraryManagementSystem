@@ -20,25 +20,29 @@ import { BookImageFormat, DeleteButton, displayAsColumn, displayAsRow, ModalBody
 import { useContactContext } from '../../../Context/Book/ContactContext';
 import { ContactInterface, DefinitionInterface } from '../../../Model/ResultModel';
 import { GetCurrentDate } from '../../../Controller/OtherController';
+import { DataValidateField } from '../../../Controller/ValidateController';
 
 const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) => 
 {
-    const { image, imageURL, bookname, language, languageID, genre, genreID, author, authorID, publisher, publisherID, description, publishDate } = bookData;
+    const { handleOpen } = useModal();
+    const { definition } = useDefinitionContext();
+    const { contact } = useContactContext();
+
+    const { image, imageURL, bookname, language, genre, author, publisher, description, publishDate } = bookData;
 
     const [ imageFile, setImageFile ] = useState<File | null>(image as File || null);
     const [ previewUrl, setPreviewUrl ] = useState<string | null>(imageURL as string || null);
     const [ book, setBook ] = useState(
         { 
-            bookname: bookname || "", language: language || "", languageID: languageID || "", 
-            genre: genre || "", genreID: genreID || "",  author: author || "", authorID: authorID || "", 
-            publisher: publisher || "", publisherID: publisherID || "", description: description || "", publishDate: publishDate || GetCurrentDate("String") as string
+            bookname: bookname || "", language: language || "", genre: genre || "", author: author || "", publisher: publisher || "",  
+            description: description || "", publishDate: publishDate || GetCurrentDate("String") as string
         }
     );
-    
-    const { handleOpen } = useModal();
-    const { definition } = useDefinitionContext();
-    const { contact } = useContactContext();
 
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errors, setErrors] = useState({bookname: "", author: "", genre: "", publisher: "", description: ""});
+    const [helperTexts, setHelperText] = useState({bookname: "", author: "", genre: "", publisher: "", description: ""});
+    
     // For book filter
     const CreateBookInputField = useMemo(() => 
     [
@@ -51,33 +55,11 @@ const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) =>
         {name: "description", label: "Description", type: "text", select: false, slotProps:{}, multiline: true, rows: 8}
     ],[definition])
 
-    const onSelectChange = (event: ChangeEvent<HTMLInputElement>, index?:number) => 
+    const onSelectChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
         const {name, value} = event.target;
 
-
-        switch(name)
-        {
-            case "genre":
-                setBook({...book, genre: value, genreID: definition.Genre[index as number]._id});
-                break;
-
-            case "language":
-                setBook({...book, language: value, languageID: definition.Language[index as number]._id});
-                break;
-
-            case "author":
-                setBook({...book, author: value, authorID: contact.Author[index as number]._id});
-                break;
-                
-            case "publisher":
-                setBook({...book, publisher: value, publisherID: contact.Publisher[index as number]._id});
-                break;
-
-            default:
-                setBook({ ...book, [name]: value });
-                break;
-        }
+        setBook({ ...book, [name]: value });
     }
 
     // Handle file upload
@@ -103,9 +85,36 @@ const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) =>
         }
     };
 
-    const OpenConfirmModal = () => 
+    const HandleDataValidate = async () => 
     {
-        handleOpen(<CreateBookConfirmModal data={{...book, image: imageFile, imageURL: previewUrl}}/>);
+        let validationPassed = true;
+        const newErrors = { ...errors };
+        const newHelperTexts = { ...helperTexts };
+        setIsSubmitted(true);
+    
+        Object.keys(book).forEach((field) => 
+        {
+            if(["description", "publishDate"].includes(field))
+            {
+                return;
+            }
+            const { helperText, error, success } = DataValidateField(field, book[field as keyof BookTableDataInterface]) || {};
+            newHelperTexts[field as keyof typeof newHelperTexts] = helperText;
+            newErrors[field as keyof typeof newErrors] = error;
+    
+            if(!success) 
+            {
+                validationPassed = false;
+            }
+        });
+    
+        setHelperText(newHelperTexts);
+        setErrors(newErrors);
+
+        if(validationPassed)
+        {
+            handleOpen(<CreateBookConfirmModal data={{...book, image: imageFile, imageURL: previewUrl}}/>);
+        }
     }
 
     return (
@@ -141,63 +150,28 @@ const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) =>
                     {
                         CreateBookInputField.map((field, index) => 
                         (
-                            <TextField key={index} label={field.label} name={field.name} value={book[field.name as keyof BookTableDataInterface]} 
-                                type={field.type} size="small" 
+                            <TextField key={index} label={field.label} name={field.name} 
+                                value={book[field.name as keyof BookTableDataInterface]} 
+                                helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
+                                error={isSubmitted && errors[field.name as keyof typeof errors] != ""}
                                 select={field.select} slotProps={field.slotProps} multiline={field.multiline} rows={field.rows} 
-                                onChange={(event) => 
-                                    {
-                                        const selectedIndex = field.options?.findIndex
-                                        (
-                                            (option) => 
-                                            {
-                                                const definitionOption = option as DefinitionInterface;
-                                                const contactOption = option as ContactInterface;
-                                                
-                                                switch(field.name)
-                                                {
-                                                    case "genre":
-                                                        return definitionOption.genre === event.target.value;
-                                      
-                                                    case "language":
-                                                        return definitionOption.language === event.target.value;
-                                                    
-                                                    case "author":
-                                                        return contactOption.author === event.target.value;
-                                                    
-                                                    case "publisher":
-                                                        return contactOption.publisher === event.target.value;
-                                                }
-                                            }
-                                        );
-                                        onSelectChange(event as ChangeEvent<HTMLInputElement>, selectedIndex as number);
-                                    }
-                                }
+                                type={field.type} size="small" onChange={onSelectChange}
                             >
                             {
                                 field.options && field.options.map((option, index) => 
                                     {
-                                        let value = "";
                                         const definitionOption = option as DefinitionInterface;
                                         const contactOption = option as ContactInterface;
 
-                                        switch(field.name)
+                                        const fieldMap:Record<string, string | undefined> = 
                                         {
-                                            case "genre":
-                                                value = definitionOption.genre as string;
-                                                break;
-
-                                            case "language":
-                                                value = definitionOption.language as string;
-                                                break;
-                                            
-                                            case "author":
-                                                value = contactOption.author as string;
-                                                break;
-                                            
-                                            case "publisher":
-                                                value = contactOption.publisher as string;
-                                                break;
+                                            "genre": definitionOption.genre as string,
+                                            "language": definitionOption.language as string,
+                                            "author": contactOption.author as string,
+                                            "publisher": contactOption.publisher as string
                                         }
+
+                                        let value = fieldMap[field.name];
 
                                         return(<MenuItem key={index} value={value}>{value}</MenuItem> )
                                     }
@@ -209,7 +183,7 @@ const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) =>
                     </Box>
                 </Box>
             </Box>
-            <Button variant='contained' onClick={OpenConfirmModal}>Create</Button>
+            <Button variant='contained' onClick={HandleDataValidate}>Create</Button>
         </ModalTemplate>
     );
 }

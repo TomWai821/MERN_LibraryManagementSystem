@@ -1,14 +1,14 @@
 import { Box } from "@mui/material";
 import { PageItemToCenter } from "../../ArraysAndObjects/FormatSyntaxObjects";
-import { useSuggestBookContext } from "../../Context/Book/SuggestBookContext";
 import SuggestBookPanelTemplate from "../Templates/SuggestBookPanelTemplate";
 import { FC } from "react";
 import { PagesInterface } from "../../Model/TablePagesAndModalModel";
+import { useBookContext } from "../../Context/Book/BookContext";
 
 const MainPage:FC<PagesInterface> = (pageData) =>
 {
     const {isLoggedIn} = pageData;
-    const { suggestBook } = useSuggestBookContext();
+    const { suggestBook } = useBookContext();
     
     const titles = ["Recommand For You","New Publish", "Most Popular"]
     

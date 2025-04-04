@@ -17,7 +17,7 @@ const BookSchema = new mongoose.Schema<BookInterface>
         authorID: { type: mongoose.Types.ObjectId, ref: 'Author', required: true },
         publisherID: { type: mongoose.Types.ObjectId, ref: 'Publusher', required: true },
         status: { type: String, required: true , default: 'OnShelf', enum: bookStatusArray},
-        description: { type: String, default: '' },
+        description: { type: String, default: 'N/A' },
         publishDate: { type: Date, default: Date.now, immutable: true  }
     }
 )

@@ -22,8 +22,7 @@ const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) =>
     [
         {label: "Bookname", value: bookname},
         {label: "Language", value: language},
-        {label: "Genre", value: genre},
-        {label: "Description", value: description}
+        {label: "Genre", value: genre}
     ]
 
     return(
@@ -40,14 +39,14 @@ const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) =>
                         {
                             bookData.map((data, index) => 
                                 (
-                                    <Box key={index} sx={{display: "inline-block"}}>
-                                        <Typography>{data.label}</Typography>
-                                        <Typography sx={BookDescriptionDisplayFormat}>{data.value}</Typography>
-                                    </Box>
+                                    <Typography key={index}>{data.label}: {data.value}</Typography>
                                 )
                             )
                         }
-
+                         <Box sx={{display: "inline-block"}}>
+                            <Typography>Description</Typography>
+                            <Typography sx={BookDescriptionDisplayFormat}>{description}</Typography>
+                        </Box>
                     </Box>
                 </Box>
 

@@ -80,6 +80,7 @@ const EditContactConfirmModal:FC<EditModalInterface> = (data) =>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>{`Do you want to edit this ${type} record?`}</Typography>
                 <Typography sx={ModalRemarkSyntax}>Changes:</Typography>
+                
                 {
                     differences.length > 0 ? differences.map((difference, index) => 
                         (

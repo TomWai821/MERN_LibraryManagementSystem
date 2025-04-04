@@ -8,7 +8,7 @@ import ModalConfirmButton from '../../UIFragment/ModalConfirmButton';
 import ModalTemplate from '../../Templates/ModalTemplate';
 
 // Another Modal
-
+import EditDefinitionConfirmModal from '../Confirmation/Definition/EditDefinitionConfirmModal';
 
 // Context
 import { useModal } from '../../../Context/ModalContext';
@@ -20,9 +20,6 @@ import { EditModalInterface } from '../../../Model/ModelForModal';
 // Data (Dropdown option and CSS Syntax)
 import { EditGenreInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
 import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
-import EditDefinitionConfirmModal from '../Confirmation/Definition/EditDefinitionConfirmModal';
-
-
 
 const EditGenreDataModal:FC<EditModalInterface> = (editModalData) => 
 {

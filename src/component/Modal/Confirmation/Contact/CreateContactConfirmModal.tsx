@@ -44,12 +44,16 @@ const CreateContactConfirmModal:FC<CreateModalInterface> = (createModalData) =>
         <ModalTemplate title={`Create ${type} Confirmation`} width="400px" cancelButtonName={"No"} cancelButtonEvent={returnCreateUserModal}>
             <Box id="modal-description" sx={ModalBodySyntax}>
             <Typography sx={ModalSubTitleSyntax}>Do you want to create this {type}?</Typography>
+
                 {
                     value === 0 ? <Typography>Author: {Data.author}</Typography>:<Typography>Language: {Data.publisher}</Typography>
                 }
+
                 <Typography>Phone No: {Data.phoneNumber}</Typography>
                 <Typography>Email: {Data.email}</Typography>
+
                 { value === 1 && <Typography>Address: {Data.address}</Typography>}
+                
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
             </Box>
             <ModalConfirmButton clickEvent={CreateContactData} name={"Yes"} buttonType={""}/>

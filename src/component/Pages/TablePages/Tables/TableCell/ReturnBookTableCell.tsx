@@ -6,7 +6,7 @@ import ReturnBookConfirmModal from "../../../../Modal/Confirmation/Book/ReturnBo
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { useModal } from "../../../../../Context/ModalContext";
 import { ReturnBookTableCellInterface } from "../../../../../Model/TablePagesAndModalModel";
-import { StatusDetectionForBook } from "../../../../../Controller/OtherUsefulController";
+import { DisableValidationForLoanBook, StatusDetectionForBook } from "../../../../../Controller/OtherUsefulController";
 import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const ReturnBookTableCell:FC<ReturnBookTableCellInterface> = (returnBookTableCellData) => 
@@ -17,20 +17,13 @@ const ReturnBookTableCell:FC<ReturnBookTableCellInterface> = (returnBookTableCel
 
     const openReturnBookModal = () => 
     {
-        handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} isAdmin={isAdmin} modalOpenPosition={"LoanBookTableCell"}/>);
+        handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} isAdmin={isAdmin as boolean} modalOpenPosition={"LoanBookTableCell"}/>);
     }
 
-    const isDiable = () => 
-    {
-        const result = StatusDetectionForBook((Information as LoanBookInterface).status, "Returned");
-        return result;
-    }
-
-    
     return(
         <TableCell>
             <Tooltip title={"Return Book"} arrow>
-                <IconButton disabled={isDiable()} sx={ImportantActionButtonSyntax} onClick={openReturnBookModal}>
+                <IconButton disabled={DisableValidationForLoanBook(Information)} sx={ImportantActionButtonSyntax} onClick={openReturnBookModal}>
                     <HistoryIcon />
                 </IconButton>
             </Tooltip>

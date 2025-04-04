@@ -11,44 +11,42 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
     const Data = data as BookDataInterface;
     const LoanData = data as LoanBookInterface;
 
-    const bookData = () => 
-    {
-        const defaults = { imageUrl: "", bookname: "", genre: "", status: "", language: "",author: "", publisher: "", publishDate: "", description: ""};
-    
-        const BookData =
-        {
-            imageUrl: Data.image?.url || LoanData.bookDetails?.image?.url,
-            bookname: Data.bookname || LoanData.bookDetails?.bookname,
-            genre: Data.genreDetails?.genre || LoanData.genreDetails?.genre,
-            status: Data.status || LoanData.bookDetails?.status,
-            language: Data.languageDetails?.language || LoanData.languageDetails?.language,
-            author: Data.authorDetails?.author || LoanData.authorDetails?.author,
-            publisher: Data.publisherDetails?.publisher || LoanData.publisherDetails?.publisher,
-            publishDate: Data.publishDate ? TransferDateToISOString(Data.publishDate as Date) : TransferDateToISOString(LoanData.bookDetails?.publishDate as string),
-            description: Data.description || LoanData.bookDetails?.description
-        };
-    
-        return { ...defaults, ...BookData };
-    };
+    const imageUrl = Data.image?.url || LoanData.bookDetails?.image?.url;
+    const descriptionData = Data.description || LoanData.bookDetails?.description;
+    const status = Data.status || LoanData.bookDetails?.status;
 
+    const BookData:Record<string, {label:string, value:any}> =
+    {
+        "bookname": { label: "Bookname", value: Data.bookname || LoanData.bookDetails?.bookname},
+        "genre": { label: "Genre", value: Data.genreDetails?.genre || LoanData.genreDetails?.genre },
+        "language": { label: "Language", value: Data.languageDetails?.language || LoanData.languageDetails?.language },
+        "author": { label: "Author", value: Data.authorDetails?.author || LoanData.authorDetails?.author },
+        "publisher": { label: "Publisher", value: Data.publisherDetails?.publisher || LoanData.publisherDetails?.publisher },
+        "publishDate": { label: "Publisher Date", value: Data.publishDate ? TransferDateToISOString(Data.publishDate as Date) : TransferDateToISOString(LoanData.bookDetails?.publishDate as string) },
+    };
+    
     return(
         <Box sx={{...displayAsRow, justifyContent: 'space-between'}}>
-            <Avatar src={bookData().imageUrl} alt="Preview" variant="rounded" sx={BookImageFormat}/>
+            <Avatar src={imageUrl} alt="Preview" variant="rounded" sx={BookImageFormat}/>
             
             <Box sx={{ display: 'grid', gap: '20px 50px', width:'350px', gridTemplateColumns: '100%'}}>
-                <Box sx={{display: 'inline-block'}}>
-                    <Typography>Bookname:</Typography>
-                    <Typography>{bookData().bookname}</Typography>
-                </Box>
-                {isLoggedIn && <Typography>Status: {bookData().status}</Typography>}
-                <Typography>Genre: {bookData().genre}</Typography>
-                <Typography>Language: {bookData().language}</Typography>
-                <Typography>Author: {bookData().author}</Typography>
-                <Typography>Publisher: {bookData().publisher}</Typography>
-                <Typography>Publish Date: {bookData().publishDate}</Typography>
+                {
+                    Object.entries(BookData).map(([key, value], index) => 
+                        (
+                            <Typography>{value.label}: {value.value}</Typography>
+                        )
+                    )
+                }
+                {
+                    isLoggedIn &&
+                    <Box sx={{ width:'350px', display: 'inline-block'}}>
+                        <Typography>Status: {status}</Typography>
+                    </Box>
+                }
+
                 <Box sx={{ maxWidth: '350px', display: 'inline-block'}}>
                     <Typography>Description:</Typography>
-                    <Typography sx={BookDescriptionDisplayFormat}>{bookData().description}</Typography>
+                    <Typography sx={BookDescriptionDisplayFormat}>{descriptionData}</Typography>
                 </Box>
             </Box>
         </Box>

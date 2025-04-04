@@ -10,36 +10,29 @@ const LoanBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
     const {data} = AllUserData;
     const LoanData = data as LoanBookInterface;
 
-    const bookData = () => 
+    const imageUrl = LoanData.bookDetails?.image?.url;
+
+    const BookData: Record<string,{label:string, data:any}> = 
     {
-        const defaults = { imageUrl: "", bookname: "", username: "", loanDate: "", dueDate: "", status: ""};
-    
-        const BookData = 
-        {
-            imageUrl: LoanData.bookDetails?.image?.url,
-            bookname: LoanData.bookDetails?.bookname,
-            username: LoanData.userDetails?.username,
-            loanDate: TransferDateToISOString(LoanData.loanDate as Date),
-            dueDate: TransferDateToISOString(LoanData.dueDate as Date),
-            status: LoanData.status
-        };
-    
-        return { ...defaults, ...BookData };
+        "bookname": {label: "Bookname", data:LoanData.bookDetails?.bookname},
+        "username": {label: "Username", data:LoanData.userDetails?.username},
+        "loanDate": {label: "Loan Date", data:TransferDateToISOString(LoanData.loanDate as Date)},
+        "dueDate": {label: "Due Date", data:TransferDateToISOString(LoanData.dueDate as Date)},
+        "status": {label: "Status", data:LoanData.status}
     };
 
     return(
         <Box sx={{...displayAsRow, justifyContent: 'space-between'}}>
-            <Avatar src={bookData().imageUrl} alt="Preview" variant="rounded" sx={BookImageFormat}/>
+            <Avatar src={imageUrl} alt="Preview" variant="rounded" sx={BookImageFormat}/>
             
             <Box sx={{ display: 'grid', gap: '20px 50px', width:'350px', gridTemplateColumns: '100%'}}>
-                <Box sx={{display: 'inline-block'}}>
-                    <Typography>Bookname:</Typography>
-                    <Typography>{bookData().bookname}</Typography>
-                </Box>
-                <Typography>Username: {bookData().username}</Typography>
-                <Typography>Loan Date: {bookData().loanDate}</Typography>
-                <Typography>Due Date: {bookData().dueDate}</Typography>
-                <Typography>Status: {bookData().status}</Typography>
+                {
+                    Object.entries(BookData).map(([key, data], index) => 
+                        (
+                            <Typography>{data.label}: {data.data}</Typography>
+                        )
+                    )
+                }
             </Box>
         </Box>
     );

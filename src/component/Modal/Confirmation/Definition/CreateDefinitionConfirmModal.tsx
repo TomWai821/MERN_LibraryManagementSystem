@@ -11,15 +11,14 @@ import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 // Template
 import ModalTemplate from '../../../Templates/ModalTemplate';
 
-// Another Modal
-
-
 // Data (CSS Synxax)
 import { ModalBodySyntax, ModalSubTitleSyntax, ModalRemarkSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 // Models
 import { CreateModalInterface } from "../../../../Model/ModelForModal";
 import { DefinitionInterface } from "../../../../Model/ResultModel";
+
+// Another Modal
 import CreateDefinitionModal from "../../Definition/CreateDefinitionModal";
 
 

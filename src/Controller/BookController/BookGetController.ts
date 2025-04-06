@@ -3,9 +3,9 @@ import { GetResultInterface } from "../../Model/ResultModel";
 const localhost:string = 'http://localhost:5000/api/book';
 const contentType:string = "application/json";
 
-export const fetchBook = async (bookname?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => 
+export const fetchBook = async (bookname?:string, status?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => 
 {
-    const queryString = BuildQuery({bookname, languageID, genreID, publisherID, authorID});
+    const queryString = BuildQuery({bookname, languageID, status, genreID, publisherID, authorID});
 
     const response = await fetch(`${localhost}/bookData${queryString ? `?${queryString}` : ``}`,
         {
@@ -68,6 +68,35 @@ export const fetchLoanBook = async(authToken?:string, bookname?:string, username
 
     const queryParams =  BuildQuery(data);
     const url = queryParams ? `${localhost}/LoanBook?${queryParams}` : `${localhost}/LoanBook`
+
+    const response = await fetch(url,
+        {
+            method: 'GET',
+            headers: headers
+        }
+    );
+
+    if(response.ok)
+    {
+        const result: GetResultInterface = await response.json();
+        return result;
+    }
+}
+
+export const fetchFavouriteBook = async(authToken?:string, data?:Record<string,any>) => 
+{
+    const headers: Record<string, string> = 
+    {
+        'content-type': contentType
+    }
+
+    if(authToken)
+    {
+        headers['authToken'] = authToken;
+    }
+
+    const queryParams = data ? '?' + Object.entries(data).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&'): '';
+    const url = queryParams ? `${localhost}/FavouriteBook?${queryParams}` : `${localhost}/FavouriteBook`
 
     const response = await fetch(url,
         {

@@ -1,6 +1,8 @@
-import { FC } from "react"
+import { FC, useContext } from "react"
 import { IconButton, TableCell, Tooltip } from "@mui/material";
 import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon, History as HistoryIcon, EventAvailable as EventAvailableIcon } from '@mui/icons-material';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
 
 // Context
 import { useModal } from "../../../../../Context/ModalContext";
@@ -15,26 +17,34 @@ import DeleteUserConfirmModal from "../../../../Modal/Confirmation/User/DeleteUs
 import DeleteBookModal from "../../../../Modal/Confirmation/Book/DeleteBookConfirmModal";
 import SuspendUserModal from "../../../../Modal/User/SuspendUserModal";
 import UndoUserActivityModal from "../../../../Modal/Confirmation/User/UndoUserActivityModal";
-
-// Model
-import { ActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel"
-import { BookDataInterface, DetailsInterfaceForSuspendAndDelete, LoanBookInterface, UserResultDataInterface } from "../../../../../Model/ResultModel";
-
-// Data(CSS Syntax)
-
-import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 import EditSuspendUserModal from "../../../../Modal/User/EditSuspendUserModal";
 import ReturnBookConfirmModal from "../../../../Modal/Confirmation/Book/ReturnBookConfirmModal";
 import DeleteContactConfirmModal from "../../../../Modal/Confirmation/Contact/DeleteContactConfirmModal";
 import EditContactModal from "../../../../Modal/Contact/EditContactModal";
 import LoanBookConfirmationModal from "../../../../Modal/Confirmation/Book/LoanBookConfirmationModal";
 
+// Model
+import { ActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel"
+import { BookDataInterface, DetailsInterfaceForSuspendAndDelete, LoanBookInterface, UserResultDataInterface } from "../../../../../Model/ResultModel";
+
+// Data(CSS Syntax)
+import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { useBookContext } from "../../../../../Context/Book/BookContext";
+import { AlertContext } from "../../../../../Context/AlertContext";
+
+
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
 {
+    const { handleOpen } = useModal();
+    const {BookRecordForUser, favouriteBook, unfavouriteBook} = useBookContext();
+    const alertContext = useContext(AlertContext);
+
+
     const { isAdmin, value, TableName, Information } = tableCellData;
     const userData = Information as UserResultDataInterface;
-
-    const { handleOpen } = useModal();
+    
+    const isFavourite = BookRecordForUser[1].find((favouriteBook) => favouriteBook.bookDetails?._id === (Information as BookDataInterface)._id);
+    const FavouriteID = BookRecordForUser[1].find((favouriteBook) => favouriteBook.bookDetails?._id === (Information as BookDataInterface)._id as string)?._id;
 
     const openEditModal = () => 
     {
@@ -113,8 +123,32 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
     const openLoanBookModal = () => 
     {
         const bookData = Information as BookDataInterface;
-        handleOpen(<LoanBookConfirmationModal _id={bookData._id} bookname={bookData.bookname} language={bookData.languageDetails.language as string} 
-            genre={bookData.genreDetails.genre as string} description={bookData.description as string} imageUrl={bookData.image?.url as string} />)
+        handleOpen(<LoanBookConfirmationModal _id={bookData._id} bookname={bookData.bookname} author={bookData.author as string} 
+            language={bookData.languageDetails.language as string} genre={bookData.genreDetails.genre as string}
+            description={bookData.description as string} imageUrl={bookData.image?.url as string} />)
+    }
+
+    const FavouriteHandler = async () => 
+    {
+        let response = isFavourite ? unfavouriteBook(FavouriteID as string) : favouriteBook((Information as BookDataInterface)._id); 
+        const favouriteText = isFavourite ? "Unfavourite" : "Favourite";
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `${favouriteText} successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to ${favouriteText}! Please try again`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
+    }
+
+    const FavouriteIconSyntax = () => 
+    {
+        return isFavourite ? { "&:hover": { backgroundColor: 'lightGray' }, color: 'gold' } : { "&:hover": { backgroundColor: 'lightGray' } };
     }
     
     const UserActionTableCellForAdmin = 
@@ -139,10 +173,14 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         [
             {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openEditModal, icon:<EditIcon />},
             {title: "Delete (Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
-            {title: "Loan Book", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openLoanBookModal, icon:<EventAvailableIcon />, disable: StatusDetectionForBook((Information as LoanBookInterface).status, "Loaned")},
+            {title: "Loan Book", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openLoanBookModal, icon:<EventAvailableIcon />, 
+                disable: StatusDetectionForBook((Information as LoanBookInterface).status, "Loaned")},
+            {title: isFavourite ? "Unfavourite" : "Favourite",  syntax: FavouriteIconSyntax, 
+                clickEvent: FavouriteHandler, icon: isFavourite ? <StarIcon/> : <StarBorderIcon />}
         ],
         [
-            {title: "Return Book", syntax:ImportantActionButtonSyntax, clickEvent:openReturnBookModal, icon:<HistoryIcon />, disable: DisableValidationForLoanBook(Information as LoanBookInterface)},
+            {title: "Return Book", syntax:ImportantActionButtonSyntax, clickEvent:openReturnBookModal, icon:<HistoryIcon />, 
+                disable: DisableValidationForLoanBook(Information as LoanBookInterface)},
         ]
     ]
 

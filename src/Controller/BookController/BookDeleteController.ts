@@ -1,11 +1,19 @@
 const localhost:string = 'http://localhost:5000/api/book';
 const contentType:string = "application/json";
 
-export const deleteBookRecord = async (authToken:string, bookID:string) => 
+export const deleteBookRecord = async (type:string ,authToken:string, ID:string) => 
 {
     try
     {
-        const response = await fetch(`${localhost}/bookData/id=${bookID}`,
+        const url:Record<string, string> = 
+        {
+            "Book": `${localhost}/bookData/id=${ID}`,
+            "Favourite": `${localhost}/FavouriteBook/id=${ID}`
+        }
+
+        console.log(url[type]);
+
+        const response = await fetch(url[type],
             {
                 method: 'DELETE',
                 headers: {'content-type': contentType, 'authToken': authToken}

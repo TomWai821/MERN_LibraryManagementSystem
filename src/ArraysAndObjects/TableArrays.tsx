@@ -146,4 +146,6 @@ const GenderFilterOption = [...GenderOption, ...EmptyOption];
 
 const LoanBookStatusOption = ["Loaned", "Returned", "Returned(Late)", "All"];
 
-export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, PublisherTableHeader, AuthorTableHeader, BookTabLabel, UserTabLabel, LoanBookTabLabel, ContactTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption}
+const AllBookStatusOption = ["OnShelf", "Loaned", "All"];
+
+export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, PublisherTableHeader, AuthorTableHeader, BookTabLabel, UserTabLabel, LoanBookTabLabel, ContactTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption, AllBookStatusOption}

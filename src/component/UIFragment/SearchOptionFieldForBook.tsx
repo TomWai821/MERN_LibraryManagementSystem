@@ -68,7 +68,7 @@ const SearchOptionFieldForBook:FC<BookOptionFieldModal> = ({...optionData}) =>
                                         >
                                             {field.dataType.map((item, index) => 
                                             (
-                                                <MenuItem key={index} value={item[field.keyProperty  as keyof DefinitionInterface]}>
+                                                <MenuItem key={index} value={item[field.keyProperty as keyof DefinitionInterface]}>
                                                     {`${item[field.keyProperty as keyof DefinitionInterface]} (${item[field.descriptionProperty as keyof DefinitionInterface]})`}
                                                 </MenuItem>
                                             ))}

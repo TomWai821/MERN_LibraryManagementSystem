@@ -1,6 +1,6 @@
 import mongoose, { PipelineStage } from "mongoose";
 import { BookLoanedInterface } from "../../model/bookSchemaInterface";
-import { printError } from "../../controller/Utils";
+import { lookupAndUnwind, printError } from "../../controller/Utils";
 
 const BookLoanedSchema = new mongoose.Schema<BookLoanedInterface>
 (   
@@ -43,19 +43,10 @@ export const GetBookLoaned = async (data?:Record<string, any>, limit?:number) =>
     }
 };
 
-const lookupAndUnwind = (from:string, localField:string, foreignField:string, asField:string) => 
-(
-    [
-        { $lookup: { from, localField, foreignField, as: asField } },
-        { $unwind: { path: `$${asField}`, preserveNullAndEmptyArrays: true } }
-    ]
-);
-
 // Local variable(For get banned user data)
 const GetBooksWithOtherDetails = async (data?:Record<string, any>) => 
 {
     let pipeline:PipelineStage[] = [];
-
 
     pipeline.push(
         ...lookupAndUnwind('users', 'userID', '_id', 'userDetails'),
@@ -63,7 +54,7 @@ const GetBooksWithOtherDetails = async (data?:Record<string, any>) =>
         ...lookupAndUnwind('authors', 'bookDetails.authorID', '_id', 'authorDetails'),
         ...lookupAndUnwind('publishers', 'bookDetails.publisherID', '_id', 'publisherDetails'),
         ...lookupAndUnwind('genres', 'bookDetails.genreID', '_id', 'genreDetails'),
-        ...lookupAndUnwind('languages', 'bookDetails.languageID', '_id', 'languageDetails'),
+        ...lookupAndUnwind('languages', 'bookDetails.languageID', '_id', 'languageDetails')
     );
 
     if (data) { pipeline.push( {$match: {...data}} )}
@@ -91,7 +82,6 @@ const GetSuggestBookDetails = async (data?: Record<string, any>, limit?: number)
         ...lookupAndUnwind('languages', 'bookDetails.languageID', '_id', 'languageDetails'),
     );
 
-    // Unwind bookDetails array to simplify the results
     pipeline.push({ $unwind: { path: "$bookDetails",  preserveNullAndEmptyArrays: true }});
 
     return await BookLoaned.aggregate(pipeline);

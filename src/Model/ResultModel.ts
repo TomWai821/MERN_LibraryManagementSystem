@@ -23,6 +23,7 @@ export interface GetResultInterface
     foundDefinition?: DefinitionInterface | DefinitionInterface[];
     foundContact?: ContactInterface | ContactInterface[];
     foundLoanBook?: LoanBookInterface | LoanBookInterface[];
+    foundFavouriteBook?: BookDataInterface | BookDataInterface[];
 }
 
 export interface UserResultDataInterface extends UserDataInterface

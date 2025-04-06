@@ -1,25 +1,15 @@
 import { Request, Response } from 'express'
 import { CreateBook, FindBookByIDAndDelete, FindBookByIDAndUpdate } from '../schema/book/book';
 import { AuthRequest } from '../model/requestInterface';
-import path from 'path';
-import fs from 'fs'
 import { deleteImage } from '../storage';
+import fs from 'fs'
 
 export const GetBookRecord = async (req: AuthRequest, res: Response) => 
 {
-    let success = false;
-
     try 
     {
         const foundBook = req.foundBook;
-
-        if (!foundBook) 
-        {
-            return res.status(404).json({ success: false, error: "Book record not found!" });
-        }
-
-        success = true;
-        return res.json({ success, foundBook: foundBook });
+        return res.json({ success: true, foundBook: foundBook });
     } 
     catch (error) 
     {

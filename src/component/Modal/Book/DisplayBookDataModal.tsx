@@ -43,13 +43,14 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
     const openLoanBookModal = () => 
     {
         handleOpen(
-        <LoanBookConfirmationModal _id={data._id} 
-            bookname={(data as BookDataInterface).bookname || (data as LoanBookInterface).bookDetails?.bookname as string} 
-            language={(data as BookDataInterface).languageDetails.language as string || (data as LoanBookInterface).bookDetails?.languageDetails.language as string} 
-            genre={(data as BookDataInterface).genreDetails.genre as string || (data as LoanBookInterface).bookDetails?.genreDetails.genre as string} 
-            description={(data as BookDataInterface).description as string || (data as LoanBookInterface).bookDetails?.description as string} 
-            imageUrl={(data as BookDataInterface).image?.url as string || (data as LoanBookInterface).bookDetails?.image?.url as string}
-        />);
+        <LoanBookConfirmationModal 
+            _id={data._id}
+            author={(data as BookDataInterface).author || (data as LoanBookInterface).bookDetails?.author as string} 
+            bookname={(data as BookDataInterface).bookname || (data as LoanBookInterface).bookDetails?.bookname as string}
+            language={(data as BookDataInterface).languageDetails.language as string || (data as LoanBookInterface).bookDetails?.languageDetails.language as string}
+            genre={(data as BookDataInterface).genreDetails.genre as string || (data as LoanBookInterface).bookDetails?.genreDetails.genre as string}
+            description={(data as BookDataInterface).description as string || (data as LoanBookInterface).bookDetails?.description as string}
+            imageUrl={(data as BookDataInterface).image?.url as string || (data as LoanBookInterface).bookDetails?.image?.url as string} />);
     }
 
     return(

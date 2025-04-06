@@ -9,7 +9,7 @@ import BookPage from "../Pages/TablePages/BookPage"
 import UserPage from "../Pages/TablePages/UserPage"
 import ViewProfilePage from "../Pages/ViewProfilePage"
 import DefinitionPage from "../Pages/TablePages/DefinitionPage"
-import SelfLoanRecordPage from "../Pages/TablePages/SelfLoanRecordPage"
+import SelfLoanRecordPage from "../Pages/TablePages/SelfRecordPage"
 
 import { PagesInterface } from "../../Model/TablePagesAndModalModel"
 import ContactPage from "../Pages/TablePages/ContactPage"

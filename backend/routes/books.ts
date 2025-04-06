@@ -5,13 +5,14 @@ import { LoginAndFindUser } from '../Arrays/routesMap';
 import { CreateBookRecord, DeleteBookRecord, EditBookRecord, GetBookImage, GetBookRecord } from '../controller/bookController';
 
 import { BookCreateRules } from '../model/expressBodyRules';
-import { BuildBookQueryAndGetData, BuildSuggestBookQueryAndGetData } from '../controller/middleware/Book/bookGetDataMiddleware';
+import { BuildBookQueryAndGetData, BuildFavouriteBookQueryAndGetData, BuildSuggestBookQueryAndGetData } from '../controller/middleware/Book/bookGetDataMiddleware';
 import { DefinitionDataValidation, DefinitionTypeValidation } from '../controller/middleware/Definition/DefinitonValidationMiddleware';
 import { CreateContactRecord, DeleteContactRecord, GetContactRecord, UpdateContactRecord } from '../controller/contactController';
 import { ContactDataValidation, ContactQueryVadlidation, ContactTypeValidation } from '../controller/middleware/Contract/ContactValidationMiddleware';
 import { CreateLoanBookRecord, GetLoanBookRecord, UpdateLoanBookRecord } from '../controller/loanBookController';
 import { BookGenreIDAndLanguageIDValidation, BookNameValidation, BookRecordIDValidation, FoundBookLoanRecord } from '../controller/middleware/Book/bookValidationMiddleware';
 import { FetchUserFromHeader } from '../controller/middleware/User/authMiddleware';
+import { CreateFavouriteBookRecord, DeleteFavouriteBookRecord, GetFavouriteBookRecord } from '../controller/favouriteBookController';
 
 const router = express.Router();
 
@@ -27,10 +28,15 @@ router.post('/BookData', upload.single("image"), BookCreateRules, ...LoginAndFin
 router.put('/BookData/id=:id', upload.single("image"), ...LoginAndFindUser, BookRecordIDValidation, BookGenreIDAndLanguageIDValidation, EditBookRecord);
 router.delete('/BookData/id=:id', ...LoginAndFindUser, BookRecordIDValidation, DeleteBookRecord);
 
-// For book records
+// For Loan book records
 router.get('/LoanBook', FetchUserFromHeader, GetLoanBookRecord);
 router.post('/LoanBook', ...LoginAndFindUser, CreateLoanBookRecord);
 router.put('/LoanBook/id=:id', ...LoginAndFindUser, FoundBookLoanRecord, UpdateLoanBookRecord);
+
+// For Loan book records
+router.get('/FavouriteBook', ...LoginAndFindUser, FetchUserFromHeader, BuildFavouriteBookQueryAndGetData, GetFavouriteBookRecord);
+router.post('/FavouriteBook', ...LoginAndFindUser, CreateFavouriteBookRecord);
+router.delete('/FavouriteBook/id=:id', ...LoginAndFindUser, DeleteFavouriteBookRecord);
 
 // For Suggest Book
 router.get('/BookData/type=:type', FetchUserFromHeader, BuildSuggestBookQueryAndGetData, GetBookRecord);

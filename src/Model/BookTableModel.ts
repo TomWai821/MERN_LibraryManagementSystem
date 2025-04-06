@@ -6,11 +6,7 @@ interface BookSearchInterface extends SelfLoanBookSearchInterface, ContactSearch
 {
     username:string;
     language:string;
-    languageID:string;
     genre:string;
-    genreID:string;
-    authorID:string;
-    publisherID:string;
 }
 
 interface SelfLoanBookSearchInterface

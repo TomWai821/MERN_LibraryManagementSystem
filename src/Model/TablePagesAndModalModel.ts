@@ -46,8 +46,9 @@ export interface ActionTableCellInterface extends IsAdminInterface, UserActionTa
     TableName: string;
 }
 
-export interface ReturnBookTableCellInterface extends IsAdminInterface
+export interface RecordTableCellInterface extends IsAdminInterface
 {
+    value:number;
     isLoggedIn?: boolean;
     Information: LoanBookInterface;
 }
@@ -59,7 +60,9 @@ export interface TableInterface extends IsAdminInterface
 
 export interface TabInterface extends IsAdminInterface
 {
+    isLoggedIn?:boolean;
     tabLabel: { label: string; }[];
+    type:string;
     value: number;
     paginationValue: number;
     valueChange: (type:string, newValue: number) => void;

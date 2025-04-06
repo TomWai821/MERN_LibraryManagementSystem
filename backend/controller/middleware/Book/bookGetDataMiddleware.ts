@@ -1,8 +1,9 @@
 import { NextFunction, Response } from "express";
 import { AuthRequest } from "../../../model/requestInterface";
-import { BookInterface } from "../../../model/bookSchemaInterface";
+import { BookFavouriteInterface, BookInterface } from "../../../model/bookSchemaInterface";
 import { GetBook } from "../../../schema/book/book";
 import { ObjectId } from "mongodb";
+import { GetBookFavourite } from "../../../schema/book/bookFavourite";
 
 // for build query (GET method in user, which require login)
 export const BuildBookQueryAndGetData = async (req: AuthRequest, res: Response, next: NextFunction) => 
@@ -22,6 +23,35 @@ export const BuildBookQueryAndGetData = async (req: AuthRequest, res: Response, 
     req.foundBook = foundBook;
     next();
 };
+
+export const BuildFavouriteBookQueryAndGetData = async (req: AuthRequest, res: Response, next: NextFunction) => 
+{
+    const userID = req.user?._id;
+    const queryParams = req.query;
+    let foundFavouriteBook: BookFavouriteInterface | BookFavouriteInterface[] | null | undefined;
+    let query:any;
+
+    const hasBodyParameter = Object.keys(queryParams).length > 0;
+
+    if(hasBodyParameter)
+    {
+        query = buildQuery(queryParams);
+    }
+
+    let userObjectId = new ObjectId(userID as unknown as ObjectId);
+
+    const completeQuery = hasBodyParameter ? {...query, userID: userObjectId} : {userID: userObjectId};
+    
+    foundFavouriteBook = await GetBookFavourite(completeQuery);
+
+    if(!foundFavouriteBook)
+    {
+        return res.status(404).json({sucess: false, error: 'Could not found favourite book record!'})
+    }
+
+    req.foundFavouriteBook = foundFavouriteBook;
+    next();
+}
 
 export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Response, next: NextFunction) => 
 {
@@ -66,11 +96,14 @@ const fetchBookData = async (queryParams: any) =>
 
 const buildQuery = (queryParams: any) => 
 {
-    const { bookname, genreID, languageID, publisherID, authorID } = queryParams;
+    const { bookname, status, genreID, languageID, publisherID, authorID } = queryParams;
+
+    console.log(status);
 
     const query = 
     {
         ...(bookname && { "bookname": { $regex: bookname, $options: "i" } }),
+        ...(status && { "status": status }),
         ...(genreID && { "genreID": new ObjectId(genreID) }),
         ...(languageID && { "languageID": new ObjectId(languageID) }),
         ...(publisherID && { "publisherID": new ObjectId(publisherID) }),

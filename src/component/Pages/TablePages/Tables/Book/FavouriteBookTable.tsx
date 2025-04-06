@@ -1,14 +1,13 @@
 import { Avatar, Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { FC, Fragment, useState } from "react";
-import { SelfLoanBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
+import { AllBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
 import ContentTableCell from "../../../../UIFragment/ContentTableCell";
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
-import { TransferDateToISOString } from "../../../../../Controller/OtherController";
 import RecordBookTableCell from "../TableCell/RecordBookTableCell";
 
-const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
+const FavouriteBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
     const {value, bookData, isAdmin, paginationValue} = DataForAllUserTable;
     const LoanBookData = bookData[value] as LoanBookInterface[];
@@ -43,7 +42,7 @@ const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
             <Table>
                 <TableHead>
                     <TableRow>
-                        {SelfLoanBookTableHeader.map((header, index) =>
+                        {AllBookTableHeader.map((header, index) =>
                             (
                                 <TableCell key={index}>{header.label}</TableCell>
                             ) 
@@ -64,9 +63,11 @@ const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                     </ContentTableCell>
 
                                     <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.bookDetails?.bookname}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.loanDate as Date)}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.status}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.genreDetails?.genre}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.languageDetails?.language}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.authorDetails?.author}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.publisherDetails?.publisher}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.bookDetails?.status}</ContentTableCell>
                                     <RecordBookTableCell value={value} isAdmin={isAdmin} Information={data}/>
                                 </TableRow>
                             )
@@ -81,4 +82,4 @@ const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
     );
 }
 
-export default SelfLoanBookTable
+export default FavouriteBookTable

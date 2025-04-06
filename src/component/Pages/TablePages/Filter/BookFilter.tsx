@@ -18,6 +18,7 @@ import { BookTableDataInterface } from "../../../../Model/BookTableModel";
 
 // Data(CSS Syntax and dropdown data)
 import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { AllBookStatusOption, LoanBookStatusOption } from "../../../../ArraysAndObjects/TableArrays";
 
 const BookFilter: FC<FilterInterface> = (filterData) => 
 {
@@ -49,7 +50,24 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{ ...ItemToCenter, paddingBottom: '25px', alignItems: 'center' }}>
                
-                <TextField label="Book Name" name="bookname" value={bookData.bookname} onChange={onChange} size="small" sx={{ width: '70%' }}/>
+               {
+                value === 0 ?
+                    <Fragment>
+                        <TextField label="Book Name" name="bookname" value={bookData.bookname} onChange={onChange} size="small" sx={{ width: '45%' }}/>
+                        <TextField label="Status" name="status" value={searchData.status} onChange={onChange} size="small" sx={{ marginLeft: '10px', width: '15%' }} select>
+                        {
+                                AllBookStatusOption.map((option, index) => 
+                                (
+                                    <MenuItem key={index} value={option}>{option}</MenuItem>
+                                )
+                            )
+                        }
+                        </TextField>
+                    </Fragment>
+                    :
+                    <TextField label="Book Name" name="bookname" value={bookData.bookname} onChange={onChange} size="small" sx={{ width: '70%' }}/> 
+               }
+                
 
                 <IconButton onClick={toggleCardVisibility}>
                     {optionVisiable ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}

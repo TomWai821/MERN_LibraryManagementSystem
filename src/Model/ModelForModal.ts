@@ -86,6 +86,7 @@ export interface LoanBookModalInterface
 {
     _id:string;
     bookname:string;
+    author: string;
     language:string; 
     genre:string; 
     description:string; 

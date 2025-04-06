@@ -30,8 +30,6 @@ export const createLoanBookRecord = async (authToken:string, bookID:string, loan
         ...(dueDate && {dueDate})
     }
 
-    console.log(loanBookBody);
-
     const response = await fetch(`${localhost}/LoanBook`,
         {
             method: 'POST',
@@ -39,6 +37,26 @@ export const createLoanBookRecord = async (authToken:string, bookID:string, loan
             body: JSON.stringify(loanBookBody)
         }
     );
+    
+    if(response.ok)
+    {
+        const result = await response.json();
+        return response.ok;
+    }
+}
+
+export const createFavouriteBookRecord = async (authToken:string, bookID:string) => 
+{
+    
+    const response = await fetch(`${localhost}/FavouriteBook`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': contentType, 'authToken': authToken },
+            body: JSON.stringify({bookID})
+        }
+    );
+
+    console.log(response);
     
     if(response.ok)
     {

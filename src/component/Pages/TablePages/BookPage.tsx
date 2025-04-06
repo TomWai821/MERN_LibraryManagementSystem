@@ -23,40 +23,23 @@ import { useContactContext } from "../../../Context/Book/ContactContext";
 const BookPage:FC<PagesInterface> = (loginData) =>
 {
     const { isLoggedIn, isAdmin } = loginData;
-    const { bookData, fetchAllBookWithFliterData, fetchLoanBookWithFliterData } = useBookContext();
+    const { bookData, fetchBookWithFliterData, fetchLoanBookWithFliterData } = useBookContext();
     const { definition } = useDefinitionContext();
     const { contact } = useContactContext();
 
     const SetTitle:string = isAdmin ? "Manage Books Record": "View Books";
 
-    const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", username: "", status:"All", language: "All", languageID: "", genre: "All", genreID: "", author: "All", authorID: "", publisher: "All", publisherID: ""});
+    const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", username: "", language: "All", status:"All", genre: "All", author: "All", publisher: "All" });
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
 
-    const defaultValue = { bookname: "", username: "", language: "All", status:"All", languageID: "", genre: "All", genreID: "",  author: "All", authorID: "", publisher: "All", publisherID: ""};
+    const defaultValue = { bookname: "", username: "", language: "All", status:"All", genre: "All", author: "All", publisher: "All" };
 
     const onChange = (event: ChangeEvent<HTMLInputElement>, index?: number) => 
     {
         const { name, value } = event.target;
 
-        const fieldsMap: Record<string, {idKey: string, dataSource:any}> = 
-        {
-            "genre": {idKey: "genreID", dataSource: definition.Genre},
-            "language": {idKey: "languageID", dataSource: definition.Language},
-            "publisher": {idKey: "publisherID", dataSource: contact.Publisher},
-            "author": {idKey: "authorID", dataSource: contact.Author},
-        }
-    
-        if(fieldsMap[name])
-        {
-            const {idKey, dataSource} = fieldsMap[name];
-
-            setSearchBook({...searchBook, [name]: value, [idKey]: index !== undefined && dataSource[index]?._id ? dataSource[index]._id : ""});
-        }
-        else
-        {
-            setSearchBook({ ...searchBook, [name]: value });
-        }
+        setSearchBook({ ...searchBook, [name]: value });
     };
 
     const changeValue = (type:string, newValue: number) =>
@@ -81,11 +64,15 @@ const BookPage:FC<PagesInterface> = (loginData) =>
         switch(tabValue)
         {
             case 0:
-                fetchAllBookWithFliterData(searchBook.bookname, searchBook.genreID, searchBook.languageID, searchBook.authorID, searchBook.publisherID);
+                const genreID = definition.Genre.find((genre) => genre.genre === searchBook.genre)?.genre as string;;
+                const languageID = definition.Language.find((language) => language.language === searchBook.language)?.language as string;
+                const authorID = contact.Author.find((author) => author.author === searchBook.author)?.author as string;
+                const publisherID = contact.Publisher.find((publisher) => publisher.publisher === searchBook.publisher)?.publisher as string;
+                fetchBookWithFliterData(searchBook.bookname, searchBook.status, genreID, languageID, authorID, publisherID);
                 break;
 
             case 1:
-                fetchLoanBookWithFliterData("AllUser", searchBook.bookname, searchBook.username, searchBook.status)
+                fetchLoanBookWithFliterData("AllUser", searchBook.bookname, searchBook.username, searchBook.status);
                 break;
         }
         
@@ -112,7 +99,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
 
             <BookFilter isAdmin={isAdmin} value={tabValue} onChange={onChange} searchData={searchBook} Search={SearchBook}/>
 
-            <CustomTab isAdmin={isAdmin} value={tabValue} valueChange={changeValue} paginationValue={paginationValue} tabLabel={BookTabLabel} paginationOption={PaginationOption}/>
+            <CustomTab isAdmin={isAdmin} value={tabValue} valueChange={changeValue} paginationValue={paginationValue} tabLabel={BookTabLabel} paginationOption={PaginationOption} type={"Book"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
                 <BookTabPanel value={tabValue} isAdmin={isAdmin} bookData={bookData} paginationValue={paginationValue} isLoggedIn={isLoggedIn}/>

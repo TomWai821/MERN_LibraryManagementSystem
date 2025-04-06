@@ -27,7 +27,8 @@ const RecordFilter:FC<ContactFilterInterface> = (filterData) =>
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{ ...ItemToCenter, paddingBottom: '25px', alignItems: 'center' }}>
                
-                <TextField label={dataForTextField[value].label} name={dataForTextField[value].name} value={dataForTextField[value].value} onChange={onChange} size="small" sx={{ width: '80%', paddingRight: '10px' }}/>
+                <TextField label={dataForTextField[value].label} name={dataForTextField[value].name} value={dataForTextField[value].value} 
+                    onChange={onChange} size="small" sx={{ width: '80%', paddingRight: '10px' }}/>
                 
                 <Button variant='contained' sx={{marginLeft: '10px'}} onClick={Search}>Search</Button>
                 <Button variant='contained' sx={{marginLeft: '10px'}} onClick={openCreateContactDataModal}>Create</Button>

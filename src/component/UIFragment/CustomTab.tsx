@@ -16,7 +16,7 @@ const getTabProps = (index: number) =>
 const CustomTab:FC<TabInterface> = (TabData) => 
 {
 
-    const {tabLabel, isAdmin, value, paginationValue, valueChange, paginationOption} = TabData;
+    const {tabLabel, isAdmin, isLoggedIn, type, value, paginationValue, valueChange, paginationOption} = TabData;
 
     const handleTabChange = (event: ChangeEvent<{}>, newValue: number) => 
     {
@@ -29,10 +29,15 @@ const CustomTab:FC<TabInterface> = (TabData) =>
         valueChange("Pagination", selectedValue);
     }
 
+    const condition = () =>
+    {
+        return isAdmin || (isLoggedIn && type === "Record");
+    }
+
     return(
         <Fragment>
             <Box sx={{ ...displayAsRow, width: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
-                {isAdmin && (
+                { condition() && (
                     <Tabs value={value} onChange={handleTabChange}>
                         {tabLabel.map((tab, index) => 
                             (

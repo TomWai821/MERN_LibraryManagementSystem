@@ -8,11 +8,11 @@ import { useModal } from "../../../../Context/ModalContext";
 
 const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) => 
 {
-    const {_id, bookname, language, genre, description, imageUrl} = LoanBookData;
+    const {_id, bookname, author, language, genre, description, imageUrl} = LoanBookData;
     const {loanBook} = useBookContext();
     const {handleClose} = useModal();
 
-    const ConfirmtLoanBook = () => 
+    const ConfirmLoanBook = () => 
     {
         loanBook(_id);
         handleClose();
@@ -21,6 +21,7 @@ const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) =>
     const bookData = 
     [
         {label: "Bookname", value: bookname},
+        {label: "Author", value: author},
         {label: "Language", value: language},
         {label: "Genre", value: genre}
     ]
@@ -51,7 +52,7 @@ const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) =>
                 </Box>
 
             </Box>
-            <Button variant='contained' onClick={ConfirmtLoanBook}>Yes</Button>
+            <Button variant='contained' onClick={ConfirmLoanBook}>Yes</Button>
         </ModalTemplate>
     )
 }

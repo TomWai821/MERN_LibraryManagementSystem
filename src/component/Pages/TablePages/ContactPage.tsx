@@ -18,7 +18,7 @@ import { ChangePage } from "../../../Controller/OtherController";
 
 const ContactPage:FC<PagesInterface> = (loginData) =>
 {
-    const { isAdmin } = loginData;
+    const { isAdmin, isLoggedIn } = loginData;
     const { contact, fetchContactDataWithFilterData } = useContactContext();
     
     const [searchContact, setSearchContact] = useState({author: "", publisher: ""});
@@ -82,7 +82,8 @@ const ContactPage:FC<PagesInterface> = (loginData) =>
 
             <ContactFilter value={tabValue} onChange={onChange} searchData={searchContact} Search={SearchContact}/>
 
-            <CustomTab isAdmin={isAdmin} value={tabValue} valueChange={changeValue} paginationValue={paginationValue} tabLabel={ContactTabLabel} paginationOption={PaginationOption}/>
+            <CustomTab isAdmin={isAdmin} isLoggedIn={isLoggedIn} value={tabValue} valueChange={changeValue} 
+                paginationValue={paginationValue} tabLabel={ContactTabLabel} paginationOption={PaginationOption} type={"Contact"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
                 <ContactTabPanel value={tabValue} contactData={contact} paginationValue={paginationValue} isAdmin={false}/>

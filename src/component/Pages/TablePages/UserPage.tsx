@@ -73,7 +73,7 @@ const UserPage:FC<PagesInterface> = (loginData) =>
 
             <UserFilter isAdmin={isAdmin} value={tabValue} onChange={onChange} searchData={searchUserData} Search={SearchUser}/>
 
-            <CustomTab isAdmin={isAdmin} value={tabValue} valueChange={changeValue} paginationValue={paginationValue} tabLabel={UserTabLabel} paginationOption={PaginationOption}/>
+            <CustomTab isAdmin={isAdmin} value={tabValue} valueChange={changeValue} paginationValue={paginationValue} tabLabel={UserTabLabel} paginationOption={PaginationOption} type={"User"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
                 <UserTabPanel value={tabValue} isAdmin={isAdmin} userData={userData} paginationValue={paginationValue}/>

@@ -1,12 +1,12 @@
-import mongoose from "mongoose";
+import mongoose, { PipelineStage } from "mongoose";
 import { BookFavouriteInterface } from "../../model/bookSchemaInterface";
-import { printError } from "../../controller/Utils";
+import { lookupAndUnwind, printError } from "../../controller/Utils";
 
 const BookFavouriteSchema = new mongoose.Schema<BookFavouriteInterface>
 (   
     {
-        userID: { type: String, required: true },
-        bookID: { type: String, required: true }
+        userID: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
+            bookID: { type: mongoose.Types.ObjectId, ref: 'Book', required: true }
     }
 )
 
@@ -24,28 +24,40 @@ export const CreateBookFavourite = async (data:Record<string, any>) =>
     }
 }
 
-export const GetBookFavourite = async (data?:Record<string, any>) =>
+export const GetBookFavourite = async (data:Record<string, any>) =>
 {
     try
     {
-        if(!data)
-        {
-            return await BookFavourite.find({});
-        }
-        return await BookFavourite.find(data);
+        return await GetBooksWithOtherDetails(data);
     }
     catch(error)
     {
         printError(error);
     }
-
 };
-        
+
+const GetBooksWithOtherDetails = async (data?:Record<string, any>) => 
+{
+    let pipeline:PipelineStage[] = [];
+
+    pipeline.push(
+        ...lookupAndUnwind('books', 'bookID', '_id', 'bookDetails'),
+        ...lookupAndUnwind('authors', 'bookDetails.authorID', '_id', 'authorDetails'),
+        ...lookupAndUnwind('publishers', 'bookDetails.publisherID', '_id', 'publisherDetails'),
+        ...lookupAndUnwind('genres', 'bookDetails.genreID', '_id', 'genreDetails'),
+        ...lookupAndUnwind('languages', 'bookDetails.languageID', '_id', 'languageDetails'),
+    );
+
+    if (data) { pipeline.push( {$match: {...data}} )}
+
+    return await BookFavourite.aggregate(pipeline);
+}
+ 
 export const FindBookFavourite = async (data: Record<string, any>) =>
 {
     try
     {
-        return await BookFavourite.findOne(data);
+        return await BookFavourite.findById(data);
     }
     catch(error)
     {
@@ -69,23 +81,11 @@ export const FindBookFavouriteByID = async (bookFavouriteId: string, select?: Re
     }
 }
 
-export const FindBookFavouriteByIDAndUpdate  = async (bookFavouriteId: string, data: Record<string, any>) =>
+export const FindBookFavouriteByIDAndDelete = async (bookFavouriteId: string) =>
 {
     try
     {
-        return await BookFavourite.findByIdAndUpdate(bookFavouriteId, data);
-    }
-    catch(error)
-    {
-        printError(error);
-    }
-}
-
-export const FindBookFavouriteByIDAndDelete = async (bookFavouriteId: string, data: Record<string, any>) =>
-{
-    try
-    {
-        return await BookFavourite.findByIdAndDelete(bookFavouriteId, data);
+        return await BookFavourite.findByIdAndDelete(bookFavouriteId);
     }
     catch(error)
     {

@@ -1,26 +1,25 @@
-import mongoose, { ObjectId, PipelineStage } from 'mongoose';
+import mongoose, { PipelineStage } from 'mongoose';
 import { BookInterface } from '../../model/bookSchemaInterface';
-import { printError } from '../../controller/Utils';
+import { lookupAndUnwind, printError } from '../../controller/Utils';
 import { bookStatusArray } from '../../Arrays/TypeArrayForBook';
 
-const BookSchema = new mongoose.Schema<BookInterface>
-(
+const BookSchema = new mongoose.Schema<BookInterface>(
     {
         image: 
-        {  
-            url: { type: String }, 
+        {
+            url: { type: String },
             filename: { type: String }
         },
-        bookname: { type: String, required: true },
-        languageID: { type: mongoose.Types.ObjectId, ref: 'Language', required: true },
+        bookname: { type: String, required: true, index: true },
+        languageID: { type: mongoose.Types.ObjectId, ref: 'Language', required: true }, 
         genreID: { type: mongoose.Types.ObjectId, ref: 'Genre', required: true },
         authorID: { type: mongoose.Types.ObjectId, ref: 'Author', required: true },
-        publisherID: { type: mongoose.Types.ObjectId, ref: 'Publusher', required: true },
-        status: { type: String, required: true , default: 'OnShelf', enum: bookStatusArray},
+        publisherID: { type: mongoose.Types.ObjectId, ref: 'Publisher', required: true }, 
+        status: { type: String, required: true, default: 'OnShelf', enum: bookStatusArray },
         description: { type: String, default: 'N/A' },
-        publishDate: { type: Date, default: Date.now, immutable: true  }
+        publishDate: { type: Date, default: Date.now, immutable: true, index: true } 
     }
-)
+);
 
 const Book = mongoose.model<BookInterface>('Book', BookSchema);
 
@@ -28,7 +27,8 @@ export const CreateBook = async (data:Record<string, any>) =>
 {
     try
     {
-        return await Book.create(data);
+        const newBook = await Book.create(data);
+        return newBook;
     }
     catch(error)
     {
@@ -48,13 +48,6 @@ export const GetBook = async (data?:Record<string, any>, sortRequirement?:Record
     }
 };
 
-const lookupAndUnwind = (from:string, localField:string, foreignField:string, asField:string) => 
-(
-    [
-        { $lookup: { from, localField, foreignField, as: asField } },
-        { $unwind: { path: `$${asField}`, preserveNullAndEmptyArrays: true } }
-    ]
-);
 
 // Local variable(For get banned user data)
 const GetBooksWithOtherDetails = async (data?:Record<string, any>, sortRequirement?:Record<string, any>, limit?:number) => 

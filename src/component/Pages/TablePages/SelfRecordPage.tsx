@@ -61,11 +61,11 @@ const SelfRecordPage:FC<PagesInterface> = (pageData) =>
                 break;
 
             case 1:
-                const genreID = definition.Genre.find((genre) => genre.genre === searchData.genre)?.genre as string;;
-                const languageID = definition.Language.find((language) => language.language === searchData.language)?.language as string;
-                const authorID = contact.Author.find((author) => author.author === searchData.author)?.author as string;
-                const publisherID = contact.Publisher.find((publisher) => publisher.publisher === searchData.publisher)?.publisher as string;
-                fetchBookWithFliterData(searchData.bookname, searchData.status, genreID, languageID, authorID, publisherID);
+                const genreID = definition.Genre.find((genre) => genre.genre === searchData.genre)?._id as string;
+                const languageID = definition.Language.find((language) => language.language === searchData.language)?._id as string;
+                const authorID = contact.Author.find((author) => author.author === searchData.author)?._id as string;
+                const publisherID = contact.Publisher.find((publisher) => publisher.publisher === searchData.publisher)?._id as string;
+                fetchBookWithFliterData("Favourite", searchData.bookname, searchData.status, genreID, languageID, authorID, publisherID);
                 break;
         }
     }
@@ -73,7 +73,7 @@ const SelfRecordPage:FC<PagesInterface> = (pageData) =>
     const onChange = (event:ChangeEvent<HTMLInputElement>) => 
     {
         const {name, value} = event.target;
-        setSearchData({...searchData, [name]: value})
+        setSearchData({...searchData, [name]: value});
     }
 
     useEffect(() => 

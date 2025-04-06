@@ -1,7 +1,7 @@
 import mongoose, { PipelineStage } from 'mongoose';
 import { BookInterface } from '../../model/bookSchemaInterface';
 import { lookupAndUnwind, printError } from '../../controller/Utils';
-import { bookStatusArray } from '../../Arrays/TypeArrayForBook';
+import { bookStatusArray } from '../../Arrays/Types';
 
 const BookSchema = new mongoose.Schema<BookInterface>(
     {

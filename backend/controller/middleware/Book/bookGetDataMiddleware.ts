@@ -35,7 +35,7 @@ export const BuildFavouriteBookQueryAndGetData = async (req: AuthRequest, res: R
 
     if(hasBodyParameter)
     {
-        query = buildQuery(queryParams);
+        query = buildQuery("Favourite", queryParams);
     }
 
     let userObjectId = new ObjectId(userID as unknown as ObjectId);
@@ -90,26 +90,42 @@ export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Resp
 
 const fetchBookData = async (queryParams: any) => 
 {
-    const query = buildQuery(queryParams);
+    const query = buildQuery("All", queryParams);
     return await GetBook(query);
 };
 
-const buildQuery = (queryParams: any) => 
+const buildQuery = (type:string, queryParams: any) => 
 {
     const { bookname, status, genreID, languageID, publisherID, authorID } = queryParams;
+    let query = {};
 
-    console.log(status);
-
-    const query = 
+    switch(type)
     {
-        ...(bookname && { "bookname": { $regex: bookname, $options: "i" } }),
-        ...(status && { "status": status }),
-        ...(genreID && { "genreID": new ObjectId(genreID) }),
-        ...(languageID && { "languageID": new ObjectId(languageID) }),
-        ...(publisherID && { "publisherID": new ObjectId(publisherID) }),
-        ...(authorID && { "authorID": new ObjectId(authorID) }),
-    };
+        case "All":
+            query = 
+                {
+                    ...(bookname && { "bookname": { $regex: bookname, $options: "i" } }),
+                    ...(status && { "status": status }),
+                    ...(genreID && { "genreID": new ObjectId(genreID) }),
+                    ...(languageID && { "languageID": new ObjectId(languageID) }),
+                    ...(publisherID && { "publisherID": new ObjectId(publisherID) }),
+                    ...(authorID && { "authorID": new ObjectId(authorID) }),
+                };
+            break;
 
+        case "Favourite":
+            query = 
+                {
+                    ...(bookname && { "bookDetails.bookname": { $regex: bookname, $options: "i" } }),
+                    ...(status && { "bookDetails.status": status }),
+                    ...(genreID && { "bookDetails.genreID": new ObjectId(genreID) }),
+                    ...(languageID && { "bookDetails.languageID": new ObjectId(languageID) }),
+                    ...(publisherID && { "bookDetails.publisherID": new ObjectId(publisherID) }),
+                    ...(authorID && { "bookDetails.authorID": new ObjectId(authorID) }),
+                };
+            break;
+    }
+    
     return query;
 };
 

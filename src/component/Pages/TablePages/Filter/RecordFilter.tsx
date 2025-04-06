@@ -4,8 +4,6 @@ import { Box, TextField, Button, MenuItem, IconButton } from "@mui/material";
 import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { SelfLoanBookSearchInterface } from "../../../../Model/BookTableModel";
 import { AllBookStatusOption, LoanBookStatusOption } from "../../../../ArraysAndObjects/TableArrays";
-import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext";
-import { useContactContext } from "../../../../Context/Book/ContactContext";
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
@@ -24,8 +22,6 @@ const RecordFilter:FC<FilterInterface> = (filterData) =>
         setOptionVisiable((prev) => !prev);
     };
 
-
-
     return(
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{ ...ItemToCenter, paddingBottom: '25px', alignItems: 'center' }}>
@@ -33,7 +29,7 @@ const RecordFilter:FC<FilterInterface> = (filterData) =>
                 <TextField label="Book Name" name="bookname" value={Data.bookname} onChange={onChange} size="small" sx={{ width: '55%', paddingRight: '10px' }}/>
                 {
                     value === 0 ?
-                    <TextField label="Status" name="status" value={Data.status} onChange={onChange} size="small" sx={{ width: '15%' }} select>
+                    <TextField label="Status" name="status" value={searchData.status} onChange={onChange} size="small" sx={{ width: '15%' }} select>
                         { 
                             LoanBookStatusOption.map((option, index) => 
                             (

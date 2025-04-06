@@ -83,27 +83,18 @@ export const fetchLoanBook = async(authToken?:string, bookname?:string, username
     }
 }
 
-export const fetchFavouriteBook = async(authToken?:string, data?:Record<string,any>) => 
+export const fetchFavouriteBook = async(authToken:string, bookname?:string, status?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => 
 {
-    const headers: Record<string, string> = 
-    {
-        'content-type': contentType
-    }
+    const queryString = BuildQuery({bookname, languageID, status, genreID, publisherID, authorID});
 
-    if(authToken)
-    {
-        headers['authToken'] = authToken;
-    }
-
-    const queryParams = data ? '?' + Object.entries(data).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&'): '';
-    const url = queryParams ? `${localhost}/FavouriteBook?${queryParams}` : `${localhost}/FavouriteBook`
-
-    const response = await fetch(url,
+    const response = await fetch(`${localhost}/FavouriteBook${queryString ? `?${queryString}` : ``}`,
         {
             method: 'GET',
-            headers: headers
+            headers: {'content-type':contentType, 'authToken': authToken}
         }
     );
+
+    console.log(response);
 
     if(response.ok)
     {

@@ -1,7 +1,7 @@
 import mongoose, { ObjectId } from "mongoose";
 import { DeleteAndSuspendListInterface } from "../../model/userSchemaInterface";
 import { printError } from "../../controller/Utils";
-import { userDeleteListDescription } from "../../Arrays/TypeArrayForUser";
+import { userDeleteListDescription } from "../../Arrays/Types";
 
 
 const DeleteListSchema = new mongoose.Schema<DeleteAndSuspendListInterface>

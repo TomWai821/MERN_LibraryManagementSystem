@@ -102,7 +102,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
                 break;
 
             case "Favourite":
-                result = await fetchFavouriteBook(authToken, {bookname, status, genreID, languageID, authorID, publisherID});
+                result = await fetchFavouriteBook(authToken, bookname, status, genreID, languageID, authorID, publisherID);
 
                 if(result && Array.isArray(result.foundFavouriteBook))
                 {

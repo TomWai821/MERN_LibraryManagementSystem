@@ -35,16 +35,30 @@ const LoginPage = () =>
     
         Object.keys(Credentials).forEach((field) => 
         {
+            if(["stayLogin"].includes(field))
+            {
+                return;
+            }
+
             const { helperText, error, success } = DataValidateField(field, Credentials[field as keyof LoginModel]);
             newHelperTexts[field as keyof typeof newHelperTexts] = helperText;
             newErrors[field as keyof typeof newErrors] = error;
-    
-            success ? handleLogin(event) : validationPassed = false;
+
+            if(!success) 
+            {
+                validationPassed = false;
+            }
         });
-    
+
         setHelperText(newHelperTexts);
         setErrors(newErrors);
-    }
+
+        if(validationPassed)
+        {
+            handleLogin(event);
+        } 
+    };
+    
 
     const handleLogin = async (event: FormEvent) => 
     {
@@ -84,7 +98,7 @@ const LoginPage = () =>
                                 name={field.name} type={field.type}
                                 value={Credentials[field.name as keyof LoginModel]}
                                 helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
-                                error={isSubmitted && errors[field.name as keyof typeof errors] != ""}
+                                error={isSubmitted && errors[field.name as keyof typeof errors] !== ""}
                                 onChange={onChange} size="small" required
                             />
                         </FormControl>

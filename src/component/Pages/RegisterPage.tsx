@@ -40,11 +40,19 @@ const RegisterPage = () =>
             newHelperTexts[field as keyof typeof newHelperTexts] = helperText;
             newErrors[field as keyof typeof newErrors] = error;
 
-            success ? handleRegister(event) : validationPassed = false;
+            if(!success) 
+            {
+                validationPassed = false;
+            }
         });
 
         setHelperText(newHelperTexts);
         setErrors(newErrors);
+
+        if(validationPassed)
+        {
+            handleRegister(event);
+        } 
     }
 
     const handleRegister = async (event: FormEvent) => 

@@ -40,6 +40,7 @@ router.delete('/FavouriteBook/id=:id', ...LoginAndFindUser, DeleteFavouriteBookR
 
 // For Suggest Book
 router.get('/BookData/type=:type', FetchUserFromHeader, BuildSuggestBookQueryAndGetData, GetBookRecord);
+router.post('/BookData/type=:type', FetchUserFromHeader, BuildSuggestBookQueryAndGetData, GetBookRecord);
 router.get('/LoanBook/type=:type', FetchUserFromHeader, GetLoanBookRecord);
 
 // For publisher and author

@@ -64,9 +64,9 @@ export interface TabInterface extends IsAdminInterface
     tabLabel: { label: string; }[];
     type:string;
     value: number;
-    paginationValue: number;
+    paginationValue?: number;
     valueChange: (type:string, newValue: number) => void;
-    paginationOption: number[];
+    paginationOption?: number[];
 }
 
 export interface OptionFieldsInterface

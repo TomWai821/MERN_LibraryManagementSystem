@@ -42,4 +42,13 @@ interface AuthRequest extends Request
     foundFavouriteBook?: BookFavouriteInterface | BookFavouriteInterface[] | null;
 }
 
-export type {LoginInterface, CreateUserInterface, ModifyUserDataInterface, AuthRequest}
+interface Book 
+{
+    _id: string;
+    bookname: string;
+    genre: string;
+    publisher: string;
+}
+
+
+export type {LoginInterface, CreateUserInterface, ModifyUserDataInterface, AuthRequest, Book}

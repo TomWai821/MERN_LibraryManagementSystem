@@ -1,9 +1,10 @@
 import { NextFunction, Response } from "express";
-import { AuthRequest } from "../../../model/requestInterface";
+import { AuthRequest, Book } from "../../../model/requestInterface";
 import { BookFavouriteInterface, BookInterface } from "../../../model/bookSchemaInterface";
 import { GetBook } from "../../../schema/book/book";
 import { ObjectId } from "mongodb";
 import { GetBookFavourite } from "../../../schema/book/bookFavourite";
+import { calculateTFIDF } from "../../Utils";
 
 // for build query (GET method in user, which require login)
 export const BuildBookQueryAndGetData = async (req: AuthRequest, res: Response, next: NextFunction) => 
@@ -57,9 +58,9 @@ export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Resp
 {
     const suggestType = req.params.type;
     const userId = req.user?._id;
-    const { topAuthors, topGenres, topPublishers } = req.query;
+    const {suggestionData} = req.body;
     let foundBook: BookInterface | BookInterface[] | null | undefined;
-    
+ 
     switch(suggestType)
     {
         case "newPublish":
@@ -67,12 +68,28 @@ export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Resp
             break;
 
         case "forUser":
-            if(!userId)
+            if (!userId) 
             {
-                return res.status(400).json({success: false, message:`This suggestion type require authToken!`});
+                return res.status(400).json({ success: false, message: `This suggestion type requires authToken!` });
             }
-            const query = buildSuggestQuery({ topAuthors, topGenres, topPublishers });
-            foundBook = await GetBook(query , { publishDate: -1 }, 8);
+
+            const loanedBooksCorpus = (suggestionData as Book[]).map
+            (
+                book => `${book.bookname} ${book.genre} ${book.publisher}`
+            );
+        
+            const allBooks = await GetBook(undefined); 
+
+            const allBooksCorpus = (allBooks as any[]).map
+            (
+                book => ({ id: book._id, metadata: `${book.bookname} ${book.genreDetails.genre} ${book.publisherDetails.publisher}` })
+            );
+        
+            const tfidfScores = calculateTFIDF(loanedBooksCorpus, allBooksCorpus);
+            console.log(tfidfScores);
+        
+            const topBookIds = tfidfScores.slice(0, 8).map(book => book.id);
+            foundBook = await GetBook({ _id: { $in: topBookIds } }, { publishDate: -1 }, 8);
             break;
 
         default:
@@ -128,21 +145,3 @@ const buildQuery = (type:string, queryParams: any) =>
     
     return query;
 };
-
-const buildSuggestQuery = (queryParams: any) => 
-{
-    const { topAuthors, topGenres, topPublishers } = queryParams;
-
-    const query = 
-    {
-        status: { $ne: "Loaned" },
-        $or: 
-        [
-            ...(topAuthors ? [{ "authorDetails.author": { $in: topAuthors.split(",") } }] : []),
-            ...(topGenres ? [{ "genreDetails.genre": { $in: topGenres.split(",") } }] : []),
-            ...(topPublishers ? [{ "publisherDetails.publisher": { $in: topPublishers.split(",") } }] : []),
-        ],
-    };
-
-    return query;
-}

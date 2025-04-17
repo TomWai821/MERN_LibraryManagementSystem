@@ -6,7 +6,6 @@ import { fetchBook, fetchFavouriteBook, fetchLoanBook, fetchSuggestBook } from "
 import { createBookRecord, createFavouriteBookRecord, createLoanBookRecord } from "../../Controller/BookController/BookPostController";
 import { returnBookAndChangeStatus, updateBookRecord } from "../../Controller/BookController/BookPutController";
 import { deleteBookRecord } from "../../Controller/BookController/BookDeleteController";
-import { countAttributes } from "../../Controller/OtherUsefulController";
 
 const BookContext = createContext<BookContextProps | undefined>(undefined);
 
@@ -62,12 +61,21 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
             if (resultForSelfLoanBook && Array.isArray(resultForSelfLoanBook.foundLoanBook)) 
             {
                 setSelfLoanBook(resultForSelfLoanBook.foundLoanBook);
+                console.log((resultForSelfLoanBook.foundLoanBook[0] as LoanBookInterface).genreDetails.genre)
 
-                const suggestionData = countAttributes(resultForSelfLoanBook.foundLoanBook);
+                const suggestionData = (resultForSelfLoanBook.foundLoanBook as LoanBookInterface[])
+                .slice(0, 20)
+                .map((book) => 
+                (
+                    {
+                        bookname: book.bookDetails?.bookname || 'Unknown Book Name',
+                        genre: book.genreDetails?.genre || 'Unknown Genre',
+                        publisher: book.publisherDetails?.publisher || 'Unknown Publisher'
+                    }
+                ));
     
-                if (suggestionData.topAuthors.length > 0 || suggestionData.topGenres.length > 0 || suggestionData.topPublishers.length > 0) 
+                if (suggestionData.length > 0) 
                 {
-    
                     const resultForUser: GetResultInterface | undefined = await fetchSuggestBook("forUser", authToken, suggestionData);
     
                     if (resultForUser && Array.isArray(resultForUser.foundBook)) 

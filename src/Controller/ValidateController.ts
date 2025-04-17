@@ -4,10 +4,10 @@ export const DataValidateField = (name: string, value: string | any) =>
 {
     const validateMap = 
     [
-        { validateName: "email", validateType: (value: string) => EmailValidate(value) },
+        { validateName: "email", validateType: (name:string, value: string) => EmailValidate(name, value) },
         { validateName: "username", validateType: (name: string, value: string) => DataLengthValidate(name, value, 6) },
         { validateName: "password", validateType: (name: string, value: string) => DataLengthValidate(name, value, 6) },
-        { validateName: "birthDay", validateType: (value: string) => BirthDayValidate(value, 6) },
+        { validateName: "birthDay", validateType: (name:string, value: string) => BirthDayValidate(name, value, 6) },
         { validateName: "gender", validateType: (name: string, value: string) => EmptyDataValidation(name, value) },
         { validateName: "role", validateType: (name: string, value: string) => EmptyDataValidation(name, value) },
         { validateName: "bookname", validateType: (name: string, value: string) => EmptyDataValidation(name, value) },
@@ -28,7 +28,7 @@ export const DataValidateField = (name: string, value: string | any) =>
     return findValidateField.validateType(name, value);
 };
 
-const EmailValidate = (value:string) => 
+const EmailValidate = (name:string, value:string) => 
 {
     let error = "";
     let helperText  = "";
@@ -68,7 +68,7 @@ const DataLengthValidate = (name:string, value:string, limitLength:number) =>
     return {success, helperText, error};
 }
 
-const BirthDayValidate = (value:string, limitAge:number) => 
+const BirthDayValidate = (name:string, value:string, limitAge:number) => 
 {
     let error = "";
     let helperText  = "";

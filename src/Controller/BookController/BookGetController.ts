@@ -33,17 +33,31 @@ export const fetchSuggestBook = async (type:string, authToken?:string, data?:Rec
         headers['authToken'] = authToken;
     }
 
-    // Build query parameters if data exists
-    const queryParams = data ? '?' + Object.entries(data).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&'): '';
+    let response: Response;
 
-    const url = type === "mostPopular" ? `${localhost}/loanBook/type=${type}${queryParams}` : `${localhost}/bookData/type=${type}${queryParams}`
-
-    const response = await fetch(url,
+    if(type === "forUser")
+    {
+        response = await fetch(`${localhost}/BookData/type=${type}`, 
         {
-            method: 'GET',
+            method: 'POST',
             headers: headers,
-        }
-    );
+            body: JSON.stringify({ suggestionData: data })
+        });
+
+        console.log(JSON.stringify({ suggestionData: data }))
+    }
+    else
+    {
+        const queryParams = data ? '?' + Object.entries(data).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&'): '';
+        const url = type === "mostPopular" ? `${localhost}/loanBook/type=${type}${queryParams}` : `${localhost}/bookData/type=${type}${queryParams}`
+    
+        response = await fetch(url,
+            {
+                method: 'GET',
+                headers: headers,
+            }
+        );
+    }
 
     if(response.ok)
     {

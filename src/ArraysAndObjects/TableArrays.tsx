@@ -114,6 +114,12 @@ const BookTabLabel =
     {label: "OnLoan Book"}
 ]
 
+const BookDataTabLabel =
+[
+    {label: "BookData"},
+    {label: "External_Data"}
+]
+
 const LoanBookTabLabel = 
 [
     {label: 'Loan Book'},
@@ -148,4 +154,4 @@ const LoanBookStatusOption = ["Loaned", "Returned", "Returned(Late)", "All"];
 
 const AllBookStatusOption = ["OnShelf", "Loaned", "All"];
 
-export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, PublisherTableHeader, AuthorTableHeader, BookTabLabel, UserTabLabel, LoanBookTabLabel, ContactTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption, AllBookStatusOption}
+export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, PublisherTableHeader, AuthorTableHeader, BookTabLabel, BookDataTabLabel, UserTabLabel, LoanBookTabLabel, ContactTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption, AllBookStatusOption}

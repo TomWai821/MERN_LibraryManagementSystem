@@ -52,6 +52,7 @@ const StatusDetectionForBook = (status:string, value:string) =>
     return status === value;
 }
 
+/*
 const getTopThree = (countObject: Record<string, number>) => 
 {
     return Object.entries(countObject)
@@ -92,6 +93,7 @@ const countAttributes = (books: LoanBookInterface[]): SuggestionData  =>
     return { topGenres: getTopThree(genreCount), topAuthors: getTopThree(authorCount),topPublishers: getTopThree(publisherCount) };
 };
 
+*/
 const DisableValidationForLoanBook = (Information: LoanBookInterface) => 
 {
     const returnedStatus = ["Returned", "Returned(Late)"];
@@ -100,4 +102,4 @@ const DisableValidationForLoanBook = (Information: LoanBookInterface) =>
     return result;
 }
 
-export {handleLogout, handleSuccess, StatusDetectionForAllUser, StatusDetectionForBook, countAttributes, DisableValidationForLoanBook}
+export {handleLogout, handleSuccess, StatusDetectionForAllUser, StatusDetectionForBook, DisableValidationForLoanBook}

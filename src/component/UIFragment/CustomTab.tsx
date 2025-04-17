@@ -51,7 +51,7 @@ const CustomTab:FC<TabInterface> = (TabData) =>
                     <Typography sx={{marginRight: '10px'}}>Show Rows</Typography>
                     <TextField size="small" value={paginationValue} onChange={handlePaginationChange} select>
                         {
-                            paginationOption.map((option, index) => 
+                            (paginationOption as number[]).map((option, index) => 
                                 (
                                     <MenuItem key={index} value={option}>{option}</MenuItem>
                                 )

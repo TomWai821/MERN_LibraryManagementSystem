@@ -8,9 +8,11 @@ import StarIcon from '@mui/icons-material/Star';
 import { StatusDetectionForBook } from "../../../../../Controller/OtherUsefulController";
 import { UserActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel";
 
-import { BookDataInterface, LoanBookInterface } from "../../../../../Model/ResultModel";
-import { useModal } from "../../../../../Context/ModalContext";
 import LoanBookConfirmationModal from "../../../../Modal/Confirmation/Book/LoanBookConfirmationModal";
+
+import { BookDataInterface, LoanBookInterface } from "../../../../../Model/ResultModel";
+
+import { useModal } from "../../../../../Context/ModalContext";
 import { AlertContext } from "../../../../../Context/AlertContext";
 import { useBookContext } from "../../../../../Context/Book/BookContext";
 

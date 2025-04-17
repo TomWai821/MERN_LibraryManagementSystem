@@ -11,7 +11,7 @@ import { FindDeleteListByID } from "../../../schema/user/deleteList";
 export const UserRegisterDataValidation = async (req: Request, res: Response, next: NextFunction) => 
 {
     const {email, username} = req.body;
-    const user = await FindUser({ $or: [{ email }, { username }] });
+    const user = await FindUser({ $or: [{ email:email }, { username:username }] });
 
     if(user)
     {

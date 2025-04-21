@@ -41,15 +41,14 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
 
     const getBookDataFromExternal = async () => 
     {
-        const apiKey = "AIzaSyCMRfDbvxyoYcWj_msLiGvP_HHgQhrL5jo";
-        const baseUrl = "https://www.googleapis.com/books/v1/volumes"; 
+        const apiKey = process.env.REACT_APP_GOOGLE_BOOKS_API_KEY;
+        const baseUrl = process.env.REACT_APP_GOOGLE_BOOKS_BASE_URL; 
         const bookName = Data.bookname || LoanData.bookDetails?.bookname;
         const author = Data.authorDetails?.author || LoanData.authorDetails?.author;
         const query = `${bookName} inauthor:${author}`;
         const url = `${baseUrl}?q=${query}&key=${apiKey}`;
 
         const response = await fetch(url);
-        console.log(url);
         const result = await response.json() as GetResultInterface;
 
         if (result.items && result.items.length > 0) 

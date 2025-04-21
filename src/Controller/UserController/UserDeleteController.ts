@@ -1,11 +1,13 @@
-const localhost:string = 'http://localhost:5000/api/user';
+const localhost = process.env.REACT_APP_LOCAL_HOST;
+
+const url:string = `${localhost}/user`;
 const contentType:string = 'application/json';
 
 const DeleteUserController = async(authToken:string, userId:string, deleteListId:string) => 
 {
     try
     {
-        const response = await fetch(`${localhost}/User/id=${userId}`,
+        const response = await fetch(`${url}/User/id=${userId}`,
             {
                 method: 'DELETE',
                 headers: 

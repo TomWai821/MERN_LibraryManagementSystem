@@ -1,8 +1,10 @@
 import { ResultInterface } from "../../Model/ResultModel"
 import { handleSuccess } from "../OtherUsefulController";
 
+const localhost = process.env.REACT_APP_LOCAL_HOST;
+
 const contentType:string = 'application/json';
-const localhost:string = 'http://localhost:5000/api/user';
+const url:string = `${localhost}/user`;
 
 const LoginController = async (email:String, password:String, stayLogin:boolean): Promise<any> => 
 {
@@ -10,7 +12,7 @@ const LoginController = async (email:String, password:String, stayLogin:boolean)
 
     try
     {
-        const response = await fetch(`${localhost}/Login`, 
+        const response = await fetch(`${url}/Login`, 
             {
                 method: 'POST',
                 headers: { 'content-type': contentType },
@@ -40,7 +42,7 @@ const RegisterController = async (registerPosition:string, username:string, emai
 
     try
     {
-        const response = await fetch(`${localhost}/Register`,
+        const response = await fetch(`${url}/Register`,
             {
                 method: 'POST',
                 headers: { 'content-type': contentType },

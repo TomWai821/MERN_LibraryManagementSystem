@@ -1,6 +1,7 @@
 import { GetResultInterface } from "../../Model/ResultModel";
 
-const url = "http://localhost:5000/api/book/definition/";
+const localhost = process.env.REACT_APP_LOCAL_HOST;
+const url = `${localhost}/book/definition/`;
 const contentType = "application/json";
 
 export const GetDefinition = async (type:string) => 

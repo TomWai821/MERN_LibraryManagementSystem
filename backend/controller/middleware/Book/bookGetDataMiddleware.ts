@@ -85,10 +85,9 @@ export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Resp
                 book => ({ id: book._id, metadata: `${book.bookname} ${book.genreDetails.genre} ${book.publisherDetails.publisher}` })
             );
         
-            const tfidfScores = calculateTFIDF(loanedBooksCorpus, allBooksCorpus);
-            console.log(tfidfScores);
+            const TF_IDF_Scores = calculateTFIDF(loanedBooksCorpus, allBooksCorpus);
         
-            const topBookIds = tfidfScores.slice(0, 8).map(book => book.id);
+            const topBookIds = TF_IDF_Scores.slice(0, 8).map(book => book.id);
             foundBook = await GetBook({ _id: { $in: topBookIds } }, { publishDate: -1 }, 8);
             break;
 

@@ -1,7 +1,9 @@
 import { GetResultInterface } from "../../Model/ResultModel";
 
+const localhost = process.env.REACT_APP_LOCAL_HOST;
+
 const contentType:string = 'application/json';
-const localhost:string = 'http://localhost:5000/api/user';
+const url:string = `${localhost}/user`;
 
 export const FetchUserData = async(tableName?: string, authToken?:string,  username?: string, email?: string , role?: string , status?: string, gender?: string, startDate?:Date, dueDate?: Date) => 
 {
@@ -20,9 +22,9 @@ export const FetchUserData = async(tableName?: string, authToken?:string,  usern
         let queryParams = BuildQuery({username, email, role, status, gender, startDate, dueDate});
 
         const queryString = queryParams.toString();
-        const url = `${localhost}/userData/tableName=${queryString ? `${tableName}?${queryString}` : `${tableName}`}`;
+        const URL = `${url}/userData/tableName=${queryString ? `${tableName}?${queryString}` : `${tableName}`}`;
 
-        const response = await fetch(url,
+        const response = await fetch(URL,
             {
                 method: 'GET',
                 headers

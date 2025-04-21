@@ -1,5 +1,7 @@
 const contentType:string = 'application/json';
-const localhost:string = 'http://localhost:5000/api/user';
+const localhost = process.env.REACT_APP_LOCAL_HOST;
+
+const url:string = `${localhost}/user`;
 
 const fetchData = async (authToken:string, url: string, data: Record<string, any>) => 
 {
@@ -38,14 +40,14 @@ const fetchData = async (authToken:string, url: string, data: Record<string, any
 const ModifyUserDataController = async (authToken:string, userId: string, username:string, email:string, gender:string, role:string) => 
 {
     const data = { username, email, gender, role };
-    const url = `${localhost}/UserData/id=${userId}`;
+    const URL = `${url}/UserData/id=${userId}`;
     return await fetchData(authToken, url, data);
 };
 
 const ModifySuspendListDataController = async(authToken:string, userId:string, banListID:string, dueDate:Date, description:string) => 
 {
     const data = { banListID, dueDate, description }
-    const url = `${localhost}/SuspendListData/id=${userId}`;
+    const URL = `${url}/SuspendListData/id=${userId}`;
     return await fetchData(authToken, url, data);
 }
 
@@ -63,8 +65,8 @@ const ModifyStatusController = async (type:string, authToken:string, userId: str
 
     const statusData = statusDataConfig[type as keyof typeof statusDataConfig];
         
-    const url = `${localhost}/Status/id=${userId}`;
-    return await fetchData(authToken, url, statusData);
+    const URL = `${url}/Status/id=${userId}`;
+    return await fetchData(authToken, URL, statusData);
 };
 
 export { ModifyUserDataController, ModifySuspendListDataController, ModifyStatusController };

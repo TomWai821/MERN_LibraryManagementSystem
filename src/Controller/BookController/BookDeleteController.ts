@@ -1,4 +1,4 @@
-const localhost:string = 'http://localhost:5000/api/book';
+const localhost = process.env.REACT_APP_LOCAL_HOST;
 const contentType:string = "application/json";
 
 export const deleteBookRecord = async (type:string ,authToken:string, ID:string) => 
@@ -7,7 +7,7 @@ export const deleteBookRecord = async (type:string ,authToken:string, ID:string)
     {
         const url:Record<string, string> = 
         {
-            "Book": `${localhost}/bookData/id=${ID}`,
+            "Book": `${localhost}/book/bookData/id=${ID}`,
             "Favourite": `${localhost}/FavouriteBook/id=${ID}`
         }
 

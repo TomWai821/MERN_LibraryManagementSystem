@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { AuthRequest } from '../model/requestInterface';
 
-const JWT_SECRET:string = "Wh@t@ver"
+const JWT_SECRET:string = "Wh@t@ver";
 
 const bcryptHash = async(password:string) => 
 {

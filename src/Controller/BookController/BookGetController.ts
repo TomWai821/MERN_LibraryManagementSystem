@@ -1,13 +1,13 @@
 import { GetResultInterface } from "../../Model/ResultModel";
 
-const localhost:string = 'http://localhost:5000/api/book';
+const localhost = process.env.REACT_APP_LOCAL_HOST;
 const contentType:string = "application/json";
 
 export const fetchBook = async (bookname?:string, status?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => 
 {
     const queryString = BuildQuery({bookname, languageID, status, genreID, publisherID, authorID});
 
-    const response = await fetch(`${localhost}/bookData${queryString ? `?${queryString}` : ``}`,
+    const response = await fetch(`${localhost}/book/bookData${queryString ? `?${queryString}` : ``}`,
         {
             method: 'GET',
             headers: { 'content-type': contentType },
@@ -37,7 +37,7 @@ export const fetchSuggestBook = async (type:string, authToken?:string, data?:Rec
 
     if(type === "forUser")
     {
-        response = await fetch(`${localhost}/BookData/type=${type}`, 
+        response = await fetch(`${localhost}/book/BookData/type=${type}`, 
         {
             method: 'POST',
             headers: headers,
@@ -49,7 +49,7 @@ export const fetchSuggestBook = async (type:string, authToken?:string, data?:Rec
     else
     {
         const queryParams = data ? '?' + Object.entries(data).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&'): '';
-        const url = type === "mostPopular" ? `${localhost}/loanBook/type=${type}${queryParams}` : `${localhost}/bookData/type=${type}${queryParams}`
+        const url = type === "mostPopular" ? `${localhost}/book/loanBook/type=${type}${queryParams}` : `${localhost}/book/bookData/type=${type}${queryParams}`
     
         response = await fetch(url,
             {
@@ -101,7 +101,7 @@ export const fetchFavouriteBook = async(authToken:string, bookname?:string, stat
 {
     const queryString = BuildQuery({bookname, languageID, status, genreID, publisherID, authorID});
 
-    const response = await fetch(`${localhost}/FavouriteBook${queryString ? `?${queryString}` : ``}`,
+    const response = await fetch(`${localhost}/book/FavouriteBook${queryString ? `?${queryString}` : ``}`,
         {
             method: 'GET',
             headers: {'content-type':contentType, 'authToken': authToken}

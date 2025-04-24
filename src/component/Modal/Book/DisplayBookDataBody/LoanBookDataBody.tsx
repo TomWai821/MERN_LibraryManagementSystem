@@ -1,9 +1,9 @@
-import { FC } from "react"
+import { FC, Fragment } from "react"
 import { DisplayDataModalBody } from "../../../../Model/ModelForModal"
 import { Avatar, Box, Typography } from "@mui/material";
 import { BookImageFormat, displayAsRow} from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { LoanBookInterface } from "../../../../Model/ResultModel";
-import { TransferDateToISOString } from "../../../../Controller/OtherController";
+import { calculateFineAmount, countLateReturn, isExpired, TransferDateToISOString } from "../../../../Controller/OtherController";
 
 const LoanBookDataBody:FC<DisplayDataModalBody> = (AllUserData) => 
 {
@@ -18,7 +18,6 @@ const LoanBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
         "username": {label: "Username", data:LoanData.userDetails?.username},
         "loanDate": {label: "Loan Date", data:TransferDateToISOString(LoanData.loanDate as Date)},
         "dueDate": {label: "Due Date", data:TransferDateToISOString(LoanData.dueDate as Date)},
-        "status": {label: "Status", data:LoanData.status}
     };
 
     return(
@@ -29,9 +28,29 @@ const LoanBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
                 {
                     Object.entries(BookData).map(([key, data], index) => 
                         (
-                            <Typography>{data.label}: {data.data}</Typography>
+                            <Typography key={index}>{data.label}: {data.data}</Typography>
                         )
                     )
+                }
+
+                {
+                    <Typography>
+                        Status: {LoanData.status}
+                        <Typography component="span" sx={{color: 'rgb(230, 0, 0)'}}>
+                            { isExpired(LoanData.dueDate as Date) && ` (Overdue by ${countLateReturn(LoanData.dueDate as Date, "number")} Day)`}
+                        </Typography>
+                    </Typography>
+                }
+
+                {
+                    isExpired(LoanData.dueDate as Date) && 
+                    <Fragment>
+                        <Typography>Fines: { isExpired(LoanData.dueDate as Date) && LoanData.finesPaid === "Not Fine Needed" ? "Not Paid" : LoanData.finesPaid} (HKD$ {calculateFineAmount(LoanData.dueDate as string)})</Typography>
+                    </Fragment>
+                }
+
+                {
+                    LoanData.status !== "Loaned" && <Typography>Return Date: {TransferDateToISOString(LoanData.returnDate as Date)}</Typography>
                 }
             </Box>
         </Box>

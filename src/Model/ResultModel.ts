@@ -3,6 +3,7 @@ import { UserDataInterface } from "./UserTableModel";
 export interface ResultInterface
 {
     data: RegisterDataInterface;
+    qrCodeDataUrl?:string;
 }
 
 export interface RegisterDataInterface
@@ -38,6 +39,7 @@ interface VolumeInfoInterface
     averageRating:string;
     ratingsCount:string;
     industryIdentifiers?: IndustryIdentifiersInterface[];
+    categories?:string;
 }
 
 interface IndustryIdentifiersInterface
@@ -51,6 +53,7 @@ interface SaleInfoInterface
     saleability: string;
     isEbook: boolean;
     listPrice?: PriceInterface;
+    retailPrice?: PriceInterface;
 }
 
 interface PriceInterface
@@ -161,6 +164,9 @@ export interface LoanBookInterface
     genreDetails?:any;
     loanDate?:string | Date;
     dueDate?:string | Date;
+    returnDate?:string | Date;
     status:string;
     count?:string;
+    fineAmount?:number;
+    finesPaid?:string;
 }

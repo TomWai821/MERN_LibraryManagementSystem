@@ -27,6 +27,7 @@ interface AllFilterInterface
 export interface FilterInterface extends IsAdminInterface, AllFilterInterface
 {
     searchData: UserDataInterface | BookSearchInterface | SelfLoanBookSearchInterface;
+    isLoggedIn?:boolean;
 }
 
 export interface ContactFilterInterface extends AllFilterInterface

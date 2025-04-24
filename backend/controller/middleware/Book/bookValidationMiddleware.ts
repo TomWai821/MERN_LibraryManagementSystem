@@ -105,14 +105,16 @@ export const FoundBookLoanRecord = async (req:AuthRequest, res:Response, next: N
 
 export const buildLoanedQuery = (queryParams: any) => 
 {
-    const { bookname, username, status } = queryParams;
+    const { bookname, username, status, finesPaid } = queryParams;
 
     const query = 
     {
         ...(bookname && { "bookDetails.bookname": { $regex: bookname, $options: "i" } }),
         ...(username && { "userDetails.username": { $regex: username, $options: "i" } }),
         ...(status && { "status": status }),
+        ...(finesPaid && { "finesPaid": finesPaid }),
     };
+    
 
     return query;
 }

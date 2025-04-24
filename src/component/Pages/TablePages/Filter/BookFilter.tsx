@@ -22,7 +22,7 @@ import { AllBookStatusOption, LoanBookStatusOption } from "../../../../ArraysAnd
 
 const BookFilter: FC<FilterInterface> = (filterData) => 
 {
-    const {value, searchData, onChange, Search, isAdmin} = filterData;
+    const {value, searchData, onChange, Search, isAdmin, isLoggedIn} = filterData;
     const bookData = searchData as unknown as BookTableDataInterface;
 
     const [optionVisiable, setOptionVisiable] = useState(false);
@@ -54,18 +54,30 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
                 value === 0 ?
                     <Fragment>
                         <TextField label="Book Name" name="bookname" value={bookData.bookname} onChange={onChange} size="small" sx={{ width: '45%' }}/>
-                        <TextField label="Status" name="status" value={searchData.status} onChange={onChange} size="small" sx={{ marginLeft: '10px', width: '15%' }} select>
-                        {
+                        { 
+                            isLoggedIn &&
+                            <TextField label="Status" name="status" value={searchData.status} onChange={onChange} size="small" sx={{ marginLeft: '10px', width: '15%' }} select>
+                            {
                                 AllBookStatusOption.map((option, index) => 
                                 (
                                     <MenuItem key={index} value={option}>{option}</MenuItem>
-                                )
-                            )
+                                ))
+                            }
+                            </TextField>
                         }
-                        </TextField>
                     </Fragment>
                     :
-                    <TextField label="Book Name" name="bookname" value={bookData.bookname} onChange={onChange} size="small" sx={{ width: '70%' }}/> 
+                    <Fragment>
+                        <TextField label="Book Name" name="bookname" value={bookData.bookname} onChange={onChange} size="small" sx={{ width: '45%' }}/>
+                        <TextField label="Status" name="status" value={searchData.status} onChange={onChange} size="small" sx={{ marginLeft: '10px', width: '15%' }} select>
+                            {
+                                LoanBookStatusOption.map((option, index) => 
+                                (
+                                    <MenuItem key={index} value={option}>{option}</MenuItem>
+                                ))
+                            }
+                        </TextField> 
+                    </Fragment>
                }
                 
 

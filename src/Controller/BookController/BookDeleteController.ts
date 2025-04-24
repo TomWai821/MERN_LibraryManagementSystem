@@ -8,7 +8,7 @@ export const deleteBookRecord = async (type:string ,authToken:string, ID:string)
         const url:Record<string, string> = 
         {
             "Book": `${localhost}/book/bookData/id=${ID}`,
-            "Favourite": `${localhost}/FavouriteBook/id=${ID}`
+            "Favourite": `${localhost}/book/FavouriteBook/id=${ID}`
         }
 
         console.log(url[type]);

@@ -9,8 +9,9 @@ import { useModal } from "../../Context/ModalContext";
 
 // Models
 import { ContentTableCellProps } from "../../Model/ContextAndProviderModel";
-import { BookDataInterface, UserResultDataInterface } from "../../Model/ResultModel";
+import { BookDataInterface, ContactInterface, UserResultDataInterface } from "../../Model/ResultModel";
 import DisplayBookDataModal from "../Modal/Book/DisplayBookDataModal";
+import DisplayContactDataModal from "../Modal/Contact/DisplayContactDataModel";
 
 const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) => 
 {
@@ -30,7 +31,7 @@ const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) =>
                 break;
             
             case "Contact":
-                handleOpen(<></>);
+                handleOpen(<DisplayContactDataModal value={value} data={Information as ContactInterface}/>);
                 break;
         }
     }

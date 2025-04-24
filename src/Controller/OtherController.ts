@@ -122,7 +122,7 @@ const CountDuration = (dueDate: Date | string) =>
     return days.toLocaleString('en-US') + " Days ";
 }
 
-const countLateReturn = (dueDate: Date | string) => 
+const countLateReturn = (dueDate: Date | string, type: string) => 
 {
     const currentDate = new Date();
     const endDate = new Date(dueDate);
@@ -130,12 +130,40 @@ const countLateReturn = (dueDate: Date | string) =>
     const durationInMilliseconds = currentDate.getTime() - endDate.getTime() ;
     const days = Math.floor(durationInMilliseconds / MillionSecondsToDay);
 
-    if(days < 0)
+    switch(type)
     {
-        return "No";
-    }
+        case "string": 
+            if(days <= 0)
+            {
+                return "No";
+            }
+        
+            return `Yes (${days.toLocaleString('en-US')} Days)`;
+        
+        case "number":
+            return days;
 
-    return `Yes (${days.toLocaleString('en-US')} Days)`;
+    }
 }
 
-export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate, CalculateDueDate, TransferDateToISOString, TransferDateToString, CalculateDuration, CountDuration, countLateReturn}
+const calculateFineAmount = (dueDate:string) => 
+{
+    if(countLateReturn(dueDate, "number") as number * 1.5 > 150)
+    {
+        return 150;
+    }
+
+    if(countLateReturn(dueDate, "number") as number > 0)
+    {
+        return countLateReturn(dueDate as string, "number") as number * 1.5;
+    }
+    
+    return 0;
+}
+
+const isExpired = (dueDate:Date) => 
+{
+    return countLateReturn(dueDate as Date, "number") as number > 0;
+}
+
+export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate, CalculateDueDate, TransferDateToISOString, TransferDateToString, CalculateDuration, CountDuration, countLateReturn, calculateFineAmount, isExpired}

@@ -15,6 +15,7 @@ app.use(cors
         allowedHeaders: ["content-type", "authToken"]
     }
 ));
+
 app.use(express.json())
 app.use('/api/user', require('./routes/user'));
 app.use('/api/book', require('./routes/books'));

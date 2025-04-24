@@ -3,6 +3,7 @@ import { IconButton, TableCell, Tooltip } from "@mui/material";
 import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon, History as HistoryIcon, EventAvailable as EventAvailableIcon } from '@mui/icons-material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 // Context
 import { useModal } from "../../../../../Context/ModalContext";
@@ -31,6 +32,7 @@ import { BookDataInterface, DetailsInterfaceForSuspendAndDelete, LoanBookInterfa
 import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { useBookContext } from "../../../../../Context/Book/BookContext";
 import { AlertContext } from "../../../../../Context/AlertContext";
+import SubmitFinesConfirmModal from "../../../../Modal/Confirmation/Book/SubmitFineConfirmation";
 
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
@@ -120,10 +122,15 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} isAdmin={isAdmin as boolean} modalOpenPosition={"AdminTableCell"}/>);
     }
 
+    const openSubmitFinesModal = () => 
+    {
+        handleOpen(<SubmitFinesConfirmModal modalOpenPosition={""} isAdmin={isAdmin as boolean} data={Information as LoanBookInterface}/>);
+    }
+
     const openLoanBookModal = () => 
     {
         const bookData = Information as BookDataInterface;
-        handleOpen(<LoanBookConfirmationModal _id={bookData._id} bookname={bookData.bookname} author={bookData.author as string} 
+        handleOpen(<LoanBookConfirmationModal _id={bookData._id} bookname={bookData.bookname} author={bookData.authorDetails.author as string} 
             language={bookData.languageDetails.language as string} genre={bookData.genreDetails.genre as string}
             description={bookData.description as string} imageUrl={bookData.image?.url as string} />)
     }
@@ -170,6 +177,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
 
     const BookActionTableCellForAdmin = 
     [
+
         [
             {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openEditModal, icon:<EditIcon />},
             {title: "Delete (Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
@@ -181,6 +189,8 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         [
             {title: "Return Book", syntax:ImportantActionButtonSyntax, clickEvent:openReturnBookModal, icon:<HistoryIcon />, 
                 disable: DisableValidationForLoanBook(Information as LoanBookInterface)},
+            {title: "Submit fines", syntax:ImportantActionButtonSyntax, clickEvent:openSubmitFinesModal, icon:<AttachMoneyIcon />, 
+                disable: (Information as LoanBookInterface).finesPaid !== "Not Paid"}
         ]
     ]
 

@@ -47,9 +47,8 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
     const backToCreateModal = () => 
     {
         handleOpen(
-        <CreateBookModal image={image} imageURL={imageURL} bookname={bookname} 
-            language={language} genre={genre} author={author} publisher={publisher}
-            description={description} publishDate={publishDate}/>
+        <CreateBookModal image={image} imageURL={imageURL} bookname={bookname} language={language} genre={genre} author={author} 
+            publisher={publisher} description={description} publishDate={publishDate}/>
         );
     }
 
@@ -83,7 +82,8 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
                         }
                         <Box sx={{ maxWidth: '350px', display: 'inline-block'}}>
                             <Typography>Description:</Typography>
-                            <Typography sx={BookDescriptionDisplayFormat}>{description}</Typography>
+                            
+                            <Typography sx={{...BookDescriptionDisplayFormat, WebkitLineClamp: 3}}>{description}</Typography>
                         </Box>
                     </Box>
 

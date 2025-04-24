@@ -29,11 +29,11 @@ const BookPage:FC<PagesInterface> = (loginData) =>
 
     const SetTitle:string = isAdmin ? "Manage Books Record": "View Books";
 
-    const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", username: "", language: "All", status:"All", genre: "All", author: "All", publisher: "All" });
+    const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", username: "", language: "All", status:"All", genre: "All", author: "All", publisher: "All", finesPaid: "All" });
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
 
-    const defaultValue = { bookname: "", username: "", language: "All", status:"All", genre: "All", author: "All", publisher: "All" };
+    const defaultValue = { bookname: "", username: "", language: "All", status:"All", genre: "All", author: "All", publisher: "All", finesPaid: "All" };
 
     const onChange = (event: ChangeEvent<HTMLInputElement>, index?: number) => 
     {
@@ -72,7 +72,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
                 break;
 
             case 1:
-                fetchLoanBookWithFliterData("AllUser", searchBook.bookname, searchBook.username, searchBook.status);
+                fetchLoanBookWithFliterData("AllUser", searchBook.bookname, searchBook.username, searchBook.status, searchBook.finesPaid);
                 break;
         }
         
@@ -97,7 +97,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <TableTitle title={SetTitle} dataLength={bookData[tabValue].length}/>
 
-            <BookFilter isAdmin={isAdmin} value={tabValue} onChange={onChange} searchData={searchBook} Search={SearchBook}/>
+            <BookFilter isAdmin={isAdmin} value={tabValue} isLoggedIn={isLoggedIn} onChange={onChange} searchData={searchBook} Search={SearchBook}/>
 
             <CustomTab isAdmin={isAdmin} value={tabValue} valueChange={changeValue} paginationValue={paginationValue} tabLabel={BookTabLabel} paginationOption={PaginationOption} type={"Book"}/>
 

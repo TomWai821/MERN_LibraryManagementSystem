@@ -66,9 +66,9 @@ export const fetchSuggestBook = async (type:string, authToken?:string, data?:Rec
     }
 }
 
-export const fetchLoanBook = async(authToken?:string, bookname?:string, username?:string, status?:string) => 
+export const fetchLoanBook = async(authToken?:string, type?:string, bookname?:string, username?:string, status?:string, finesPaid?:string) => 
 {
-    const data = {bookname, username, status};
+    const data = {bookname, username, status, finesPaid};
 
     const headers: Record<string, string> = 
     {
@@ -81,7 +81,21 @@ export const fetchLoanBook = async(authToken?:string, bookname?:string, username
     }
 
     const queryParams =  BuildQuery(data);
-    const url = queryParams ? `${localhost}/LoanBook?${queryParams}` : `${localhost}/LoanBook`
+    const baseUrl = `${localhost}/book/LoanBook`;
+    let url = '';
+
+    switch(type)
+    {
+        case "AllUser":
+            url = queryParams ? `${baseUrl}/type=${type}?${queryParams}` : `${baseUrl}/type=${type}`;
+            break;
+
+        case "Self":
+            url = queryParams ? `${baseUrl}/?${queryParams}` : `${baseUrl}`;
+            break;
+
+    }
+    console.log(url);
 
     const response = await fetch(url,
         {
@@ -93,6 +107,7 @@ export const fetchLoanBook = async(authToken?:string, bookname?:string, username
     if(response.ok)
     {
         const result: GetResultInterface = await response.json();
+        console.log(result);
         return result;
     }
 }

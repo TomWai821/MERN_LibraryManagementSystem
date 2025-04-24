@@ -36,7 +36,7 @@ export const FetchUserData = async(tableName?: string, authToken?:string,  usern
     }
     catch(error)
     {
-        console.log("");
+        console.log(error);
     }
 }
 

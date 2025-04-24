@@ -14,7 +14,7 @@ import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 import { ChangePage } from "../../../Controller/OtherController";
 
 // Useful data
-import { LoanBookTabLabel, PaginationOption } from "../../../ArraysAndObjects/TableArrays";
+import { BookRecordTabLabel, PaginationOption } from "../../../ArraysAndObjects/TableArrays";
 import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects"
 
 // Context
@@ -91,7 +91,7 @@ const SelfRecordPage:FC<PagesInterface> = (pageData) =>
             <RecordFilter value={tabValue} onChange={onChange} searchData={searchData} Search={search}  isAdmin={isAdmin}/>
 
             <CustomTab isAdmin={isAdmin} isLoggedIn={isLoggedIn} value={tabValue} valueChange={changeValue} 
-                paginationValue={paginationValue} tabLabel={LoanBookTabLabel} paginationOption={PaginationOption} type={"Record"}/>
+                paginationValue={paginationValue} tabLabel={BookRecordTabLabel} paginationOption={PaginationOption} type={"Record"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
                <SelfRecordTabPanel value={tabValue} bookData={BookRecordForUser} paginationValue={paginationValue} isAdmin={isAdmin}/>

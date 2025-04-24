@@ -9,7 +9,7 @@ import { buildLoanedQuery } from './middleware/Book/bookValidationMiddleware';
 export const GetLoanBookRecord = async (req: AuthRequest, res:Response) => 
 {
     const suggestType = req.params.type;
-    const {bookname, username, status} = req.query;
+    const {bookname, username, status, finesPaid} = req.query;
     const userId = req.user?._id;
     let success = false;
     
@@ -24,13 +24,22 @@ export const GetLoanBookRecord = async (req: AuthRequest, res:Response) =>
                 getLoanRecord = await GetBookLoaned(undefined, 8);
                 break;
 
+            case "AllUser":
+                console.log(req.query);
+                if(req.query && Object.keys(req.query).length > 0)
+                {  
+                    query = buildLoanedQuery({bookname, username, status, finesPaid});
+                }
+                getLoanRecord = await GetBookLoaned({...query});
+                break;
+
             default:
                 if(req.query && Object.keys(req.query).length > 0)
                 {  
-                    query = buildLoanedQuery({bookname, username, status});
+                    query = buildLoanedQuery({bookname, username, status, finesPaid});
                 }
                 let userObjectId = new ObjectId(userId as unknown as ObjectId);
-                getLoanRecord = userId ? await GetBookLoaned({userID: userObjectId, ...query}) : await GetBookLoaned();
+                getLoanRecord = await GetBookLoaned({userID: userObjectId, ...query});
                 break;
         }
 
@@ -84,15 +93,19 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
 export const UpdateLoanBookRecord = async (req: AuthRequest, res:Response) => 
 {
     const foundLoanedRecord = req.foundLoanedRecord as BookLoanedInterface;
+    const { fineAmount, finesPaid } = req.body;
     let success = false;
 
     try
     {
         const currentDate = new Date();
-        const dueDate = foundLoanedRecord.dueDate;
-        const status = dueDate && currentDate <= dueDate ? 'Returned' : 'Returned(Late)'
+        const dueDate = new Date(foundLoanedRecord.dueDate); 
+        
+        const status = dueDate && currentDate <= dueDate ? 'Returned' : 'Returned(Late)';
 
-        const changeLoanRecordStatus = await FindBookLoanedByIDAndUpdate(foundLoanedRecord._id as unknown as string, {status: status})
+        console.log(fineAmount);
+        console.log(finesPaid);
+        const changeLoanRecordStatus = await FindBookLoanedByIDAndUpdate(foundLoanedRecord._id as unknown as string, {status: status, returnDate: currentDate, fineAmount: fineAmount, finesPaid: finesPaid})
 
         if(!changeLoanRecordStatus)
         {

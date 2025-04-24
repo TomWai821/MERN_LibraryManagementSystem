@@ -9,6 +9,8 @@ import { CreateStatusList } from './middleware/User/userUpdateDataMiddleware';
 import { FindDeleteListByIDAndDelete } from '../schema/user/deleteList';
 import { FindSuspendListByIDAndUpdate } from '../schema/user/suspendList';
 
+import QRCode from 'qrcode';
+
 export const UserRegister = async(req: Request, res: Response) =>
 {
     const { email, username, password, gender, birthDay, role, status, avatarUrl }: CreateUserInterface = req.body;
@@ -55,6 +57,7 @@ export const UserLogin = async (req: AuthRequest, res: Response) =>
         const avatarUrl = user.avatarUrl;
     
         const authToken: string = await jwtSign(data);
+
         success = true;
         res.json({ success, message: "Login Successfully!" , data:{username, role, authToken, status, avatarUrl} });
     } 

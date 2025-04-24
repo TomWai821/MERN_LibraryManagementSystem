@@ -88,7 +88,7 @@ const EditSuspendUserModal:FC<EditModalInterface> = (editModalData) =>
                         <TextField key={index} label={field.label} name={field.name} value={banData[field.name as keyof DetailsInterfaceForSuspendAndDelete]}
                             type={field.type} size="small" onChange={onChange} select={field.select} multiline={field.rows > 1} rows={field.rows} disabled={field.disable}
                             helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
-                            error={isSubmitted && errors[field.name as keyof typeof errors] != ""}>
+                            error={isSubmitted && errors[field.name as keyof typeof errors] !== ""}>
                             {
                                 field.select && field.options.map((option, index) => 
                                 (

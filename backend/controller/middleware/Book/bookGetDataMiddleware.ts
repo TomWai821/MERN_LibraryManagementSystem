@@ -72,23 +72,20 @@ export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Resp
             {
                 return res.status(400).json({ success: false, message: `This suggestion type requires authToken!` });
             }
-
-            const loanedBooksCorpus = (suggestionData as Book[]).map
-            (
-                book => `${book.bookname} ${book.genre} ${book.publisher}`
-            );
         
-            const allBooks = await GetBook(undefined); 
-
-            const allBooksCorpus = (allBooks as any[]).map
-            (
-                book => ({ id: book._id, metadata: `${book.bookname} ${book.genreDetails.genre} ${book.publisherDetails.publisher}` })
-            );
+            const loanedBooksCorpus = (suggestionData as Book[]).map( book => `${book.bookname} ${book.genre} ${book.publisher}`);
+        
+            const allBooks = await GetBook(undefined);
+        
+            const allBooksCorpus = (allBooks as any[]).map(book => ({ id: book._id, metadata: `${book.bookname} ${book.genreDetails.genre} ${book.publisherDetails.publisher}` }));
         
             const TF_IDF_Scores = calculateTFIDF(loanedBooksCorpus, allBooksCorpus);
         
-            const topBookIds = TF_IDF_Scores.slice(0, 8).map(book => book.id);
-            foundBook = await GetBook({ _id: { $in: topBookIds } }, { publishDate: -1 }, 8);
+            const topBookIds = TF_IDF_Scores.map(book => book.id);
+            foundBook = await GetBook({ _id: { $in: topBookIds } }, undefined);
+            
+            const suggestedBookNames = (suggestionData as Book[]).map(book => book.bookname);
+            foundBook = (foundBook as BookInterface[]).filter(book => !suggestedBookNames.slice(0, 5).includes(book.bookname)).slice(0, 8);
             break;
 
         default:

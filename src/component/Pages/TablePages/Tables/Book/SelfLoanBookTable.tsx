@@ -5,8 +5,7 @@ import { SelfLoanBookTableHeader } from "../../../../../ArraysAndObjects/TableAr
 import ContentTableCell from "../../../../UIFragment/ContentTableCell";
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
-import { TransferDateToISOString } from "../../../../../Controller/OtherController";
-import RecordBookTableCell from "../TableCell/RecordBookTableCell";
+import { calculateFineAmount, isExpired, TransferDateToISOString } from "../../../../../Controller/OtherController";
 
 const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
@@ -67,7 +66,14 @@ const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                     <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.loanDate as Date)}</ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.status}</ContentTableCell>
-                                    <RecordBookTableCell value={value} isAdmin={isAdmin} Information={data}/>
+                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.returnDate as Date)}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
+                                        { isExpired(data.dueDate as Date) && data.finesPaid === "Not Fine Needed" ? "Not Paid" : data.finesPaid }
+                                    </ContentTableCell>
+                                    
+                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
+                                        HKD$ { calculateFineAmount(data.dueDate as string) }
+                                    </ContentTableCell>
                                 </TableRow>
                             )
                         )

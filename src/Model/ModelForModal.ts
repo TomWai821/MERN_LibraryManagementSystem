@@ -1,4 +1,5 @@
-import { BookDataInterface, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
+import { RefObject } from "react";
+import { BookDataInterface, ContactInterface, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
 
 export interface CreateModalInterface
 {
@@ -63,7 +64,7 @@ export interface DisplayDataModalInterface
 {
     position?: string;
     value: number;
-    data: UserResultDataInterface | BookDataInterface | LoanBookInterface;
+    data: UserResultDataInterface | BookDataInterface | LoanBookInterface | ContactInterface;
     isLoggedIn?: boolean;
     isAdmin?: boolean;
 }
@@ -79,7 +80,36 @@ export interface DisplayDataModalBody
 {
     isAdmin?:boolean;
     isLoggedIn?:boolean;
-    data: UserResultDataInterface | BookDataInterface | LoanBookInterface;
+    data: UserResultDataInterface | BookDataInterface | LoanBookInterface | ContactInterface;
+}
+
+export interface BookDataBodyInterface
+{
+    BookData: Record<string, {label:string, value:any}>; 
+    isLoggedIn:boolean; 
+    status:string;
+    toggleDescriptionDisplay:() => void; 
+    descriptionData?:string; 
+    displayFullDescription:boolean; 
+    displayAmount:number;
+    overFlow:string;
+    descriptionRef:RefObject<HTMLDivElement>;
+    lineCount:number;
+}
+
+export interface GoogleBookDataInterface
+{
+    externalBookData: 
+    {
+        averageRating: string;
+        ratingsCount: string;
+        categories: string;
+        listPrice: string;
+        retailPrice: string;
+        ISBN_13_Code: string;
+        ISBN_10_Code: string;
+    }; 
+    RatingAsNumber:number;
 }
 
 export interface LoanBookModalInterface

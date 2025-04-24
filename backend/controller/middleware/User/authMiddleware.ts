@@ -1,6 +1,7 @@
 import { NextFunction, Response } from "express";
 import { jwtVerify } from "../../hashing";
 import { AuthRequest } from "../../../model/requestInterface";
+import { FindUser, GetUser } from "../../../schema/user/user";
 
 export const FetchUserFromHeader = async (req: AuthRequest, res: Response, next: NextFunction) => 
 {
@@ -22,9 +23,9 @@ export const FetchUserFromHeader = async (req: AuthRequest, res: Response, next:
     }
 };
 
-export const AuthIdValidation = (req: AuthRequest, res: Response, next: NextFunction) => 
+export const AuthIdValidation = async (req: AuthRequest, res: Response, next: NextFunction) => 
 {
-    const userId = req.user?._id;
+    const userId = await FindUser({_id: req.user?._id});
 
     if (!userId) 
     {

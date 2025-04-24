@@ -31,7 +31,7 @@ export const createLoanBookRecord = async (authToken:string, bookID:string, loan
         ...(dueDate && {dueDate})
     }
 
-    const response = await fetch(`${localhost}/LoanBook`,
+    const response = await fetch(`${url}/LoanBook`,
         {
             method: 'POST',
             headers: { 'Content-Type': contentType, 'authToken': authToken },
@@ -49,7 +49,7 @@ export const createLoanBookRecord = async (authToken:string, bookID:string, loan
 export const createFavouriteBookRecord = async (authToken:string, bookID:string) => 
 {
     
-    const response = await fetch(`${localhost}/FavouriteBook`,
+    const response = await fetch(`${url}/FavouriteBook`,
         {
             method: 'POST',
             headers: { 'Content-Type': contentType, 'authToken': authToken },

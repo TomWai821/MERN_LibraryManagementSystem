@@ -61,7 +61,10 @@ interface BookLoanedInterface extends IDInterface, BookFavouriteInterface
 {
     dueDate: Date;
     loanDate: Date;
+    returnDate?: Date | null;
     status: string;
+    fineAmount: number;
+    finesPaid: string;
 }
 
 export { BookInterface, ImageInterface, GenreInterface, LanguageInterface, PublisherInterface, AuthorInterface, BookFavouriteInterface, BookLoanedInterface}

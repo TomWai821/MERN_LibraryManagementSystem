@@ -29,10 +29,10 @@ const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =>
             sessionStorage.setItem("username", userData.username);
             sessionStorage.setItem("role", userData.role);
             sessionStorage.setItem("status", userData.status);
-            sessionStorage.setItem("avatarUrl", userData.avatarUrl as string)
+            sessionStorage.setItem("avatarUrl", userData.avatarUrl as string);
             return;
         }
-        SetUserCookie(userData.authToken  as string, userData.username, userData.role , userData.status, userData.avatarUrl as string, 30);
+        SetUserCookie(userData.authToken as string, userData.username, userData.role , userData.status, userData.avatarUrl as string, 30);
     }
 }
 

@@ -68,6 +68,9 @@ const LoanBookTableHeader =
     {label:"Loan Date"},
     {label:"Due Date"},
     {label:"Status"},
+    {label:"Return Date"},
+    {label:"Fines Paid"},
+    {label:"Fines Amount"},
     {label:"Actions"}
 ]
 
@@ -79,7 +82,9 @@ const SelfLoanBookTableHeader =
     {label:"Loan Date"},
     {label:"Due Date"},
     {label:"Status"},
-    {label:"Actions"}
+    {label:"Return Date"},
+    {label:"Fines Paid"},
+    {label:"Fine Amount"}
 ]
 
 const PublisherTableHeader = 
@@ -110,20 +115,20 @@ const UserTabLabel =
 
 const BookTabLabel = 
 [
-    {label: "All Book"},
-    {label: "OnLoan Book"}
+    {label: "Book Data"},
+    {label: "Loan Record"}
 ]
 
 const BookDataTabLabel =
 [
-    {label: "BookData"},
-    {label: "External_Data"}
+    {label: "Book Data"},
+    {label: "Book Data (Google Books)"}
 ]
 
-const LoanBookTabLabel = 
+const BookRecordTabLabel = 
 [
-    {label: 'Loan Book'},
-    {label: 'Favourite Book'}
+    {label: 'Loan Book Record'},
+    {label: 'Favourite Book Record'}
 ]
 
 const ContactTabLabel = 
@@ -152,6 +157,8 @@ const GenderFilterOption = [...GenderOption, ...EmptyOption];
 
 const LoanBookStatusOption = ["Loaned", "Returned", "Returned(Late)", "All"];
 
+const FinesPaidStatusOption = ["Not Fine Needed", "Paid", "Not Paid", "All"]
+
 const AllBookStatusOption = ["OnShelf", "Loaned", "All"];
 
-export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, PublisherTableHeader, AuthorTableHeader, BookTabLabel, BookDataTabLabel, UserTabLabel, LoanBookTabLabel, ContactTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption, AllBookStatusOption}
+export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, PublisherTableHeader, AuthorTableHeader, BookTabLabel, BookDataTabLabel, UserTabLabel, BookRecordTabLabel, ContactTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption, FinesPaidStatusOption, AllBookStatusOption}

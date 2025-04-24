@@ -16,7 +16,7 @@ import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { RecordTableCellInterface } from "../../../../../Model/TablePagesAndModalModel";
 
 // Controllers
-import { DisableValidationForLoanBook, StatusDetectionForBook } from "../../../../../Controller/OtherUsefulController";
+import { DisableValidationForLoanBook } from "../../../../../Controller/OtherUsefulController";
 
 
 import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
@@ -35,13 +35,6 @@ const RecordBookTableCell:FC<RecordTableCellInterface> = (returnBookTableCellDat
     const openReturnBookModal = () => 
     {
         handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} isAdmin={isAdmin as boolean} modalOpenPosition={"LoanBookTableCell"}/>);
-    }
-
-    const openLoanBookModal = () => 
-    {
-        handleOpen(<LoanBookConfirmationModal _id={Information.bookDetails?._id as string} bookname={Information.bookDetails?.bookname as string} author={Information.authorDetails?.author as string}
-            language={Information.languageDetails?.language as string} genre={Information.genreDetails?.genre as string}
-            description={Information.bookDetails?.description as string} imageUrl={Information.bookDetails?.image?.url as string} />)
     }
 
     const unfavourite = async () => 
@@ -75,11 +68,6 @@ const RecordBookTableCell:FC<RecordTableCellInterface> = (returnBookTableCellDat
             {
                 value === 1 &&
                 <Fragment>
-                    <Tooltip title={"Loan Book"} arrow>
-                        <IconButton disabled={StatusDetectionForBook((Information as LoanBookInterface).bookDetails?.status as string, "Loaned")} onClick={openLoanBookModal}>
-                            <EventAvailableIcon />
-                        </IconButton>
-                    </Tooltip>
                     {
                         <Tooltip title={"Unfavourite"} arrow>
                             <IconButton sx={{color: "gold"}} onClick={unfavourite}>

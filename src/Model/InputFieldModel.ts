@@ -2,20 +2,10 @@ import { ChangeEvent } from "react";
 import { UserDataInterface } from "./UserTableModel";
 import { BookTableDataInterface } from "./BookTableModel";
 
-interface FirstRow 
-{ 
+export interface ViewProfileModel
+{
     username: string; 
     role: string; 
-}
-
-interface SecondRow
-{
-    newName: string; 
-    newPassword: string;
-}
-
-export interface ViewProfileModel extends SecondRow, FirstRow
-{
     email: string;
     gender: string;
 };

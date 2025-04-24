@@ -1,6 +1,7 @@
 import mongoose, { PipelineStage } from "mongoose";
 import { BookLoanedInterface } from "../../model/bookSchemaInterface";
 import { lookupAndUnwind, printError } from "../../controller/Utils";
+import { bookReturnStatus, finesPaidStatus } from "../../Arrays/Types";
 
 const BookLoanedSchema = new mongoose.Schema<BookLoanedInterface>
 (   
@@ -9,7 +10,10 @@ const BookLoanedSchema = new mongoose.Schema<BookLoanedInterface>
         bookID: { type: mongoose.Types.ObjectId, ref: 'Book', required: true },
         loanDate: { type:Date, required: true },
         dueDate: { type:Date, required: true },
-        status: { type:String, enum: ['Returned', 'Loaned', 'Returned(Late)'], default: 'Loaned'}
+        returnDate: { type:Date, default: null },
+        status: { type:String, enum: bookReturnStatus, default: 'Loaned'},
+        fineAmount: { type:Number, default: 0 },
+        finesPaid: { type:String, enum: finesPaidStatus, default: "Not Fine Needed" }
     }
 )
 

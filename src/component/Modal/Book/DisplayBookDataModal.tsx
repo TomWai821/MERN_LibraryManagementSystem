@@ -26,12 +26,12 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
         {
             case 0:
                 displayData.title = "Book Information";
-                displayData.displayBody = <AllBookDataBody data={data} isLoggedIn={isLoggedIn}/>
+                displayData.displayBody = <AllBookDataBody data={data as BookDataInterface} isLoggedIn={isLoggedIn}/>
                 break;
 
             case 1:
                 displayData.title = "OnLoan Book Information";
-                displayData.displayBody = <LoanBookDataBody data={data} isLoggedIn={isLoggedIn}/>
+                displayData.displayBody = <LoanBookDataBody data={data as BookDataInterface} isLoggedIn={isLoggedIn}/>
                 break;
 
         }

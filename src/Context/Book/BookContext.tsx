@@ -29,7 +29,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
     const fetchAllBook = useCallback(async () => 
     {
         const resultForAllBook: GetResultInterface | undefined = await fetchBook("All");
-        const resultForLoanBook: GetResultInterface | undefined = await fetchLoanBook();
+        const resultForLoanBook: GetResultInterface | undefined = await fetchLoanBook(authToken, "AllUser");
         
         if(resultForAllBook && Array.isArray(resultForAllBook.foundBook))
         {
@@ -39,6 +39,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         if(resultForLoanBook && Array.isArray(resultForLoanBook.foundLoanBook))
         {
             setOnLoanBook(resultForLoanBook.foundLoanBook);
+            console.log(resultForLoanBook.foundLoanBook)
         }
 
         const resultForNewPublishBook: GetResultInterface | undefined = await fetchSuggestBook("newPublish");
@@ -56,12 +57,11 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
     
         if (authToken) 
         {
-            const resultForSelfLoanBook: GetResultInterface | undefined = await fetchLoanBook(authToken);
+            const resultForSelfLoanBook: GetResultInterface | undefined = await fetchLoanBook(authToken, "Self");
     
             if (resultForSelfLoanBook && Array.isArray(resultForSelfLoanBook.foundLoanBook)) 
             {
                 setSelfLoanBook(resultForSelfLoanBook.foundLoanBook);
-                console.log((resultForSelfLoanBook.foundLoanBook[0] as LoanBookInterface).genreDetails.genre)
 
                 const suggestionData = (resultForSelfLoanBook.foundLoanBook as LoanBookInterface[])
                 .slice(0, 20)
@@ -80,6 +80,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
     
                     if (resultForUser && Array.isArray(resultForUser.foundBook)) 
                     {
+                        console.log(resultForUser.foundBook)
                         setBookForUser(resultForUser.foundBook);
                     }
                 }
@@ -122,14 +123,14 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         
     },[fetchAllBook])
 
-    const fetchLoanBookWithFliterData = useCallback(async (type:string, bookname?:string, username?:string, status?:string) => 
+    const fetchLoanBookWithFliterData = useCallback(async (type:string, bookname?:string, username?:string, status?:string, finesPaid?:string) => 
     {
         let result: GetResultInterface | undefined;
         
         switch(type)
         {
             case "AllUser":
-                result = await fetchLoanBook(authToken, bookname, username, status);
+                result = await fetchLoanBook(authToken, type, bookname, username, status, finesPaid);
 
                 if(result && Array.isArray(result.foundLoanBook))
                 {
@@ -138,7 +139,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
                 break;
 
             case "Self":
-                result = await fetchLoanBook(authToken, bookname, undefined, status);
+                result = await fetchLoanBook(authToken, type, bookname, undefined, status);
 
                 if(result && Array.isArray(result.foundLoanBook))
                 {
@@ -181,9 +182,9 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         }
     },[fetchAllBook])
 
-    const returnBook = useCallback(async(loanRecordID:string) =>
+    const returnBook = useCallback(async(loanRecordID:string, fineAmount?:number, finesPaid?:string) =>
     {
-        const result = await returnBookAndChangeStatus(authToken, loanRecordID);
+        const result = await returnBookAndChangeStatus(authToken, loanRecordID, fineAmount, finesPaid);
 
         if(result)
         {

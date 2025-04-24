@@ -68,6 +68,7 @@ const GetBooksWithOtherDetails = async (data?:Record<string, any>, sortRequireme
         ...lookupAndUnwind('publishers', 'publisherID', '_id', 'publisherDetails'),
     );
 
+    console.log(...otherRequirement)
     pipeline.push(...otherRequirement);
 
     return await Book.aggregate(pipeline);

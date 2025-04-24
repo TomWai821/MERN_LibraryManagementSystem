@@ -1,4 +1,4 @@
-import { GenderFilterOption, GenderOption, LoanBookStatusOption, RoleFilterOption, RoleOption, StatusFilterOption } from "./TableArrays";
+import { FinesPaidStatusOption, GenderFilterOption, GenderOption, LoanBookStatusOption, RoleFilterOption, RoleOption, StatusFilterOption } from "./TableArrays";
 
 const RegisterField = 
 [
@@ -16,12 +16,10 @@ const LoginField =
 
 const ViewProfileField = 
 [
-    {name: "email", label: "Email:", type: "email", disable: true}, 
-    {name: "gender", label: "Gender:", type: "text", disable: true},
-    {name: "username", label: "Username:", type: "text", disable: true}, 
-    {name: "newName", label: "New Name:", type: "text"},
-    {name: "role", label: "Role:",  type: "text", disable: true}, 
-    {name: "newPassword", label: "New Password:", type: "password"}
+    {name: "role", label: "Role"}, 
+    {name: "username", label: "Username"}, 
+    {name: "email", label: "Email"}, 
+    {name: "gender", label: "Gender"},
 ]
 
 // For user filter
@@ -86,7 +84,7 @@ const dateOption =
 const SearchLoanBookInputField = 
 [
     {name: "username", label: "Username", type:"text", select:false, slotProps: {}, options: []},
-    {name: "status", label: "Status", type:"text", select:true, slotProps: {}, options: LoanBookStatusOption},
+    {name: "finesPaid", label: "Fines Paid", type:"text", select:true, slotProps: {}, options: FinesPaidStatusOption},
 ]
 
 const EditLanguageInputField = 

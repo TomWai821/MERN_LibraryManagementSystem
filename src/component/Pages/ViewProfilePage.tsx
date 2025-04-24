@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, useEffect, useState, Fragment } from 'react'
-
-import { Box, Button, Card, CardContent, TextField, Typography } from '@mui/material'
+import { FormEvent, useEffect, useState } from 'react'
+import QrCode from 'react-qr-code'
+import { Avatar, Box, Button, Card, CardContent, Typography } from '@mui/material'
 
 // Context
 import { useModal } from '../../Context/ModalContext'
@@ -14,104 +14,81 @@ import { UserDataInterface } from '../../Model/UserTableModel'
 import { FetchUserData } from '../../Controller/UserController/UserGetController'
 import { GetUserCookie } from '../../Controller/CookieController'
 
-// Another Modal
-import DeleteProfileConfirmModal from '../Modal/Confirmation/Profile/DeleteProfileComfirmModal'
-
 // Data(CSS Syntax)
-import { DeleteButton, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../ArraysAndObjects/FormatSyntaxObjects';
+import { displayAsColumn, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../ArraysAndObjects/FormatSyntaxObjects';
 import { ViewProfileField } from '../../ArraysAndObjects/TextFieldsArrays';
 
 const ViewProfilePage = () => 
 {
-    const [Credentials, setCredentials] = useState<ViewProfileModel>({ email: "", gender: "", username: "",  newName: "", role: "", newPassword: ""});
+    const [Credentials, setCredentials] = useState<ViewProfileModel>({ email: "", gender: "", username: "", role: ""});
     const {handleOpen} = useModal();
+    const authToken = GetUserCookie("authToken") || sessionStorage.getItem("authToken");
 
-    useEffect(() => 
+    const fetchUser = async () => 
     {
-        const fetchUser = async () => 
+        if (authToken) 
         {
-            const authToken = GetUserCookie("authToken") || sessionStorage.getItem("authToken");
-
-            if (authToken) 
+            try
             {
-                try
-                {
-                    const userData = await FetchUserData(authToken);
-                    if (userData) 
-                    {
-                        updateCredentials(userData);
-                    }
-                } 
-                catch (error) 
-                {
-                    console.log('Error while fetching user', error);
-                }
-            }
-        };
+                const userData = await FetchUserData(authToken);
 
-        fetchUser();
-    }, []);
+                if (userData) 
+                {
+                    updateCredentials(userData);
+                }
+            } 
+            catch (error) 
+            {
+                console.log('Error while fetching user', error);
+            }
+        }
+    };
 
     const updateCredentials = (userData: GetResultInterface) =>
     {
         const foundUser = Array.isArray(userData.foundUser) ? userData.foundUser[0] : userData.foundUser as UserDataInterface;
 
         setCredentials
-        (
+        ( 
             {
                 username: foundUser.username|| "", 
                 gender: foundUser.gender || "",
                 role: foundUser.role || "",
                 email: foundUser.email || "",
-                newName: "",
-                newPassword: ""
             }
         );
     }
-
-    const onChange = (event: ChangeEvent<HTMLInputElement>) => 
-    {
-        setCredentials({ ...Credentials, [event.target.name]: event.target.value });
-    };
 
     const onSubmit = (event: FormEvent) => 
     {
         event.preventDefault();
     }
 
-    const onClick = () => 
+    useEffect(() => 
     {
-        handleOpen(<DeleteProfileConfirmModal/>);
-    }
+        fetchUser();
+    }, []);
 
     return (
         <Box sx={PageItemToCenter}>
-            <Card variant='outlined' sx={{ width: '900px' }}>
-                <CardContent>
+            <Card variant='outlined' sx={{ width: '600px', borderRadius: '25px' }}>
+                <CardContent sx={{ padding: '3%' }}>
                     <Typography sx={ PageTitleSyntax }>Profile</Typography>
-                    <Box sx={{ padding: '20px', display: 'grid', gap: '10px 50px', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'}}>
-                    {
-                        ViewProfileField.map((field, index) =>
-                        (
-                            <Fragment key={index}>
-                                <TextField 
-                                    sx={{ minWidth: '100px',  maxWidth: '500px'}}
-                                    name={field.name}
-                                    label={field.name}
-                                    type={field.type}
-                                    value={Credentials[field.name as keyof ViewProfileModel]}
-                                    size="small" 
-                                    onChange={onChange} 
-                                    disabled={field.disable}
-                                />
-                            </Fragment>
-                        ))
-                    }
+                    <Box sx={{...displayAsColumn, padding: '0 5% 0 5%', alignItems: 'center'}}>
+                        <Avatar sx={{width: '150px', height: '150px'}}></Avatar>
+                        {
+                            ViewProfileField.map((field, index) => 
+                            (
+                                <Box key={index} sx={{ display: 'grid', width: '100%', gridTemplateColumns: '1fr 1fr', padding: '20px 0 20px 0'}}>
+                                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{field.label}</Typography>
+                                    <Typography sx={{ fontSize: '20px', textAlign: 'right' }}>{Credentials[field.name as keyof ViewProfileModel]}</Typography>
+                                </Box>
+                            ))
+                        }
                     </Box>
 
                     <Box sx={{...PageItemToCenter, flexDirection: 'column', alignItems: 'center', mt: ViewProfileButton.marginTop}}>
-                        <Button variant='contained' sx={{...ViewProfileButton}} onClick={onSubmit}>Change Data</Button>
-                        <Button variant='contained' sx={{...ViewProfileButton, ...DeleteButton}} onClick={onClick}>Delete Account</Button>
+                        <Button variant='contained' sx={{...ViewProfileButton}} onClick={onSubmit}>Display QR Code</Button>
                     </Box>
                 </CardContent>
             </Card>

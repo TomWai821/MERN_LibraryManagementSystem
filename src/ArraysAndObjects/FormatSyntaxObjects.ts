@@ -77,6 +77,6 @@ const BookImageFormat = { minHeight: '225px', maxHeight: '350px', width: '225px'
 
 const BookImageFormatForEdit = { width: '250px', height: '350px', borderRadius: '10px' };
 
-const BookDescriptionDisplayFormat = { overflow: 'hidden', whiteSpace: 'normal',  wordWrap: 'break-word', maxWidth: '100%'};
+const BookDescriptionDisplayFormat = { display: '-webkit-box', WebkitBoxOrient: 'vertical', overflow: 'hidden', whiteSpace: 'normal',  wordWrap: 'break-word', maxWidth: '100%', textOverflow: 'ellipsis'};
 
 export {ViewProfileButton, buttonFontColor, DeleteButton, ItemToCenter, displayAsRow, displayAsColumn, PageItemToCenter, NavColor, NavButtonTransition, NavSyntax, AvatarSize, MenuItemSyntax, PageTitleSyntax, ModalTitleSyntax, ModalSubTitleSyntax, ModalSyntax, ModalRemarkSyntax, ModalBodySyntax, ImportantActionButtonSyntax, BookImageFormat, BookImageFormatForEdit, BookDescriptionDisplayFormat}

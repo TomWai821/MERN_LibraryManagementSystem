@@ -102,4 +102,12 @@ const DisableValidationForLoanBook = (Information: LoanBookInterface) =>
     return result;
 }
 
-export {handleLogout, handleSuccess, StatusDetectionForAllUser, StatusDetectionForBook, DisableValidationForLoanBook}
+const TabProps = (index: number) =>
+{
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
+export {handleLogout, handleSuccess, StatusDetectionForAllUser, StatusDetectionForBook, DisableValidationForLoanBook, TabProps}

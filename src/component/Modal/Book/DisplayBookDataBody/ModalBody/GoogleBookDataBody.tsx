@@ -5,9 +5,9 @@ import { Box, Typography } from "@mui/material"
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
-import { displayAsColumn, displayAsRow } from "../../../../ArraysAndObjects/FormatSyntaxObjects"
+import { displayAsColumn, displayAsRow } from "../../../../../ArraysAndObjects/FormatSyntaxObjects"
 import { FC } from "react"
-import { GoogleBookDataInterface } from "../../../../Model/ModelForModal";
+import { GoogleBookDataInterface } from "../../../../../Model/ModelForModal";
 
 const GoogleBookDataBody:FC<GoogleBookDataInterface> = (GoogleBookDatabody) => 
 {

@@ -125,6 +125,12 @@ const BookDataTabLabel =
     {label: "Book Data (Google Books)"}
 ]
 
+const LoanBookModalTabLabel = 
+[
+    {label: "Self Loaned"},
+    {label: "User Loaned"}
+]
+
 const BookRecordTabLabel = 
 [
     {label: 'Loan Book Record'},
@@ -161,4 +167,4 @@ const FinesPaidStatusOption = ["Not Fine Needed", "Paid", "Not Paid", "All"]
 
 const AllBookStatusOption = ["OnShelf", "Loaned", "All"];
 
-export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, PublisherTableHeader, AuthorTableHeader, BookTabLabel, BookDataTabLabel, UserTabLabel, BookRecordTabLabel, ContactTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption, FinesPaidStatusOption, AllBookStatusOption}
+export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, PublisherTableHeader, AuthorTableHeader, BookTabLabel, BookDataTabLabel, UserTabLabel, LoanBookModalTabLabel, BookRecordTabLabel, ContactTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption, FinesPaidStatusOption, AllBookStatusOption}

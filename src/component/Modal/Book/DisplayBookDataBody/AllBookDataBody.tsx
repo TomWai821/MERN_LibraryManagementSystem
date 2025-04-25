@@ -9,8 +9,9 @@ import { TransferDateToISOString } from "../../../../Controller/OtherController"
 
 import { BookDataTabLabel } from "../../../../ArraysAndObjects/TableArrays";
 import CustomTabPanel from "../../../UIFragment/CustomTabPanel";
-import BookDataBody from "./BookDataBody";
-import GoogleBookDataBody from "./GoogleBookDataBody";
+import BookDataBody from "./ModalBody/BookDataBody";
+import GoogleBookDataBody from "./ModalBody/GoogleBookDataBody";
+import { TabProps } from "../../../../Controller/OtherUsefulController";
 
 const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) => 
 {
@@ -36,14 +37,6 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
     const changeTabValue = (event: React.SyntheticEvent, newValue: number) =>
     {
         setTabValue(newValue);
-    }
-
-    const TabProps = (index: number) =>
-    {
-        return {
-          id: `simple-tab-${index}`,
-          'aria-controls': `simple-tabpanel-${index}`,
-        };
     }
 
     const toggleDescriptionDisplay = () => 

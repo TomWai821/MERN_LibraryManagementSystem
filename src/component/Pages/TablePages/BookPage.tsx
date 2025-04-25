@@ -78,6 +78,11 @@ const BookPage:FC<PagesInterface> = (loginData) =>
         
     }
 
+    const resetFilter = () => 
+    {
+        setSearchBook(defaultValue);
+    }
+
     useEffect(() => 
         { 
             if(!isAdmin) 
@@ -86,23 +91,19 @@ const BookPage:FC<PagesInterface> = (loginData) =>
             }
         },[isAdmin]
     )
-
-    useEffect(() => 
-        {
-            setSearchBook(defaultValue);
-        },[tabValue]
-    )
      
     return( 
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <TableTitle title={SetTitle} dataLength={bookData[tabValue].length}/>
 
-            <BookFilter isAdmin={isAdmin} value={tabValue} isLoggedIn={isLoggedIn} onChange={onChange} searchData={searchBook} Search={SearchBook}/>
+            <BookFilter isAdmin={isAdmin} value={tabValue} isLoggedIn={isLoggedIn} onChange={onChange} searchData={searchBook} Search={SearchBook} resetFilter={resetFilter}/>
 
-            <CustomTab isAdmin={isAdmin} value={tabValue} valueChange={changeValue} paginationValue={paginationValue} tabLabel={BookTabLabel} paginationOption={PaginationOption} type={"Book"}/>
+            <CustomTab isAdmin={isAdmin} value={tabValue} changeValue={changeValue} paginationValue={paginationValue} tabLabel={BookTabLabel}
+                 paginationOption={PaginationOption} type={"Book"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-                <BookTabPanel value={tabValue} isAdmin={isAdmin} bookData={bookData} paginationValue={paginationValue} isLoggedIn={isLoggedIn}/>
+                <BookTabPanel value={tabValue} isAdmin={isAdmin} bookData={bookData} paginationValue={paginationValue} isLoggedIn={isLoggedIn} 
+                    changeValue={changeValue} setSearchBook={setSearchBook} searchBook={searchBook}/>
             </TableContainer>
         </Box>
     );

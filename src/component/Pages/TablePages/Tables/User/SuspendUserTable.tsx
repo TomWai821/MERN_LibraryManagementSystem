@@ -1,6 +1,6 @@
 import { FC, Fragment, useState } from "react";
 
-import { Pagination, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 // UI Fragment and Manager
 import ContentTableCell from "../../../../UIFragment/ContentTableCell";

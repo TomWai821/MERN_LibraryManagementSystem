@@ -16,7 +16,7 @@ import { calculateFineAmount, isExpired, TransferDateToISOString } from "../../.
 
 const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
-    const {value, bookData, isAdmin, paginationValue, isLoggedIn} = DataForAllUserTable;
+    const {value, bookData, isAdmin, paginationValue, isLoggedIn, setSearchBook, searchBook} = DataForAllUserTable;
     const TableName = "Book";
 
     const currentTableData = bookData[value] as LoanBookInterface[];
@@ -90,7 +90,12 @@ const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                 <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
                                     HKD$ { calculateFineAmount(data.dueDate as string) }
                                 </ContentTableCell>
-                                {isAdmin && (<ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>)}
+                                {isAdmin && 
+                                    (
+                                    <ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin} isLoggedIn={isLoggedIn} 
+                                        setSearchBook={setSearchBook} searchBook={searchBook}/>
+                                    )
+                                }
                             </TableRow>
                         )
                     )

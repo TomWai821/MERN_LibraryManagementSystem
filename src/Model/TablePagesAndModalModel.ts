@@ -28,6 +28,7 @@ export interface FilterInterface extends IsAdminInterface, AllFilterInterface
 {
     searchData: UserDataInterface | BookSearchInterface | SelfLoanBookSearchInterface;
     isLoggedIn?:boolean;
+    resetFilter?:() => void;
 }
 
 export interface ContactFilterInterface extends AllFilterInterface
@@ -45,6 +46,9 @@ export interface ActionTableCellInterface extends IsAdminInterface, UserActionTa
     isLoggedIn?: boolean;
     value: number;
     TableName: string;
+    changeValue?: (type:string, newValue: number) => void;
+    setSearchBook?: (data: BookSearchInterface) => void;
+    searchBook?: BookSearchInterface;
 }
 
 export interface RecordTableCellInterface extends IsAdminInterface
@@ -66,7 +70,7 @@ export interface TabInterface extends IsAdminInterface
     type:string;
     value: number;
     paginationValue?: number;
-    valueChange: (type:string, newValue: number) => void;
+    changeValue: (type:string, newValue: number) => void;
     paginationOption?: number[];
 }
 

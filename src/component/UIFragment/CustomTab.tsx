@@ -16,17 +16,17 @@ const getTabProps = (index: number) =>
 const CustomTab:FC<TabInterface> = (TabData) => 
 {
 
-    const {tabLabel, isAdmin, isLoggedIn, type, value, paginationValue, valueChange, paginationOption} = TabData;
+    const {tabLabel, isAdmin, isLoggedIn, type, value, paginationValue, changeValue, paginationOption} = TabData;
 
     const handleTabChange = (event: ChangeEvent<{}>, newValue: number) => 
     {
-        valueChange("Tab", newValue);
+        changeValue("Tab", newValue);
     }
 
     const handlePaginationChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => 
     {
         const selectedValue = parseInt(event.target.value);
-        valueChange("Pagination", selectedValue);
+        changeValue("Pagination", selectedValue);
     }
 
     const condition = () =>

@@ -13,7 +13,7 @@ import { BookDataInterface } from "../../../../../Model/ResultModel";
 
 const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
-    const {isAdmin, value, bookData, paginationValue, isLoggedIn} = DataForAllUserTable;
+    const {isAdmin, value, bookData, paginationValue, isLoggedIn, changeValue, setSearchBook, searchBook} = DataForAllUserTable;
     const TableName = "Book";
 
     const currentTableData = bookData[value] as BookDataInterface[];
@@ -71,7 +71,9 @@ const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                     (
                                         <Fragment>
                                             <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.status}</ContentTableCell>
-                                            <ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>
+                                            <ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin} isLoggedIn={isLoggedIn} 
+                                                changeValue={changeValue as (type: string, newValue: number) => void} setSearchBook={setSearchBook} searchBook={searchBook}
+                                            />
                                         </Fragment>
                                     )
                                 }

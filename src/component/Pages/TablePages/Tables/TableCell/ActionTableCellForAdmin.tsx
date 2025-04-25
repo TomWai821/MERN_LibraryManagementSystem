@@ -1,6 +1,6 @@
 import { FC, useContext } from "react"
 import { IconButton, TableCell, Tooltip } from "@mui/material";
-import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon, History as HistoryIcon, EventAvailable as EventAvailableIcon } from '@mui/icons-material';
+import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon, History as HistoryIcon, EventAvailable as EventAvailableIcon, BookmarkBorder as BookmarkBorderIcon } from '@mui/icons-material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -33,16 +33,16 @@ import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/For
 import { useBookContext } from "../../../../../Context/Book/BookContext";
 import { AlertContext } from "../../../../../Context/AlertContext";
 import SubmitFinesConfirmModal from "../../../../Modal/Confirmation/Book/SubmitFineConfirmation";
+import { BookSearchInterface } from "../../../../../Model/BookTableModel";
 
-
-const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) => 
+const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData}) => 
 {
     const { handleOpen } = useModal();
-    const {BookRecordForUser, favouriteBook, unfavouriteBook} = useBookContext();
+    const {BookRecordForUser, favouriteBook, unfavouriteBook, fetchLoanBookWithFliterData} = useBookContext();
     const alertContext = useContext(AlertContext);
 
 
-    const { isAdmin, value, TableName, Information } = tableCellData;
+    const { isAdmin, value, TableName, Information, changeValue, setSearchBook, searchBook } = tableCellData;
     const userData = Information as UserResultDataInterface;
     
     const isFavourite = BookRecordForUser[1].find((favouriteBook) => favouriteBook.bookDetails?._id === (Information as BookDataInterface)._id);
@@ -153,6 +153,20 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
         }
     }
 
+    const ViewLoanRecord = () => 
+    {
+        if (changeValue && setSearchBook) 
+        {
+            fetchLoanBookWithFliterData("AllUser", (Information as BookDataInterface).bookname);
+            changeValue("Tab", 1);
+            setSearchBook({ ...searchBook as BookSearchInterface, bookname: (Information as BookDataInterface).bookname });
+        }
+        else 
+        {
+            console.error("changeValue is undefined.");
+        }
+    };
+
     const FavouriteIconSyntax = () => 
     {
         return isFavourite ? { "&:hover": { backgroundColor: 'lightGray' }, color: 'gold' } : { "&:hover": { backgroundColor: 'lightGray' } };
@@ -183,6 +197,8 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
             {title: "Delete (Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
             {title: "Loan Book", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openLoanBookModal, icon:<EventAvailableIcon />, 
                 disable: StatusDetectionForBook((Information as LoanBookInterface).status, "Loaned")},
+            {title: "View Loan Book History",  syntax: { "&:hover": { backgroundColor: 'lightGray' } }, 
+                clickEvent: ViewLoanRecord, icon: <BookmarkBorderIcon/>},
             {title: isFavourite ? "Unfavourite" : "Favourite",  syntax: FavouriteIconSyntax, 
                 clickEvent: FavouriteHandler, icon: isFavourite ? <StarIcon/> : <StarBorderIcon />}
         ],

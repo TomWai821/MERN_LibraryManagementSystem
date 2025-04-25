@@ -90,7 +90,7 @@ const SelfRecordPage:FC<PagesInterface> = (pageData) =>
 
             <RecordFilter value={tabValue} onChange={onChange} searchData={searchData} Search={search}  isAdmin={isAdmin}/>
 
-            <CustomTab isAdmin={isAdmin} isLoggedIn={isLoggedIn} value={tabValue} valueChange={changeValue} 
+            <CustomTab isAdmin={isAdmin} isLoggedIn={isLoggedIn} value={tabValue} changeValue={changeValue} 
                 paginationValue={paginationValue} tabLabel={BookRecordTabLabel} paginationOption={PaginationOption} type={"Record"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>

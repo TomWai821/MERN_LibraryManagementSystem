@@ -6,10 +6,14 @@ import ActionTableCellForAdmin from "../Pages/TablePages/Tables/TableCell/Action
 
 const ActionTableCellManager: FC<ActionTableCellInterface> = (tableCellData) => 
 {
-    const { value, TableName, Information, isAdmin } = tableCellData;
+    const { value, TableName, Information, isAdmin, changeValue, setSearchBook, searchBook } = tableCellData;
 
     return (
-        isAdmin ? <ActionTableCellForAdmin value={value} TableName={TableName} Information={Information} isAdmin={isAdmin}/> : <ActionTableCellForUser Information={Information}/>
+        isAdmin ? 
+            <ActionTableCellForAdmin value={value} TableName={TableName} Information={Information} isAdmin={isAdmin} 
+                changeValue={changeValue} setSearchBook={setSearchBook} searchBook={searchBook}/> 
+            : 
+            <ActionTableCellForUser Information={Information}/>
     );
 }
 

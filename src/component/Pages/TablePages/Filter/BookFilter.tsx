@@ -22,7 +22,7 @@ import { AllBookStatusOption, LoanBookStatusOption } from "../../../../ArraysAnd
 
 const BookFilter: FC<FilterInterface> = (filterData) => 
 {
-    const {value, searchData, onChange, Search, isAdmin, isLoggedIn} = filterData;
+    const {value, searchData, onChange, Search, isAdmin, isLoggedIn, resetFilter} = filterData;
     const bookData = searchData as unknown as BookTableDataInterface;
 
     const [optionVisiable, setOptionVisiable] = useState(false);
@@ -32,8 +32,7 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
     const ActionMenu = 
     [
         {label: 'Create book', clickEvent: () => handleOpen(<CreateBookModal />)},
-        {label: 'Loan book', clickEvent: () => handleOpen(<></>)},
-        {label: 'Return book', clickEvent: () => handleOpen(<></>)}
+        {label: 'Reset Filter', clickEvent: resetFilter},
     ]
 
     const toggleCardVisibility = () => 
@@ -86,10 +85,15 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
                 </IconButton>
 
                 <Button variant='contained' sx={{marginLeft: '10px'}} onClick={Search}>Search</Button>
-                    { isAdmin && 
+                    { 
+                        isAdmin && 
                         (
                             <Fragment>
-                                {value === 0 && <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={handleActionMenu}>Action</Button>}
+                                {value === 0 ? 
+                                    <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={handleActionMenu}>Action</Button>
+                                    :
+                                    <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={resetFilter}>Reset Filter</Button>
+                                }
                                 <Menu open={Boolean(actionMenu)} anchorEl={actionMenu} onClose={handleActionMenu}>
                                 {
                                     ActionMenu.map((action, index) =>(

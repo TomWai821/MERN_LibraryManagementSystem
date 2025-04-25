@@ -82,7 +82,7 @@ const ContactPage:FC<PagesInterface> = (loginData) =>
 
             <ContactFilter value={tabValue} onChange={onChange} searchData={searchContact} Search={SearchContact}/>
 
-            <CustomTab isAdmin={isAdmin} isLoggedIn={isLoggedIn} value={tabValue} valueChange={changeValue} 
+            <CustomTab isAdmin={isAdmin} isLoggedIn={isLoggedIn} value={tabValue} changeValue={changeValue} 
                 paginationValue={paginationValue} tabLabel={ContactTabLabel} paginationOption={PaginationOption} type={"Contact"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>

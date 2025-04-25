@@ -40,6 +40,9 @@ interface BookRecordTableInterface extends TableInterface
     value: number;
     bookData: (BookDataInterface[] | LoanBookInterface[])[] | LoanBookInterface[];
     paginationValue:number;
+    changeValue?: (type: string, newValue: number) => void;
+    setSearchBook?: (data: BookSearchInterface) => void;
+    searchBook?: BookSearchInterface;
 }
 
 interface ContactTableInterface extends TableInterface

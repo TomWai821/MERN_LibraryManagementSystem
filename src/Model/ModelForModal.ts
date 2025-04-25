@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { ChangeEvent, RefObject } from "react";
 import { BookDataInterface, ContactInterface, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
 
 export interface CreateModalInterface
@@ -114,6 +114,8 @@ export interface GoogleBookDataInterface
 
 export interface LoanBookModalInterface
 {
+    tabValue?: number;
+    qrCodeData?: string;
     _id:string;
     bookname:string;
     author: string;
@@ -121,4 +123,15 @@ export interface LoanBookModalInterface
     genre:string; 
     description:string; 
     imageUrl:string;
+}
+
+export interface QRCodeInterface
+{
+    username:string;
+    authToken:string;
+}
+
+export interface UserLoanBookModalBodyInterface extends LoanBookModalInterface
+{
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }

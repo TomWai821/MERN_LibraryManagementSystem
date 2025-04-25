@@ -5,6 +5,8 @@ import { FindBookByIDAndUpdate } from '../schema/book/book';
 import { BookLoanedInterface } from '../model/bookSchemaInterface';
 import { ObjectId } from 'mongodb';
 import { buildLoanedQuery } from './middleware/Book/bookValidationMiddleware';
+import { jwtVerify } from './hashing';
+import { UserInterface } from '../model/userSchemaInterface';
 
 export const GetLoanBookRecord = async (req: AuthRequest, res:Response) => 
 {
@@ -66,7 +68,7 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
     
     try
     {
-        const UserID = userID ?? id;
+        const UserID = (await jwtVerify(userID) as unknown as UserInterface)._id ?? id;
         const createLoanRecord = await CreateBookLoaned({userID:UserID, bookID, loanDate, dueDate})
 
         if(!createLoanRecord)

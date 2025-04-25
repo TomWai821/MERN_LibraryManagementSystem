@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
-import { BookDescriptionDisplayFormat, displayAsRow } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { BookDescriptionDisplayFormat, displayAsRow } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import { BookDataBodyInterface } from "../../../../Model/ModelForModal";
+import { BookDataBodyInterface } from "../../../../../Model/ModelForModal";
 
 const BookDataBody:FC<BookDataBodyInterface> = (bookBodyData) => 
 {

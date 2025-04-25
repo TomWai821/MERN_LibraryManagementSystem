@@ -1,58 +1,91 @@
-import { Avatar, Box, Button, Typography } from "@mui/material";
+import { ChangeEvent, FC, useState } from "react";
+import { Box, Button, Tab, Tabs, Typography } from "@mui/material";
 import ModalTemplate from "../../../Templates/ModalTemplate";
-import { BookDescriptionDisplayFormat, BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
-import { FC } from "react";
+
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+
 import { useBookContext } from "../../../../Context/Book/BookContext";
-import { LoanBookModalInterface } from "../../../../Model/ModelForModal";
 import { useModal } from "../../../../Context/ModalContext";
+
+import { LoanBookModalInterface, QRCodeInterface } from "../../../../Model/ModelForModal";
+
+import { TabProps } from "../../../../Controller/OtherUsefulController";
+import { LoanBookModalTabLabel } from "../../../../ArraysAndObjects/TableArrays";
+
+import CustomTabPanel from "../../../UIFragment/CustomTabPanel";
+import SelfLoanConfirmationModalBody from "./ModalBody/SelfLoanConfirmationModalBody";
+import UserLoanModalBody from "./ModalBody/UserLoanModalBody";
+import UserLoanBookConfirmationModal from "./UserLoanBookConfirmModal";
+
 
 const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) => 
 {
-    const {_id, bookname, author, language, genre, description, imageUrl} = LoanBookData;
+    const {tabValue, qrCodeData, _id, bookname, author, language, genre, description, imageUrl} = LoanBookData;
     const {loanBook} = useBookContext();
-    const {handleClose} = useModal();
+    const { handleOpen, handleClose} = useModal();
 
-    const ConfirmLoanBook = () => 
+    const [QrCodeData, setQrCodeData] = useState(qrCodeData ?? "");
+    const [TabValue, setTabValue] = useState<number>(tabValue as number);
+
+    const LoanBook = () => 
+    {
+        TabValue === 0 ? ConfirmLoanBook() : confirmUserLoanbook();
+    }
+
+    const ConfirmLoanBook = () =>     
     {
         loanBook(_id);
         handleClose();
     }
 
-    const bookData = 
-    [
-        {label: "Bookname", value: bookname},
-        {label: "Author", value: author},
-        {label: "Language", value: language},
-        {label: "Genre", value: genre}
-    ]
+    const confirmUserLoanbook = () => 
+    {
+        if(QrCodeData)
+        {
+            handleOpen(<UserLoanBookConfirmationModal qrCodeData={QrCodeData} _id={_id} bookname={bookname} author={author}
+            language={language} genre={genre} description={description} imageUrl={imageUrl} tabValue={1} />);
+        }
+    }
+
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => 
+    {
+        const {value} = event.target;
+        setQrCodeData(value);
+    }
+    
+    const changeTabValue = (event: React.SyntheticEvent, newValue: number) =>
+    {
+        setTabValue(newValue);
+    }
+
+    const setSubTitle = ["Do you want to loan this book?", "Please input userID"];
+    const setCancelButtonName = ["No", "Exit"];
+    const setConfirmButtonName = ["Yes", "Confirm"]
 
     return(
-        <ModalTemplate title={"Loan Book Record Confirmation"} width="600px" cancelButtonName="No">
+        <ModalTemplate title={"Loan Book Modal"} width="600px" cancelButtonName={setCancelButtonName[TabValue]}>
+            <Tabs value={TabValue} onChange={changeTabValue} sx={{paddingBottom: '25px', width: '500px'}}>
+                {
+                    LoanBookModalTabLabel.map((tab, index) => 
+                    (
+                        <Tab key={index} label={tab.label} {...TabProps(index)}/>
+                    ))
+                }
+            </Tabs>
+
             <Box id="modal-description" sx={ModalBodySyntax}>
-                <Typography sx={ModalSubTitleSyntax}>Do you want to loan this book?</Typography>
+                <Typography sx={ModalSubTitleSyntax}>{setSubTitle[TabValue]}</Typography>
 
-                <Box sx={displayAsRow}>
-                    <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-                        <Avatar src={imageUrl} alt="Preview" variant="rounded" sx={BookImageFormat}/>
-                    </Box>
+                <CustomTabPanel index={TabValue} value={0}>
+                    <SelfLoanConfirmationModalBody bookname={bookname} author={author} language={language} genre={genre} description={description} imageUrl={imageUrl} _id={_id}/>
+                </CustomTabPanel>
 
-                    <Box sx={{...displayAsColumn, margin: '10px 0 0 20px', gap:"20px 50px"}}>
-                        {
-                            bookData.map((data, index) => 
-                                (
-                                    <Typography key={index}>{data.label}: {data.value}</Typography>
-                                )
-                            )
-                        }
-                         <Box sx={{display: "inline-block"}}>
-                            <Typography>Description</Typography>
-                            <Typography sx={BookDescriptionDisplayFormat}>{description}</Typography>
-                        </Box>
-                    </Box>
-                </Box>
-
+                <CustomTabPanel index={TabValue} value={1}>
+                    <UserLoanModalBody qrCodeData={QrCodeData} bookname={bookname} author={author} language={language} genre={genre} description={description} imageUrl={imageUrl} _id={_id} onChange={onChange}/>
+                </CustomTabPanel>
+               
             </Box>
-            <Button variant='contained' onClick={ConfirmLoanBook}>Yes</Button>
+            <Button variant='contained' sx={{ marginRight: '10px' }} onClick={LoanBook}>{setConfirmButtonName[TabValue]}</Button>
         </ModalTemplate>
     )
 }

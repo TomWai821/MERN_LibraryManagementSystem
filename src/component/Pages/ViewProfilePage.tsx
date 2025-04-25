@@ -17,6 +17,7 @@ import { GetUserCookie } from '../../Controller/CookieController'
 // Data(CSS Syntax)
 import { displayAsColumn, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../ArraysAndObjects/FormatSyntaxObjects';
 import { ViewProfileField } from '../../ArraysAndObjects/TextFieldsArrays';
+import DisplayQRCodeModal from '../Modal/DisplayQRCodeModa'
 
 const ViewProfilePage = () => 
 {
@@ -59,9 +60,9 @@ const ViewProfilePage = () =>
         );
     }
 
-    const onSubmit = (event: FormEvent) => 
+    const onSubmit = () => 
     {
-        event.preventDefault();
+        handleOpen(<DisplayQRCodeModal username={Credentials.username} authToken={authToken as string}/>)
     }
 
     useEffect(() => 

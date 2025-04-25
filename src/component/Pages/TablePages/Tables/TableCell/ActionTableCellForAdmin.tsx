@@ -130,7 +130,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = (tableCellData) =>
     const openLoanBookModal = () => 
     {
         const bookData = Information as BookDataInterface;
-        handleOpen(<LoanBookConfirmationModal _id={bookData._id} bookname={bookData.bookname} author={bookData.authorDetails.author as string} 
+        handleOpen(<LoanBookConfirmationModal tabValue={0} _id={bookData._id} bookname={bookData.bookname} author={bookData.authorDetails.author as string} 
             language={bookData.languageDetails.language as string} genre={bookData.genreDetails.genre as string}
             description={bookData.description as string} imageUrl={bookData.image?.url as string} />)
     }

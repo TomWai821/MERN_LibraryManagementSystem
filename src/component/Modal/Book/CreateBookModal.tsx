@@ -98,6 +98,7 @@ const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) =>
             {
                 return;
             }
+            
             const { helperText, error, success } = DataValidateField(field, book[field as keyof BookTableDataInterface]) || {};
             newHelperTexts[field as keyof typeof newHelperTexts] = helperText;
             newErrors[field as keyof typeof newErrors] = error;

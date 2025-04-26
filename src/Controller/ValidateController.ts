@@ -22,7 +22,7 @@ export const DataValidateField = (name: string, value: string | any) =>
 
     if (!findValidateField) 
     {
-        return { success: false, helperText: "Invalid field", error: "Validation failed" };
+        return { success: false, helperText: `Invalid field: ${name}`, error: "Validation failed" };
     }
 
     return findValidateField.validateType(name, value);

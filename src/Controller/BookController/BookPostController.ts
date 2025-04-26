@@ -75,8 +75,8 @@ const createFormData = (image:File, bookname:string, genreID:string, languageID:
     formData.append('languageID', languageID);
     formData.append('publisherID', publisherID);
     formData.append('authorID', authorID);
-    formData.append('description',  description);
-    formData.append('publishDate',  publishDate);
+    formData.append('description', description);
+    formData.append('publishDate', publishDate);
 
     return formData;
 }

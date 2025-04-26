@@ -20,6 +20,7 @@ import { BookDataInterfaceForEdit, ContactInterface, DefinitionInterface } from 
 import { BookTableDataInterface } from '../../../Model/BookTableModel';
 import { useContactContext } from '../../../Context/Book/ContactContext';
 import { DataValidateField } from '../../../Controller/ValidateController';
+import { TransferDateToISOString } from '../../../Controller/OtherController';
 
 const EditBookModal:FC<EditModalInterface> = (editModalData) => 
 {
@@ -32,35 +33,36 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
     const CompareData = compareData as BookDataInterfaceForEdit;
 
     // For UI Rendering
-    const CreateBookInputField = useMemo(() => 
+    const EditBookInputField = useMemo(() => 
     [
         {name: "bookname", label: "Book Name", type:"text", select: false, slotProps: {}, multiline: false, rows: 1 },
         {name: "language", label: "Language", type:"text", select: true, options:definition.Language, slotProps: {}, multiline: false, rows: 1},
         {name: "genre", label: "Genre", type:"text", select: true, options:definition.Genre, slotProps:{}, multiline: false, rows: 1},
         {name: "author", label: "Author", type:"text", select: true, options:contact.Author, slotProps:{}, multiline: false, rows: 1},
         {name: "publisher", label: "Publisher", type:"text", select: true, options:contact.Publisher, slotProps:{}, multiline: false, rows: 1},
+        {name: "publishDate", label: "Publish Date", type: "date", select: false, slotProps:{}, multiline: false, rows: 1},
         {name: "description", label: "Description", type: "text", select:false, slotProps:{}, multiline: true, rows: 8}
     ],[definition])
     
     const [book, setBook] = useState(
         {   
             _id: EditData._id, bookname: EditData.bookname, language: EditData.language as string,  
-            genre: EditData.genre, author: EditData.author, publisher: EditData.publisher, description: EditData.description, 
-            filename: EditData.filename, imageUrl: EditData.imageUrl, image: EditData.image
+            genre: EditData.genre, author: EditData.author, publisher: EditData.publisher,  publishDate: TransferDateToISOString(EditData.publishDate as string), 
+            description: EditData.description, filename: EditData.filename, imageUrl: EditData.imageUrl, image: EditData.image
         }
     );
 
     const CompareBook = 
     { 
         _id: CompareData._id, bookname: CompareData.bookname, language: CompareData.language as string,
-        genre: CompareData.genre, author: CompareData.author, publisher: CompareData.publisher, 
+        genre: CompareData.genre, author: CompareData.author, publisher: CompareData.publisher, publishDate: TransferDateToISOString(CompareData.publishDate as string),
         description: CompareData.description, filename: CompareData.filename, imageUrl: CompareData.imageUrl 
     };
 
     // For data validate
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [errors, setErrors] = useState({bookname: "", author: "", genre: "", publisher: "", description: ""});
-    const [helperTexts, setHelperText] = useState({bookname: "", author: "", genre: "", publisher: "", description: ""});
+    const [errors, setErrors] = useState({bookname: "", author: "", genre: "", publisher: "", publishDate: "", description: ""});
+    const [helperTexts, setHelperText] = useState({bookname: "", author: "", genre: "", publisher: "",  publishDate: "", description: ""});
 
     // For Iamge input
     const [imageFile, setImageFile] = useState<File | null>(book.image || null); 
@@ -72,37 +74,30 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
         setBook({ ...book, [name]: value });
     }
     
-    useEffect(() => 
+
+    const fetchImage = async (imageURL: string) => 
     {
-        const fetchImage = async (imageURL: string) => 
+        try 
         {
-            try 
+            const response = await fetch(imageURL);
+    
+            if (!response.ok) 
             {
-                const response = await fetch(imageURL);
-    
-                if (!response.ok) 
-                {
-                    throw new Error("Failed to fetch image");
-                }
-    
-                const blob = await response.blob(); 
-                const file = new File([blob], CompareData.filename as string, { type: blob.type });
-    
-                setImageFile(file);
-                const preview = URL.createObjectURL(blob);
-                setPreviewUrl(preview);
-            } 
-            catch (error) 
-            {
-                console.error("Error fetching image:", error);
+                throw new Error("Failed to fetch image");
             }
-        };
     
-        if (book.imageUrl) 
+            const blob = await response.blob(); 
+            const file = new File([blob], CompareData.filename as string, { type: blob.type });
+    
+            setImageFile(file);
+            const preview = URL.createObjectURL(blob);
+            setPreviewUrl(preview);
+        } 
+        catch (error) 
         {
-            fetchImage(book.imageUrl);
+            console.error("Error fetching image:", error);
         }
-    }, [EditData.imageUrl, CompareData.imageUrl, CompareData.filename]);
+    };
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
@@ -142,11 +137,13 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
     
         Object.keys(book).forEach((field) => 
         {
-            if(["description", "publishDate"].includes(field))
+            const ignoreList = ["description", "publishDate", "image", "imageUrl", "filename", "_id"];
+            if(ignoreList.includes(field))
             {
                 return;
             }
-            const { helperText, error, success } = DataValidateField(field, book[field as keyof BookTableDataInterface] as string) || {};
+
+            const { helperText, error, success } = DataValidateField(field, book[field as keyof BookTableDataInterface]) || {};
             newHelperTexts[field as keyof typeof newHelperTexts] = helperText;
             newErrors[field as keyof typeof newErrors] = error;
     
@@ -164,6 +161,11 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
             handleOpen(<EditBookConfirmModal editData={{...book, image: imageFile, imageURL: previewUrl}} compareData={CompareBook} value={value}/>) 
         }
     }
+
+    useEffect(() => 
+    {
+        fetchImage(CompareData.imageUrl);
+    }, [EditData.imageUrl, CompareData.imageUrl, CompareData.filename]);
 
     return (
         <ModalTemplate title={"Edit Book Record"} minWidth="500px" maxWidth="750px" width="100%" cancelButtonName={"Exit"}>
@@ -196,7 +198,7 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
 
                     <Box sx={{...displayAsColumn, marginLeft: '20px', gap: '20px 100px', width: '60%'}}>
                     {
-                        CreateBookInputField.map((field, index) => 
+                        EditBookInputField.map((field, index) => 
                         (
                             <TextField key={index} label={field.label} name={field.name} value={book[field.name as keyof BookTableDataInterface]} 
                                 type={field.type} size="small" select={field.select} slotProps={field.slotProps} multiline={field.multiline} rows={field.rows}

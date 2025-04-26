@@ -70,6 +70,8 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
     const returnEditBookModal = () => 
     {
         setDifferences([]);
+        console.log(EditData.bookname);
+        console.log(CompareData.bookname);
         handleOpen(<EditBookModal value={value} editData={EditData} compareData={CompareData} />);
     }
     
@@ -79,7 +81,7 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
         const langaugeID = definition.Language.find((languageData) => languageData.language === EditData.language)?._id as string;
         const publisherID = contact.Publisher.find((publisherData) => publisherData.publisher === EditData.publisher)?._id as string;
         const authorID = contact.Author.find((authorData) => authorData.author === EditData.author)?._id as string;
-        editBook(EditData._id, CompareData.filename, EditData.image as File, EditData.bookname, genreID, langaugeID, publisherID, authorID, EditData.description);
+        editBook(EditData._id, CompareData.filename, EditData.image as File, EditData.bookname, genreID, langaugeID, publisherID, EditData.publishDate as string, authorID, EditData.description);
         handleClose();
     }
 

@@ -95,7 +95,6 @@ export const fetchLoanBook = async(authToken?:string, type?:string, bookname?:st
             break;
 
     }
-    console.log(url);
 
     const response = await fetch(url,
         {
@@ -122,8 +121,6 @@ export const fetchFavouriteBook = async(authToken:string, bookname?:string, stat
             headers: {'content-type':contentType, 'authToken': authToken}
         }
     );
-
-    console.log(response);
 
     if(response.ok)
     {

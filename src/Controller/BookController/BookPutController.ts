@@ -1,9 +1,9 @@
 const localhost = process.env.REACT_APP_LOCAL_HOST;
 const contentType:string = "application/json";
 
-export const updateBookRecord = async (authToken:string, bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description: string) => 
+export const updateBookRecord = async (authToken:string, bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, publishDate:string, authorID:string, description: string) => 
 {
-    const data = createFormData(newFile, imageName, bookname, genreID, languageID, publisherID, authorID, description);
+    const data = createFormData(newFile, imageName, bookname, genreID, languageID, publisherID, publishDate, authorID, description);
 
     const response = await fetch(`${localhost}/book/bookData/id=${bookID}`,
         {
@@ -41,7 +41,7 @@ export const returnBookAndChangeStatus = async (authToken:string, loanBookRecord
     }
 }
 
-const createFormData = (image:File, imageName:string, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string) => 
+const createFormData = (image:File, imageName:string, bookname:string, genreID:string, languageID:string, publisherID:string, publishDate:string, authorID:string, description:string) => 
 {
     const formData = new FormData();
     formData.append('image', image);
@@ -51,7 +51,8 @@ const createFormData = (image:File, imageName:string, bookname:string, genreID:s
     formData.append('languageID', languageID);
     formData.append('publisherID', publisherID);
     formData.append('authorID', authorID);
-    formData.append('description',  description);
+    formData.append('description', description);
+    formData.append('publishDate', publishDate);
 
     return formData;
 }

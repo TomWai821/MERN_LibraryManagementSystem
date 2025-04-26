@@ -1,6 +1,6 @@
 import { FC, useContext } from "react"
 import { IconButton, TableCell, Tooltip } from "@mui/material";
-import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon, History as HistoryIcon, EventAvailable as EventAvailableIcon, BookmarkBorder as BookmarkBorderIcon } from '@mui/icons-material';
+import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon, History as HistoryIcon, EventAvailable as EventAvailableIcon, Search as SearchIcon } from '@mui/icons-material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -58,7 +58,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
                             { 
                                 _id: data._id, bookname: data.bookname, language: data.languageDetails.language as string,
                                 genre: data.genreDetails.genre as string, author: data.authorDetails.author as string,
-                                publisher: data.publisherDetails.publisher as string, description: data.description, 
+                                publisher: data.publisherDetails.publisher as string, publishDate: data.publishDate, description: data.description, 
                                 imageUrl: data.image?.url, filename: data.image?.filename
                             }
                 handleOpen(<EditBookModal value={value} editData={Data} compareData={Data}/>);
@@ -195,10 +195,10 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
         [
             {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openEditModal, icon:<EditIcon />},
             {title: "Delete (Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
+            {title: "View Loan Book History",  syntax: { "&:hover": { backgroundColor: 'lightGray' } }, 
+                clickEvent: ViewLoanRecord, icon: <SearchIcon/>},
             {title: "Loan Book", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openLoanBookModal, icon:<EventAvailableIcon />, 
                 disable: StatusDetectionForBook((Information as LoanBookInterface).status, "Loaned")},
-            {title: "View Loan Book History",  syntax: { "&:hover": { backgroundColor: 'lightGray' } }, 
-                clickEvent: ViewLoanRecord, icon: <BookmarkBorderIcon/>},
             {title: isFavourite ? "Unfavourite" : "Favourite",  syntax: FavouriteIconSyntax, 
                 clickEvent: FavouriteHandler, icon: isFavourite ? <StarIcon/> : <StarBorderIcon />}
         ],

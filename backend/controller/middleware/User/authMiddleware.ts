@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import { jwtVerify } from "../../hashing";
 import { AuthRequest } from "../../../model/requestInterface";
-import { FindUser, GetUser } from "../../../schema/user/user";
+import { FindUser } from "../../../schema/user/user";
 
 export const FetchUserFromHeader = async (req: AuthRequest, res: Response, next: NextFunction) => 
 {

@@ -133,14 +133,17 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
     
     return(
         <Box>
-            <Tabs value={tabValue} onChange={changeTabValue} sx={{paddingBottom: '50px', width: '500px'}}>
-                {
-                    BookDataTabLabel.map((tab, index) => 
-                    (
-                        <Tab key={index} label={tab.label} {...TabProps(index)}/>
-                    ))
-                }
-            </Tabs>
+            {
+                isLoggedIn && 
+                <Tabs value={tabValue} onChange={changeTabValue} sx={{paddingBottom: '50px', width: '500px'}}>
+                    {
+                        BookDataTabLabel.map((tab, index) => 
+                        (
+                            <Tab key={index} label={tab.label} {...TabProps(index)}/>
+                        ))
+                    }
+                </Tabs>
+            }
             
             <Box sx={{...displayAsRow, justifyContent: 'space-between', width: '500px'}}>
                 <Avatar src={imageUrl} alt="Preview" variant="rounded" sx={{...BookImageFormat, paddingTop: '50px'}}/>

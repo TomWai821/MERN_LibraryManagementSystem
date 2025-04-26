@@ -27,7 +27,6 @@ export const GetLoanBookRecord = async (req: AuthRequest, res:Response) =>
                 break;
 
             case "AllUser":
-                console.log(req.query);
                 if(req.query && Object.keys(req.query).length > 0)
                 {  
                     query = buildLoanedQuery({bookname, username, status, finesPaid});
@@ -68,7 +67,7 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
     
     try
     {
-        const UserID = (await jwtVerify(userID) as unknown as UserInterface)._id ?? id;
+        const UserID = userID ? await jwtVerify(userID) as unknown as UserInterface : id;
         const createLoanRecord = await CreateBookLoaned({userID:UserID, bookID, loanDate, dueDate})
 
         if(!createLoanRecord)
@@ -88,6 +87,7 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
     }
     catch(error)
     {
+        console.log(error);
         return res.status(500).json({success, error: "Internal Server Error!" })
     }
 }
@@ -105,8 +105,6 @@ export const UpdateLoanBookRecord = async (req: AuthRequest, res:Response) =>
         
         const status = dueDate && currentDate <= dueDate ? 'Returned' : 'Returned(Late)';
 
-        console.log(fineAmount);
-        console.log(finesPaid);
         const changeLoanRecordStatus = await FindBookLoanedByIDAndUpdate(foundLoanedRecord._id as unknown as string, {status: status, returnDate: currentDate, fineAmount: fineAmount, finesPaid: finesPaid})
 
         if(!changeLoanRecordStatus)

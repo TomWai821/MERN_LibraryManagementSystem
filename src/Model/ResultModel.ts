@@ -100,7 +100,8 @@ export interface BookDataInterfaceForEdit
     language?:string;
     author?:string;
     publisher?:string;
-    description: string;
+    publishDate?:string;
+    description:string;
     status:string;
     filename:string;
     imageUrl:string;

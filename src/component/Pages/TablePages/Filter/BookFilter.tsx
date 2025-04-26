@@ -31,8 +31,8 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
 
     const ActionMenu = 
     [
-        {label: 'Create book', clickEvent: () => handleOpen(<CreateBookModal />)},
         {label: 'Reset Filter', clickEvent: resetFilter},
+        {label: 'Create book', clickEvent: () => handleOpen(<CreateBookModal />)}
     ]
 
     const toggleCardVisibility = () => 

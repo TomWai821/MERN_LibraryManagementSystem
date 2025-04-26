@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
-import { CreateBook, FindBookByIDAndDelete, FindBookByIDAndUpdate } from '../schema/book/book';
+import { CreateBook, FindBookByID, FindBookByIDAndDelete, FindBookByIDAndUpdate } from '../schema/book/book';
 import { AuthRequest } from '../model/requestInterface';
 import { deleteImage } from '../storage';
 import fs from 'fs'
+import { BookInterface } from '../model/bookSchemaInterface';
 
 export const GetBookRecord = async (req: AuthRequest, res: Response) => 
 {
@@ -36,8 +37,9 @@ export const GetBookImage = async(req:Request, res:Response) =>
 
 export const CreateBookRecord = async (req:Request, res:Response) => 
 {
-    const { bookname, languageID, genreID, authorID, publisherID, pages, description, publishDate } = req.body;
+    const { bookname, languageID, genreID, authorID, publisherID, description, publishDate } = req.body;
     let success = false;
+    console.log(req.body);
 
     try
     {
@@ -46,7 +48,8 @@ export const CreateBookRecord = async (req:Request, res:Response) =>
         const mongoDate = new Date(publishDate);
 
         // Add imageUrl to each book
-        const createBook = await CreateBook({ image: {url:imageUrl, filename:imageName}, bookname, languageID, genreID, authorID, publisherID, pages, description, publishDate:mongoDate });
+        const createBook = await CreateBook({ image: {url:imageUrl, filename:imageName}, 
+                                                bookname, languageID, genreID, authorID, publisherID, description, publishDate:mongoDate });
 
         if(!createBook)
         {
@@ -66,16 +69,20 @@ export const CreateBookRecord = async (req:Request, res:Response) =>
 export const EditBookRecord = async (req: Request, res: Response) => 
 {
     const bookID = req.params.id;
-    const { bookname, imageName, languageID, genreID, authorID, publisherID, description } = req.body;
+    const { bookname, imageName, languageID, genreID, authorID, publisherID, description, publishDate } = req.body;
     let success = false;
 
     try 
     {
-        // New image filename (if uploaded)
-        const newImageName = req.file?.filename;
-        const imageUrl = newImageName ? `http://localhost:5000/api/book/uploads/${newImageName}` : null;
+        const bookData = await FindBookByID(bookID) as BookInterface;
+        const ImageName = bookData.image.filename;
+        const ImageUrl = bookData.image.url;
 
-        if (imageName) {
+        const newImageName = ImageName === imageName ? ImageName : req.file?.filename ?? ImageName;
+        const imageUrl = ImageName === imageName ? ImageUrl : `http://localhost:5000/api/book/uploads/${newImageName}`;
+
+        if (ImageName !== imageName) 
+        {
             try 
             {
                 await deleteImage(imageName);
@@ -93,8 +100,10 @@ export const EditBookRecord = async (req: Request, res: Response) =>
             }
         }
     
-        const updateBookRecord = await FindBookByIDAndUpdate(bookID, {image: { url: imageUrl, filename: newImageName }, bookname, languageID, genreID, authorID, publisherID, description});
+        const updateBookRecord = await FindBookByIDAndUpdate(bookID, {$set: {image: { url: imageUrl, filename: newImageName }, 
+                                                                    bookname, languageID, genreID, authorID, publisherID, description, publishDate:new Date(publishDate) }});
 
+        console.log(updateBookRecord);
         if (!updateBookRecord) 
         {
             return res.status(400).json({ success, error: 'Failed to Update Book Record' });

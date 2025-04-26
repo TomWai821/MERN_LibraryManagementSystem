@@ -64,10 +64,14 @@ const BookPage:FC<PagesInterface> = (loginData) =>
         switch(tabValue)
         {
             case 0:
-                const genreID = definition.Genre.find((genre) => genre.genre === searchBook.genre)?.genre as string;;
-                const languageID = definition.Language.find((language) => language.language === searchBook.language)?.language as string;
-                const authorID = contact.Author.find((author) => author.author === searchBook.author)?.author as string;
-                const publisherID = contact.Publisher.find((publisher) => publisher.publisher === searchBook.publisher)?.publisher as string;
+                const genreID = definition.Genre.find((genre) => genre.genre === searchBook.genre)?._id as string;;
+                const languageID = definition.Language.find((language) => language.language === searchBook.language)?._id as string;
+                const authorID = contact.Author.find((author) => author.author === searchBook.author)?._id as string;
+                const publisherID = contact.Publisher.find((publisher) => publisher.publisher === searchBook.publisher)?._id as string;
+                console.log(genreID)
+                console.log(languageID)
+                console.log(authorID)
+                console.log(publisherID)
                 fetchBookWithFliterData("All", searchBook.bookname, searchBook.status, genreID, languageID, authorID, publisherID);
                 break;
 

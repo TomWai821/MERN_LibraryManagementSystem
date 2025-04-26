@@ -17,7 +17,7 @@ import { GetUserCookie } from '../../Controller/CookieController'
 // Data(CSS Syntax)
 import { displayAsColumn, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../ArraysAndObjects/FormatSyntaxObjects';
 import { ViewProfileField } from '../../ArraysAndObjects/TextFieldsArrays';
-import DisplayQRCodeModal from '../Modal/DisplayQRCodeModa'
+import DisplayQRCodeModal from '../Modal/DisplayQRCodeModal'
 
 const ViewProfilePage = () => 
 {

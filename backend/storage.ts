@@ -23,9 +23,7 @@ export const deleteImage = async (imageName: string): Promise<void> =>
     try 
     {
         const imagePath = path.join(__dirname, 'upload', imageName);
-        console.log(__dirname, './backend/upload/', imageName)
         await fs.unlink(imagePath); 
-        console.log(`Successfully deleted image: ${imageName}`);
     } 
     catch (err) 
     {

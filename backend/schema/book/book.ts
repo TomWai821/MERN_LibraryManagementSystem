@@ -17,7 +17,7 @@ const BookSchema = new mongoose.Schema<BookInterface>(
         publisherID: { type: mongoose.Types.ObjectId, ref: 'Publisher', required: true }, 
         status: { type: String, required: true, default: 'OnShelf', enum: bookStatusArray },
         description: { type: String, default: 'N/A' },
-        publishDate: { type: Date, default: Date.now, immutable: true, index: true } 
+        publishDate: { type: Date, default: Date.now, index: true } 
     }
 );
 
@@ -68,7 +68,6 @@ const GetBooksWithOtherDetails = async (data?:Record<string, any>, sortRequireme
         ...lookupAndUnwind('publishers', 'publisherID', '_id', 'publisherDetails'),
     );
 
-    console.log(...otherRequirement)
     pipeline.push(...otherRequirement);
 
     return await Book.aggregate(pipeline);
@@ -106,7 +105,7 @@ export const FindBookByIDAndUpdate = async (bookID: string, data: Record<string,
 {
     try
     {
-        return await Book.findByIdAndUpdate(bookID, data);
+        return await Book.findByIdAndUpdate(bookID, data, {new: true});
     }
     catch(error)
     {

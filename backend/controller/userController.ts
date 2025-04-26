@@ -107,7 +107,6 @@ export const ChangeUserData = async (req: AuthRequest, res: Response) =>
 export const ChangeStatus = async (req:AuthRequest, res:Response) => 
 {
     const { statusForUserList, description, startDate, dueDate } = req.body;
-    console.log(req.body)
     const foundUser = req.foundUser as UserInterface;
     const userId = foundUser._id as ObjectId;
     let success = false;

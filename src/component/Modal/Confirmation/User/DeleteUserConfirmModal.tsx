@@ -25,50 +25,19 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
     const {value, _id, data} = userData;
     const Data = data as UserResultDataInterface;
 
-    const { changeUserStatus, actualDeleteUser } = useUserContext();
-    const {handleClose} = useModal();
+    const { actualDeleteUser } = useUserContext();
+    const { handleClose } = useModal();
 
     const DeleteUserAction = (): void => 
     {
-        switch(value)
-        {
-            case 0:
-                if(Data.status !== "Delete")
-                {
-                    changeUserStatus("Delete", _id, "Delete", undefined, 30, "Admin-Request Deletion");   
-                }
-                break;
-
-            case 2:
-                actualDeleteUser(_id, Data.deleteDetails?._id as string, "Deleted");
-                break;
-        }
+        actualDeleteUser(_id);
         handleClose();
     }
 
-    const setTitle = () =>
-    {
-        let setTitle = {title: "", subTitle: ""};
-        switch(value)
-        {
-            case 0:
-                setTitle.title = "Move to Delete List";
-                setTitle.subTitle = "Do you want to move this account to delete list?"
-                break;
-            
-            case 2:
-                setTitle.title = "Delete User Record";
-                setTitle.subTitle = "Do you want to delete this account?"
-                break;
-        }
-
-        return setTitle;
-    }
-    
     return(
-        <ModalTemplate title={setTitle().title as string} width="400px" cancelButtonName={"No"}>
+        <ModalTemplate title={"Delete User Record"} width="400px" cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
-                <Typography sx={ModalSubTitleSyntax}>{setTitle().subTitle}</Typography>
+                <Typography sx={ModalSubTitleSyntax}>{"Do you want to delete this account?"}</Typography>
                 <Typography>Username: {Data.username}</Typography>
                 <Typography>Email: {Data.email}</Typography>
                 <Typography>Role: {Data.role}</Typography>

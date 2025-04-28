@@ -1,6 +1,6 @@
 import { FC, useContext } from "react"
 import { IconButton, TableCell, Tooltip } from "@mui/material";
-import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, Restore as RestoreIcon, History as HistoryIcon, EventAvailable as EventAvailableIcon, Search as SearchIcon } from '@mui/icons-material';
+import { Edit as EditIcon, Delete as DeleteIcon, Block as BlockIcon, LockOpen as LockOpenIcon, History as HistoryIcon, EventAvailable as EventAvailableIcon, Search as SearchIcon } from '@mui/icons-material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -26,7 +26,7 @@ import LoanBookConfirmationModal from "../../../../Modal/Confirmation/Book/LoanB
 
 // Model
 import { ActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel"
-import { BookDataInterface, DetailsInterfaceForSuspendAndDelete, LoanBookInterface, UserResultDataInterface } from "../../../../../Model/ResultModel";
+import { BookDataInterface, DetailsInterfaceForSuspend, LoanBookInterface, UserResultDataInterface } from "../../../../../Model/ResultModel";
 
 // Data(CSS Syntax)
 import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
@@ -108,13 +108,13 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
 
     const openEditSuspendDataModal = () => 
     {
-        const banData = userData.bannedDetails as DetailsInterfaceForSuspendAndDelete;
+        const banData = userData.bannedDetails as DetailsInterfaceForSuspend;
         handleOpen(<EditSuspendUserModal value={value} editData={banData} compareData={banData}/>)
     } 
 
     const openUndoActionModal = () => 
     {
-        handleOpen(<UndoUserActivityModal value={value} _id={userData._id} data={userData} />)
+        handleOpen(<UndoUserActivityModal _id={userData._id} data={userData} />)
     }
 
     const openReturnBookModal = () => 
@@ -178,21 +178,16 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
         [
             {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />},
             {title: "Suspend User" , syntax:ImportantActionButtonSyntax, clickEvent:openSuspendModal, icon:<BlockIcon />, disable: StatusDetectionForAllUser(userData.status).banned.disable},
-            {title: "Move To Delete List", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />, disable: StatusDetectionForAllUser(userData.status).delete.disable}
+            {title: "Delete User", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />, disable: StatusDetectionForAllUser(userData.status).delete.disable}
         ],
         [
             {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditSuspendDataModal, icon:<EditIcon />},
             {title: "Unsuspend User", syntax:ImportantActionButtonSyntax, clickEvent:openUndoActionModal , icon:<LockOpenIcon />},
-        ],
-        [
-            {title: "UnDelete user", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openUndoActionModal, icon:<RestoreIcon />},
-            {title: "Delete(Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
         ]
     ]
 
     const BookActionTableCellForAdmin = 
     [
-
         [
             {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openEditModal, icon:<EditIcon />},
             {title: "Delete (Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},

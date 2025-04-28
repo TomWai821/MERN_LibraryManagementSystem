@@ -41,14 +41,14 @@ const ModifyUserDataController = async (authToken:string, userId: string, userna
 {
     const data = { username, email, gender, role };
     const URL = `${url}/UserData/id=${userId}`;
-    return await fetchData(authToken, url, data);
+    return await fetchData(authToken, URL, data);
 };
 
 const ModifySuspendListDataController = async(authToken:string, userId:string, banListID:string, dueDate:Date, description:string) => 
 {
     const data = { banListID, dueDate, description }
     const URL = `${url}/SuspendListData/id=${userId}`;
-    return await fetchData(authToken, url, data);
+    return await fetchData(authToken, URL, data);
 }
 
 const ModifyStatusController = async (type:string, authToken:string, userId: string, statusForUserList?: string, ListID?:string, startDate?: Date, dueDate?: Date, description?:string) => 
@@ -56,8 +56,6 @@ const ModifyStatusController = async (type:string, authToken:string, userId: str
     const statusDataConfig =
     {
         Suspend: { banListID: ListID, statusForUserList, startDate, dueDate, description },
-        Delete: { deleteListID: ListID, statusForUserList, startDate, dueDate, description },
-        UnDelete: { statusForUserList, deleteListID: ListID },
         UnSuspend: { statusForUserList, banListID: ListID }
     };
 

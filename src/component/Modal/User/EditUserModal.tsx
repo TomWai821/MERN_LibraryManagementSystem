@@ -49,7 +49,7 @@ const EditUserModal:FC<EditModalInterface> = (editModalData) =>
     
         Object.keys(user).forEach((field) => 
         {
-            if(["gender", "role"].includes(field))
+            if(["_id", "gender", "role", "status"].includes(field))
             {
                 return;
             }
@@ -62,6 +62,8 @@ const EditUserModal:FC<EditModalInterface> = (editModalData) =>
             {
                 validationPassed = false;
             }
+
+            console.log({ helperText, error, success })
         });
     
         setHelperText(newHelperTexts);
@@ -82,7 +84,7 @@ const EditUserModal:FC<EditModalInterface> = (editModalData) =>
                         <TextField key={index} label={field.label} name={field.name} value={user[field.name as keyof UserDataInterface]}
                             type={field.type} size="small" onChange={onChange} select={field.select} 
                             helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
-                            error={isSubmitted && errors[field.name as keyof typeof errors] != ""}>
+                            error={isSubmitted && errors[field.name as keyof typeof errors] !== ""}>
                             {
                                 field.select && field.options.map((option, index) => 
                                 (

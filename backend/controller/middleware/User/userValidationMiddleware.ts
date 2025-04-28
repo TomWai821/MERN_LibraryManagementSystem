@@ -5,7 +5,6 @@ import { ObjectId } from "mongoose";
 import { comparePassword } from "../../hashing";
 import { UserInterface } from "../../../model/userSchemaInterface";
 import { FindSuspendListByID } from "../../../schema/user/suspendList";
-import { FindDeleteListByID } from "../../../schema/user/deleteList";
 
 // For user register (not require login)
 export const UserRegisterDataValidation = async (req: Request, res: Response, next: NextFunction) => 
@@ -98,23 +97,6 @@ export const SuspendListValidation = async (req: AuthRequest, res: Response, nex
         if(!foundSuspendList)
         {
             return res.status(404).json({ success: false, error:"Invalid Suspend List ID!"});
-        }
-    }
-    next();
-}
-
-// DeleteList ID validation before doing some action
-export const DeleteListValidation = async (req: AuthRequest, res: Response, next:NextFunction) => 
-{
-    const { deleteListID } = req.body;
-
-    if(deleteListID)
-    {
-        const foundDeleteList = await FindDeleteListByID(deleteListID);
-
-        if(!foundDeleteList)
-        {
-            return res.status(404).json({ success: false, error:"Invalid Delete List ID!"});
         }
     }
     next();

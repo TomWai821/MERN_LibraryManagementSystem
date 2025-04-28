@@ -17,9 +17,13 @@ import EditBookModal from "../../Book/EditBookModal";
 import { BookDataInterfaceForEdit } from "../../../../Model/ResultModel";
 import { useBookContext } from "../../../../Context/Book/BookContext";
 import { BookImageFormatForEdit, displayAsRow, ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+
+// other context
 import { useContactContext } from "../../../../Context/Book/ContactContext";
 import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext";
+import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
 
 const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {  
@@ -40,7 +44,7 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
     const generateChangeTypography = (editData:BookDataInterfaceForEdit, compareData:BookDataInterfaceForEdit) => 
     {
         let differences: JSX.Element[] = [];
-        const ignoreList = ["imageUrl", "filename"]
+        const ignoreList = ["imageUrl", "filename", "description"]
     
         for (const key in compareData) 
         {
@@ -58,8 +62,13 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
                 );
             }
         }
-    
-        if (differences.length === 0 && sameImage) 
+
+        if(CompareData.description.trim() !== EditData.description.trim())
+        {
+            differences.push(<ExpandableTypography title={"Description"}>{`${CompareData.description} -> ${EditData.description}`}</ExpandableTypography>);
+        }
+
+        if (differences.length === 0 && sameImage && CompareData.description.trim() === EditData.description.trim()) 
         {
             differences.push(<Typography key={"nothingChange"}>- Nothing Changed</Typography>);
         }
@@ -70,8 +79,6 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
     const returnEditBookModal = () => 
     {
         setDifferences([]);
-        console.log(EditData.bookname);
-        console.log(CompareData.bookname);
         handleOpen(<EditBookModal value={value} editData={EditData} compareData={CompareData} />);
     }
     

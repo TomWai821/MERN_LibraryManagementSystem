@@ -3,7 +3,7 @@ const localhost = process.env.REACT_APP_LOCAL_HOST;
 const url:string = `${localhost}/user`;
 const contentType:string = 'application/json';
 
-const DeleteUserController = async(authToken:string, userId:string, deleteListId:string) => 
+const DeleteUserController = async(authToken:string, userId:string) => 
 {
     try
     {
@@ -14,8 +14,7 @@ const DeleteUserController = async(authToken:string, userId:string, deleteListId
                 { 
                     'content-type': contentType,
                     'authToken': authToken
-                },
-                body:JSON.stringify({deleteListID: deleteListId})
+                }
             }
         )
 

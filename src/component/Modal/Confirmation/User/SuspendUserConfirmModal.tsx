@@ -20,6 +20,7 @@ import SuspendUserModal from "../../User/SuspendUserModal";
 // Data (CSS Syntax and dropdown data)
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { dateOption } from "../../../../ArraysAndObjects/TextFieldsArrays";
+import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
 
 const SuspendUserConfirmModal:FC<SuspendModalInterface> = (banData) => 
 {
@@ -42,9 +43,9 @@ const SuspendUserConfirmModal:FC<SuspendModalInterface> = (banData) =>
     return(
         <ModalTemplate title={"Suspend User Confirmation"} width="400px" cancelButtonName={"No"}  cancelButtonEvent={returnSuspendUserModal}>
             <Box id="modal-description" sx={ModalBodySyntax}>
-                <Typography sx={ModalSubTitleSyntax}>Do you want to ban {username}?</Typography>
+                <Typography sx={ModalSubTitleSyntax}>Do you want to suspend {username}?</Typography>
                 <Typography>Duration: {dateOption[durationOption as number].label}</Typography>
-                <Typography>Description: {description}</Typography>
+                <ExpandableTypography title={"Description"}>{description}</ExpandableTypography>
             </Box>
             
             <ModalConfirmButton clickEvent={() => SuspendUser(_id, dateOption[durationOption as number].value, description as string)} name={"Yes"} buttonType={"Important"}/>

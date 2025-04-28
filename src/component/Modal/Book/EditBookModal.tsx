@@ -74,7 +74,6 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
         setBook({ ...book, [name]: value });
     }
     
-
     const fetchImage = async (imageURL: string) => 
     {
         try 
@@ -203,7 +202,7 @@ const EditBookModal:FC<EditModalInterface> = (editModalData) =>
                             <TextField key={index} label={field.label} name={field.name} value={book[field.name as keyof BookTableDataInterface]} 
                                 type={field.type} size="small" select={field.select} slotProps={field.slotProps} multiline={field.multiline} rows={field.rows}
                                 helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
-                                error={isSubmitted && errors[field.name as keyof typeof errors] != ""}
+                                error={isSubmitted && errors[field.name as keyof typeof errors] !== ""}
                                 onChange={onSelectChange}
                             >
                                     {

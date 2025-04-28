@@ -1,4 +1,4 @@
-import { Box, Paper, TableContainer, Typography } from "@mui/material";
+import { Box, Paper, TableContainer } from "@mui/material";
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 
 // Another Component

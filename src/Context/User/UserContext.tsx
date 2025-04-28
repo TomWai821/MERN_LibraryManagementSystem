@@ -18,9 +18,8 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
 {
     const [AllUser, setAllUser] = useState<UserResultDataInterface[]>([]);
     const [SuspendUser, setSuspendUser] = useState<UserResultDataInterface[]>([]);
-    const [DeleteUser, setDeleteUser] = useState<UserResultDataInterface[]>([]);
     const authToken = GetData("authToken") as string;
-    const userData = [AllUser, SuspendUser, DeleteUser];
+    const userData = [AllUser, SuspendUser];
 
     // For init
     const fetchAllUser = useCallback(async () => 
@@ -29,7 +28,6 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
         {
             const resultForAllUser: GetResultInterface | undefined = await FetchUserData("AllUser", authToken);
             const resultForSuspendUser: GetResultInterface | undefined = await FetchUserData("SuspendUser", authToken);
-            const resultForDeleteUser: GetResultInterface | undefined = await FetchUserData("DeleteUser", authToken);
 
             if(resultForAllUser && Array.isArray(resultForAllUser.foundUser))
             {
@@ -41,10 +39,6 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
                 setSuspendUser(resultForSuspendUser.foundUser);
             }
 
-            if(resultForDeleteUser && Array.isArray(resultForDeleteUser.foundUser))
-            {
-                setDeleteUser(resultForDeleteUser.foundUser);
-            }
         }
         catch(error)
         {
@@ -70,10 +64,6 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
 
                     case "SuspendUser":
                         setSuspendUser(result.foundUser);
-                        break;
-
-                    case "DeleteUser":
-                        setDeleteUser(result.foundUser);
                         break;
                 }
                 
@@ -148,12 +138,8 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
                     result = await ModifyStatusController(type, authToken, userId, status, ListID);
                     break;
                 
-                case "UnDelete":
-                    result = await ModifyStatusController(type, authToken, userId, status, ListID);
-                    break;
-
                 default:
-                    if(type !== "Suspend" && type !== "Delete")
+                    if(type !== "Suspend")
                     {
                         return console.log(`Invalid type: ${type}`);
                     }
@@ -172,9 +158,9 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[fetchAllUser]);
 
-    const actualDeleteUser = useCallback(async(userId:string, banListID:string) => 
+    const actualDeleteUser = useCallback(async(userId:string) => 
     {
-        const result : GetResultInterface | undefined = await DeleteUserController(authToken, userId, banListID);
+        const result : GetResultInterface | undefined = await DeleteUserController(authToken, userId);
         try
         {
             if(result)

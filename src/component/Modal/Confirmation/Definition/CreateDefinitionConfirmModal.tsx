@@ -58,7 +58,7 @@ const CreateDefinitionConfirmModal:FC<CreateModalInterface> = (definationData) =
                 {
                     value === 0 ? <Typography>Genre: {Data.genre}</Typography>:<Typography>Language: {Data.language}</Typography>
                 }
-                <Typography>ShortName: {Data.shortName}</Typography>
+                <Typography>ShortName: {Data.shortName ?? "N/A"}</Typography>
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
             </Box>
             

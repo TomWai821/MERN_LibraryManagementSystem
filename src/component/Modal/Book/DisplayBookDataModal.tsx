@@ -15,7 +15,7 @@ import LoanBookConfirmationModal from "../Confirmation/Book/LoanBookConfirmation
 
 const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 
 {
-    const {position, value, data, isLoggedIn} = displayUserData;
+    const {position, value, data, isAdmin} = displayUserData;
     const {handleOpen} = useModal();
     const width = '600px';
 
@@ -26,12 +26,12 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
         {
             case 0:
                 displayData.title = "Book Information";
-                displayData.displayBody = <AllBookDataBody data={data as BookDataInterface} isLoggedIn={isLoggedIn}/>
+                displayData.displayBody = <AllBookDataBody data={data as BookDataInterface} isAdmin={isAdmin}/>
                 break;
 
             case 1:
                 displayData.title = "OnLoan Book Information";
-                displayData.displayBody = <LoanBookDataBody data={data as BookDataInterface} isLoggedIn={isLoggedIn}/>
+                displayData.displayBody = <LoanBookDataBody data={data as BookDataInterface} isAdmin={isAdmin}/>
                 break;
 
         }
@@ -60,7 +60,7 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
             </Box>
 
             {
-                (position === "mainPage" && value === 0 && isLoggedIn) &&
+                (position === "mainPage" && value === 0 && isAdmin) &&
                 <Button variant="contained" onClick={openLoanBookModal} disabled={bookStatusValidation}>Loan Book</Button>
             }
         </ModalTemplate>

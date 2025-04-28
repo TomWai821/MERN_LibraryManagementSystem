@@ -1,14 +1,12 @@
 import { FC } from "react";
-import { Box, IconButton, Typography } from "@mui/material";
-import { BookDescriptionDisplayFormat, displayAsRow } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
-
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { Box, Typography } from "@mui/material";
 import { BookDataBodyInterface } from "../../../../../Model/ModelForModal";
+
+import ExpandableTypography from "../../../../UIFragment/ExpandableTypography";
 
 const BookDataBody:FC<BookDataBodyInterface> = (bookBodyData) => 
 {
-    const {BookData, isLoggedIn, status, toggleDescriptionDisplay, descriptionData, displayFullDescription, displayAmount, overFlow, descriptionRef, lineCount} = bookBodyData;
+    const {BookData, isLoggedIn, status, descriptionData} = bookBodyData;
       
     return(
             <Box sx={{ display: 'grid', gap: '20px 50px', width:'350px', gridTemplateColumns: '100%'}}>
@@ -26,19 +24,8 @@ const BookDataBody:FC<BookDataBodyInterface> = (bookBodyData) =>
                         <Typography>Status: {status}</Typography>
                     </Box>
                 }
-                <Box sx={{ maxWidth: '350px', display: 'inline-block'}}>
-                    <Box sx={{...displayAsRow, alignItems: 'center'}}>
-                        <Typography>Description:</Typography>
-                        {lineCount > 4 && 
-                            (
-                            <IconButton onClick={toggleDescriptionDisplay}>
-                                {displayFullDescription ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
-                            </IconButton>
-                            )
-                        }
-                    </Box>
-                    <Typography ref={descriptionRef} sx={{...BookDescriptionDisplayFormat, WebkitLineClamp: displayAmount, overflow: overFlow}}>{descriptionData}</Typography>
-                </Box>
+                
+                <ExpandableTypography title={"Description"}>{descriptionData}</ExpandableTypography>
             </Box>
     );
 }

@@ -6,6 +6,5 @@ export const bookReturnStatus = ['Returned', 'Loaned', 'Returned(Late)'];
 export const finesPaidStatus = ['Not Fine Needed', 'Paid', 'Not Paid'];
 
 // User Types
-export const userStatus = ['Normal', 'Suspendned', 'Delete'];
+export const userStatus = ['Normal', 'Suspendned'];
 export const userRole = ['User', 'Admin'];
-export const userDeleteListDescription = ['Admin-Request Deletion', 'User-Request Deletion'];

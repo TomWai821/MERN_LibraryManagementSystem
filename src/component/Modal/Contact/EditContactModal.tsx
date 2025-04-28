@@ -14,8 +14,9 @@ const EditAuthorModal:FC<EditModalInterface> = (editContactData) =>
 
     const [contact, setContact] = useState({author: editData?.author ?? "", publisher: editData?.publisher ?? "", phoneNumber: editData?.phoneNumber ?? "", email: editData?.email ?? "", address: editData?.address ?? ""});
     const type = value === 0 ? "Author" : "Publisher";
+    const sanitizeField = (field: string) => field.trim() === "" ? "N/A" : field;
 
-     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
         const {name, value} = event.target;
         setContact({...contact, [name] : value})
@@ -23,8 +24,22 @@ const EditAuthorModal:FC<EditModalInterface> = (editContactData) =>
     
     const OpenConfirmModal = () => 
     {
-        handleOpen(<EditContactConfirmModal value={value as number} editData={contact} compareData={compareData}/>);
-    }
+        const sanitizedContact = value === 0 ? 
+        {
+            author: contact.author,
+            phoneNumber: sanitizeField(contact.phoneNumber),
+            email: sanitizeField(contact.email)
+        }
+        : 
+        {
+            publisher: contact.publisher,
+            phoneNumber: sanitizeField(contact.phoneNumber),
+            email: sanitizeField(contact.email),
+            address: sanitizeField(contact.address)
+        };
+
+        handleOpen(<EditContactConfirmModal value={value as number} editData={sanitizedContact} compareData={compareData} />);
+    };
 
     return(
         <ModalTemplate title={`Edit ${type} Record`} width="400px" cancelButtonName={"Exit"}>

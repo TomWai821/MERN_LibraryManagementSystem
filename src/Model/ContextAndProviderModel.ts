@@ -52,7 +52,7 @@ export interface UserContextProps
     editUserData: (userId:string, username: string, email: string, gender: string, role: string) => void;
     editSuspendUserData: (userId:string, bannedListID: string, dueDate: Date, description: string) => void;
     changeUserStatus: (type:string, userId:string, status:string, ListID?:string, duration?:number, description?:string) => void;
-    actualDeleteUser: (userId:string, deleteListID:string, status:string) => void;
+    actualDeleteUser: (userId:string) => void;
 }
 
 export interface BookContextProps

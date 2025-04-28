@@ -8,7 +8,6 @@ import { DisplayDataModalInterface } from "../../../Model/ModelForModal";
 // Another COmponent
 import AllUserDataBody from "./DisplayUserDataBody/AllUserDataBody";
 import BannedUserDataBody from "./DisplayUserDataBody/BannedUserDataBody";
-import DeleteUserDataBody from "./DisplayUserDataBody/DeleteUserDataBody";
 
 // Models
 import { UserResultDataInterface } from "../../../Model/ResultModel";
@@ -33,11 +32,6 @@ const DisplayUserDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
             case 1:
                 displayData.title = "Suspend User Information";
                 displayData.displayBody = <BannedUserDataBody data={data as UserResultDataInterface} isAdmin={isAdmin}/>;
-                break;
-
-            case 2:
-                displayData.title = "Delete User Information";
-                displayData.displayBody = <DeleteUserDataBody data={data as UserResultDataInterface}/>;
                 break;
         }
         return displayData;

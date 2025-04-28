@@ -6,7 +6,6 @@ import CustomTabPanel from "../../../UIFragment/CustomTabPanel"
 // Another Component
 import AllUserTable from "../Tables/User/AllUserTable"
 import BannedUserTable from "../Tables/User/SuspendUserTable"
-import DeleteUserTable from "../Tables/User/DeleteUserTable"
 
 // Model
 import { UserDataTableInterface } from "../../../../Model/UserTableModel"
@@ -23,10 +22,6 @@ const UserTabPanel:FC<UserDataTableInterface> = (userTableData) =>
 
             <CustomTabPanel index={1} value={value}>
                 <BannedUserTable isAdmin={isAdmin} userData={userData} value={value} paginationValue={paginationValue}/>
-            </CustomTabPanel>
-
-            <CustomTabPanel index={2} value={value}>
-                <DeleteUserTable isAdmin={isAdmin} userData={userData} value={value} paginationValue={paginationValue}/>
             </CustomTabPanel>
         </Fragment>
     )

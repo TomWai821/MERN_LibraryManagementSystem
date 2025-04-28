@@ -125,6 +125,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
     const openSubmitFinesModal = () => 
     {
         handleOpen(<SubmitFinesConfirmModal modalOpenPosition={""} isAdmin={isAdmin as boolean} data={Information as LoanBookInterface}/>);
+        console.log(((Information as LoanBookInterface).finesPaid !== "Not Paid" && (Information as LoanBookInterface).status !== "Returned(Late)"));
     }
 
     const openLoanBookModal = () => 
@@ -206,7 +207,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
             {title: "Return Book", syntax:ImportantActionButtonSyntax, clickEvent:openReturnBookModal, icon:<HistoryIcon />, 
                 disable: DisableValidationForLoanBook(Information as LoanBookInterface)},
             {title: "Submit fines", syntax:ImportantActionButtonSyntax, clickEvent:openSubmitFinesModal, icon:<AttachMoneyIcon />, 
-                disable: (Information as LoanBookInterface).finesPaid !== "Not Paid"}
+                disable: ((Information as LoanBookInterface).status !== "Returned(Late)")}
         ]
     ]
 

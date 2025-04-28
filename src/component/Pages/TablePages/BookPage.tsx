@@ -68,10 +68,6 @@ const BookPage:FC<PagesInterface> = (loginData) =>
                 const languageID = definition.Language.find((language) => language.language === searchBook.language)?._id as string;
                 const authorID = contact.Author.find((author) => author.author === searchBook.author)?._id as string;
                 const publisherID = contact.Publisher.find((publisher) => publisher.publisher === searchBook.publisher)?._id as string;
-                console.log(genreID)
-                console.log(languageID)
-                console.log(authorID)
-                console.log(publisherID)
                 fetchBookWithFliterData("All", searchBook.bookname, searchBook.status, genreID, languageID, authorID, publisherID);
                 break;
 

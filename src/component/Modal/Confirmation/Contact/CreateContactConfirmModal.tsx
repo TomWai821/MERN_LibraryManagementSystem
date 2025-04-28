@@ -49,8 +49,8 @@ const CreateContactConfirmModal:FC<CreateModalInterface> = (createModalData) =>
                     value === 0 ? <Typography>Author: {Data.author}</Typography>:<Typography>Language: {Data.publisher}</Typography>
                 }
 
-                <Typography>Phone No: {Data.phoneNumber}</Typography>
-                <Typography>Email: {Data.email}</Typography>
+                <Typography>Phone No: {Data.phoneNumber !== "" ? Data.phoneNumber : "N/A"}</Typography>
+                <Typography>Email: {Data.email !== "" ? Data.email : "N/A"}</Typography>
 
                 { value === 1 && <Typography>Address: {Data.address}</Typography>}
                 

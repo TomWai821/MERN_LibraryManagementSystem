@@ -66,8 +66,7 @@ export interface UserResultDataInterface extends UserDataInterface
 {
     _id:string;
     avatarUrl?:string;
-    bannedDetails?: DetailsInterfaceForSuspendAndDelete;
-    deleteDetails?: DetailsInterfaceForSuspendAndDelete;
+    bannedDetails?: DetailsInterfaceForSuspend;
 }
 
 export interface BookDataInterface
@@ -114,7 +113,7 @@ export interface ImageInterface
     filename?:string;
 }
 
-export interface DetailsInterfaceForSuspendAndDelete
+export interface DetailsInterfaceForSuspend
 {
     _id:string;
     userID:string;

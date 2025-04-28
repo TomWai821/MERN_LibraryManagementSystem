@@ -1,4 +1,4 @@
-import { FC, useEffect, useLayoutEffect, useRef, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import { Avatar, Box, Tab, Tabs } from "@mui/material";
 
 import { DisplayDataModalBody } from "../../../../Model/ModelForModal"
@@ -15,7 +15,7 @@ import { TabProps } from "../../../../Controller/OtherUsefulController";
 
 const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) => 
 {
-    const {data, isLoggedIn, isAdmin} = AllUserData;
+    const {data, isLoggedIn} = AllUserData;
     const Data = data as BookDataInterface;
     const LoanData = data as LoanBookInterface;
 
@@ -25,34 +25,12 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
 
     const [externalBookData, setExternalBookData] = useState({averageRating:  "N/A", ratingsCount: "N/A", categories: "N/A", listPrice: "N/A", retailPrice: "N/A", ISBN_13_Code: "N/A", ISBN_10_Code: "N/A"});
     const [tabValue, setTabValue] = useState(0);
-    const [displayFullDescription, setDisplayFullDescription] = useState(false);
-    const [displayAmount, setDisplayAmount] = useState(5);
-    const [overFlow, setOverFlow] = useState("hidden");
-
-    const descriptionRef = useRef<HTMLDivElement>(null);
-    const [lineCount, setLineCount] = useState<number>(0);
 
     const RatingAsNumber = Number.parseInt(externalBookData.averageRating);
 
     const changeTabValue = (event: React.SyntheticEvent, newValue: number) =>
     {
         setTabValue(newValue);
-    }
-
-    const toggleDescriptionDisplay = () => 
-    {
-        if(displayFullDescription === false)
-        {
-            setDisplayFullDescription(true);
-            setDisplayAmount(10);
-            setOverFlow("auto");
-        }
-        else
-        {
-            setDisplayFullDescription(false);
-            setDisplayAmount(5);
-            setOverFlow("hidden");
-        }
     }
 
     const getBookDataFromExternal = async () => 
@@ -109,27 +87,10 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
         "publishDate": { label: "Publisher Date", value: Data.publishDate ? TransferDateToISOString(Data.publishDate as Date) : TransferDateToISOString(LoanData.bookDetails?.publishDate as string) },     
     };
 
-    const countDescriptionLength = () => 
-    {
-        if (descriptionRef.current) 
-        {
-            const computedStyle = window.getComputedStyle(descriptionRef.current);
-            const lineHeight = parseFloat(computedStyle.lineHeight);
-            const height = descriptionRef.current.getBoundingClientRect().height;
-            const calculatedLines = Math.round(height / lineHeight);
-            setLineCount(calculatedLines);
-        }
-    };
-
     useEffect(() => 
     {
         getBookDataFromExternal();
     },[])
-
-    useLayoutEffect(() => 
-    {
-        countDescriptionLength();
-    }, [descriptionData, displayFullDescription])
     
     return(
         <Box>
@@ -149,16 +110,14 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
                 <Avatar src={imageUrl} alt="Preview" variant="rounded" sx={{...BookImageFormat, paddingTop: '50px'}}/>
                 
                 <CustomTabPanel index={tabValue} value={0}>
-                    <BookDataBody BookData={BookData} isLoggedIn={isLoggedIn as boolean} status={status as string} toggleDescriptionDisplay={toggleDescriptionDisplay}
-                        descriptionData={descriptionData} displayFullDescription={displayFullDescription} displayAmount={displayAmount} 
-                        overFlow={overFlow} descriptionRef={descriptionRef} lineCount={lineCount}/>
+                    <BookDataBody BookData={BookData} isLoggedIn={isLoggedIn as boolean} status={status as string}
+                        descriptionData={descriptionData}/>
                 </CustomTabPanel>
                
 
                 <CustomTabPanel index={tabValue} value={1}>
                     <GoogleBookDataBody externalBookData={externalBookData} RatingAsNumber={RatingAsNumber}/>
                 </CustomTabPanel>
-
             </Box>
         </Box>
     );

@@ -6,7 +6,7 @@ import { useModal } from "../../../../Context/ModalContext";
 import { useUserContext } from "../../../../Context/User/UserContext";
 
 // Models
-import { DetailsInterfaceForSuspendAndDelete, UserResultDataInterface } from "../../../../Model/ResultModel";
+import { DetailsInterfaceForSuspend, UserResultDataInterface } from "../../../../Model/ResultModel";
 import { UserDataInterface } from "../../../../Model/UserTableModel";
 import { EditModalInterface } from "../../../../Model/ModelForModal";
 
@@ -25,44 +25,63 @@ import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 
 // Data (CSS syntax)
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
-
+import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
 
 const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {
     const {value, editData, compareData} = editModalData;
-    const [differences, setDifferences] = useState<string[]>([]);
+    const [differences, setDifferences] = useState<JSX.Element[]>([]);
 
     const {handleOpen, handleClose} = useModal();
     const {editUserData, editSuspendUserData} = useUserContext();
 
-    // editData = use modify, compareData = vanilla one(Before change)
-    const compareDifference = (editData: UserDataInterface | DetailsInterfaceForSuspendAndDelete, compareData: UserDataInterface | DetailsInterfaceForSuspendAndDelete) => 
-    {
-        const newDifferences: string[] = [];
-
+    const compareDifference = (
+        editData: UserDataInterface | DetailsInterfaceForSuspend,
+        compareData: UserDataInterface | DetailsInterfaceForSuspend
+    ) => {
+        let differences: JSX.Element[] = [];
+        const ignoreList = ["startDate", "dueDate", "description"]; // `description` ignored in loop
+    
         for (const key in editData) 
         {
-            if (Object.prototype.hasOwnProperty.call(compareData, key) && Object.prototype.hasOwnProperty.call(editData, key)) 
+            if (Object.prototype.hasOwnProperty.call(compareData, key) && Object.prototype.hasOwnProperty.call(editData, key) && !ignoreList.includes(key)) 
             {
                 const editValue = (editData as any)[key];
                 const compareValue = (compareData as any)[key];
-
+    
                 let formattedCompareValue = compareValue;
-
+                let formattedEditValue = editValue;
+    
                 if (["startDate", "dueDate"].includes(key)) 
                 {
-                    formattedCompareValue = TransferDateToISOString(compareValue);
-                }; 
-
-                if (formattedCompareValue !== editValue) 
+                    formattedCompareValue = TransferDateToISOString(compareValue).split("T")[0];
+                    formattedEditValue = TransferDateToISOString(editValue).split("T")[0];
+                }
+    
+                if (formattedCompareValue !== formattedEditValue) 
                 {
                     const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
-                    newDifferences.push(`${capitalizedKey}: ${formattedCompareValue} -> ${editValue}`);
+                    differences.push(<Typography key={key}>{`- ${capitalizedKey}: ${formattedCompareValue} -> ${formattedEditValue}`}</Typography>);
                 }
             }
         }
-        setDifferences(newDifferences);
-    }
+    
+        if ((compareData as DetailsInterfaceForSuspend).description?.trim() !== (editData as DetailsInterfaceForSuspend).description?.trim()) 
+        {
+            differences.push(
+                <ExpandableTypography title={"Description"} key={"description"}>
+                    {`${(compareData as DetailsInterfaceForSuspend).description} -> ${(editData as DetailsInterfaceForSuspend).description}`}
+                </ExpandableTypography>
+            );
+        }
+    
+        if (differences.length === 0) 
+        {
+            differences.push(<Typography key={"nothingChange"}>- Nothing Changed</Typography>);
+        }
+    
+        setDifferences(differences);
+    };
 
     const returnEditUserModal = () =>
     {
@@ -93,8 +112,8 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
                     break;
 
                 case 1:
-                    const CompareSuspendUserData = compareData as DetailsInterfaceForSuspendAndDelete;
-                    const EditSuspendUserData = editData as DetailsInterfaceForSuspendAndDelete;
+                    const CompareSuspendUserData = compareData as DetailsInterfaceForSuspend;
+                    const EditSuspendUserData = editData as DetailsInterfaceForSuspend;
                     editSuspendUserData(EditSuspendUserData.userID as string, CompareSuspendUserData._id, EditSuspendUserData.dueDate as Date, EditSuspendUserData.description);
                     break;
             }
@@ -104,7 +123,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
 
     useEffect(() => 
     {
-        compareDifference(editData as UserDataInterface | DetailsInterfaceForSuspendAndDelete, compareData as UserDataInterface | DetailsInterfaceForSuspendAndDelete);
+        compareDifference(editData as UserDataInterface | DetailsInterfaceForSuspend, compareData as UserDataInterface | DetailsInterfaceForSuspend);
     },
     [editData, compareData]);
 
@@ -113,15 +132,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>Do you want to edit this User record?</Typography>
                 <Typography sx={ModalRemarkSyntax}>Changes:</Typography>
-                {
-                    differences.length > 0 ? differences.map((difference, index) => 
-                        (
-                            <Typography key={index}>{difference}</Typography>
-                        )
-                    )
-                    :<Typography>- "Nothing Changed"</Typography>
-                }
-
+                {differences}
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
             </Box>
             

@@ -1,16 +1,11 @@
-import { Avatar, Box, Button, Typography } from "@mui/material"
+import { Avatar, Box, Typography } from "@mui/material"
 import { BookDescriptionDisplayFormat, BookImageFormat, displayAsColumn, displayAsRow } from "../../../../../ArraysAndObjects/FormatSyntaxObjects"
 import { FC } from "react"
 import { LoanBookModalInterface } from "../../../../../Model/ModelForModal"
 
-import { useBookContext } from "../../../../../Context/Book/BookContext"
-import { useModal } from "../../../../../Context/ModalContext"
-
 const SelfLoanConfirmationModalBody:FC<LoanBookModalInterface> = (SelfLoanBookData) => 
 {
-    const {_id, bookname, author, language, genre, description, imageUrl} = SelfLoanBookData;
-    const {loanBook} = useBookContext();
-    const {handleClose} = useModal();
+    const {bookname, author, language, genre, description, imageUrl} = SelfLoanBookData;
 
     const bookData = 
     [

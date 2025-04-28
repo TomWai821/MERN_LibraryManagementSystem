@@ -13,9 +13,11 @@ import { CreateModalInterface } from "../../../../Model/ModelForModal"
 
 // Data(CSS Syntax)
 import { useBookContext } from "../../../../Context/Book/BookContext"
-import { BookDescriptionDisplayFormat, BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects"
+import { BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects"
 import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext"
 import { useContactContext } from "../../../../Context/Book/ContactContext"
+import DescriptionTypography from "../../../UIFragment/ExpandableTypography"
+import ExpandableTypography from "../../../UIFragment/ExpandableTypography"
 
 const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) => 
 {
@@ -31,6 +33,8 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
     const authorID = contact.Author.find((authorData) => authorData.author === author)?._id as string;
     const publisherID = contact.Publisher.find((publisherData) => publisherData.publisher === publisher)?._id as string;
     
+    const width = image ? '600px': '400px';
+
     // Data for rendering
     const fieldData = 
     [   
@@ -41,14 +45,12 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
         {label:"Author", data: author},
         {label:"Publish Date", data: publishDate},
     ]
-
-    const width = image ? '600px': '400px';
-
+    
     const backToCreateModal = () => 
     {
         handleOpen(
-        <CreateBookModal image={image} imageURL={imageURL} bookname={bookname} language={language} genre={genre} author={author} 
-            publisher={publisher} description={description} publishDate={publishDate}/>
+            <CreateBookModal image={image} imageURL={imageURL} bookname={bookname} language={language} genre={genre} author={author} 
+                publisher={publisher} description={description} publishDate={publishDate}/>
         );
     }
 
@@ -80,12 +82,9 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
                                 )
                             )
                         }
-                        <Box sx={{ maxWidth: '350px', display: 'inline-block'}}>
-                            <Typography>Description:</Typography>
-                            
-                            <Typography sx={{...BookDescriptionDisplayFormat, WebkitLineClamp: 3}}>{description}</Typography>
-                        </Box>
                     </Box>
+
+                    <ExpandableTypography title={"Description"}>{description}</ExpandableTypography>
 
                 </Box>
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>

@@ -6,10 +6,7 @@ import { CreateUser, FindUserByIDAndDelete, FindUserByIDAndUpdate } from '../sch
 
 import { ObjectId } from 'mongoose';
 import { CreateStatusList } from './middleware/User/userUpdateDataMiddleware';
-import { FindDeleteListByIDAndDelete } from '../schema/user/deleteList';
 import { FindSuspendListByIDAndUpdate } from '../schema/user/suspendList';
-
-import QRCode from 'qrcode';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {
@@ -170,13 +167,6 @@ export const DeleteUser = async (req: AuthRequest, res: Response) =>
 
     try 
     {
-        const removeRecordFromDeleteList = await FindDeleteListByIDAndDelete(req.body.deleteListID);
-
-        if(!removeRecordFromDeleteList)
-        {
-            return res.status(401).json({ success, error: "Failed to Delete user in delete List!"});
-        }
-
         const deleteUser = await FindUserByIDAndDelete(foundUser._id);
 
         if(!deleteUser)

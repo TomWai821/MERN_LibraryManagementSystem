@@ -22,7 +22,7 @@ import { UserResultDataInterface } from "../../../../Model/ResultModel";
 const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) => 
 {
 
-    const { _id, value, data } = userData;
+    const { _id, data } = userData;
     const Data = data as UserResultDataInterface;
     
     const { changeUserStatus } = useUserContext();
@@ -30,45 +30,19 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
 
     const UndoUserAction = () => 
     {
-        switch(value)
-        {
-            case 1:
-                changeUserStatus("UnSuspend", _id, "Normal", Data.bannedDetails?._id as string);
-                break;
-            
-            case 2:
-                changeUserStatus("UnDelete", _id, "Normal", Data.deleteDetails?._id as string);
-                break;
-        }
+        changeUserStatus("UnSuspend", _id, "Normal", Data.bannedDetails?._id as string);
         handleClose();
     }
  
-    const setTitle = () => 
-    {
-        let Titles = {Title: "", subTitle: ""};
-        switch(value)
-        {
-            case 1:
-                Titles.Title = "Unsuspend User Confirmation";
-                Titles.subTitle = "Do you want to unsuspend this account?"
-                break;
-            
-            case 2:
-                Titles.Title = "Remove User From Delete List Confirmation";
-                Titles.subTitle = "Do you want to undelete this user?";
-        }
-        return Titles;
-    }
-
     return(
-        <ModalTemplate title={setTitle().Title} width="400px" cancelButtonName={"No"}>
+        <ModalTemplate title={"Unsuspend User Confirmation"} width="400px" cancelButtonName={"No"}>
             <Box id="modal-description" sx={ModalBodySyntax}>
-                <Typography sx={ModalSubTitleSyntax}>{setTitle().subTitle}</Typography>
+                <Typography sx={ModalSubTitleSyntax}>{"Do you want to unsuspend this account?"}</Typography>
                 <Typography>Username: {Data.username}</Typography>
                 <Typography>Email: {Data.email}</Typography>
                 <Typography>Role: {Data.role}</Typography>
                 <Typography>Gender: {Data.gender}</Typography>
-                <Typography>Description: {Data.bannedDetails?.description || Data.deleteDetails?.description}</Typography>
+                <Typography>Description: {Data.bannedDetails?.description}</Typography>
             </Box>
             
             <ModalConfirmButton clickEvent={UndoUserAction} name={"Yes"} buttonType={""}/>

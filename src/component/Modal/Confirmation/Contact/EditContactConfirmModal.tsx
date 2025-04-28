@@ -8,6 +8,7 @@ import { Box, Typography } from "@mui/material";
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 import { ContactInterface } from "../../../../Model/ResultModel";
+import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
 
 const EditContactConfirmModal:FC<EditModalInterface> = (data) => 
 {
@@ -28,14 +29,19 @@ const EditContactConfirmModal:FC<EditModalInterface> = (data) =>
         switch(value)
         {
             case 0:
-                editContactData(type, compareData._id, editData.author, editData.phoneNumber, editData.email);
+                editContactData(type, compareData._id, editData.author, detectNullData(editData.phoneNumber), detectNullData(editData.email));
                 break;
 
             case 1:
-                editContactData(type, compareData._id, editData.publisher, editData.phoneNumber, editData.email, editData.address);
+                editContactData(type, compareData._id, editData.publisher,detectNullData(editData.phoneNumber), detectNullData(editData.email), detectNullData(editData.address));
                 break;
         }
         handleClose();
+    }
+
+    const detectNullData = (data:string) =>
+    {
+        return data === "" ? data : "N/A";
     }
 
     const compareDifference = (editData: ContactInterface, compareData: ContactInterface) => 
@@ -61,13 +67,35 @@ const EditContactConfirmModal:FC<EditModalInterface> = (data) =>
                 continue;
             }
 
-            if(editData[key as keyof ContactInterface] != compareData[key as keyof ContactInterface])
+            if(editData[key as keyof ContactInterface] !== compareData[key as keyof ContactInterface])
             {
                 const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
-                newDifferences.push(`${capitalizedKey}: ${compareData[key as keyof ContactInterface]} -> ${editData[key as keyof ContactInterface]}`);
+
+                if(editData[key as keyof ContactInterface] !== "")
+                {
+                    newDifferences.push(`${capitalizedKey}: ${compareData[key as keyof ContactInterface]} -> ${editData[key as keyof ContactInterface]}`);
+                }
+                else
+                {
+                    newDifferences.push(`${capitalizedKey}: ${compareData[key as keyof ContactInterface]} -> N/A`);
+                }
+
             }
         }
         setDifferences(newDifferences);
+    }
+
+    const compareAddress = (compareDataAddress:string, editDataAddress:string) => 
+    {
+        if(compareDataAddress !== editDataAddress)
+        {
+            if(editDataAddress === "")
+            {
+                editDataAddress = "N/A";
+            }
+            return(<ExpandableTypography title={"Address"}>{`${compareData.Address} -> ${editData.Address === "N/A" ? editData.Address : "N/A"}`}</ExpandableTypography>);
+        }
+        return <></>;
     }
 
     useEffect(() => 
@@ -87,6 +115,10 @@ const EditContactConfirmModal:FC<EditModalInterface> = (data) =>
                             <Typography key={index}>{difference}</Typography>
                         )):
                    <Typography>- "Nothing Changed"</Typography>
+                }
+
+                {
+                    value === 1 && compareAddress(compareData.Address, editData.Address)
                 }
 
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>

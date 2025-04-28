@@ -109,8 +109,7 @@ const AuthorTableHeader =
 const UserTabLabel = 
 [
     {label: 'All User'},
-    {label: 'Suspend List User'},
-    {label: 'Deleted List User'}
+    {label: 'Suspend List User'}
 ]
 
 const BookTabLabel = 
@@ -143,7 +142,7 @@ const ContactTabLabel =
     {label:"publisher List"},
 ]
 
-const UserDataTableName = ["AllUser", "SuspendUser", "DeleteUser"];
+const UserDataTableName = ["AllUser", "SuspendUser"];
 
 const PaginationOption = [10, 20, 50, 100];
 
@@ -151,7 +150,7 @@ const EmptyOption = ["All"];
 
 const RoleOption = ["User", "Admin"];
 
-const StatusOption = ["Normal", "Suspend", "Delete"];
+const StatusOption = ["Normal", "Suspend"];
 
 const GenderOption = ["Male", "Female"];
 

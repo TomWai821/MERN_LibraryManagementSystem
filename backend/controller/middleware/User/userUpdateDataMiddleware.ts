@@ -3,7 +3,6 @@ import { AuthRequest } from "../../../model/requestInterface";
 import { FindUser } from "../../../schema/user/user";
 import { ObjectId } from "mongoose";
 import { CreateSuspendList, FindSuspendList, FindSuspendListByIDAndDelete } from "../../../schema/user/suspendList";
-import { CreateDeleteList, FindDeleteList,  FindDeleteListByIDAndDelete } from "../../../schema/user/deleteList";
 import { UserInterface } from "../../../model/userSchemaInterface";
 
 // For user update(Require login)
@@ -55,22 +54,12 @@ export const BuildUpdateData = async (req: AuthRequest, res:Response, next:NextF
     next();
 }
 
-export const DeleteSuspendListOrDeleteListData = async (req: AuthRequest, res: Response, next:NextFunction) => 
+export const DeleteSuspendListData = async (req: AuthRequest, res: Response, next:NextFunction) => 
 {
-    const {deleteListID, banListID, statusForUserList} = req.body;
+    const { banListID, statusForUserList} = req.body;
 
     if(statusForUserList === "Normal")
-    {
-        if(deleteListID)
-        {
-            const deleteDataFromDeleteList = await FindDeleteListByIDAndDelete(deleteListID);
-
-            if(!deleteDataFromDeleteList)
-            {
-                return res.status(400).json({ success: false, error:"Failed to Remove Delete List Data!"});
-            }
-        }
-        
+    {   
         if(banListID)
         {
             const deleteDataFromSuspendList = await FindSuspendListByIDAndDelete(banListID);
@@ -81,7 +70,6 @@ export const DeleteSuspendListOrDeleteListData = async (req: AuthRequest, res: R
             }
         }
     }
-
     next();
 }
 
@@ -92,10 +80,6 @@ export const CreateStatusList = async (statusForUserList:string, userId:ObjectId
         "Suspend":
         {
             find: () => FindSuspendList({ userId }), create: () => CreateSuspendList({ userID: userId, description, startDate, dueDate }) 
-        },
-        "Delete":
-        {
-            find: () => FindDeleteList({userId}),  create: () => CreateDeleteList({ userID: userId, description, startDate, dueDate })
         }
     }
 

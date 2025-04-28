@@ -1,5 +1,6 @@
 import { ChangeEvent, RefObject } from "react";
 import { BookDataInterface, ContactInterface, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
+import { ChildProps } from "./ContextAndProviderModel";
 
 export interface CreateModalInterface
 {
@@ -76,6 +77,11 @@ export interface ModalConfirmButtonInterface
     buttonType:string;
 }
 
+export interface ExpandableTypographyInterface extends ChildProps
+{
+    title:string;
+}
+
 export interface DisplayDataModalBody
 {
     isAdmin?:boolean;
@@ -88,13 +94,7 @@ export interface BookDataBodyInterface
     BookData: Record<string, {label:string, value:any}>; 
     isLoggedIn:boolean; 
     status:string;
-    toggleDescriptionDisplay:() => void; 
     descriptionData?:string; 
-    displayFullDescription:boolean; 
-    displayAmount:number;
-    overFlow:string;
-    descriptionRef:RefObject<HTMLDivElement>;
-    lineCount:number;
 }
 
 export interface GoogleBookDataInterface

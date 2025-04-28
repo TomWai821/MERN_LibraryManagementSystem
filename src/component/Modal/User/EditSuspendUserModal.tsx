@@ -14,7 +14,7 @@ import EditUserConfirmModal from '../Confirmation/User/EditUserConfirmModal';
 import { useModal } from '../../../Context/ModalContext';
 
 // Models
-import { DetailsInterfaceForSuspendAndDelete } from '../../../Model/ResultModel';
+import { DetailsInterfaceForSuspend } from '../../../Model/ResultModel';
 import { EditModalInterface } from '../../../Model/ModelForModal';
 
 // Data (Dropdown option and CSS Syntax)
@@ -28,13 +28,13 @@ const EditSuspendUserModal:FC<EditModalInterface> = (editModalData) =>
 {
     const { value, editData, compareData } = editModalData;
     const {handleOpen} = useModal();    
-    const { _id, userID, description, startDate, dueDate, status } = editData as DetailsInterfaceForSuspendAndDelete;
+    const { _id, userID, description, startDate, dueDate, status } = editData as DetailsInterfaceForSuspend;
 
     const bannedIDToString = _id.toString() as string;
     const startDateToString = TransferDateToISOString(startDate as Date) as string;
     const dueDateToString = TransferDateToISOString(dueDate as Date) as string;
     const descriptionToString = description.toString() as string;
-    const [banData, setSuspendData] = useState<DetailsInterfaceForSuspendAndDelete>({_id: bannedIDToString, userID:userID, startDate: startDateToString, dueDate: dueDateToString, description: descriptionToString, status: status });
+    const [banData, setSuspendData] = useState<DetailsInterfaceForSuspend>({_id: bannedIDToString, userID:userID, startDate: startDateToString, dueDate: dueDateToString, description: descriptionToString, status: status });
     
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errors, setErrors] = useState({description: ""});
@@ -55,12 +55,12 @@ const EditSuspendUserModal:FC<EditModalInterface> = (editModalData) =>
     
         Object.keys(banData).forEach((field) => 
         {
-            if(["startDate", "dueDate"].includes(field))
+            if(["_id", "userID", "startDate", "dueDate", "status"].includes(field))
             {
                 return;
             }
             
-            const { helperText, error, success } = DataValidateField(field, banData[field as keyof DetailsInterfaceForSuspendAndDelete] as string);
+            const { helperText, error, success } = DataValidateField(field, banData[field as keyof DetailsInterfaceForSuspend] as string);
             newHelperTexts[field as keyof typeof newHelperTexts] = helperText;
             newErrors[field as keyof typeof newErrors] = error;
     
@@ -85,7 +85,7 @@ const EditSuspendUserModal:FC<EditModalInterface> = (editModalData) =>
                 {
                     EditSuspendUserInputField.map((field, index) => 
                     (
-                        <TextField key={index} label={field.label} name={field.name} value={banData[field.name as keyof DetailsInterfaceForSuspendAndDelete]}
+                        <TextField key={index} label={field.label} name={field.name} value={banData[field.name as keyof DetailsInterfaceForSuspend]}
                             type={field.type} size="small" onChange={onChange} select={field.select} multiline={field.rows > 1} rows={field.rows} disabled={field.disable}
                             helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
                             error={isSubmitted && errors[field.name as keyof typeof errors] !== ""}>

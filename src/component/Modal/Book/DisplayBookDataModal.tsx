@@ -15,7 +15,7 @@ import LoanBookConfirmationModal from "../Confirmation/Book/LoanBookConfirmation
 
 const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 
 {
-    const {position, value, data, isAdmin} = displayUserData;
+    const {position, value, data, isAdmin, isLoggedIn} = displayUserData;
     const {handleOpen} = useModal();
     const width = '600px';
 
@@ -26,7 +26,7 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
         {
             case 0:
                 displayData.title = "Book Information";
-                displayData.displayBody = <AllBookDataBody data={data as BookDataInterface} isAdmin={isAdmin}/>
+                displayData.displayBody = <AllBookDataBody data={data as BookDataInterface} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>
                 break;
 
             case 1:

@@ -33,7 +33,7 @@ const EditContactConfirmModal:FC<EditModalInterface> = (data) =>
                 break;
 
             case 1:
-                editContactData(type, compareData._id, editData.publisher,detectNullData(editData.phoneNumber), detectNullData(editData.email), detectNullData(editData.address));
+                editContactData(type, compareData._id, editData.publisher, detectNullData(editData.phoneNumber), detectNullData(editData.email));
                 break;
         }
         handleClose();

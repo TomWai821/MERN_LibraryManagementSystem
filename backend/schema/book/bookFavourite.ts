@@ -6,7 +6,7 @@ const BookFavouriteSchema = new mongoose.Schema<BookFavouriteInterface>
 (   
     {
         userID: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
-            bookID: { type: mongoose.Types.ObjectId, ref: 'Book', required: true }
+        bookID: { type: mongoose.Types.ObjectId, ref: 'Book', required: true }
     }
 )
 

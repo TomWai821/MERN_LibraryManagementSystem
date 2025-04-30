@@ -48,9 +48,9 @@ export const ContactProvider:FC<ChildProps> = ({children}) =>
     }
     ,[])
 
-    const createContactData = useCallback(async (type:string, contactName:string, phoneNumber:string, email:string, address?:string) => 
+    const createContactData = useCallback(async (type:string, contactName:string, phoneNumber:string, email:string) => 
     {
-        const createContactData = await CreateContact(authToken, type, contactName, phoneNumber, email, address);
+        const createContactData = await CreateContact(authToken, type, contactName, phoneNumber, email);
 
         if(createContactData)
         {
@@ -59,9 +59,9 @@ export const ContactProvider:FC<ChildProps> = ({children}) =>
     }
     ,[fetchAllContactData])
 
-    const editContactData = useCallback( async (type:string, id:string, contactName:string, phoneNumber:string, email:string, address?:string) => 
+    const editContactData = useCallback( async (type:string, id:string, contactName:string, phoneNumber:string, email:string) => 
     {
-        const editContactData = await EditContact(authToken, type, contactName, phoneNumber, email, address, id);
+        const editContactData = await EditContact(authToken, type, contactName, phoneNumber, email, id);
 
         if(editContactData)
         {

@@ -34,7 +34,7 @@ const CreateContactConfirmModal:FC<CreateModalInterface> = (createModalData) =>
                 break;
 
             case 1:
-                createContactData(type, Data.publisher as string, Data.phoneNumber, Data.email, Data.address);
+                createContactData(type, Data.publisher as string, Data.phoneNumber, Data.email);
                 break;
         }
         handleClose();
@@ -52,8 +52,6 @@ const CreateContactConfirmModal:FC<CreateModalInterface> = (createModalData) =>
                 <Typography>Phone No: {Data.phoneNumber !== "" ? Data.phoneNumber : "N/A"}</Typography>
                 <Typography>Email: {Data.email !== "" ? Data.email : "N/A"}</Typography>
 
-                { value === 1 && <Typography>Address: {Data.address}</Typography>}
-                
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
             </Box>
             <ModalConfirmButton clickEvent={CreateContactData} name={"Yes"} buttonType={""}/>

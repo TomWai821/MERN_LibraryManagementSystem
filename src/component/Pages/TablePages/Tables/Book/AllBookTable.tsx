@@ -15,6 +15,7 @@ const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
 {
     const {isAdmin, value, bookData, paginationValue, isLoggedIn, changeValue, setSearchBook, searchBook} = DataForAllUserTable;
     const TableName = "Book";
+    console.log(isLoggedIn);
 
     const currentTableData = bookData[value] as BookDataInterface[];
     const [page, setPage] = useState<number>(1);

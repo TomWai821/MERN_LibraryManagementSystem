@@ -86,8 +86,8 @@ export interface ContactProps
     contact: ContactState;
     fetchAllContactData: () => Promise<void>;
     fetchContactDataWithFilterData: (type:string, author:string, publisher:string) => Promise<void>;
-    createContactData:(type:string, contactName:string, phoneNumber:string, email:string, address?:string) => void;
-    editContactData:(type:string, id:string, contactName:string, phoneNumber:string, email:string, address?:string) => void;
+    createContactData:(type:string, contactName:string, phoneNumber:string, email:string) => void;
+    editContactData:(type:string, id:string, contactName:string, phoneNumber:string, email:string) => void;
     deleteContactData:(type:string, id:string) => void;
 }
 

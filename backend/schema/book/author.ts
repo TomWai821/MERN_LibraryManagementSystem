@@ -2,7 +2,7 @@ import mongoose, { ObjectId } from 'mongoose';
 import { AuthorInterface } from '../../model/bookSchemaInterface';
 import { printError } from '../../controller/Utils';
 
-const publisherSchema = new mongoose.Schema<AuthorInterface>
+const authorSchema = new mongoose.Schema<AuthorInterface>
 (
     {
         author: { type: String, required: true },
@@ -11,7 +11,7 @@ const publisherSchema = new mongoose.Schema<AuthorInterface>
     }
 )
 
-const Author = mongoose.model<AuthorInterface>('Author', publisherSchema);
+const Author = mongoose.model<AuthorInterface>('Author', authorSchema);
 
 export const CreateAuthor = async (data:Record<string, any>) => 
 {

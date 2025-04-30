@@ -54,9 +54,9 @@ export const GetContact = async (type:string, author?:string, publisher?:string)
     }
 }
 
-export const CreateContact = async (authToken:string, type:string, contactName:string, phoneNumber:string, email:string, address?:string) => 
+export const CreateContact = async (authToken:string, type:string, contactName:string, phoneNumber:string, email:string) => 
 {
-    const body = BuildBodyData(type, contactName, phoneNumber, email, address);
+    const body = BuildBodyData(type, contactName, phoneNumber, email);
 
     try
     {
@@ -80,9 +80,9 @@ export const CreateContact = async (authToken:string, type:string, contactName:s
     }
 }
 
-export const EditContact = async (authToken:string, type:string, contactName:string, phoneNumber:string, email:string, address?:string, id?:string) => 
+export const EditContact = async (authToken:string, type:string, contactName:string, phoneNumber:string, email:string, id?:string) => 
 {
-    const body = BuildBodyData(type, contactName, phoneNumber, email, address, id);
+    const body = BuildBodyData(type, contactName, phoneNumber, email, id);
 
     try
     {
@@ -132,7 +132,7 @@ export const DeleteContact= async (authToken:string, type:string, id:string) =>
     }
 }
 
-const BuildBodyData = (type:string, contactName:string, phoneNumber:string, email:string,  address?:string, id?:string) => 
+const BuildBodyData = (type:string, contactName:string, phoneNumber:string, email:string,  id?:string) => 
 {
 
     let data:Record<string, any> = 
@@ -146,7 +146,6 @@ const BuildBodyData = (type:string, contactName:string, phoneNumber:string, emai
     {
         case "Publisher":
             data.publisher = contactName;
-            data.address = address;
             break;
         
         case "Author":

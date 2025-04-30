@@ -36,7 +36,6 @@ interface LanguageInterface extends IDInterface
 interface PublisherInterface extends IDInterface, ContractDataInterface
 {
     publisher:string;
-    address:string;
 }
 
 interface AuthorInterface extends IDInterface, ContractDataInterface

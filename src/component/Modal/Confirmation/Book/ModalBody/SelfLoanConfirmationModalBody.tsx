@@ -2,6 +2,7 @@ import { Avatar, Box, Typography } from "@mui/material"
 import { BookDescriptionDisplayFormat, BookImageFormat, displayAsColumn, displayAsRow } from "../../../../../ArraysAndObjects/FormatSyntaxObjects"
 import { FC } from "react"
 import { LoanBookModalInterface } from "../../../../../Model/ModelForModal"
+import ExpandableTypography from "../../../../UIFragment/ExpandableTypography"
 
 const SelfLoanConfirmationModalBody:FC<LoanBookModalInterface> = (SelfLoanBookData) => 
 {
@@ -29,10 +30,7 @@ const SelfLoanConfirmationModalBody:FC<LoanBookModalInterface> = (SelfLoanBookDa
                         )
                     )
                 }
-                <Box sx={{display: "inline-block"}}>
-                    <Typography>Description</Typography>
-                    <Typography sx={BookDescriptionDisplayFormat}>{description}</Typography>
-                </Box>
+                <ExpandableTypography title={"Description"}>{description}</ExpandableTypography>
             </Box>
         </Box>
     )

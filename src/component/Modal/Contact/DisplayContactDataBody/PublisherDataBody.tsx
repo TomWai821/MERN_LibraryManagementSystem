@@ -14,8 +14,7 @@ const PublisherDataBody:FC<DisplayDataModalBody> = (contactData) =>
     {
         "name": {label: "Name", data:publisherData.publisher},
         "email": {label: "Email", data:publisherData.email},
-        "phoneNumber": {label: "Phone number", data:publisherData.phoneNumber},
-        "address": {label: "Address", data:publisherData.address}
+        "phoneNumber": {label: "Phone number", data:publisherData.phoneNumber}
     };
 
     return(

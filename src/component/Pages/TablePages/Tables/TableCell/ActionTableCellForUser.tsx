@@ -61,12 +61,6 @@ const ActionTableCellForUser:FC<UserActionTableCellInterface> = (actionTableCell
 
     return(
         <TableCell sx={{marginLeft: '20px'}}>
-            <Tooltip title={"Loan Book"} arrow>
-                <IconButton disabled={StatusDetectionForBook((Information as LoanBookInterface).status, "Loaned")} onClick={openLoanBookModal}>
-                    <EventAvailableIcon />
-                </IconButton>
-            </Tooltip>
-
             <Tooltip title={isFavourite ? "Unfavourite" : "Favourite"} arrow>
                 <IconButton onClick={FavouriteHandler} sx={FavouriteIconSyntax}>
                     {isFavourite ? <StarIcon/>: <StarBorderIcon />}

@@ -80,13 +80,13 @@ const CreateAuthorRecord = async (req: AuthRequest, res: Response) =>
 
 const CreatePublisherRecord = async (req: AuthRequest, res: Response) => 
 {
-    const { publisher, address, phoneNumber, email } = req.body;
+    const { publisher, phoneNumber, email } = req.body;
     const contactType = req.params.type as keyof typeof contactHandler;
     let success = false;
 
     try 
     {
-        const createPublisher = await CreatePublisher({publisher: publisher, address: address, phoneNumber: phoneNumber, email: email});
+        const createPublisher = await CreatePublisher({publisher: publisher, phoneNumber: phoneNumber, email: email});
 
         if(!createPublisher)
         {
@@ -139,12 +139,12 @@ const UpdateAuthorRecord = async (req: AuthRequest, res: Response) =>
 
 const UpdatePublisherRecord = async (req: AuthRequest, res: Response) => 
 {
-    const { id, publisher, address, phoneNumber, email } = req.body;
+    const { id, publisher, phoneNumber, email } = req.body;
     let success = false;
 
     try 
     {
-        const createPublisher = await FindPublisherByIDAndUpdate(id, {publisher: publisher, address: address, phoneNumber: phoneNumber, email: email});
+        const createPublisher = await FindPublisherByIDAndUpdate(id, {publisher: publisher, phoneNumber: phoneNumber, email: email});
 
         if(!createPublisher)
         {

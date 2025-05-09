@@ -10,12 +10,12 @@ import FavouriteBookTable from "../Tables/Book/FavouriteBookTable";
 
 const SelfRecordTabPanel:FC<BookRecordTableInterface> = (TabData) =>
 {
-    const {value, isAdmin, bookData, paginationValue, isLoggedIn} = TabData;
+    const {value, bookData, paginationValue} = TabData;
     
     return(
         <Fragment>
             <CustomTabPanel index={0} value={value}>
-                <SelfLoanBookTable value={value} bookData={bookData} paginationValue={paginationValue} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>
+                <SelfLoanBookTable value={value} bookData={bookData} paginationValue={paginationValue}/>
             </CustomTabPanel>
 
             <CustomTabPanel index={1} value={value}>

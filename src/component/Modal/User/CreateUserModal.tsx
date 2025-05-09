@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { Box, MenuItem, TextField } from '@mui/material'
 
 // Context
@@ -21,7 +21,7 @@ import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
 import { CreateUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
 import { DataValidateField } from '../../../Controller/ValidateController';
 
-const CreateUserModal:FC = ({}) => 
+const CreateUserModal = () => 
 {
     const {handleOpen} = useModal();
 

@@ -9,7 +9,7 @@ import RecordBookTableCell from "../TableCell/RecordBookTableCell";
 
 const FavouriteBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
-    const {value, bookData, isAdmin, paginationValue} = DataForAllUserTable;
+    const {value, bookData, paginationValue} = DataForAllUserTable;
     const LoanBookData = bookData[value] as LoanBookInterface[];
     const TableName = "Book";
 
@@ -58,17 +58,17 @@ const FavouriteBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                 <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                     <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
                                     
-                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
+                                    <ContentTableCell TableName={TableName} value={value} Information={data}>
                                         <Avatar src={data.bookDetails?.image?.url} alt="Preview" variant="rounded" sx={{ width: "150px", height: "225px" }}/>
                                     </ContentTableCell>
 
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.bookDetails?.bookname}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.genreDetails?.genre}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.languageDetails?.language}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.authorDetails?.author}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.publisherDetails?.publisher}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.bookDetails?.status}</ContentTableCell>
-                                    <RecordBookTableCell value={value} isAdmin={isAdmin} Information={data}/>
+                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{data.bookDetails?.bookname}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{data.genreDetails?.genre}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{data.languageDetails?.language}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{data.authorDetails?.author}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{data.publisherDetails?.publisher}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{data.bookDetails?.status}</ContentTableCell>
+                                    <RecordBookTableCell value={value} Information={data}/>
                                 </TableRow>
                             )
                         )

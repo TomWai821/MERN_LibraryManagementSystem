@@ -1,6 +1,5 @@
 import { ContactState } from "./ContextAndProviderModel";
-import { BookDataInterface, ContactInterface, LoanBookInterface } from "./ResultModel";
-import { TableInterface } from "./TablePagesAndModalModel";
+import { BookDataInterface, LoanBookInterface } from "./ResultModel";
 
 interface BookSearchInterface extends SelfLoanBookSearchInterface, ContactSearchInterface
 {
@@ -35,7 +34,7 @@ interface BookDataInterfaceForDelete extends BookTableDataInterface
     bookID:string;
 }
 
-interface BookRecordTableInterface extends TableInterface
+interface BookRecordTableInterface
 {
     value: number;
     bookData: (BookDataInterface[] | LoanBookInterface[])[] | LoanBookInterface[];
@@ -45,7 +44,7 @@ interface BookRecordTableInterface extends TableInterface
     searchBook?: BookSearchInterface;
 }
 
-interface ContactTableInterface extends TableInterface
+interface ContactTableInterface
 {
     value?: number;
     contactData: ContactState;

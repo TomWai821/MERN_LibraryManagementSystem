@@ -2,7 +2,7 @@ import { createContext, FC, useCallback, useContext, useEffect, useState } from 
 
 // Another Useful Function
 import { FetchUserData } from "../../Controller/UserController/UserGetController";
-import { CalculateDueDate, GetCurrentDate, GetData } from "../../Controller/OtherController";
+import { CalculateDueDate, GetCurrentDate } from "../../Controller/OtherController";
 import { ModifySuspendListDataController, ModifyStatusController, ModifyUserDataController } from "../../Controller/UserController/UserPutController";
 import { RegisterController } from "../../Controller/UserController/UserPostController";
 
@@ -11,11 +11,13 @@ import { GetResultInterface, UserResultDataInterface } from "../../Model/ResultM
 import { FindUserInterface, UserDataInterface } from "../../Model/UserTableModel";
 import { ChildProps, UserContextProps } from "../../Model/ContextAndProviderModel";
 import { DeleteUserController } from "../../Controller/UserController/UserDeleteController";
+import { useAuthContext } from "./AuthContext";
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider: FC<ChildProps> = ({ children }) =>
 {
+    const { GetData } = useAuthContext();
     const [AllUser, setAllUser] = useState<UserResultDataInterface[]>([]);
     const [SuspendUser, setSuspendUser] = useState<UserResultDataInterface[]>([]);
     const authToken = GetData("authToken") as string;

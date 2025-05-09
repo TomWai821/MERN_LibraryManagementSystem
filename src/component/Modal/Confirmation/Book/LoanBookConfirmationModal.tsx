@@ -7,7 +7,7 @@ import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjec
 import { useBookContext } from "../../../../Context/Book/BookContext";
 import { useModal } from "../../../../Context/ModalContext";
 
-import { LoanBookModalInterface, QRCodeInterface } from "../../../../Model/ModelForModal";
+import { LoanBookModalInterface } from "../../../../Model/ModelForModal";
 
 import { TabProps } from "../../../../Controller/OtherUsefulController";
 import { LoanBookModalTabLabel } from "../../../../ArraysAndObjects/TableArrays";

@@ -1,5 +1,3 @@
-import { GetUserCookie } from "./CookieController";
-
 const MillionSecondsToDay = 1000 * 60 * 60 * 24;
 
 const ChangePage = (location: string) => 
@@ -7,33 +5,6 @@ const ChangePage = (location: string) =>
     window.location.href = location;
 }
 
-const IsLoggedIn = () => 
-{
-    const tokenFromCookie = document.cookie.split(';').find(row => row.startsWith('authToken='));
-
-    if (tokenFromCookie || sessionStorage.getItem('authToken')) 
-    {
-        return true;
-    }
-    return false;
-}
-
-const GetData = (data:string): string | undefined | null=> 
-{
-    const DataList = ["authToken", "role", "username", "avatarUrl", "status"];
-
-    if(DataList.includes(data))
-    {
-        return GetUserCookie(data) || sessionStorage.getItem(data);
-    }
-
-    return undefined;
-}
-
-const IsAdmin = (role: string | undefined): boolean => 
-{
-    return role === "Admin";
-}
 
 const GetCurrentDate = (type:string): Date | string => 
 { 
@@ -122,48 +93,33 @@ const CountDuration = (dueDate: Date | string) =>
     return days.toLocaleString('en-US') + " Days ";
 }
 
-const countLateReturn = (dueDate: Date | string, type: string) => 
+const countLateReturn = (dueDate: Date | string, returnDate: string): number => 
 {
-    const currentDate = new Date();
-    const endDate = new Date(dueDate);
+    const due = new Date(dueDate);
+    const actualReturn = new Date(returnDate);
+    const today = new Date();
 
-    const durationInMilliseconds = currentDate.getTime() - endDate.getTime() ;
-    const days = Math.floor(durationInMilliseconds / MillionSecondsToDay);
-
-    switch(type)
+    if (actualReturn > due) 
     {
-        case "string": 
-            if(days <= 0)
-            {
-                return "No";
-            }
-        
-            return `Yes (${days.toLocaleString('en-US')} Days)`;
-        
-        case "number":
-            return days;
-
+        const lateDays = Math.ceil((today.getTime() - due.getTime()) / (1000 * 60 * 60 * 24));
+        return lateDays;
     }
-}
-
-const calculateFineAmount = (dueDate:string) => 
-{
-    if(countLateReturn(dueDate, "number") as number * 1.5 > 150)
-    {
-        return 150;
-    }
-
-    if(countLateReturn(dueDate, "number") as number > 0)
-    {
-        return countLateReturn(dueDate as string, "number") as number * 1.5;
-    }
-    
     return 0;
-}
+};
 
-const isExpired = (dueDate:Date) => 
+const calculateFineAmount = (dueDate: string, returnDate: string): number => 
 {
-    return countLateReturn(dueDate as Date, "number") as number > 0;
-}
+    const lateDays = countLateReturn(dueDate, returnDate);
+    const finePerDay = 1.5;
 
-export {ChangePage, IsLoggedIn, GetData, IsAdmin, GetCurrentDate, CalculateDueDate, TransferDateToISOString, TransferDateToString, CalculateDuration, CountDuration, countLateReturn, calculateFineAmount, isExpired}
+
+    return lateDays * finePerDay > 130 ? 130 : lateDays * finePerDay;
+};
+
+const isExpired = (returnDate:Date, dueDate: Date): boolean => 
+{
+
+    return new Date(returnDate) > new Date(dueDate);
+};
+
+export {ChangePage, GetCurrentDate, CalculateDueDate, TransferDateToISOString, TransferDateToString, CalculateDuration, CountDuration, countLateReturn, calculateFineAmount, isExpired}

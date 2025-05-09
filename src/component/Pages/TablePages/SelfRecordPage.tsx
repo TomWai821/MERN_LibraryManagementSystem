@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useEffect, useState } from "react"
+import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { Box, Paper,  TableContainer } from "@mui/material"
 
 // UI Fragment and another useful component
@@ -6,9 +6,6 @@ import TableTitle from "../../UIFragment/TableTitle";
 import CustomTab from "../../UIFragment/CustomTab";
 import RecordFilter from "./Filter/RecordFilter";
 import SelfRecordTabPanel from "./Tabs/SelfRecordTabPanel";
-
-// Models
-import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 
 // Useful function(Controller)
 import { ChangePage } from "../../../Controller/OtherController";
@@ -21,14 +18,14 @@ import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects"
 import { useContactContext } from "../../../Context/Book/ContactContext";
 import { useDefinitionContext } from "../../../Context/Book/DefinitionContext";
 import { useBookContext } from "../../../Context/Book/BookContext";
+import { useAuthContext } from "../../../Context/User/AuthContext";
 
-const SelfRecordPage:FC<PagesInterface> = (pageData) => 
+const SelfRecordPage = () => 
 {
     const { contact } = useContactContext();
     const { definition } = useDefinitionContext();
+    const { IsLoggedIn } = useAuthContext();
     const { BookRecordForUser, fetchLoanBookWithFliterData, fetchBookWithFliterData } = useBookContext();
-
-    const { isAdmin, isLoggedIn } = pageData;
 
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
@@ -78,23 +75,23 @@ const SelfRecordPage:FC<PagesInterface> = (pageData) =>
 
     useEffect(() => 
     {
-        if(!isLoggedIn)
+        if(!IsLoggedIn())
         {
             ChangePage('/');
         }
-    },[isLoggedIn])
+    },[IsLoggedIn])
 
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <TableTitle title={SetTitle[tabValue]} dataLength={BookRecordForUser[tabValue].length}/>
 
-            <RecordFilter value={tabValue} onChange={onChange} searchData={searchData} Search={search}  isAdmin={isAdmin}/>
+            <RecordFilter value={tabValue} onChange={onChange} searchData={searchData} Search={search}/>
 
-            <CustomTab isAdmin={isAdmin} isLoggedIn={isLoggedIn} value={tabValue} changeValue={changeValue} 
+            <CustomTab value={tabValue} changeValue={changeValue} 
                 paginationValue={paginationValue} tabLabel={BookRecordTabLabel} paginationOption={PaginationOption} type={"Record"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-               <SelfRecordTabPanel value={tabValue} bookData={BookRecordForUser} paginationValue={paginationValue} isAdmin={isAdmin}/>
+               <SelfRecordTabPanel value={tabValue} bookData={BookRecordForUser} paginationValue={paginationValue}/>
             </TableContainer>
         </Box>
     )

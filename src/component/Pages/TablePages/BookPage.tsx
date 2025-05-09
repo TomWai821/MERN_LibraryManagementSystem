@@ -1,4 +1,4 @@
-import {  ChangeEvent, FC, useEffect, useState } from "react";
+import {  ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Box, TableContainer, Paper } from "@mui/material";
 
 // Context
@@ -13,21 +13,21 @@ import TableTitle from "../../UIFragment/TableTitle";
 
 // Model
 import { BookSearchInterface } from "../../../Model/BookTableModel";
-import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 
 // Data (CSS SYntax and dropdown)
 import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects";
 import { BookTabLabel, PaginationOption } from "../../../ArraysAndObjects/TableArrays";
 import { useContactContext } from "../../../Context/Book/ContactContext";
+import { useAuthContext } from "../../../Context/User/AuthContext";
 
-const BookPage:FC<PagesInterface> = (loginData) =>
+const BookPage= () =>
 {
-    const { isLoggedIn, isAdmin } = loginData;
     const { bookData, fetchBookWithFliterData, fetchLoanBookWithFliterData } = useBookContext();
+    const {IsAdmin} = useAuthContext();
     const { definition } = useDefinitionContext();
     const { contact } = useContactContext();
 
-    const SetTitle:string = isAdmin ? "Manage Books Record": "View Books";
+    const SetTitle:string = IsAdmin() ? "Manage Books Record": "View Books";
 
     const [searchBook, setSearchBook] = useState<BookSearchInterface>({ bookname: "", username: "", language: "All", status:"All", genre: "All", author: "All", publisher: "All", finesPaid: "All" });
     const [tabValue, setTabValue] = useState(0);
@@ -38,11 +38,10 @@ const BookPage:FC<PagesInterface> = (loginData) =>
     const onChange = (event: ChangeEvent<HTMLInputElement>, index?: number) => 
     {
         const { name, value } = event.target;
-
         setSearchBook({ ...searchBook, [name]: value });
     };
 
-    const changeValue = (type:string, newValue: number) =>
+    const changeValue = useCallback((type:string, newValue: number) =>
     {
         switch(type)
         {
@@ -57,7 +56,7 @@ const BookPage:FC<PagesInterface> = (loginData) =>
             default:
                 break;
         }
-    }
+    },[])
 
     const SearchBook = () => 
     {
@@ -75,7 +74,6 @@ const BookPage:FC<PagesInterface> = (loginData) =>
                 fetchLoanBookWithFliterData("AllUser", searchBook.bookname, searchBook.username, searchBook.status, searchBook.finesPaid);
                 break;
         }
-        
     }
 
     const resetFilter = () => 
@@ -85,25 +83,24 @@ const BookPage:FC<PagesInterface> = (loginData) =>
 
     useEffect(() => 
         { 
-            if(!isAdmin) 
+            if(!IsAdmin()) 
             { 
                 setTabValue(0); 
             }
-        },[isAdmin]
+        },[IsAdmin]
     )
      
     return( 
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <TableTitle title={SetTitle} dataLength={bookData[tabValue].length}/>
 
-            <BookFilter isAdmin={isAdmin} value={tabValue} isLoggedIn={isLoggedIn} onChange={onChange} searchData={searchBook} Search={SearchBook} resetFilter={resetFilter}/>
+            <BookFilter value={tabValue} onChange={onChange} searchData={searchBook} Search={SearchBook} resetFilter={resetFilter}/>
 
-            <CustomTab isAdmin={isAdmin} value={tabValue} changeValue={changeValue} paginationValue={paginationValue} tabLabel={BookTabLabel}
+            <CustomTab value={tabValue} changeValue={changeValue} paginationValue={paginationValue} tabLabel={BookTabLabel}
                  paginationOption={PaginationOption} type={"Book"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-                <BookTabPanel value={tabValue} isAdmin={isAdmin} bookData={bookData} paginationValue={paginationValue} isLoggedIn={isLoggedIn} 
-                    changeValue={changeValue} setSearchBook={setSearchBook} searchBook={searchBook}/>
+                <BookTabPanel value={tabValue} bookData={bookData} paginationValue={paginationValue} changeValue={changeValue} setSearchBook={setSearchBook} searchBook={searchBook}/>
             </TableContainer>
         </Box>
     );

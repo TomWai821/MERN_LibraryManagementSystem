@@ -2,14 +2,12 @@ import { FC, Fragment, useContext } from "react";
 import { IconButton, TableCell, Tooltip } from "@mui/material"
 
 import HistoryIcon from '@mui/icons-material/History';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import StarIcon from "@mui/icons-material/Star"
 
 import { useModal } from "../../../../../Context/ModalContext";
 
 // Other Modals
 import ReturnBookConfirmModal from "../../../../Modal/Confirmation/Book/ReturnBookConfirmModal";
-import LoanBookConfirmationModal from "../../../../Modal/Confirmation/Book/LoanBookConfirmationModal";
 
 // Models
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
@@ -26,7 +24,7 @@ import { AlertContext } from "../../../../../Context/AlertContext";
 
 const RecordBookTableCell:FC<RecordTableCellInterface> = (returnBookTableCellData) => 
 {
-    const {value, Information, isAdmin} = returnBookTableCellData;
+    const {value, Information} = returnBookTableCellData;
 
     const {handleOpen} = useModal();
     const {unfavouriteBook} = useBookContext();
@@ -34,7 +32,7 @@ const RecordBookTableCell:FC<RecordTableCellInterface> = (returnBookTableCellDat
 
     const openReturnBookModal = () => 
     {
-        handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} isAdmin={isAdmin as boolean} modalOpenPosition={"LoanBookTableCell"}/>);
+        handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} modalOpenPosition={"LoanBookTableCell"}/>);
     }
 
     const unfavourite = async () => 

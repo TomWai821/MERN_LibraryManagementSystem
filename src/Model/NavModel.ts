@@ -1,7 +1,6 @@
 import { MouseEvent, ReactElement } from "react";
-import { PagesInterface } from "./TablePagesAndModalModel";
 
-export interface NavInterface extends PagesInterface
+export interface NavInterface
 {
     AvatarSize: string;
 }
@@ -31,7 +30,6 @@ interface ProfileItemInterface
 
 export interface ProfileMenuInterface extends NavInterface, ProfileItemInterface
 {
-    username:string;
     anchorElUser: HTMLElement | null;
     handleUserMenu: (event: MouseEvent<HTMLElement>) => void;
 }

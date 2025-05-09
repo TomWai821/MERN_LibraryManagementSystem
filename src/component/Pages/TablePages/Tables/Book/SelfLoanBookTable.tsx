@@ -9,7 +9,7 @@ import { calculateFineAmount, isExpired, TransferDateToISOString } from "../../.
 
 const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
-    const {value, bookData, isAdmin, paginationValue} = DataForAllUserTable;
+    const {value, bookData, paginationValue} = DataForAllUserTable;
     const LoanBookData = bookData[value] as LoanBookInterface[];
     const TableName = "Book";
 
@@ -58,21 +58,21 @@ const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                 <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                     <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
                                     
-                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
+                                    <ContentTableCell TableName={TableName} value={value} Information={data}>
                                         <Avatar src={data.bookDetails?.image?.url} alt="Preview" variant="rounded" sx={{ width: "150px", height: "225px" }}/>
                                     </ContentTableCell>
 
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.bookDetails?.bookname}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.loanDate as Date)}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{data.status}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.returnDate as Date)}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
-                                        { isExpired(data.dueDate as Date) && data.finesPaid === "Not Fine Needed" ? "Not Paid" : data.finesPaid }
+                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{data.bookDetails?.bookname}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{TransferDateToISOString(data.loanDate as Date)}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{data.status}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{TransferDateToISOString(data.returnDate as Date)}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} Information={data}>
+                                        { isExpired(data.returnDate as Date, data.dueDate as Date) && data.finesPaid === "Not Fine Needed" ? "Not Paid" : data.finesPaid }
                                     </ContentTableCell>
                                     
-                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
-                                        HKD$ { calculateFineAmount(data.dueDate as string) }
+                                    <ContentTableCell TableName={TableName} value={value} Information={data}>
+                                        HKD$ { calculateFineAmount(data.dueDate as string , data.returnDate as string) }
                                     </ContentTableCell>
                                 </TableRow>
                             )

@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useState } from "react"
+import { FC, Fragment, useState } from "react"
 import { FilterInterface } from "../../../../Model/TablePagesAndModalModel"
 import { Box, TextField, Button, MenuItem, IconButton } from "@mui/material";
 import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";

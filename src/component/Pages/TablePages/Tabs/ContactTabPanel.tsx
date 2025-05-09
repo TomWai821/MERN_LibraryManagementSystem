@@ -12,16 +12,16 @@ import {ContactTableInterface } from "../../../../Model/BookTableModel"
 
 const ContactTabPanel:FC<ContactTableInterface> = (TabData) =>
 {
-    const {value, isAdmin, contactData, paginationValue} = TabData;
+    const {value, contactData, paginationValue} = TabData;
     
     return(
         <Fragment>
             <CustomTabPanel index={0} value={value as number}>
-                <AuthorTable value={value} contactData={contactData} paginationValue={paginationValue} isAdmin={isAdmin}/>
+                <AuthorTable value={value} contactData={contactData} paginationValue={paginationValue}/>
             </CustomTabPanel>
 
             <CustomTabPanel index={1} value={value as number}>
-                <PublisherTable value={value} contactData={contactData} paginationValue={paginationValue} isAdmin={isAdmin}/>
+                <PublisherTable value={value} contactData={contactData} paginationValue={paginationValue}/>
             </CustomTabPanel>
         </Fragment>
     )

@@ -5,9 +5,9 @@ import { TransferDateToISOString } from "../../Controller/OtherController";
 import { useModal } from "../../Context/ModalContext";
 import DisplayBookDataModal from "../Modal/Book/DisplayBookDataModal";
 
-const SuggestBookPanelTemplate:FC<{value:number, title:string, data:BookDataInterface[] | LoanBookInterface[], IsLoggedIn:boolean, isAdmin:boolean}> = (suggestBookPanelData) => 
+const SuggestBookPanelTemplate:FC<{value:number, title:string, data:BookDataInterface[] | LoanBookInterface[]}> = (suggestBookPanelData) => 
 {
-    const { value, title, data, IsLoggedIn, isAdmin } = suggestBookPanelData;
+    const { value, title, data } = suggestBookPanelData;
     const { handleOpen } = useModal();
 
     const PublishPanelSyntax = 
@@ -30,7 +30,7 @@ const SuggestBookPanelTemplate:FC<{value:number, title:string, data:BookDataInte
 
     const openDisplayBookDataModal = (data: BookDataInterface | LoanBookInterface) => 
     {
-        handleOpen(<DisplayBookDataModal position={"mainPage"} value={0} data={data} isLoggedIn={IsLoggedIn} isAdmin={isAdmin}/>);
+        handleOpen(<DisplayBookDataModal position={"mainPage"} value={0} data={data}/>);
     }
     
     return(

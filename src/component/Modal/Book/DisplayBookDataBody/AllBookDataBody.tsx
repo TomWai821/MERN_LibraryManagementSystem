@@ -12,10 +12,12 @@ import CustomTabPanel from "../../../UIFragment/CustomTabPanel";
 import BookDataBody from "./ModalBody/BookDataBody";
 import GoogleBookDataBody from "./ModalBody/GoogleBookDataBody";
 import { TabProps } from "../../../../Controller/OtherUsefulController";
+import { useAuthContext } from "../../../../Context/User/AuthContext";
 
 const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) => 
 {
-    const {data, isLoggedIn} = AllUserData;
+    const {IsLoggedIn} = useAuthContext();
+    const {data} = AllUserData;
     const Data = data as BookDataInterface;
     const LoanData = data as LoanBookInterface;
 
@@ -95,7 +97,7 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
     return(
         <Box>
             {
-                isLoggedIn && 
+                IsLoggedIn() && 
                 <Tabs value={tabValue} onChange={changeTabValue} sx={{paddingBottom: '50px', width: '500px'}}>
                     {
                         BookDataTabLabel.map((tab, index) => 
@@ -110,8 +112,7 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
                 <Avatar src={imageUrl} alt="Preview" variant="rounded" sx={{...BookImageFormat, paddingTop: '50px'}}/>
                 
                 <CustomTabPanel index={tabValue} value={0}>
-                    <BookDataBody BookData={BookData} isLoggedIn={isLoggedIn as boolean} status={status as string}
-                        descriptionData={descriptionData}/>
+                    <BookDataBody BookData={BookData} status={status as string} descriptionData={descriptionData}/>
                 </CustomTabPanel>
                
 

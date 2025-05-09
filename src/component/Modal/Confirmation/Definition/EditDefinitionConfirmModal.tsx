@@ -65,7 +65,7 @@ const EditDefinitionConfirmModal:FC<EditModalInterface>  = (data) =>
         const newDifferences = [];
         for(const key in editData)
         {
-            if(editData[key as keyof DefinitionInterface] != compareData[key as keyof DefinitionInterface])
+            if(editData[key as keyof DefinitionInterface] !== compareData[key as keyof DefinitionInterface])
             {
                 const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
                 newDifferences.push(`${capitalizedKey}: ${compareData[key as keyof DefinitionInterface]} -> ${editData[key as keyof DefinitionInterface]}`);
@@ -89,7 +89,7 @@ const EditDefinitionConfirmModal:FC<EditModalInterface>  = (data) =>
                         (
                             <Typography key={index}>{difference}</Typography>
                         )):
-                   <Typography>- "Nothing Changed"</Typography>
+                   <Typography>- "No Change detected"</Typography>
                 }
 
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>

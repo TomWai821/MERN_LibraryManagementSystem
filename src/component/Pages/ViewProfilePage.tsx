@@ -1,5 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react'
-import QrCode from 'react-qr-code'
+import { useEffect, useState } from 'react'
 import { Avatar, Box, Button, Card, CardContent, Typography } from '@mui/material'
 
 // Context

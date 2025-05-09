@@ -4,10 +4,12 @@ import { Avatar, Box, Typography } from "@mui/material";
 import { CalculateDuration, CountDuration, TransferDateToString } from "../../../../Controller/OtherController";
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
 import { displayAsColumn } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { useAuthContext } from "../../../../Context/User/AuthContext";
 
 const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) => 
 {
-    const {data, isAdmin} = BannedUserData;
+    const {data} = BannedUserData;
+    const {IsAdmin} = useAuthContext();
     const Data = data as UserResultDataInterface;
 
     return(
@@ -16,7 +18,8 @@ const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) =>
             <Typography sx={{fontSize: '24px', padding: '15px'}}>{Data.role}</Typography>
             <Box sx={{ display: 'grid', gap: '20px 50px', gridTemplateColumns: '100%'}}>
                 <Typography>Username: {Data.username}</Typography>
-                {isAdmin && 
+                {
+                    IsAdmin() && 
                     (
                         <Fragment>
                             <Typography>Email: {Data.email}</Typography>
@@ -30,7 +33,7 @@ const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) =>
                     <Typography>Duration: {CalculateDuration(Data.bannedDetails?.startDate as Date, Data.bannedDetails?.dueDate as Date)}</Typography>
                 </Fragment>
                 {
-                    isAdmin && 
+                    IsAdmin() && 
                     (
                         <Fragment>
                             <Typography>Count: {CountDuration(Data.bannedDetails?.dueDate as Date)}</Typography>

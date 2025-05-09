@@ -10,12 +10,13 @@ import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
 import { AllBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
 import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { BookDataInterface } from "../../../../../Model/ResultModel";
+import { useAuthContext } from "../../../../../Context/User/AuthContext";
 
 const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
-    const {isAdmin, value, bookData, paginationValue, isLoggedIn, changeValue, setSearchBook, searchBook} = DataForAllUserTable;
+    const {value, bookData, paginationValue, changeValue, setSearchBook, searchBook} = DataForAllUserTable;
     const TableName = "Book";
-    console.log(isLoggedIn);
+    const {IsLoggedIn} = useAuthContext();
 
     const currentTableData = bookData[value] as BookDataInterface[];
     const [page, setPage] = useState<number>(1);
@@ -49,7 +50,7 @@ const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                     <TableRow>
                         {AllBookTableHeader.map((header, index) =>
                             (
-                                (header.isLoggedIn && !isLoggedIn) ? null : <TableCell sx={{fontSize: '16px'}} key={index}>{header.label}</TableCell>
+                                (header.isLoggedIn && !IsLoggedIn()) ? null : <TableCell sx={{fontSize: '16px'}} key={index}>{header.label}</TableCell>
                             ) 
                         )}  
                     </TableRow>
@@ -60,19 +61,19 @@ const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                         (
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                 <TableCell sx={{fontSize: "16px", "&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>
                                     <Avatar src={data.image?.url} alt="Preview" variant="rounded" sx={{width: "150px", height: "225px"}}/>
                                 </ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.bookname}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.genreDetails?.genre}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.languageDetails?.language}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.authorDetails?.author}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.publisherDetails?.publisher}</ContentTableCell>
-                                {isLoggedIn && 
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.bookname}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.genreDetails?.genre}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.languageDetails?.language}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.authorDetails?.author}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.publisherDetails?.publisher}</ContentTableCell>
+                                {IsLoggedIn() && 
                                     (
                                         <Fragment>
-                                            <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.status}</ContentTableCell>
-                                            <ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin} isLoggedIn={isLoggedIn} 
+                                            <ContentTableCell TableName={TableName} value={value} Information={data}>{data.status}</ContentTableCell>
+                                            <ActionTableCell value={value} TableName={TableName} Information={data} 
                                                 changeValue={changeValue as (type: string, newValue: number) => void} setSearchBook={setSearchBook} searchBook={searchBook}
                                             />
                                         </Fragment>

@@ -2,7 +2,6 @@ import { FC } from "react"
 import ModalTemplate from "../../../Templates/ModalTemplate"
 import { useModal } from "../../../../Context/ModalContext";
 import { DeleteModalInterface } from "../../../../Model/ModelForModal";
-import { LoanBookInterface } from "../../../../Model/ResultModel";
 import { Box, Typography } from "@mui/material";
 import DeleteTypography from "../../../UIFragment/DeleteTypography";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";

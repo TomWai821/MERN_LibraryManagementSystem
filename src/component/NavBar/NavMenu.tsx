@@ -4,12 +4,14 @@ import { FC } from "react";
 import { NavMenuInterface } from "../../Model/NavModel";
 import { externalUserPage, adminPage, userPage } from "../../ArraysAndObjects/MenuArrays";
 import CustomMenuItem from "../UIFragment/CustomMenuItem";
+import { useAuthContext } from "../../Context/User/AuthContext";
 
 
 
-const NavMenu:FC<NavMenuInterface> = ({isAdmin, isLoggedIn, role, AvatarSize, anchorElNav, handleNavMenu, NavSyntax}) => 
+const NavMenu:FC<NavMenuInterface> = ({AvatarSize, anchorElNav, handleNavMenu, NavSyntax}) => 
 {
-    const SetNavName = isAdmin ? "Manage" : "View";
+    const {GetData, IsLoggedIn, IsAdmin} = useAuthContext(); 
+    const SetNavName = IsAdmin() ? "Manage" : "View";
 
     return(
         <Box sx={{ flexGrow: 1 }}>
@@ -27,7 +29,7 @@ const NavMenu:FC<NavMenuInterface> = ({isAdmin, isLoggedIn, role, AvatarSize, an
                     onClose={handleNavMenu}
                 >
                 {
-                    !isLoggedIn ?  <CustomMenuItem pages={externalUserPage}/> : (role === 'Admin' ? <CustomMenuItem pages={adminPage}/> : <CustomMenuItem pages={userPage}/>)
+                    !IsLoggedIn() ?  <CustomMenuItem pages={externalUserPage}/> : (GetData("role") === 'Admin' ? <CustomMenuItem pages={adminPage}/> : <CustomMenuItem pages={userPage}/>)
                 }
                 </Menu>
         </Box>

@@ -3,10 +3,12 @@ import { Box, Typography } from "@mui/material";
 import { BookDataBodyInterface } from "../../../../../Model/ModelForModal";
 
 import ExpandableTypography from "../../../../UIFragment/ExpandableTypography";
+import { useAuthContext } from "../../../../../Context/User/AuthContext";
 
 const BookDataBody:FC<BookDataBodyInterface> = (bookBodyData) => 
 {
-    const {BookData, isLoggedIn, status, descriptionData} = bookBodyData;
+    const {IsLoggedIn} = useAuthContext();
+    const {BookData, status, descriptionData} = bookBodyData;
       
     return(
             <Box sx={{ display: 'grid', gap: '20px 50px', width:'350px', gridTemplateColumns: '100%'}}>
@@ -19,7 +21,7 @@ const BookDataBody:FC<BookDataBodyInterface> = (bookBodyData) =>
                 }
                 
                 {
-                    isLoggedIn &&
+                    IsLoggedIn() &&
                     <Box sx={{ width:'350px', display: 'inline-block'}}>
                         <Typography>Status: {status}</Typography>
                     </Box>

@@ -16,7 +16,6 @@ import { useBookContext } from "../../../../Context/Book/BookContext"
 import { BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects"
 import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext"
 import { useContactContext } from "../../../../Context/Book/ContactContext"
-import DescriptionTypography from "../../../UIFragment/ExpandableTypography"
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography"
 
 const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) => 

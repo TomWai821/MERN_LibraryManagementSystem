@@ -3,20 +3,6 @@ import { BookDataInterface, ContactInterface, LoanBookInterface, UserResultDataI
 import { UserDataInterface } from "./UserTableModel";
 import { BookTableDataInterface, BookSearchInterface, SelfLoanBookSearchInterface, ContactSearchInterface } from "./BookTableModel"
 
-export interface IsAdminInterface
-{
-    isAdmin?:boolean;
-}
-
-export interface PagesInterface extends IsAdminInterface
-{
-    role?: string;
-    isLoggedIn: boolean;
-    avatarUrl?: string;
-    status?: string;
-    username?:string;
-}
-
 interface AllFilterInterface
 {
     value:number;
@@ -24,7 +10,7 @@ interface AllFilterInterface
     Search: () => void;
 }
 
-export interface FilterInterface extends IsAdminInterface, AllFilterInterface
+export interface FilterInterface extends AllFilterInterface
 {
     searchData: UserDataInterface | BookSearchInterface | SelfLoanBookSearchInterface;
     isLoggedIn?:boolean;
@@ -41,9 +27,8 @@ export interface UserActionTableCellInterface
     Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface | ContactInterface;
 }
 
-export interface ActionTableCellInterface extends IsAdminInterface, UserActionTableCellInterface
+export interface ActionTableCellInterface extends UserActionTableCellInterface
 {
-    isLoggedIn?: boolean;
     value: number;
     TableName: string;
     changeValue?: (type:string, newValue: number) => void;
@@ -51,21 +36,14 @@ export interface ActionTableCellInterface extends IsAdminInterface, UserActionTa
     searchBook?: BookSearchInterface;
 }
 
-export interface RecordTableCellInterface extends IsAdminInterface
+export interface RecordTableCellInterface 
 {
     value:number;
-    isLoggedIn?: boolean;
     Information: LoanBookInterface;
 }
 
-export interface TableInterface extends IsAdminInterface
+export interface TabInterface
 {
-    isLoggedIn?: boolean;
-}
-
-export interface TabInterface extends IsAdminInterface
-{
-    isLoggedIn?:boolean;
     tabLabel: { label: string; }[];
     type:string;
     value: number;

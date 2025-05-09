@@ -11,10 +11,12 @@ import { UserDataTableInterface } from "../../../../../Model/UserTableModel";
 // Data (CSS Syntax and table header)
 import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { AllUserTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
+import { useAuthContext } from "../../../../../Context/User/AuthContext";
 
 const AllUserTable:FC<UserDataTableInterface> = (DataForAllUserTable) => 
 {
-    const {isAdmin, value, userData, paginationValue} = DataForAllUserTable;
+    const {value, userData, paginationValue} = DataForAllUserTable;
+    const {IsAdmin} = useAuthContext();
     const TableName = "User";
 
     const currentTableData = userData[value];
@@ -59,12 +61,12 @@ const AllUserTable:FC<UserDataTableInterface> = (DataForAllUserTable) =>
                         (
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                 <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.username}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.email}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.role}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.status}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.gender}</ContentTableCell>
-                                {isAdmin && (<ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin}/>)}
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.username}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.email}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.role}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.status}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.gender}</ContentTableCell>
+                                {IsAdmin() && (<ActionTableCell value={value} TableName={TableName} Information={data}/>)}
                             </TableRow>
                         )
                     )}

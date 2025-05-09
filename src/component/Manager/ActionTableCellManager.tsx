@@ -3,14 +3,16 @@ import { FC } from "react";
 import { ActionTableCellInterface } from "../../Model/TablePagesAndModalModel";
 import ActionTableCellForUser from "../Pages/TablePages/Tables/TableCell/ActionTableCellForUser";
 import ActionTableCellForAdmin from "../Pages/TablePages/Tables/TableCell/ActionTableCellForAdmin";
+import { useAuthContext } from "../../Context/User/AuthContext";
 
 const ActionTableCellManager: FC<ActionTableCellInterface> = (tableCellData) => 
 {
-    const { value, TableName, Information, isAdmin, changeValue, setSearchBook, searchBook } = tableCellData;
+    const { value, TableName, Information, changeValue, setSearchBook, searchBook } = tableCellData;
+    const {IsAdmin} = useAuthContext();
 
     return (
-        isAdmin ? 
-            <ActionTableCellForAdmin value={value} TableName={TableName} Information={Information} isAdmin={isAdmin} 
+        IsAdmin() ? 
+            <ActionTableCellForAdmin value={value} TableName={TableName} Information={Information} 
                 changeValue={changeValue} setSearchBook={setSearchBook} searchBook={searchBook}/> 
             : 
             <ActionTableCellForUser Information={Information}/>

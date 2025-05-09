@@ -9,13 +9,12 @@ import { useModal } from "../../Context/ModalContext";
 
 // Models
 import { ContentTableCellProps } from "../../Model/ContextAndProviderModel";
-import { BookDataInterface, ContactInterface, UserResultDataInterface } from "../../Model/ResultModel";
+import { BookDataInterface, UserResultDataInterface } from "../../Model/ResultModel";
 import DisplayBookDataModal from "../Modal/Book/DisplayBookDataModal";
-import DisplayContactDataModal from "../Modal/Contact/DisplayContactDataModel";
 
 const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) => 
 {
-    const {children, TableName, value, isAdmin, Information, isLoggedIn} = contentTableCellData;
+    const {children, TableName, value, Information} = contentTableCellData;
     const {handleOpen} = useModal();
 
     const onClick = () => 
@@ -23,15 +22,11 @@ const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) =>
         switch(TableName)
         {
             case "User":
-                handleOpen(<DisplayUserDataModal value={value} data={Information as UserResultDataInterface} isAdmin={isAdmin} />);
+                handleOpen(<DisplayUserDataModal value={value} data={Information as UserResultDataInterface} />);
                 break;
             
             case "Book":
-                handleOpen(<DisplayBookDataModal position={"Table"} value={value} data={Information as BookDataInterface} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>);
-                break;
-            
-            case "Contact":
-                handleOpen(<DisplayContactDataModal value={value} data={Information as ContactInterface}/>);
+                handleOpen(<DisplayBookDataModal position={"Table"} value={value} data={Information as BookDataInterface}/>);
                 break;
         }
     }

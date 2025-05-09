@@ -2,12 +2,13 @@ import { createContext, FC, useCallback, useContext, useEffect, useState } from 
 import { CreateDefinitionData, DeleteDefinitionData, EditDefinitionData, GetDefinition } from "../../Controller/BookController/DefinitionController";
 import { ChildProps, DefinatonProps } from "../../Model/ContextAndProviderModel";
 import { DefinitionInterface, DefinitionState, GetResultInterface } from "../../Model/ResultModel";
-import { GetData } from "../../Controller/OtherController";
+import { useAuthContext } from "../User/AuthContext";
 
 const DefinitionContext = createContext<DefinatonProps | undefined>(undefined);
 
 export const DefinitionProvider:FC<ChildProps> = ({children}) => 
 {
+    const {GetData} = useAuthContext();
     const [definition, setDefinition] = useState<DefinitionState>(
         {
             Genre:[],

@@ -19,15 +19,17 @@ import { BookTableDataInterface } from "../../../../Model/BookTableModel";
 // Data(CSS Syntax and dropdown data)
 import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { AllBookStatusOption, LoanBookStatusOption } from "../../../../ArraysAndObjects/TableArrays";
+import { useAuthContext } from "../../../../Context/User/AuthContext";
 
 const BookFilter: FC<FilterInterface> = (filterData) => 
 {
-    const {value, searchData, onChange, Search, isAdmin, isLoggedIn, resetFilter} = filterData;
+    const {value, searchData, onChange, Search, isLoggedIn, resetFilter} = filterData;
     const bookData = searchData as unknown as BookTableDataInterface;
 
     const [optionVisiable, setOptionVisiable] = useState(false);
     const [actionMenu, openActionMenu] = useState<HTMLElement | null>(null);
     const { handleOpen } = useModal();
+    const {IsAdmin} = useAuthContext();
 
     const ActionMenu = 
     [
@@ -86,7 +88,7 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
 
                 <Button variant='contained' sx={{marginLeft: '10px'}} onClick={Search}>Search</Button>
                     { 
-                        isAdmin && 
+                        IsAdmin() && 
                         (
                             <Fragment>
                                 {value === 0 ? 

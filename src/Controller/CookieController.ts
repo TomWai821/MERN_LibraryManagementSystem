@@ -19,9 +19,4 @@ const GetUserCookie = (name:string) =>
     return document.cookie.split(';').find(row => row.startsWith(name+'='));
 }
     
-const DeleteUserCookie = (username: string | null) =>
-{
-    document.cookie = "authToken=" + username + '; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-}
-
-export {SetUserCookie, GetUserCookie, DeleteUserCookie}
+export {SetUserCookie, GetUserCookie}

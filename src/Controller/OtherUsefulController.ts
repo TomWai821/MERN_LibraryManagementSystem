@@ -1,21 +1,5 @@
-import { useBookContext } from '../Context/Book/BookContext';
-import { useContactContext } from '../Context/Book/ContactContext';
-import { useDefinitionContext } from '../Context/Book/DefinitionContext';
-import { SuggestionData } from '../Model/ContextAndProviderModel';
 import { LoanBookInterface, ResultInterface } from '../Model/ResultModel';
-import { SetUserCookie, DeleteUserCookie } from './CookieController'
-
-const mainPage:string = 'http://localhost:3000/';
-
-const handleLogout = async(username: string | null) =>
-{
-    if(document.cookie)
-    {
-        DeleteUserCookie(username);
-    }
-    sessionStorage.clear();
-    window.location.href = mainPage;
-}
+import { SetUserCookie } from './CookieController'
 
 // For Register/Login
 const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =>
@@ -110,4 +94,4 @@ const TabProps = (index: number) =>
     };
 }
 
-export {handleLogout, handleSuccess, StatusDetectionForAllUser, StatusDetectionForBook, DisableValidationForLoanBook, TabProps}
+export {handleSuccess, StatusDetectionForAllUser, StatusDetectionForBook, DisableValidationForLoanBook, TabProps}

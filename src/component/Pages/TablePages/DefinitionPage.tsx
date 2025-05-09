@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { Box, Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 
@@ -18,13 +18,12 @@ import { ChangePage } from "../../../Controller/OtherController";
 // data (CSS Syntax)
 import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects";
 
-//Model
-import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 import TableTitle from "../../UIFragment/TableTitle";
+import { useAuthContext } from "../../../Context/User/AuthContext";
 
-const DefinitionPage:FC<PagesInterface>  = (loginData) => 
+const DefinitionPage  = () => 
 {
-    const {isAdmin} = loginData;
+    const {IsAdmin} = useAuthContext();
     const {definition} = useDefinitionContext();
     const {handleOpen} = useModal();
 
@@ -55,11 +54,11 @@ const DefinitionPage:FC<PagesInterface>  = (loginData) =>
 
     useEffect(() => 
     {
-        if(!isAdmin)
+        if(!IsAdmin())
         {
             ChangePage('/');
         }
-    },[isAdmin])
+    },[IsAdmin])
 
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>

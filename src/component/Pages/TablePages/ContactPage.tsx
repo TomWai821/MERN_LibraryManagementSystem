@@ -1,4 +1,4 @@
-import {  ChangeEvent, FC, useEffect, useState } from "react";
+import {  ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Box, TableContainer, Paper } from "@mui/material";
 
 // Another Component
@@ -6,20 +6,18 @@ import ContactFilter from "./Filter/ContactFilter";
 import CustomTab from "../../UIFragment/CustomTab";
 import TableTitle from "../../UIFragment/TableTitle";
 
-// Model
-import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
-
 // Data (CSS SYntax and dropdown)
 import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects";
 import { ContactTabLabel, PaginationOption } from "../../../ArraysAndObjects/TableArrays";
 import { useContactContext } from "../../../Context/Book/ContactContext";
 import ContactTabPanel from "./Tabs/ContactTabPanel";
 import { ChangePage } from "../../../Controller/OtherController";
+import { useAuthContext } from "../../../Context/User/AuthContext";
 
-const ContactPage:FC<PagesInterface> = (loginData) =>
+const ContactPage= () =>
 {
-    const { isAdmin, isLoggedIn } = loginData;
     const { contact, fetchContactDataWithFilterData } = useContactContext();
+    const {IsAdmin} = useAuthContext();
     
     const [searchContact, setSearchContact] = useState({author: "", publisher: ""});
     const [paginationValue, setPaginationValue] = useState(10);
@@ -27,7 +25,7 @@ const ContactPage:FC<PagesInterface> = (loginData) =>
 
     const Title = ["Manage Author Record", "Manager Publisher Record"];
 
-    const countLength = ()=> 
+    const countLength = useCallback(()=> 
     {
         switch(tabValue)
         {
@@ -37,9 +35,9 @@ const ContactPage:FC<PagesInterface> = (loginData) =>
             case 1:
                 return contact.Publisher.length;
         }
-    }
+    },[])
 
-    const changeValue = (type:string, newValue: number) =>
+    const changeValue = useCallback((type:string, newValue: number) =>
     {
         switch(type)
         {
@@ -54,7 +52,7 @@ const ContactPage:FC<PagesInterface> = (loginData) =>
             default:
                 break;
         }
-    }
+    },[])
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
@@ -70,11 +68,11 @@ const ContactPage:FC<PagesInterface> = (loginData) =>
 
     useEffect(() => 
     {
-        if(!isAdmin)
+        if(!IsAdmin())
         {
             ChangePage('/');
         }
-    },[isAdmin])
+    },[IsAdmin])
     
     return( 
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
@@ -82,11 +80,11 @@ const ContactPage:FC<PagesInterface> = (loginData) =>
 
             <ContactFilter value={tabValue} onChange={onChange} searchData={searchContact} Search={SearchContact}/>
 
-            <CustomTab isAdmin={isAdmin} isLoggedIn={isLoggedIn} value={tabValue} changeValue={changeValue} 
+            <CustomTab value={tabValue} changeValue={changeValue} 
                 paginationValue={paginationValue} tabLabel={ContactTabLabel} paginationOption={PaginationOption} type={"Contact"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-                <ContactTabPanel value={tabValue} contactData={contact} paginationValue={paginationValue} isAdmin={false}/>
+                <ContactTabPanel value={tabValue} contactData={contact} paginationValue={paginationValue}/>
             </TableContainer>
         </Box>
     );

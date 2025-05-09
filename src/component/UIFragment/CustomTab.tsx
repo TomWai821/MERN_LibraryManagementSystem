@@ -4,19 +4,14 @@ import { ChangeEvent, FC, Fragment } from "react";
 import { TabInterface } from "../../Model/TablePagesAndModalModel";
 
 import { displayAsRow } from "../../ArraysAndObjects/FormatSyntaxObjects";
-
-const getTabProps = (index: number) => 
-{
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    }
-}
+import { TabProps } from "../../Controller/OtherUsefulController";
+import { useAuthContext } from "../../Context/User/AuthContext";
 
 const CustomTab:FC<TabInterface> = (TabData) => 
 {
 
-    const {tabLabel, isAdmin, isLoggedIn, type, value, paginationValue, changeValue, paginationOption} = TabData;
+    const {tabLabel, type, value, paginationValue, changeValue, paginationOption} = TabData;
+    const {IsAdmin, IsLoggedIn} = useAuthContext();
 
     const handleTabChange = (event: ChangeEvent<{}>, newValue: number) => 
     {
@@ -31,7 +26,7 @@ const CustomTab:FC<TabInterface> = (TabData) =>
 
     const condition = () =>
     {
-        return isAdmin || (isLoggedIn && type === "Record");
+        return IsAdmin() || (IsLoggedIn() && type === "Record");
     }
 
     return(
@@ -41,7 +36,7 @@ const CustomTab:FC<TabInterface> = (TabData) =>
                     <Tabs value={value} onChange={handleTabChange}>
                         {tabLabel.map((tab, index) => 
                             (
-                                <Tab key={index} label={tab.label} {...getTabProps(index)}/>
+                                <Tab key={index} label={tab.label} {...TabProps(index)}/>
                             ))
                         }
                     </Tabs>

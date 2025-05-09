@@ -1,5 +1,4 @@
 import { UserResultDataInterface } from "./ResultModel";
-import { IsAdminInterface } from "./TablePagesAndModalModel";
 
 interface UserDataInterface
 {
@@ -27,7 +26,7 @@ interface CreateUserInterface extends UserDataInterface
     birthDay:Date;
 }
 
-interface UserDataTableInterface extends IsAdminInterface
+interface UserDataTableInterface
 {
     value: number;
     userData: UserResultDataInterface[][];

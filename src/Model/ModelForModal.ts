@@ -1,4 +1,4 @@
-import { ChangeEvent, RefObject } from "react";
+import { ChangeEvent } from "react";
 import { BookDataInterface, ContactInterface, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
 import { ChildProps } from "./ContextAndProviderModel";
 
@@ -41,7 +41,6 @@ export interface EditModalInterface
 export interface ReturnBookInterface
 {
     modalOpenPosition:string;
-    isAdmin: boolean;
     data:LoanBookInterface;
 }
 
@@ -66,8 +65,6 @@ export interface DisplayDataModalInterface
     position?: string;
     value: number;
     data: UserResultDataInterface | BookDataInterface | LoanBookInterface | ContactInterface;
-    isLoggedIn?: boolean;
-    isAdmin?: boolean;
 }
 
 export interface ModalConfirmButtonInterface
@@ -84,15 +81,12 @@ export interface ExpandableTypographyInterface extends ChildProps
 
 export interface DisplayDataModalBody
 {
-    isAdmin?:boolean;
-    isLoggedIn?:boolean;
     data: UserResultDataInterface | BookDataInterface | LoanBookInterface | ContactInterface;
 }
 
 export interface BookDataBodyInterface
 {
     BookData: Record<string, {label:string, value:any}>; 
-    isLoggedIn:boolean; 
     status:string;
     descriptionData?:string; 
 }

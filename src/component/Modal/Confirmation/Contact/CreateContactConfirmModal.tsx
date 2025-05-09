@@ -2,7 +2,6 @@ import { FC } from "react"
 import ModalTemplate from "../../../Templates/ModalTemplate"
 import { CreateModalInterface } from "../../../../Model/ModelForModal"
 import { ContactInterface } from "../../../../Model/ResultModel";
-import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext";
 import { useModal } from "../../../../Context/ModalContext";
 import CreateContextModal from "../../Contact/CreateContactModal";
 import { useContactContext } from "../../../../Context/Book/ContactContext";

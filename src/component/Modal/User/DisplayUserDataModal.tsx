@@ -17,7 +17,7 @@ import { ModalBodySyntax } from "../../../ArraysAndObjects/FormatSyntaxObjects";
 
 const DisplayUserDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 
 {
-    const {value, data, isAdmin} = displayUserData;
+    const {value, data} = displayUserData;
 
     const setTitle = () => 
     {
@@ -31,7 +31,7 @@ const DisplayUserDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
 
             case 1:
                 displayData.title = "Suspend User Information";
-                displayData.displayBody = <BannedUserDataBody data={data as UserResultDataInterface} isAdmin={isAdmin}/>;
+                displayData.displayBody = <BannedUserDataBody data={data as UserResultDataInterface}/>;
                 break;
         }
         return displayData;

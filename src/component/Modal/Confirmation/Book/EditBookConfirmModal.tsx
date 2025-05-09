@@ -70,7 +70,7 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
 
         if (differences.length === 0 && sameImage && CompareData.description.trim() === EditData.description.trim()) 
         {
-            differences.push(<Typography key={"nothingChange"}>- Nothing Changed</Typography>);
+            differences.push(<Typography key={"noChange"}>- No Change detected</Typography>);
         }
     
         setDifferences(differences);

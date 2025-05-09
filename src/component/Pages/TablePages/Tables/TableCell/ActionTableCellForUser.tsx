@@ -1,24 +1,17 @@
 import { FC, useContext } from "react";
 import { IconButton, TableCell, Tooltip } from "@mui/material";
 
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
-import { StatusDetectionForBook } from "../../../../../Controller/OtherUsefulController";
 import { UserActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel";
+import { BookDataInterface } from "../../../../../Model/ResultModel";
 
-import LoanBookConfirmationModal from "../../../../Modal/Confirmation/Book/LoanBookConfirmationModal";
-
-import { BookDataInterface, LoanBookInterface } from "../../../../../Model/ResultModel";
-
-import { useModal } from "../../../../../Context/ModalContext";
 import { AlertContext } from "../../../../../Context/AlertContext";
 import { useBookContext } from "../../../../../Context/Book/BookContext";
 
 const ActionTableCellForUser:FC<UserActionTableCellInterface> = (actionTableCellData) => 
 {
-    const {handleOpen} = useModal();
     const {BookRecordForUser, favouriteBook, unfavouriteBook} = useBookContext();
     
     const {Information} = actionTableCellData;
@@ -27,14 +20,6 @@ const ActionTableCellForUser:FC<UserActionTableCellInterface> = (actionTableCell
 
     const isFavourite = BookRecordForUser[1].find((favouriteBook) => favouriteBook.bookDetails?._id === (Information as BookDataInterface)._id);
     const FavouriteID = BookRecordForUser[1].find((favouriteBook) => favouriteBook.bookDetails?._id === (Information as BookDataInterface)._id as string)?._id;
-
-    const openLoanBookModal = () => 
-    {
-        const bookData = Information as BookDataInterface;
-        handleOpen(<LoanBookConfirmationModal _id={bookData._id} bookname={bookData.bookname} author={bookData.author as string}
-            language={bookData.languageDetails.language as string} genre={bookData.genreDetails.genre as string} 
-            description={bookData.description as string} imageUrl={bookData.image?.url as string} />)
-    }
 
     const FavouriteHandler = async () => 
     {

@@ -114,7 +114,7 @@ const EditContactConfirmModal:FC<EditModalInterface> = (data) =>
                         (
                             <Typography key={index}>{difference}</Typography>
                         )):
-                   <Typography>- "Nothing Changed"</Typography>
+                   <Typography>- "No Change detected"</Typography>
                 }
 
                 {

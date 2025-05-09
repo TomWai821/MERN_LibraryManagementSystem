@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import { BookDataInterface, ContactInterface, DefinitionState, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
 import { BookTableDataInterface } from "./BookTableModel";
-import { IsAdminInterface } from "./TablePagesAndModalModel";
 
 export interface ChildProps
 {
@@ -40,6 +39,14 @@ export interface ModalTemplateProps extends ChildProps
     width?:string;
     cancelButtonName: string;
     cancelButtonEvent?: () => void;
+}
+
+export interface AuthContextProps
+{
+    IsLoggedIn: () => boolean;
+    GetData: (data:string)  => string | undefined | null;
+    IsAdmin: () => boolean;
+    handleLogout: (username: string | null) => void;
 }
 
 // For Context
@@ -99,11 +106,10 @@ export interface TabPanelProps extends ChildProps
 }
 
 // For ContentTableCell
-export interface ContentTableCellProps extends ChildProps, IsAdminInterface
+export interface ContentTableCellProps extends ChildProps
 {
     TableName: string;
     value: number;
-    isLoggedIn?: boolean;
     Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface | ContactInterface;
 }
 

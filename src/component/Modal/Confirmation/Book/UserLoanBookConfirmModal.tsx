@@ -1,5 +1,5 @@
-import { FC, useState } from "react";
-import { Avatar, Box, Button, Tab, Tabs, Typography } from "@mui/material";
+import { FC } from "react";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
 import { BookDescriptionDisplayFormat, BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";

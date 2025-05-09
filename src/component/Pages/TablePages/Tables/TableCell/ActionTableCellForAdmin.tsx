@@ -42,7 +42,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
     const alertContext = useContext(AlertContext);
 
 
-    const { isAdmin, value, TableName, Information, changeValue, setSearchBook, searchBook } = tableCellData;
+    const { value, TableName, Information, changeValue, setSearchBook, searchBook } = tableCellData;
     const userData = Information as UserResultDataInterface;
     
     const isFavourite = BookRecordForUser[1].find((favouriteBook) => favouriteBook.bookDetails?._id === (Information as BookDataInterface)._id);
@@ -119,13 +119,12 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
 
     const openReturnBookModal = () => 
     {
-        handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} isAdmin={isAdmin as boolean} modalOpenPosition={"AdminTableCell"}/>);
+        handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} modalOpenPosition={"AdminTableCell"}/>);
     }
 
     const openSubmitFinesModal = () => 
     {
-        handleOpen(<SubmitFinesConfirmModal modalOpenPosition={""} isAdmin={isAdmin as boolean} data={Information as LoanBookInterface}/>);
-        console.log(((Information as LoanBookInterface).finesPaid !== "Not Paid" && (Information as LoanBookInterface).status !== "Returned(Late)"));
+        handleOpen(<SubmitFinesConfirmModal modalOpenPosition={""} data={Information as LoanBookInterface}/>);
     }
 
     const openLoanBookModal = () => 

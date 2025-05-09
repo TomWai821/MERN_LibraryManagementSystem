@@ -12,10 +12,12 @@ import { BookDataInterface, LoanBookInterface } from "../../../Model/ResultModel
 import { StatusDetectionForBook } from "../../../Controller/OtherUsefulController";
 import { useModal } from "../../../Context/ModalContext";
 import LoanBookConfirmationModal from "../Confirmation/Book/LoanBookConfirmationModal";
+import { useAuthContext } from "../../../Context/User/AuthContext";
 
 const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 
 {
-    const {position, value, data, isAdmin, isLoggedIn} = displayUserData;
+    const {position, value, data} = displayUserData;
+    const {IsAdmin} = useAuthContext();
     const {handleOpen} = useModal();
     const width = '600px';
 
@@ -26,12 +28,12 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
         {
             case 0:
                 displayData.title = "Book Information";
-                displayData.displayBody = <AllBookDataBody data={data as BookDataInterface} isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>
+                displayData.displayBody = <AllBookDataBody data={data as BookDataInterface}/>
                 break;
 
             case 1:
                 displayData.title = "OnLoan Book Information";
-                displayData.displayBody = <LoanBookDataBody data={data as BookDataInterface} isAdmin={isAdmin}/>
+                displayData.displayBody = <LoanBookDataBody data={data as BookDataInterface}/>
                 break;
 
         }
@@ -60,7 +62,7 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
             </Box>
 
             {
-                (position === "mainPage" && value === 0 && isAdmin) &&
+                (position === "mainPage" && value === 0 && IsAdmin()) &&
                 <Button variant="contained" onClick={openLoanBookModal} disabled={bookStatusValidation}>Loan Book</Button>
             }
         </ModalTemplate>

@@ -77,7 +77,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
     
         if (differences.length === 0) 
         {
-            differences.push(<Typography key={"nothingChange"}>- Nothing Changed</Typography>);
+            differences.push(<Typography key={"nothingChange"}>- No Change detected</Typography>);
         }
     
         setDifferences(differences);

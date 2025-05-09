@@ -3,7 +3,7 @@ import { DisplayDataModalBody } from "../../../../Model/ModelForModal"
 import { Avatar, Box, Typography } from "@mui/material";
 import { BookImageFormat, displayAsRow} from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { LoanBookInterface } from "../../../../Model/ResultModel";
-import { calculateFineAmount, countLateReturn, isExpired, TransferDateToISOString } from "../../../../Controller/OtherController";
+import { TransferDateToISOString } from "../../../../Controller/OtherController";
 
 const LoanBookDataBody:FC<DisplayDataModalBody> = (AllUserData) => 
 {
@@ -11,6 +11,10 @@ const LoanBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
     const LoanData = data as LoanBookInterface;
 
     const imageUrl = LoanData.bookDetails?.image?.url;
+
+    const CalculateExpired = "";
+    const CalculateFines = "";
+    const CalculateLateReturn = "";
 
     const BookData: Record<string,{label:string, data:any}> = 
     {
@@ -37,15 +41,15 @@ const LoanBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
                     <Typography>
                         Status: {LoanData.status}
                         <Typography component="span" sx={{color: 'rgb(230, 0, 0)'}}>
-                            { isExpired(LoanData.dueDate as Date) && ` (Overdue by ${countLateReturn(LoanData.dueDate as Date, "number")} Day)`}
+                            { CalculateExpired && ` (Overdue by ${CalculateLateReturn} Day)`}
                         </Typography>
                     </Typography>
                 }
 
                 {
-                    isExpired(LoanData.dueDate as Date) && 
+                    CalculateExpired && 
                     <Fragment>
-                        <Typography>Fines: { isExpired(LoanData.dueDate as Date) && LoanData.finesPaid === "Not Fine Needed" ? "Not Paid" : LoanData.finesPaid} (HKD$ {calculateFineAmount(LoanData.dueDate as string)})</Typography>
+                        <Typography>Fines: { CalculateExpired && LoanData.finesPaid === "Not Fine Needed" ? "Not Paid" : LoanData.finesPaid} (HKD$ {CalculateFines})</Typography>
                     </Fragment>
                 }
 

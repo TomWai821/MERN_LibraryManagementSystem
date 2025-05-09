@@ -1,13 +1,10 @@
 import { Box, Paper, TableContainer } from "@mui/material";
-import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
 // Another Component
 import UserFilter from "./Filter/UserFilter";
 import CustomTab from "../../UIFragment/CustomTab";
 import UserTabPanel from "./Tabs/UserTabPanel";
-
-// Model
-import { PagesInterface } from "../../../Model/TablePagesAndModalModel";
 
 // Contexts
 import { useUserContext } from "../../../Context/User/UserContext";
@@ -16,13 +13,14 @@ import { useUserContext } from "../../../Context/User/UserContext";
 import { PaginationOption, UserTabLabel } from "../../../ArraysAndObjects/TableArrays";
 import TableTitle from "../../UIFragment/TableTitle";
 import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects";
+import { useAuthContext } from "../../../Context/User/AuthContext";
 
-const UserPage:FC<PagesInterface> = (loginData) =>
+const UserPage = () =>
 {
-    const { isAdmin } = loginData;
+    const { IsAdmin } = useAuthContext();
     const { userData, fetchUser } = useUserContext();
 
-    const SetTitle = isAdmin ? "User Management Page" : "View Suspend List";
+    const SetTitle = IsAdmin() ? "User Management Page" : "View Suspend List";
 
     const [searchUserData, setSearchUserData] = useState({ username: "", email: "", role: "All", status: "All", gender: "All" });
     const [tabValue, setTabValue] = useState(0);
@@ -61,22 +59,22 @@ const UserPage:FC<PagesInterface> = (loginData) =>
 
     useEffect(() => 
     { 
-        if(!isAdmin) 
+        if(!IsAdmin()) 
         { 
             setTabValue(1); 
         }
-    },[isAdmin])
+    },[IsAdmin])
     
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <TableTitle title={SetTitle} dataLength={userData[tabValue].length}/>
 
-            <UserFilter isAdmin={isAdmin} value={tabValue} onChange={onChange} searchData={searchUserData} Search={SearchUser}/>
+            <UserFilter value={tabValue} onChange={onChange} searchData={searchUserData} Search={SearchUser}/>
 
-            <CustomTab isAdmin={isAdmin} value={tabValue} changeValue={changeValue} paginationValue={paginationValue} tabLabel={UserTabLabel} paginationOption={PaginationOption} type={"User"}/>
+            <CustomTab value={tabValue} changeValue={changeValue} paginationValue={paginationValue} tabLabel={UserTabLabel} paginationOption={PaginationOption} type={"User"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-                <UserTabPanel value={tabValue} isAdmin={isAdmin} userData={userData} paginationValue={paginationValue}/>
+                <UserTabPanel value={tabValue} userData={userData} paginationValue={paginationValue}/>
             </TableContainer>
         </Box>
     );

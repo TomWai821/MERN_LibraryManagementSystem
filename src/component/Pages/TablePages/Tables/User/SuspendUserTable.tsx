@@ -14,12 +14,14 @@ import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObject
 import { SuspendUserTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
 
 import { CalculateDuration, TransferDateToString } from "../../../../../Controller/OtherController";
+import { useAuthContext } from "../../../../../Context/User/AuthContext";
 
 
 
 const SuspendUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) => 
 {
-    const {isAdmin, value, userData, paginationValue} = DataForBannedUserTable;
+    const {value, userData, paginationValue} = DataForBannedUserTable;
+    const {IsAdmin} = useAuthContext();
     const TableName = "User";
 
     const currentTableData = userData[value];
@@ -55,7 +57,7 @@ const SuspendUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
                     <TableRow>
                         {SuspendUserTableHeader.map((header, index) =>
                             (
-                                (header.isAdmin && !isAdmin) ? null : <TableCell key={index} sx={{fontSize: '16px'}}>{header.label}</TableCell>
+                                (header.isAdmin && !IsAdmin()) ? null : <TableCell key={index} sx={{fontSize: '16px'}}>{header.label}</TableCell>
                             ) 
                         )}  
                     </TableRow>
@@ -67,15 +69,15 @@ const SuspendUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
                             return(
                                 <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                     <TableCell sx={{fontSize: "16px", "&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.username} </ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.role} </ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {data.bannedDetails?.description} </ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {TransferDateToString(data.bannedDetails?.startDate as Date)} </ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> {TransferDateToString(data.bannedDetails?.dueDate as Date)} </ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}> 
+                                    <ContentTableCell TableName={TableName} value={value} Information={data}> {data.username} </ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} Information={data}> {data.role} </ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} Information={data}> {data.bannedDetails?.description} </ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} Information={data}> {TransferDateToString(data.bannedDetails?.startDate as Date)} </ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} Information={data}> {TransferDateToString(data.bannedDetails?.dueDate as Date)} </ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} Information={data}> 
                                         {CalculateDuration(data.bannedDetails?.startDate as Date, data.bannedDetails?.dueDate as Date)}
                                     </ContentTableCell>
-                                    {isAdmin && (<ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin}/>)}
+                                    {IsAdmin() && (<ActionTableCell value={value} TableName={TableName} Information={data}/>)}
                                 </TableRow>
                             )
                         }
@@ -85,9 +87,9 @@ const SuspendUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
 
             <Pagination
                 sx={{ ...ItemToCenter, alignItems: "center", paddingTop: "10px" }}
-                count={getCountPage() as number} // Total page count
-                page={page} // Current page number
-                onChange={handlePageChange} // On page change handler
+                count={getCountPage() as number} 
+                page={page}
+                onChange={handlePageChange}
             />
         </Fragment>
     );

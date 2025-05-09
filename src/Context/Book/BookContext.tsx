@@ -1,16 +1,19 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
-import { BookContextProps, ChildProps, SuggestionData } from "../../Model/ContextAndProviderModel";
-import { CalculateDueDate, GetCurrentDate, GetData } from "../../Controller/OtherController";
+import { BookContextProps, ChildProps } from "../../Model/ContextAndProviderModel";
+import { CalculateDueDate, GetCurrentDate } from "../../Controller/OtherController";
 import { BookDataInterface, GetResultInterface, LoanBookInterface } from "../../Model/ResultModel";
 import { fetchBook, fetchFavouriteBook, fetchLoanBook, fetchSuggestBook } from "../../Controller/BookController/BookGetController";
 import { createBookRecord, createFavouriteBookRecord, createLoanBookRecord } from "../../Controller/BookController/BookPostController";
 import { returnBookAndChangeStatus, updateBookRecord } from "../../Controller/BookController/BookPutController";
 import { deleteBookRecord } from "../../Controller/BookController/BookDeleteController";
+import { useAuthContext } from "../User/AuthContext";
 
 const BookContext = createContext<BookContextProps | undefined>(undefined);
 
 export const BookProvider:FC<ChildProps> = ({children}) => 
 {
+    const {GetData} = useAuthContext();
+    
     const [AllBook, setAllBook] = useState<BookDataInterface[]>([]);
     const [OnLoanBook, setOnLoanBook] = useState<LoanBookInterface[]>([]);
     const bookData = [AllBook, OnLoanBook];
@@ -64,7 +67,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
                 setSelfLoanBook(resultForSelfLoanBook.foundLoanBook);
 
                 const suggestionData = (resultForSelfLoanBook.foundLoanBook as LoanBookInterface[])
-                .slice(0, 20)
+                .slice(0, 10)
                 .map((book) => 
                 (
                     {

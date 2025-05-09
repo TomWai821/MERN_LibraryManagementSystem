@@ -1,7 +1,7 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Box, Button, Typography } from "@mui/material";
 
-import { displayAsRow, ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
 
@@ -31,7 +31,7 @@ const SubmitFinesConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) =>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>Does {Data.userDetails?.username} submit fines now?</Typography>
                 <Typography>Fines Per Day: HKD$1.5</Typography>
-                <Typography>OverDue: {countLateReturn(Data.dueDate as string, "string")}</Typography>
+                <Typography>OverDue: {countLateReturn(Data.dueDate as string , data.returnDate as string)} days</Typography>
                 <Typography>Total: HKD${Data.fineAmount} </Typography>
             </Box>
             <Button variant='contained' onClick={submitFinesConfirm}>Yes</Button>

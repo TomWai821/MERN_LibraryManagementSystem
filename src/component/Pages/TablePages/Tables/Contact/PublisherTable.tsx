@@ -13,7 +13,7 @@ import { ContactInterface } from "../../../../../Model/ResultModel";
 
 const PublisherTable:FC<ContactTableInterface> = (DataForAllUserTable) => 
 {
-    const {isAdmin, value, contactData, paginationValue, isLoggedIn} = DataForAllUserTable;
+    const {value, contactData, paginationValue} = DataForAllUserTable;
     const TableName = "Contact";
 
     const currentTableData = contactData.Publisher as ContactInterface[];
@@ -59,10 +59,10 @@ const PublisherTable:FC<ContactTableInterface> = (DataForAllUserTable) =>
                         (
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                 <TableCell sx={{fontSize: "16px", "&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                <ContentTableCell TableName={TableName} value={value as number} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.publisher}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value as number} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.email}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value as number} isAdmin={isAdmin} isLoggedIn={isLoggedIn} Information={data}>{data.phoneNumber}</ContentTableCell>
-                                <ActionTableCell value={value as number} TableName={TableName} Information={data} isAdmin={true} isLoggedIn={isLoggedIn}/>
+                                <ContentTableCell TableName={TableName} value={value as number} Information={data}>{data.publisher}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value as number} Information={data}>{data.email}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value as number} Information={data}>{data.phoneNumber}</ContentTableCell>
+                                <ActionTableCell value={value as number} TableName={TableName} Information={data}/>
                             </TableRow>
                         )
                     )}

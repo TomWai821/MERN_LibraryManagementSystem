@@ -13,11 +13,13 @@ import { LoanBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays
 import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { calculateFineAmount, isExpired, TransferDateToISOString } from "../../../../../Controller/OtherController";
+import { useAuthContext } from "../../../../../Context/User/AuthContext";
 
 const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
-    const {value, bookData, isAdmin, paginationValue, isLoggedIn, setSearchBook, searchBook} = DataForAllUserTable;
+    const {value, bookData, paginationValue, setSearchBook, searchBook} = DataForAllUserTable;
     const TableName = "Book";
+    const {IsAdmin} = useAuthContext();
 
     const currentTableData = bookData[value] as LoanBookInterface[];
     const [page, setPage] = useState<number>(1);
@@ -63,18 +65,18 @@ const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                         (
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                 <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>
                                     <Avatar src={data.bookDetails?.image?.url} alt="Preview" variant="rounded" sx={{ width: "150px", height: "225px" }}/>
                                 </ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.bookDetails?.bookname}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{data.userDetails?.username}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.loanDate as Date)}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.bookDetails?.bookname}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.userDetails?.username}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{TransferDateToISOString(data.loanDate as Date)}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>
                                     {data.status}
                                 </ContentTableCell>
 
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>
                                 {
                                     data.status !== "Loaned" ?
                                     TransferDateToISOString(data.returnDate as Date)
@@ -83,16 +85,16 @@ const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                 }
                                 </ContentTableCell>
 
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
-                                    { isExpired(data.dueDate as Date) && data.finesPaid === "Not Fine Needed" ? "Not Paid" : data.finesPaid }
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>
+                                    { isExpired(data.returnDate as Date, data.dueDate as Date) && data.finesPaid === "Not Fine Needed" ? "Not Paid" : data.finesPaid }
                                 </ContentTableCell>
 
-                                <ContentTableCell TableName={TableName} value={value} isAdmin={isAdmin} Information={data}>
-                                    HKD$ { calculateFineAmount(data.dueDate as string) }
+                                <ContentTableCell TableName={TableName} value={value} Information={data}>
+                                    HKD$ { calculateFineAmount(data.dueDate as string, data.returnDate as string) }
                                 </ContentTableCell>
-                                {isAdmin && 
+                                {IsAdmin() && 
                                     (
-                                    <ActionTableCell value={value} TableName={TableName} Information={data} isAdmin={isAdmin} isLoggedIn={isLoggedIn} 
+                                    <ActionTableCell value={value} TableName={TableName} Information={data} 
                                         setSearchBook={setSearchBook} searchBook={searchBook}/>
                                     )
                                 }

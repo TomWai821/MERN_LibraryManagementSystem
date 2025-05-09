@@ -9,6 +9,7 @@ import { UserProvider } from './Context/User/UserContext';
 import { BookProvider } from './Context/Book/BookContext';
 import { DefinitionProvider } from './Context/Book/DefinitionContext';
 import { ContactProvider } from './Context/Book/ContactContext';
+import { AuthProvider } from './Context/User/AuthContext';
 
 const root = ReactDOM.createRoot
 (
@@ -17,6 +18,7 @@ const root = ReactDOM.createRoot
 
 root.render
 (
+    <AuthProvider>
         <ContactProvider>
             <DefinitionProvider>
                 <BookProvider>
@@ -32,6 +34,7 @@ root.render
                 </BookProvider>
             </DefinitionProvider>
         </ContactProvider>
+    </AuthProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

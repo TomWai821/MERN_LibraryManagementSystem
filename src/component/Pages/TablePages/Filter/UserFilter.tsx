@@ -18,10 +18,12 @@ import { UserDataInterface } from "../../../../Model/UserTableModel";
 
 // data (CSS Syntax)
 import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { useAuthContext } from "../../../../Context/User/AuthContext";
 
 const UserFilter:FC<FilterInterface> = (filterData) => 
 {
-    const {value, isAdmin, onChange, searchData, Search} = filterData;
+    const {value, onChange, searchData, Search} = filterData;
+    const {IsAdmin} = useAuthContext();
     const userData = searchData as UserDataInterface;
 
     const [optionVisiable, setOptionVisiable] = useState(false);
@@ -47,7 +49,7 @@ const UserFilter:FC<FilterInterface> = (filterData) =>
                 </IconButton>
                 
                 <Button variant='contained' sx={{marginLeft: '10px'}} onClick={Search}>Search</Button>
-                {(isAdmin && value === 0) &&
+                {(IsAdmin() && value === 0) &&
                     (
                         <Button variant='contained' sx={{marginLeft: '10px'}} onClick={openCreateUserModal}>Create User</Button>
                     )

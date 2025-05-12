@@ -5,16 +5,35 @@ import { CreateLanguage, FindLanguageByIDAndDelete, FindLanguageByIDAndUpdate, G
 export const GetDefinition = async (req: Request, res: Response) => 
 {
     const definitionType = req.params.type as keyof typeof definitionHandlers;
+    const {name} = req.query;
     let success = false;
+    let getData;
 
     try 
     {
-        const getData = await definitionHandlers[definitionType].getAll();
-        
+        if(!name)
+        {
+            getData = await definitionHandlers[definitionType].getAll();
+        }
+        else
+        {
+            switch(definitionType)
+            {
+                case "Genre":
+                    getData = await GetGenre({ "genre": { $regex: name, $options: "i" } });
+                    break;
+
+                case "Language":
+                    getData = await GetLanguage({ "language": { $regex: name, $options: "i" } });
+                    break;
+            }
+        }
+
         if (!getData) 
         {
             return res.status(400).json({ success, error: `Failed to get ${definitionType} data` });
         }
+        
 
         success = true;
         return res.json({ success, foundDefinition: getData });

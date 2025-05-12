@@ -122,7 +122,6 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
                 }
                 break;
         }
-
         
     },[fetchAllBook])
 

@@ -23,13 +23,13 @@ import { useAuthContext } from "../../../../Context/User/AuthContext";
 
 const BookFilter: FC<FilterInterface> = (filterData) => 
 {
-    const {value, searchData, onChange, Search, isLoggedIn, resetFilter} = filterData;
+    const {value, searchData, onChange, Search, resetFilter} = filterData;
     const bookData = searchData as unknown as BookTableDataInterface;
 
     const [optionVisiable, setOptionVisiable] = useState(false);
     const [actionMenu, openActionMenu] = useState<HTMLElement | null>(null);
     const { handleOpen } = useModal();
-    const {IsAdmin} = useAuthContext();
+    const { IsAdmin, IsLoggedIn } = useAuthContext();
 
     const ActionMenu = 
     [
@@ -56,7 +56,7 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
                     <Fragment>
                         <TextField label="Book Name" name="bookname" value={bookData.bookname} onChange={onChange} size="small" sx={{ width: '45%' }}/>
                         { 
-                            isLoggedIn &&
+                            IsLoggedIn() &&
                             <TextField label="Status" name="status" value={searchData.status} onChange={onChange} size="small" sx={{ marginLeft: '10px', width: '15%' }} select>
                             {
                                 AllBookStatusOption.map((option, index) => 
@@ -91,7 +91,8 @@ const BookFilter: FC<FilterInterface> = (filterData) =>
                         IsAdmin() && 
                         (
                             <Fragment>
-                                {value === 0 ? 
+                                {
+                                value === 0 ? 
                                     <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={handleActionMenu}>Action</Button>
                                     :
                                     <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={resetFilter}>Reset Filter</Button>

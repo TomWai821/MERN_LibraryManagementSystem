@@ -25,6 +25,9 @@ const CreateDefinitionModal:FC<CreateModalInterface> = (createModalData) =>
     const type = value === 0 ? "Genre": "Language";
 
     const [definition, setDefinition] = useState({ genre: data?.genre ?? "", language: data?.language ?? "", shortName: data?.shortName ?? ""});
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errors, setErrors] = useState({ genre: "", language: "", shortName: ""});
+    const [helperTexts, setHelperText] = useState({genre: "", language: "", shortName: ""});
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
@@ -32,9 +35,30 @@ const CreateDefinitionModal:FC<CreateModalInterface> = (createModalData) =>
         setDefinition({...definition, [name]: value})
     }
 
-    const OpenConfirmModal = () => 
+    const openConfirmModal = () => 
     {
-       handleOpen(<CreateDefinitionConfirmModal value={value} data={definition}/>);
+        setIsSubmitted(true);
+        switch(value)
+        {
+            case 0:
+                if(definition.genre === "")
+                {
+                    setHelperText((prev) => ({...prev, genre : "Genre should not be null!"}));
+                    setErrors((prev) =>  ({...prev, genre : "Genre should not be null!"}));
+                    return;
+                }
+                break;
+
+            case 1:
+                if(definition.language === "")
+                {
+                    setHelperText((prev) => ({...prev, language : "Language should not be null!"}));
+                    setErrors((prev) =>  ({...prev, language : "Language should not be null!"}));
+                    return;
+                }
+                break;
+        }
+        handleOpen(<CreateDefinitionConfirmModal value={value} data={definition}/>);
     }
     
     return(
@@ -42,14 +66,16 @@ const CreateDefinitionModal:FC<CreateModalInterface> = (createModalData) =>
             <Box id="modal-description" sx={ModalBodySyntax}>
             {
                 value === 0 ?
-                <TextField label="Genre" name="genre" value={definition.genre} type="text" size="small" onChange={onChange}/>
+                <TextField label="Genre" name="genre" value={definition.genre} type="text" size="small" onChange={onChange}
+                    helperText={isSubmitted && helperTexts["genre"]} error={isSubmitted && errors["genre"] !== ""} />
                 :
-                <TextField label="Language" name="language" value={definition.language} type="text" size="small" onChange={onChange}/>
+                <TextField label="Language" name="language" value={definition.language} type="text" size="small" onChange={onChange}
+                    helperText={isSubmitted && helperTexts["language"]} error={isSubmitted && errors["language"] !== ""} />
             }
                 <TextField label="Short Name" name="shortName" value={definition.shortName} type="text" size="small" onChange={onChange}/>
             </Box>
             
-            <ModalConfirmButton clickEvent={OpenConfirmModal} name={"Create"} buttonType={""}/>
+            <ModalConfirmButton clickEvent={openConfirmModal} name={"Create"} buttonType={""}/>
         </ModalTemplate>
     );
 }

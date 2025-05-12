@@ -81,12 +81,10 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
                                 )
                             )
                         }
+                        <ExpandableTypography title={"Description"}>{description}</ExpandableTypography>
                     </Box>
-
-                    <ExpandableTypography title={"Description"}>{description}</ExpandableTypography>
-
                 </Box>
-                <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
+                <Typography sx={ModalRemarkSyntax}>Please ensure this information is correct</Typography>
             </Box>
 
             <Button variant="contained" onClick={CreateBook}>Yes</Button>

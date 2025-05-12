@@ -30,6 +30,8 @@ const SelfRecordPage = () =>
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
     const [searchData, setSearchData] = useState({bookname: "", status: "All", author: "All", publisher: "All", genre: "All", language: "All"});
+    const defaultValue = {bookname: "", status: "All", author: "All", publisher: "All", genre: "All", language: "All"};
+
     const SetTitle:string[] = ["Loan Book List", "Favourite Book List"];
 
     const changeValue = useCallback((type:string, newValue: number) =>
@@ -73,6 +75,21 @@ const SelfRecordPage = () =>
         setSearchData({...searchData, [name]: value});
     }
 
+    const resetFilter = () => 
+    {
+        switch(tabValue)
+        {
+            case 0:
+                fetchLoanBookWithFliterData("Self", "", "", "All");
+                break;
+
+            case 1:
+                fetchBookWithFliterData("Favourite", "", "All", "All", "All", "All", "All");
+                break;
+        }
+        setSearchData(defaultValue);
+    }
+
     useEffect(() => 
     {
         if(!IsLoggedIn())
@@ -85,7 +102,7 @@ const SelfRecordPage = () =>
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <TableTitle title={SetTitle[tabValue]} dataLength={BookRecordForUser[tabValue].length}/>
 
-            <RecordFilter value={tabValue} onChange={onChange} searchData={searchData} Search={search}/>
+            <RecordFilter value={tabValue} onChange={onChange} searchData={searchData} Search={search} resetFilter={resetFilter}/>
 
             <CustomTab value={tabValue} changeValue={changeValue} 
                 paginationValue={paginationValue} tabLabel={BookRecordTabLabel} paginationOption={PaginationOption} type={"Record"}/>

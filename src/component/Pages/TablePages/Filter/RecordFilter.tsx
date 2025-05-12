@@ -12,7 +12,7 @@ import OptionFields from "../../../Manager/OptionFieldsManager";
 
 const RecordFilter:FC<FilterInterface> = (filterData) => 
 {
-    const {value, searchData, onChange, Search} = filterData;
+    const {value, searchData, onChange, Search, resetFilter} = filterData;
     const Data = searchData as SelfLoanBookSearchInterface;
 
     const [optionVisiable, setOptionVisiable] = useState(false);
@@ -26,7 +26,7 @@ const RecordFilter:FC<FilterInterface> = (filterData) =>
         <Box sx={{ padding: '25px 15%' }}>
             <Box sx={{ ...ItemToCenter, paddingBottom: '25px', alignItems: 'center' }}>
                
-                <TextField label="Book Name" name="bookname" value={Data.bookname} onChange={onChange} size="small" sx={{ width: '55%', paddingRight: '10px' }}/>
+                <TextField label="Book Name" name="bookname" value={Data.bookname} onChange={onChange} size="small" sx={{ width: '50%', paddingRight: '10px' }}/>
                 {
                     value === 0 ?
                     <TextField label="Status" name="status" value={searchData.status} onChange={onChange} size="small" sx={{ width: '15%' }} select>
@@ -57,7 +57,9 @@ const RecordFilter:FC<FilterInterface> = (filterData) =>
                 }
                 
                 <Button variant='contained' sx={{marginLeft: '10px'}} onClick={Search}>Search</Button>
+                <Button variant='contained' sx={{marginLeft: '10px'}} onClick={resetFilter}>Reset Filter</Button>
             </Box>
+
 
             <OptionFields value={value} type={"Record"} optionVisiable={optionVisiable} onChange={onChange} searchData={searchData}/>
         </Box>

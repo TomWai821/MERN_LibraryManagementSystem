@@ -4,11 +4,13 @@ const localhost = process.env.REACT_APP_LOCAL_HOST;
 const url = `${localhost}/book/definition/`;
 const contentType = "application/json";
 
-export const GetDefinition = async (type:string) => 
+export const GetDefinition = async (type:string, data?:string) => 
 {
     try
     {
-        const response = await fetch(url+`type=${type}`,
+        const actualUrl = data ? url+`type=${type}?name=${data}` : url+`type=${type}`;
+
+        const response = await fetch(actualUrl,
             {
                 method: 'GET',
                 headers: { 'content-type': contentType }

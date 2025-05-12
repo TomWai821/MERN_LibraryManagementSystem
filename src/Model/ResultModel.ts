@@ -148,7 +148,6 @@ export interface ContactInterface
     _id:string;
     publisher?:string;
     author?:string;
-    address?:string;
     email:string;
     phoneNumber:string;
 }

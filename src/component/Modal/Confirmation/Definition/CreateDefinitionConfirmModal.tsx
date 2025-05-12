@@ -56,9 +56,12 @@ const CreateDefinitionConfirmModal:FC<CreateModalInterface> = (definationData) =
             <Box id="modal-description" sx={ModalBodySyntax}>
             <Typography sx={ModalSubTitleSyntax}>Do you want to create this {type}?</Typography>
                 {
-                    value === 0 ? <Typography>Genre: {Data.genre}</Typography>:<Typography>Language: {Data.language}</Typography>
+                    value === 0 ? 
+                    <Typography>Genre: {Data.genre !== "" ? Data.genre : "N/A"}</Typography>
+                    :
+                    <Typography>Language: {Data.language !== "" ? Data.language : "N/A"}</Typography>
                 }
-                <Typography>ShortName: {Data.shortName ?? "N/A"}</Typography>
+                <Typography>ShortName: {Data.shortName !== "" ? Data.shortName : "N/A"}</Typography>
                 <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
             </Box>
             

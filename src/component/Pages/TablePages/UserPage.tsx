@@ -26,6 +26,8 @@ const UserPage = () =>
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
 
+    const defaultValue = { username: "", email: "", role: "All", status: "All", gender: "All" };
+
     // useCallback could avoid unnecessary re-rendering
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
@@ -57,6 +59,13 @@ const UserPage = () =>
         }
     },[])
 
+    const resetFilter = () => 
+    {
+        const TableName = ["AllUser", "SuspendUser", "DeleteUser"];
+        fetchUser(TableName[tabValue], defaultValue);
+        setSearchUserData(defaultValue);
+    };
+
     useEffect(() => 
     { 
         if(!IsAdmin()) 
@@ -69,7 +78,7 @@ const UserPage = () =>
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <TableTitle title={SetTitle} dataLength={userData[tabValue].length}/>
 
-            <UserFilter value={tabValue} onChange={onChange} searchData={searchUserData} Search={SearchUser}/>
+            <UserFilter value={tabValue} onChange={onChange} searchData={searchUserData} Search={SearchUser} resetFilter={resetFilter}/>
 
             <CustomTab value={tabValue} changeValue={changeValue} paginationValue={paginationValue} tabLabel={UserTabLabel} paginationOption={PaginationOption} type={"User"}/>
 

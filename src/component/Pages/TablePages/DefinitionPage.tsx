@@ -1,16 +1,8 @@
-import { useEffect } from "react";
-import { Box, Chip, IconButton, Tooltip, Typography } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { Box, Tab, Tabs } from "@mui/material";
 
 // Context
 import { useDefinitionContext } from "../../../Context/Book/DefinitionContext";
-import { useModal } from "../../../Context/ModalContext";
-
-// Modals
-import CreateDefinitionModal from "../../Modal/Definition/CreateDefinitionModal";
-import EditGenreDataModal from "../../Modal/Definition/EditGenreDataModal";
-import EditLanguageDataModal from "../../Modal/Definition/EditLanguageDataModal";
-import DeleteDefinitionConfirmModal from "../../Modal/Confirmation/Definition/DeleteDefinitionConfirmModal";
 
 // Useful function
 import { ChangePage } from "../../../Controller/OtherController";
@@ -18,38 +10,65 @@ import { ChangePage } from "../../../Controller/OtherController";
 // data (CSS Syntax)
 import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects";
 
-import TableTitle from "../../UIFragment/TableTitle";
 import { useAuthContext } from "../../../Context/User/AuthContext";
+
+import { TabProps } from "../../../Controller/OtherUsefulController";
+import { DefinitionTabLabel } from "../../../ArraysAndObjects/TableArrays";
+import TableTitle from "../../UIFragment/TableTitle";
+import DefinitionFilter from "./Filter/DefinitionFilter";
+import ChipBody from "../../Templates/ChipBodyTemplate";
+import CustomTabPanel from "../../UIFragment/CustomTabPanel";
 
 const DefinitionPage  = () => 
 {
     const {IsAdmin} = useAuthContext();
-    const {definition} = useDefinitionContext();
-    const {handleOpen} = useModal();
+    const {definition, fetchDefinitionDataWithFilterData} = useDefinitionContext();
 
-    const openCreateModal = (value: number) => 
+    const [searchData, setSearchData] = useState({genre:"", language: ""});
+    const [tabValue, setTabValue] = useState(0);
+
+    const defaultValue = {genre:"", language: ""};
+
+    const Title = tabValue === 0 ? "Genre" : "Language";
+
+    const changeValue = useCallback((event: React.SyntheticEvent, newValue: number) =>
     {
-        handleOpen(<CreateDefinitionModal value={value} />);
+        setTabValue(newValue);
+    },[])
+
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => 
+    {
+        const {name, value} = event.target;
+        setSearchData({...searchData, [name]: value});
     }
 
-    const openEditModel = (type: string, data: any) => 
+    const SearchDefinition = () => 
     {
-        switch(type)
+        switch(tabValue)
         {
-            case "Genre":
-                handleOpen(<EditGenreDataModal value={0} editData={data} compareData={data}/>);
+            case 0:
+                fetchDefinitionDataWithFilterData("Genre", searchData.genre);
                 break;
-
-            case "Language":
-                handleOpen(<EditLanguageDataModal value={1} editData={data} compareData={data}/>);
+            
+            case 1:
+                fetchDefinitionDataWithFilterData("Language", searchData.language);
                 break;
         }
-
     }
 
-    const handleDelete = (type:string, data:any) =>
+    const resetFilter = () => 
     {
-        handleOpen(<DeleteDefinitionConfirmModal _id={data._id} type={type} data={data}/>);
+        switch(tabValue)
+        {
+            case 0:
+                fetchDefinitionDataWithFilterData("Genre", "");
+                break;
+            
+            case 1:
+                fetchDefinitionDataWithFilterData("Language", "");
+                break;
+        }
+        setSearchData(defaultValue);
     }
 
     useEffect(() => 
@@ -62,37 +81,27 @@ const DefinitionPage  = () =>
 
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
-            <Typography sx={{fontSize: '24px'}}>Manage Definition</Typography>
 
-            <Box sx={{ paddingTop: '50px', minHeight: '100px' }}>
-            <TableTitle title={"Genre"} dataLength={definition.Genre.length}/>
-                {   definition.Genre.map((genreData, index) => 
+            <TableTitle title={`Manage ${Title} Record`} dataLength={definition[Title].length}/>
+
+            <DefinitionFilter searchData={searchData} value={tabValue} onChange={onChange} Search={SearchDefinition} resetFilter={resetFilter}/>
+
+            <Tabs value={tabValue} onChange={changeValue} sx={{paddingBottom: '50px', width: '500px'}}>
+                {
+                    DefinitionTabLabel.map((tab, index) => 
                     (
-                        <Chip sx={{marginRight: '10px'}} key={index} label={`${genreData.genre} (${genreData.shortName})`} variant="outlined" 
-                            onClick={() => openEditModel("Genre", genreData)} onDelete={() => handleDelete("Genre", genreData)}/>
+                        <Tab key={index} label={tab.label} {...TabProps(index)}/>
                     ))
                 }
-                <Tooltip title={"Create Genre Definition Data"}>
-                    <IconButton onClick={() => openCreateModal(0)}>
-                        <AddIcon/>
-                    </IconButton>
-                </Tooltip>
-            </Box>
+            </Tabs>
+            
+            <CustomTabPanel index={tabValue} value={0}>
+                <ChipBody value={tabValue} title={Title} data={definition.Genre}/>
+            </CustomTabPanel>
 
-            <Box sx={{ paddingTop: '50px', minHeight: '100px' }}>
-                <TableTitle title={"Language"} dataLength={definition.Language.length}/>
-                {   definition.Language.map((languageData, index) => 
-                    (
-                        <Chip sx={{marginRight: '10px'}} key={index} label={`${languageData.language} (${languageData.shortName})`} variant="outlined" 
-                            onClick={() => openEditModel("Language", languageData)} onDelete={() => handleDelete("Language", languageData)}/>
-                    ))
-                }
-                <Tooltip title={"Create Language Definition Data"}>
-                    <IconButton onClick={() => openCreateModal(1)}>
-                        <AddIcon/>
-                    </IconButton>
-                </Tooltip>
-            </Box>
+            <CustomTabPanel index={tabValue} value={1}>
+                <ChipBody value={tabValue} title={Title} data={definition.Language}/>
+            </CustomTabPanel>
         </Box>
     );
 }

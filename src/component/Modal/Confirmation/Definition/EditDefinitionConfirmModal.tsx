@@ -14,8 +14,7 @@ import { useModal } from "../../../../Context/ModalContext";
 import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext";
 
 // Another Modals
-import EditGenreDataModal from "../../Definition/EditGenreDataModal";
-import EditLanguageDataModal from "../../Definition/EditLanguageDataModal";
+import EditDefinitionModal from "../../Definition/EditDefinitionModal";
 
 // useful Array/Objects(Data)
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
@@ -31,16 +30,7 @@ const EditDefinitionConfirmModal:FC<EditModalInterface>  = (data) =>
 
     const returnEditDefinitionModal = () => 
     {
-        switch(value)
-        {
-            case 0:
-                handleOpen(<EditGenreDataModal editData={editData} compareData={compareData}/>);
-                break;
-
-            case 1:
-                handleOpen(<EditLanguageDataModal editData={editData} compareData={compareData}/>);
-                break;
-        }
+        handleOpen(<EditDefinitionModal value={value} editData={editData} compareData={compareData}/>);
     }
 
     const editDefinitionAction = () => 
@@ -92,7 +82,7 @@ const EditDefinitionConfirmModal:FC<EditModalInterface>  = (data) =>
                    <Typography>- "No Change detected"</Typography>
                 }
 
-                <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
+                <Typography sx={ModalRemarkSyntax}>Please ensure this information is correct</Typography>
             </Box>
             
             <ModalConfirmButton clickEvent={editDefinitionAction} name={"Yes"} buttonType={""}/>

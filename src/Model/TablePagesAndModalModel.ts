@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { BookDataInterface, ContactInterface, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
+import { BookDataInterface, ContactInterface, DefinitionInterface, LoanBookInterface, UserResultDataInterface } from "./ResultModel";
 import { UserDataInterface } from "./UserTableModel";
 import { BookTableDataInterface, BookSearchInterface, SelfLoanBookSearchInterface, ContactSearchInterface } from "./BookTableModel"
 
@@ -8,18 +8,22 @@ interface AllFilterInterface
     value:number;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     Search: () => void;
+    resetFilter?:() => void;
 }
 
 export interface FilterInterface extends AllFilterInterface
 {
-    searchData: UserDataInterface | BookSearchInterface | SelfLoanBookSearchInterface;
-    isLoggedIn?:boolean;
-    resetFilter?:() => void;
+    searchData: UserDataInterface | BookSearchInterface | SelfLoanBookSearchInterface ;
 }
 
 export interface ContactFilterInterface extends AllFilterInterface
 {
     searchData: ContactSearchInterface;
+}
+
+export interface DefinitionFilterInterface extends AllFilterInterface
+{
+    searchData: {genre:string, language: string};
 }
 
 export interface UserActionTableCellInterface

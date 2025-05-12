@@ -78,8 +78,18 @@ const BookPage= () =>
 
     const resetFilter = () => 
     {
+        switch(tabValue)
+        {
+            case 0:
+                fetchBookWithFliterData("All", "", "All", "All", "All", "All", "All");
+                break;
+
+            case 1:
+                fetchLoanBookWithFliterData("AllUser", "", "All", "All", "All");
+                break;
+        }
         setSearchBook(defaultValue);
-    }
+    };
 
     useEffect(() => 
         { 
@@ -97,7 +107,7 @@ const BookPage= () =>
             <BookFilter value={tabValue} onChange={onChange} searchData={searchBook} Search={SearchBook} resetFilter={resetFilter}/>
 
             <CustomTab value={tabValue} changeValue={changeValue} paginationValue={paginationValue} tabLabel={BookTabLabel}
-                 paginationOption={PaginationOption} type={"Book"}/>
+                paginationOption={PaginationOption} type={"Book"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
                 <BookTabPanel value={tabValue} bookData={bookData} paginationValue={paginationValue} changeValue={changeValue} setSearchBook={setSearchBook} searchBook={searchBook}/>

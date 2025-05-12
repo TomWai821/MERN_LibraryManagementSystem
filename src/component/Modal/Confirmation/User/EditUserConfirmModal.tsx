@@ -133,7 +133,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
                 <Typography sx={ModalSubTitleSyntax}>Do you want to edit this User record?</Typography>
                 <Typography sx={ModalRemarkSyntax}>Changes:</Typography>
                 {differences}
-                <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
+                <Typography sx={ModalRemarkSyntax}>Please ensure this information is correct</Typography>
             </Box>
             
             <ModalConfirmButton clickEvent={EditUserAction} name={"Yes"} buttonType={""}/>

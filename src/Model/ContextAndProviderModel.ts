@@ -83,6 +83,7 @@ export interface DefinatonProps
 {
     definition: DefinitionState;
     fetchAllDefinition: () => Promise<void>;
+    fetchDefinitionDataWithFilterData:(type:string, data:string) => Promise<void>;
     createDefinition:(type:string, shortName:string, detailsName:string) => void;
     editDefinition:(type:string, id:string, shortName:string, detailsName:string) => void;
     deleteDefinition:(type:string, id:string) => void;

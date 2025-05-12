@@ -33,4 +33,11 @@ interface UserDataTableInterface
     paginationValue: number;
 }
 
-export type {UserDataInterface, FindUserInterface, CreateUserInterface, UserDataTableInterface}
+interface ChipBodyInterface
+{
+    value:number;
+    title:string; 
+    data:any[]; 
+}
+
+export type {UserDataInterface, FindUserInterface, CreateUserInterface, UserDataTableInterface, ChipBodyInterface}

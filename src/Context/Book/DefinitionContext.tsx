@@ -34,6 +34,26 @@ export const DefinitionProvider:FC<ChildProps> = ({children}) =>
     }
     ,[])
 
+    const fetchDefinitionDataWithFilterData = useCallback(async (type:string, data?:string) => 
+    {
+        const getData: GetResultInterface | undefined = await GetDefinition(type, data);
+    
+        if(getData && Array.isArray(getData.foundDefinition as DefinitionInterface[]))
+        {
+            switch(type)
+            {
+                case "Genre":
+                    setDefinition((prev) => ({...prev, Genre:getData.foundDefinition as DefinitionInterface[]}));
+                    break;
+    
+                case "Language":
+                    setDefinition((prev) => ({...prev, Language:getData.foundDefinition as DefinitionInterface[]}));
+                    break;
+            }
+        }
+    }
+    ,[])
+
     const createDefinition = useCallback(async (type:string, shortName:string, detailsName:string) => 
     {
         const createDefinitionData = await CreateDefinitionData(type, authToken, shortName, detailsName);
@@ -74,7 +94,7 @@ export const DefinitionProvider:FC<ChildProps> = ({children}) =>
     ,[fetchAllDefinition])
 
     return (
-        <DefinitionContext.Provider value={{ definition, fetchAllDefinition, createDefinition, editDefinition, deleteDefinition}}>
+        <DefinitionContext.Provider value={{ definition, fetchAllDefinition, fetchDefinitionDataWithFilterData, createDefinition, editDefinition, deleteDefinition}}>
             {children}
         </DefinitionContext.Provider>
     );

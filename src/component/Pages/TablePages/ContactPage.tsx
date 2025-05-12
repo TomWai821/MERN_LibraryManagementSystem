@@ -23,9 +23,10 @@ const ContactPage= () =>
     const [paginationValue, setPaginationValue] = useState(10);
     const [tabValue, setTabValue] = useState(0);
 
+    const defaultValue = {author: "", publisher: ""};
     const Title = ["Manage Author Record", "Manager Publisher Record"];
 
-    const countLength = useCallback(()=> 
+    const countLength = ()=> 
     {
         switch(tabValue)
         {
@@ -35,7 +36,7 @@ const ContactPage= () =>
             case 1:
                 return contact.Publisher.length;
         }
-    },[])
+    }
 
     const changeValue = useCallback((type:string, newValue: number) =>
     {
@@ -66,6 +67,13 @@ const ContactPage= () =>
         fetchContactDataWithFilterData(title[tabValue], searchContact.author, searchContact.publisher);
     }
 
+    const resetFilter = () => 
+    {
+        const title = ["Author", "Publisher"];
+        fetchContactDataWithFilterData(title[tabValue], "", "");
+        setSearchContact(defaultValue);
+    }
+
     useEffect(() => 
     {
         if(!IsAdmin())
@@ -78,7 +86,7 @@ const ContactPage= () =>
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
             <TableTitle title={Title[tabValue]} dataLength={countLength() as number}/>
 
-            <ContactFilter value={tabValue} onChange={onChange} searchData={searchContact} Search={SearchContact}/>
+            <ContactFilter value={tabValue} onChange={onChange} searchData={searchContact} Search={SearchContact} resetFilter={resetFilter}/>
 
             <CustomTab value={tabValue} changeValue={changeValue} 
                 paginationValue={paginationValue} tabLabel={ContactTabLabel} paginationOption={PaginationOption} type={"Contact"}/>

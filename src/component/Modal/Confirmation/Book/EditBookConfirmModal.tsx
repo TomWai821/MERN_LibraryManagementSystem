@@ -119,7 +119,7 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
                     )
                 } 
                 {differences}
-                <Typography sx={ModalRemarkSyntax}>Please ensure these information are correct</Typography>
+                <Typography sx={ModalRemarkSyntax}>Please ensure this information is correct</Typography>
             </Box>
             <Button variant='contained' onClick={editBookData}>Yes</Button>
         </ModalTemplate>

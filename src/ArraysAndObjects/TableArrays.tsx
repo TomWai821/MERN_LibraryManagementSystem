@@ -142,6 +142,12 @@ const ContactTabLabel =
     {label:"publisher List"},
 ]
 
+const DefinitionTabLabel =
+[
+    {label: "Genre Data"},
+    {label: "Language Data"}
+]
+
 const UserDataTableName = ["AllUser", "SuspendUser"];
 
 const PaginationOption = [10, 20, 50, 100];
@@ -166,4 +172,4 @@ const FinesPaidStatusOption = ["Not Fine Needed", "Paid", "Not Paid", "All"]
 
 const AllBookStatusOption = ["OnShelf", "Loaned", "All"];
 
-export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, PublisherTableHeader, AuthorTableHeader, BookTabLabel, BookDataTabLabel, UserTabLabel, LoanBookModalTabLabel, BookRecordTabLabel, ContactTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption, FinesPaidStatusOption, AllBookStatusOption}
+export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, PublisherTableHeader, AuthorTableHeader, BookTabLabel, BookDataTabLabel, UserTabLabel, LoanBookModalTabLabel, BookRecordTabLabel, ContactTabLabel, DefinitionTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption, FinesPaidStatusOption, AllBookStatusOption}

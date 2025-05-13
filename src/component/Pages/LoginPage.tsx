@@ -59,7 +59,6 @@ const LoginPage = () =>
         } 
     };
     
-
     const handleLogin = async (event: FormEvent) => 
     {
         event.preventDefault();

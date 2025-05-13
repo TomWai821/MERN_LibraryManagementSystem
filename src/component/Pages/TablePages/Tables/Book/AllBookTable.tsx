@@ -50,7 +50,8 @@ const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                     <TableRow>
                         {AllBookTableHeader.map((header, index) =>
                             (
-                                (header.isLoggedIn && !IsLoggedIn()) ? null : <TableCell sx={{fontSize: '16px'}} key={index}>{header.label}</TableCell>
+                                (header.isLoggedIn && !IsLoggedIn()) ? null : 
+                                <TableCell sx={{fontSize: '16px'}} key={index}>{header.label}</TableCell>
                             ) 
                         )}  
                     </TableRow>

@@ -22,7 +22,7 @@ export const FetchUserData = async(tableName?: string, authToken?:string,  usern
         let queryParams = BuildQuery({username, email, role, status, gender, startDate, dueDate});
 
         const queryString = queryParams.toString();
-        const URL = `${url}/userData/tableName=${queryString ? `${tableName}?${queryString}` : `${tableName}`}`;
+        const URL = tableName === undefined ? `${url}/UserData` : `${url}/userData/tableName=${queryString ? `${tableName}?${queryString}` : `${tableName}`}`;
 
         const response = await fetch(URL,
             {

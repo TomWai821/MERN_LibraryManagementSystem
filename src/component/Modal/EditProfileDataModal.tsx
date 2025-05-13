@@ -3,30 +3,23 @@ import { Box, Button, FormControl, MenuItem, TextField } from "@mui/material";
 
 import ModalTemplate from "../Templates/ModalTemplate";
 import { displayAsColumn } from "../../ArraysAndObjects/FormatSyntaxObjects";
-import { EditProfileInterface } from "../../Model/TablePagesAndModalModel";
 import { DataValidateField } from "../../Controller/ValidateController";
 import { useAuthContext } from "../../Context/User/AuthContext";
 import { AlertContext } from "../../Context/AlertContext";
 import { useModal } from "../../Context/ModalContext";
 import { GetResultInterface } from "../../Model/ResultModel";
 
-const EditProfileDataModal:FC<EditProfileInterface> = (EditProfileData) => 
+const EditProfileDataModal = () => 
 {
-
-    const {type, editData} = EditProfileData;
     const {GetData} = useAuthContext();
     const {handleClose} = useModal();
     const alertContext = useContext(AlertContext);
     
     const url = process.env.REACT_APP_LOCAL_HOST;
 
-    const [option, setOption] = useState(type ?? "username");
+    const [option, setOption] = useState("username");
     const [editedData, setEditData] = useState(
-    {
-        username: (editData as { username?: string; password?: string })?.username ?? "",
-        password: (editData as { username?: string; password?: string })?.password ?? "",
-        confirmPassword: ""
-    });
+    { username: "",password: "",confirmPassword: "" });
 
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errors, setErrors] = useState({email: "", password: "", confirmPassword: ""});

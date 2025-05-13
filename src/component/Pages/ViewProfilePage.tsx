@@ -66,7 +66,7 @@ const ViewProfilePage = () =>
 
     const editUserData = () => 
     {
-        handleOpen(<EditProfileDataModal type={"username"}/>);
+        handleOpen(<EditProfileDataModal/>);
     }
 
     const displayQRCode = () => 

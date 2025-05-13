@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { AuthRequest, CreateUserInterface } from '../model/requestInterface';
-import { jwtSign, bcryptHash } from './hashing'
+import { jwtSign, bcryptHash, comparePassword } from './hashing'
 import { UserInterface } from '../model/userSchemaInterface';
-import { CreateUser, FindUserByIDAndDelete, FindUserByIDAndUpdate } from '../schema/user/user';
+import { CreateUser, FindUser, FindUserByIDAndDelete, FindUserByIDAndUpdate } from '../schema/user/user';
 
 import { ObjectId } from 'mongoose';
 import { CreateStatusList } from './middleware/User/userUpdateDataMiddleware';
@@ -77,6 +77,21 @@ export const GetUserData = async (req: AuthRequest, res: Response) =>
     }
 };
 
+export const GetSelfUserData = async (req: AuthRequest, res: Response) =>
+{
+    const userId = req.user;
+
+    try 
+    {
+        const foundUser = await FindUser({_id: userId});
+        res.send({ success: true, foundUser });
+    } 
+    catch (error) 
+    {
+        res.status(500).json({ success: false, error: "Internal Server Error!" });
+    }
+};
+
 export const ChangeUserData = async (req: AuthRequest, res: Response) => 
 {
     const foundUser = req.foundUser as UserInterface;
@@ -100,6 +115,59 @@ export const ChangeUserData = async (req: AuthRequest, res: Response) =>
         res.status(500).json({ success, error: "Internal Server Error!" });
     }
 };
+
+export const UpdateUserData = async (req:AuthRequest, res:Response) => 
+{
+    const {username, password} = req.body;
+    const {type} = req.params;
+    const userId = req.user;
+    let updateData;
+    let success = false;
+
+    try
+    {
+        switch(type)
+        {
+            case "username":
+                const GetUserName = await FindUser({username: username});
+
+                if(GetUserName)
+                {
+                    return res.status(400).json({ success, error: "The user with this username are already exist!" });
+                }
+
+                updateData = await FindUserByIDAndUpdate(userId as unknown as ObjectId, {username: username});
+                break;
+
+            case "password":
+                const GetUserData = await FindUser({_id: userId}) as UserInterface;
+                const match = await comparePassword(password, GetUserData.password);
+                if(match)
+                {
+                    return res.status(400).json({ success, error: "New password cannot be the same as the old password!" });
+                }
+
+                const hashedPassword = await bcryptHash(password);
+                updateData = await FindUserByIDAndUpdate(userId as unknown as ObjectId, {password: hashedPassword})
+                break;
+
+            default:
+                return res.status(400).json({ success, error: `Invalid Update type: ${type} !` });
+        }
+
+        if(!updateData)
+        {
+            return res.status(400).json({ success, error: `Failed to update ${type}!` });
+        }
+       
+        success = true;
+        res.json({ success, message: `${type} data update successfully!` });
+    }
+    catch(error)
+    {
+        res.status(500).json({ success, error: "Internal Server Error!" });
+    }
+}
 
 export const ChangeStatus = async (req:AuthRequest, res:Response) => 
 {

@@ -48,15 +48,15 @@ const DeleteUserTableHeader =
 // Table Cell Header for Book tables
 const AllBookTableHeader = 
 [
-    {label:"No.", isLoggedIn: false},
-    {label:"Image", isLoggedIn: false},
-    {label:"BookName", isLoggedIn: false},
-    {label:"Genre", isLoggedIn: false},
-    {label:"Language", isLoggedIn: false},
-    {label:"Author", isLoggedIn: false},
-    {label:"Publisher", isLoggedIn: false},
-    {label:"Status", isLoggedIn: true},
-    {label:"Actions", isLoggedIn: true}
+    {label:"No.", isLoggedIn: false, hasSortLabel: false},
+    {label:"Image", isLoggedIn: false, hasSortLabel: false},
+    {label:"BookName", isLoggedIn: false, hasSortLabel: true},
+    {label:"Genre", isLoggedIn: false, hasSortLabel: true},
+    {label:"Language", isLoggedIn: false, hasSortLabel: true},
+    {label:"Author", isLoggedIn: false, hasSortLabel: true},
+    {label:"Publisher", isLoggedIn: false, hasSortLabel: true},
+    {label:"Status", isLoggedIn: true, hasSortLabel: true},
+    {label:"Actions", isLoggedIn: true, hasSortLabel: false}
 ]
 
 const LoanBookTableHeader = 

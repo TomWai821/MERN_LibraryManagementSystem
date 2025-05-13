@@ -11,7 +11,8 @@ export interface NavSyntaxInterface
     transition?: string;
     bgcolor?: string;
     color?: string;
-    '&:hover'?: {
+    '&:hover'?: 
+    {
         color: string;
     };
 }

@@ -18,6 +18,8 @@ export interface RegisterDataInterface
 export interface GetResultInterface
 {
     success:boolean;
+    message?: string;
+    error?:string;
     authtoken?:string;
     foundUser?: UserResultDataInterface | UserResultDataInterface[];
     foundBook?: BookDataInterface | BookDataInterface[];

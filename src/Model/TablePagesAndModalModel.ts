@@ -71,3 +71,8 @@ export interface TableTitleInterface
     dataLength:number;
 }
 
+export interface EditProfileInterface
+{
+    type: string;
+    editData?: { username: string, password:string };
+}

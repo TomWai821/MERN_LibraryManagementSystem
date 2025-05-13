@@ -17,12 +17,15 @@ import { GetUserCookie } from '../../Controller/CookieController'
 import { displayAsColumn, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../ArraysAndObjects/FormatSyntaxObjects';
 import { ViewProfileField } from '../../ArraysAndObjects/TextFieldsArrays';
 import DisplayQRCodeModal from '../Modal/DisplayQRCodeModal'
+import EditProfileDataModal from '../Modal/EditProfileDataModal'
+import { useAuthContext } from '../../Context/User/AuthContext'
 
 const ViewProfilePage = () => 
 {
     const [Credentials, setCredentials] = useState<ViewProfileModel>({ email: "", gender: "", username: "", role: ""});
     const {handleOpen} = useModal();
-    const authToken = GetUserCookie("authToken") || sessionStorage.getItem("authToken");
+    const {GetData} = useAuthContext();
+    const authToken = GetData("authToken");
 
     const fetchUser = async () => 
     {
@@ -30,10 +33,11 @@ const ViewProfilePage = () =>
         {
             try
             {
-                const userData = await FetchUserData(authToken);
+                const userData = await FetchUserData(undefined, authToken);
 
                 if (userData) 
                 {
+                    console.log(userData);
                     updateCredentials(userData);
                 }
             } 
@@ -42,6 +46,7 @@ const ViewProfilePage = () =>
                 console.log('Error while fetching user', error);
             }
         }
+
     };
 
     const updateCredentials = (userData: GetResultInterface) =>
@@ -59,7 +64,12 @@ const ViewProfilePage = () =>
         );
     }
 
-    const onSubmit = () => 
+    const editUserData = () => 
+    {
+        handleOpen(<EditProfileDataModal type={"username"}/>);
+    }
+
+    const displayQRCode = () => 
     {
         handleOpen(<DisplayQRCodeModal username={Credentials.username} authToken={authToken as string}/>)
     }
@@ -88,7 +98,8 @@ const ViewProfilePage = () =>
                     </Box>
 
                     <Box sx={{...PageItemToCenter, flexDirection: 'column', alignItems: 'center', mt: ViewProfileButton.marginTop}}>
-                        <Button variant='contained' sx={{...ViewProfileButton}} onClick={onSubmit}>Display QR Code</Button>
+                        <Button variant='contained' sx={{...ViewProfileButton}} onClick={displayQRCode}>Display QR Code</Button>
+                        <Button variant='contained' sx={{...ViewProfileButton}} onClick={editUserData}>Edit Data</Button>
                     </Box>
                 </CardContent>
             </Card>

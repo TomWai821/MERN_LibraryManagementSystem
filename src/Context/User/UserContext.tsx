@@ -85,11 +85,14 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
             if(result)
             {
                 fetchAllUser();
+                return true;
             }
+            return false;
         }
         catch(error)
         {
             console.log(error);
+            return false;
         }
     },[fetchAllUser])
 
@@ -102,11 +105,14 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
             if(result)
             {
                 fetchAllUser();
+                return true;
             }
+            return false;
         }
         catch(error)
         {
             console.log(error);
+            return false;
         }
     },[fetchAllUser])
     
@@ -119,11 +125,14 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
             if(result)
             {
                 fetchAllUser();
+                return true;
             }
+            return false;
         }
         catch(error)
         {
             console.log(error);
+            return false;
         }
     },[fetchAllUser])
 
@@ -152,11 +161,14 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
             if(result)
             {
                 fetchAllUser();
+                return true;
             }
+            return false;
         }
         catch(error)
         {
             console.log(error);
+            return false;
         }
     },[fetchAllUser]);
 
@@ -168,11 +180,14 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
             if(result)
             {
                 fetchAllUser();
+                return true;
             }
+            return false;
         }
         catch(error)
         {
             console.log(error);
+            return false;
         }
     },[fetchAllUser]);
     

@@ -1,4 +1,4 @@
-import { FC, JSX, useEffect, useState } from "react"
+import { FC, JSX, useContext, useEffect, useState } from "react"
 import { Avatar, Box, Button, Typography } from "@mui/material";
 
 // Template
@@ -24,6 +24,7 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { useContactContext } from "../../../../Context/Book/ContactContext";
 import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext";
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {  
@@ -31,6 +32,7 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
     const {editBook} = useBookContext();
     const {contact} = useContactContext();
     const {definition} = useDefinitionContext();
+    const alertContext = useContext(AlertContext);
 
     const {value, editData, compareData} = editModalData;
 
@@ -82,14 +84,27 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
         handleOpen(<EditBookModal value={value} editData={EditData} compareData={CompareData} />);
     }
     
-    const editBookData = () => 
+    const editBookData = async () => 
     {
         const genreID = definition.Genre.find((genreData) => genreData.genre === EditData.genre)?._id as string;
         const langaugeID = definition.Language.find((languageData) => languageData.language === EditData.language)?._id as string;
         const publisherID = contact.Publisher.find((publisherData) => publisherData.publisher === EditData.publisher)?._id as string;
         const authorID = contact.Author.find((authorData) => authorData.author === EditData.author)?._id as string;
-        editBook(EditData._id, CompareData.filename, EditData.image as File, EditData.bookname, genreID, langaugeID, publisherID, EditData.publishDate as string, authorID, EditData.description);
-        handleClose();
+
+        const response = editBook(EditData._id, CompareData.filename, EditData.image as File, EditData.bookname, genreID, langaugeID, publisherID, EditData.publishDate as string, authorID, EditData.description);
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: "Edit book record successfully!", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Edit book record! Please try again later", open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     useEffect(() => 

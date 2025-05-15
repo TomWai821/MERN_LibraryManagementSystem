@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, Fragment, useState } from "react";
+import { ChangeEvent, FC, Fragment, useContext, useState } from "react";
 import { Avatar, Box, Button, MenuItem, TextField, Typography } from "@mui/material";
 
 import { BookImageFormat, displayAsRow, ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
@@ -12,6 +12,7 @@ import { LoanBookInterface } from "../../../../Model/ResultModel";
 import { useBookContext } from "../../../../Context/Book/BookContext";
 import { useModal } from "../../../../Context/ModalContext";
 import { useAuthContext } from "../../../../Context/User/AuthContext";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 const ReturnBookConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) => 
 {
@@ -19,6 +20,7 @@ const ReturnBookConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) =>
     const {IsAdmin} = useAuthContext();
     const {handleClose} = useModal();
     const {returnBook} = useBookContext();
+    const alertContext = useContext(AlertContext);
 
     const [finesPaid, setFinesPaid] = useState<string>("Not Paid");
 
@@ -26,10 +28,22 @@ const ReturnBookConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) =>
 
     const CalculateLateReturn = countLateReturn(Data.dueDate as string , data.returnDate as string) as number;
 
-    const ReturnBook = () => 
+    const ReturnBook = async () => 
     {
-        CalculateLateReturn > 0 ?  returnBook(data._id, calculateFineAmount(Data.dueDate as string , data.returnDate as string), finesPaid) : returnBook(Data._id);
-        handleClose();
+        const response =  CalculateLateReturn > 0 ?  returnBook(data._id, calculateFineAmount(Data.dueDate as string , data.returnDate as string), finesPaid) : returnBook(Data._id);
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: "Return Book successfully!", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Return book! Please try again later", open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     const modifyFinesPaid = (event:ChangeEvent<HTMLInputElement>) => 

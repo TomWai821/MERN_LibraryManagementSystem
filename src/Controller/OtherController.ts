@@ -1,12 +1,12 @@
 const MillionSecondsToDay = 1000 * 60 * 60 * 24;
 
-const ChangePage = (location: string) => 
+export const ChangePage = (location: string) => 
 {
     window.location.href = location;
 }
 
 
-const GetCurrentDate = (type:string): Date | string => 
+export const GetCurrentDate = (type:string): Date | string => 
 { 
     const date = new Date();
 
@@ -23,7 +23,7 @@ const GetCurrentDate = (type:string): Date | string =>
     }
 }
 
-const CalculateDueDate = (duration:number): Date => 
+export const CalculateDueDate = (duration:number): Date => 
 {
     const currentDate = new Date();
     let dueDate = new Date(currentDate);
@@ -32,7 +32,7 @@ const CalculateDueDate = (duration:number): Date =>
     return dueDate;
 }
 
-const TransferDateToISOString = (date: Date | string): string => 
+export const TransferDateToISOString = (date: Date | string): string => 
 {
     if (date instanceof Date) 
     {
@@ -49,14 +49,14 @@ const TransferDateToISOString = (date: Date | string): string =>
     return "Invalid Date";
 };
 
-const TransferDateToString = (date: Date | undefined):string => 
+export const TransferDateToString = (date: Date | undefined):string => 
 {
 
     if (!date) return "N/A";
     return new Date(date).toLocaleDateString('en-US'); 
 }
 
-const CalculateDuration = (startDate:Date, dueDate: Date | string) => 
+export const CalculateDuration = (startDate:Date, dueDate: Date | string) => 
 {
     if(dueDate === "N/A")
     {
@@ -72,7 +72,7 @@ const CalculateDuration = (startDate:Date, dueDate: Date | string) =>
     return days.toLocaleString('en-US') + " Days";
 }
 
-const CountDuration = (dueDate: Date | string) => 
+export const CountDuration = (dueDate: Date | string) => 
 {
     if(dueDate === "N/A")
     {
@@ -93,7 +93,7 @@ const CountDuration = (dueDate: Date | string) =>
     return days.toLocaleString('en-US') + " Days ";
 }
 
-const countLateReturn = (dueDate: Date | string, returnDate: string): number => 
+export const countLateReturn = (dueDate: Date | string, returnDate: string): number => 
 {
     const due = new Date(dueDate);
     const actualReturn = new Date(returnDate);
@@ -107,7 +107,7 @@ const countLateReturn = (dueDate: Date | string, returnDate: string): number =>
     return 0;
 };
 
-const calculateFineAmount = (dueDate: string, returnDate: string): number => 
+export const calculateFineAmount = (dueDate: string, returnDate: string): number => 
 {
     const lateDays = countLateReturn(dueDate, returnDate);
     const finePerDay = 1.5;
@@ -116,10 +116,8 @@ const calculateFineAmount = (dueDate: string, returnDate: string): number =>
     return lateDays * finePerDay > 130 ? 130 : lateDays * finePerDay;
 };
 
-const isExpired = (returnDate:Date, dueDate: Date): boolean => 
+export const isExpired = (returnDate:Date, dueDate: Date): boolean => 
 {
 
     return new Date(returnDate) > new Date(dueDate);
 };
-
-export {ChangePage, GetCurrentDate, CalculateDueDate, TransferDateToISOString, TransferDateToString, CalculateDuration, CountDuration, countLateReturn, calculateFineAmount, isExpired}

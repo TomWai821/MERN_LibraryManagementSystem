@@ -2,7 +2,7 @@ import { LoanBookInterface, ResultInterface } from '../Model/ResultModel';
 import { SetUserCookie } from './CookieController'
 
 // For Register/Login
-const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =>
+export const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =>
 {
     const userData = result.data;
     if(userData)
@@ -21,7 +21,7 @@ const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =>
 }
 
 // For user status detect in Action TableCell for Admin
-const StatusDetectionForAllUser = (status: string) => 
+export  const StatusDetectionForAllUser = (status: string) => 
 {
     const isNormal = status === "Normal";
 
@@ -31,7 +31,7 @@ const StatusDetectionForAllUser = (status: string) =>
     }
 }
 
-const StatusDetectionForBook = (status:string, value:string) =>
+export const StatusDetectionForBook = (status:string, value:string) =>
 {
     return status === value;
 }
@@ -78,7 +78,7 @@ const countAttributes = (books: LoanBookInterface[]): SuggestionData  =>
 };
 
 */
-const DisableValidationForLoanBook = (Information: LoanBookInterface) => 
+export const DisableValidationForLoanBook = (Information: LoanBookInterface) => 
 {
     const returnedStatus = ["Returned", "Returned(Late)"];
     const status = Information.status || Information.bookDetails?.status;
@@ -86,12 +86,10 @@ const DisableValidationForLoanBook = (Information: LoanBookInterface) =>
     return result;
 }
 
-const TabProps = (index: number) =>
+export const TabProps = (index: number) =>
 {
     return {
       id: `simple-tab-${index}`,
       'aria-controls': `simple-tabpanel-${index}`,
     };
 }
-
-export {handleSuccess, StatusDetectionForAllUser, StatusDetectionForBook, DisableValidationForLoanBook, TabProps}

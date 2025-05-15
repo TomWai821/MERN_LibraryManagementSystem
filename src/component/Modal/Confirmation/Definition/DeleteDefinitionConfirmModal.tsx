@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Box, Typography } from "@mui/material";
 
 // Models
@@ -16,12 +16,15 @@ import { useModal } from "../../../../Context/ModalContext";
 
 // Useful Object/Array Data
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 const DeleteDefinitionConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
 {
     const {type, data} = deleteData;
     const {handleClose} = useModal();
     const { deleteDefinition } = useDefinitionContext();
+    const alertContext = useContext(AlertContext);
+
     const Data = data as DefinitionInterface;
 
     const setTitle = () => 
@@ -33,10 +36,22 @@ const DeleteDefinitionConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
         return setTitle;
     }
 
-    const DeleteDefinitionAction = () => 
+    const DeleteDefinitionAction = async () => 
     {
-        deleteDefinition(type as string, deleteData._id);
-        handleClose();
+        const response = deleteDefinition(type as string, deleteData._id);
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Delete ${type} record successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to delete ${type} record! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     return( 

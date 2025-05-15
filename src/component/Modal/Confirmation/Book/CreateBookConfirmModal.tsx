@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useContext } from "react"
 import { Avatar, Box, Button, Typography } from "@mui/material"
 
 // Template
@@ -17,6 +17,7 @@ import { BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalR
 import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext"
 import { useContactContext } from "../../../../Context/Book/ContactContext"
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography"
+import { AlertContext } from "../../../../Context/AlertContext"
 
 const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) => 
 {
@@ -24,6 +25,7 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
     const { createBook } = useBookContext();
     const { definition } = useDefinitionContext();
     const { contact } = useContactContext();
+    const alertContext = useContext(AlertContext);
 
     const { image, imageURL, bookname, genre, language, author, publisher, description, publishDate} = bookData.data;
 
@@ -53,10 +55,22 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
         );
     }
 
-    const CreateBook = () => 
+    const CreateBook = async () => 
     {
-        createBook(image, bookname, genreID, languageID, publisherID, authorID, description, publishDate);
-        handleClose();
+        const response = createBook(image, bookname, genreID, languageID, publisherID, authorID, description, publishDate);
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: "Create Book record successfully!", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Create book record! Please try again later", open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     return(

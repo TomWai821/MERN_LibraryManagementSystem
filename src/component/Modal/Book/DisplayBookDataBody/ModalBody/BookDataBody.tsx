@@ -4,6 +4,7 @@ import { BookDataBodyInterface } from "../../../../../Model/ModelForModal";
 
 import ExpandableTypography from "../../../../UIFragment/ExpandableTypography";
 import { useAuthContext } from "../../../../../Context/User/AuthContext";
+import { setDataTextColor } from "../../../../../Controller/SetTextController";
 
 const BookDataBody:FC<BookDataBodyInterface> = (bookBodyData) => 
 {
@@ -23,7 +24,9 @@ const BookDataBody:FC<BookDataBodyInterface> = (bookBodyData) =>
                 {
                     IsLoggedIn() &&
                     <Box sx={{ width:'350px', display: 'inline-block'}}>
-                        <Typography>Status: {status}</Typography>
+                        <Typography>Status:
+                            <Box component={"span"} color={setDataTextColor(status, "OnShelf", "green", "red")}> {status}</Box>
+                        </Typography>
                     </Box>
                 }
                 

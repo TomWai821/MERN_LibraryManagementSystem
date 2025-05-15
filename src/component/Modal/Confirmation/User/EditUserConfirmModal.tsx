@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 
 // Context
 import { useModal } from "../../../../Context/ModalContext";
@@ -26,6 +26,7 @@ import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 // Data (CSS syntax)
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) => 
 {
@@ -34,11 +35,12 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
 
     const {handleOpen, handleClose} = useModal();
     const {editUserData, editSuspendUserData} = useUserContext();
+    const alertContext = useContext(AlertContext);
+    
+    const type = value === 0 ? "User" : "Suspend User";
 
-    const compareDifference = (
-        editData: UserDataInterface | DetailsInterfaceForSuspend,
-        compareData: UserDataInterface | DetailsInterfaceForSuspend
-    ) => {
+    const compareDifference = (editData: UserDataInterface | DetailsInterfaceForSuspend, compareData: UserDataInterface | DetailsInterfaceForSuspend) => 
+    {
         let differences: JSX.Element[] = [];
         const ignoreList = ["startDate", "dueDate", "description"]; // `description` ignored in loop
     
@@ -99,8 +101,10 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
         
     }
 
-    const EditUserAction = () => 
+    const EditUserAction = async () => 
     {
+        let response;
+
         if(differences.length > 0)
         {
             switch(value)
@@ -108,17 +112,29 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
                 case 0:
                     const CompareData = compareData as UserResultDataInterface;
                     const EditData = editData as UserDataInterface;
-                    editUserData(CompareData._id, EditData.username, EditData.email, EditData.gender, EditData.role);
+                    response = editUserData(CompareData._id, EditData.username, EditData.email, EditData.gender, EditData.role);
                     break;
 
                 case 1:
                     const CompareSuspendUserData = compareData as DetailsInterfaceForSuspend;
                     const EditSuspendUserData = editData as DetailsInterfaceForSuspend;
-                    editSuspendUserData(EditSuspendUserData.userID as string, CompareSuspendUserData._id, EditSuspendUserData.dueDate as Date, EditSuspendUserData.description);
+                    response = editSuspendUserData(EditSuspendUserData.userID as string, CompareSuspendUserData._id, EditSuspendUserData.dueDate as Date, EditSuspendUserData.description);
                     break;
             }
         }
-        handleClose();
+        
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Edit ${type} record successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to Edit ${type} record! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     useEffect(() => 
@@ -128,7 +144,7 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
     [editData, compareData]);
 
     return(
-        <ModalTemplate title={"Edit User Record Confirmation"} width="400px" cancelButtonName={"No"} cancelButtonEvent={returnEditUserModal}>
+        <ModalTemplate title={`Edit ${type} Record Confirmation`} width="400px" cancelButtonName={"No"} cancelButtonEvent={returnEditUserModal}>
             <Box id="modal-description" sx={ModalBodySyntax}>
                 <Typography sx={ModalSubTitleSyntax}>Do you want to edit this User record?</Typography>
                 <Typography sx={ModalRemarkSyntax}>Changes:</Typography>

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useContext, useEffect, useState } from "react"
 import ModalTemplate from "../../../Templates/ModalTemplate"
 import { EditModalInterface } from "../../../../Model/ModelForModal"
 import EditContactModal from "../../Contact/EditContactModal";
@@ -8,13 +8,14 @@ import { Box, Typography } from "@mui/material";
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 import { ContactInterface } from "../../../../Model/ResultModel";
-import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 const EditContactConfirmModal:FC<EditModalInterface> = (data) => 
 {
     const { value, compareData, editData } = data;
     const { handleOpen, handleClose } = useModal();
     const { editContactData } = useContactContext();
+    const alertContext = useContext(AlertContext);
 
     const [differences, setDifferences] = useState<string[]>([]);
     const type = value === 0 ? "Author" : "Publisher";
@@ -24,19 +25,33 @@ const EditContactConfirmModal:FC<EditModalInterface> = (data) =>
         handleOpen(<EditContactModal value={value} editData={editData} compareData={compareData}/>);
     }
 
-    const editDefinitionAction = () => 
+    const editDefinitionAction = async () => 
     {
+        let response;
+
         switch(value)
         {
             case 0:
-                editContactData(type, compareData._id, editData.author, detectNullData(editData.phoneNumber), detectNullData(editData.email));
+                response = editContactData(type, compareData._id, editData.author, detectNullData(editData.phoneNumber), detectNullData(editData.email));
                 break;
 
             case 1:
-                editContactData(type, compareData._id, editData.publisher, detectNullData(editData.phoneNumber), detectNullData(editData.email));
+                response = editContactData(type, compareData._id, editData.publisher, detectNullData(editData.phoneNumber), detectNullData(editData.email));
                 break;
         }
-        handleClose();
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Edit ${type} record successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to edit ${type} record! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     const detectNullData = (data:string) =>
@@ -51,7 +66,7 @@ const EditContactConfirmModal:FC<EditModalInterface> = (data) =>
         switch(value)
         {   
             case 0:
-                ignoreList = ["publisher", "address"];
+                ignoreList = ["publisher"];
                 break;
 
             case 1:
@@ -85,19 +100,6 @@ const EditContactConfirmModal:FC<EditModalInterface> = (data) =>
         setDifferences(newDifferences);
     }
 
-    const compareAddress = (compareDataAddress:string, editDataAddress:string) => 
-    {
-        if(compareDataAddress !== editDataAddress)
-        {
-            if(editDataAddress === "")
-            {
-                editDataAddress = "N/A";
-            }
-            return(<ExpandableTypography title={"Address"}>{`${compareData.Address} -> ${editData.Address === "N/A" ? editData.Address : "N/A"}`}</ExpandableTypography>);
-        }
-        return <></>;
-    }
-
     useEffect(() => 
     {
         compareDifference(editData as ContactInterface, compareData as ContactInterface);
@@ -115,10 +117,6 @@ const EditContactConfirmModal:FC<EditModalInterface> = (data) =>
                             <Typography key={index}>{difference}</Typography>
                         )):
                    <Typography>- "No Change detected"</Typography>
-                }
-
-                {
-                    value === 1 && compareAddress(compareData.Address, editData.Address)
                 }
 
                 <Typography sx={ModalRemarkSyntax}>Please ensure this information is correct</Typography>

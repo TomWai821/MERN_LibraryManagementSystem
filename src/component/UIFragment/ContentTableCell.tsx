@@ -14,9 +14,9 @@ import DisplayBookDataModal from "../Modal/Book/DisplayBookDataModal";
 
 const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) => 
 {
-    const {children, TableName, value, Information} = contentTableCellData;
+    const {children, TableName, value, textColor, Information} = contentTableCellData;
     const {handleOpen} = useModal();
-
+    
     const onClick = () => 
     {
         switch(TableName)
@@ -32,7 +32,7 @@ const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) =>
     }
     
     return(
-        <TableCell sx={{ fontSize: '16px ', "&:hover": {cursor: "pointer"}}} onClick={onClick}>
+        <TableCell sx={{ fontSize: '16px', color: textColor , "&:hover": {cursor: "pointer"}}} onClick={onClick}>
             {children}
         </TableCell>
     );

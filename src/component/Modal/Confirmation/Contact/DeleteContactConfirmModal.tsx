@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useContext } from "react"
 import ModalTemplate from "../../../Templates/ModalTemplate"
 import { useModal } from "../../../../Context/ModalContext";
 import { DeleteModalInterface } from "../../../../Model/ModelForModal";
@@ -7,6 +7,7 @@ import DeleteTypography from "../../../UIFragment/DeleteTypography";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { useContactContext } from "../../../../Context/Book/ContactContext";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 const DeleteContactConfirmModal:FC<DeleteModalInterface> = (deleteData) => 
 {
@@ -14,6 +15,7 @@ const DeleteContactConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
     const {value, data} = deleteData;
     const {deleteContactData} = useContactContext();
     const {handleClose} = useModal();
+    const alertContext = useContext(AlertContext);
 
     const type = value === 0 ? "Author" : "Publisher";
     
@@ -26,10 +28,22 @@ const DeleteContactConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
         return setTitle;
     }
 
-    const DeleteDefinitionAction = () => 
+    const DeleteDefinitionAction = async () => 
     {
-        deleteContactData(type as string, data._id);
-        handleClose();
+        const response = deleteContactData(type as string, data._id);
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Delete ${type} record successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to delete ${type} record! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
     
     return(

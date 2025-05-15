@@ -55,11 +55,11 @@ export interface UserContextProps
     userData: UserResultDataInterface[][];
     fetchAllUser: () => Promise<void>;
     fetchUser: (type:string, UserData: UserDataInterface | undefined) => Promise<void>;
-    createUser: (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string) => void;
-    editUserData: (userId:string, username: string, email: string, gender: string, role: string) => void;
-    editSuspendUserData: (userId:string, bannedListID: string, dueDate: Date, description: string) => void;
-    changeUserStatus: (type:string, userId:string, status:string, ListID?:string, duration?:number, description?:string) => void;
-    actualDeleteUser: (userId:string) => void;
+    createUser: (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string) => Promise<boolean>;
+    editUserData: (userId:string, username: string, email: string, gender: string, role: string) => Promise<boolean>;
+    editSuspendUserData: (userId:string, bannedListID: string, dueDate: Date, description: string) => Promise<boolean>;
+    changeUserStatus: (type:string, userId:string, status:string, ListID?:string, duration?:number, description?:string) => Promise<boolean | void>;
+    actualDeleteUser: (userId:string) => Promise<boolean>;
 }
 
 export interface BookContextProps
@@ -70,11 +70,11 @@ export interface BookContextProps
     fetchAllBook: () => Promise<void>;
     fetchBookWithFliterData: (type:string, bookname?:string, status?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => Promise<void>;
     fetchLoanBookWithFliterData: (type:string, bookname?:string, username?:string, status?:string, finesPaid?:string) => Promise<void>;
-    createBook: (image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => void;
-    editBook: (bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, publishDate:string, authorID:string, description:string) => void;
-    loanBook: (bookID:string, userID?:string) => void;
-    returnBook: (loanRecordID:string, fineAmount?:number, finesPaid?:string) => void;
-    deleteBook: (bookID:string) => void;
+    createBook: (image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => Promise<boolean>;
+    editBook: (bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, publishDate:string, authorID:string, description:string) => Promise<boolean>;
+    loanBook: (bookID:string, userID?:string) => Promise<boolean>;
+    returnBook: (loanRecordID:string, fineAmount?:number, finesPaid?:string) => Promise<boolean>;
+    deleteBook: (bookID:string) => Promise<boolean>;
     favouriteBook: (bookID:string) => Promise<boolean>;
     unfavouriteBook: (favouriteBookID:string) => Promise<boolean>;
 }
@@ -84,9 +84,9 @@ export interface DefinatonProps
     definition: DefinitionState;
     fetchAllDefinition: () => Promise<void>;
     fetchDefinitionDataWithFilterData:(type:string, data:string) => Promise<void>;
-    createDefinition:(type:string, shortName:string, detailsName:string) => void;
-    editDefinition:(type:string, id:string, shortName:string, detailsName:string) => void;
-    deleteDefinition:(type:string, id:string) => void;
+    createDefinition:(type:string, shortName:string, detailsName:string) => Promise<boolean>;
+    editDefinition:(type:string, id:string, shortName:string, detailsName:string) => Promise<boolean>;
+    deleteDefinition:(type:string, id:string) => Promise<boolean>;
 }
 
 export interface ContactProps
@@ -94,9 +94,9 @@ export interface ContactProps
     contact: ContactState;
     fetchAllContactData: () => Promise<void>;
     fetchContactDataWithFilterData: (type:string, author:string, publisher:string) => Promise<void>;
-    createContactData:(type:string, contactName:string, phoneNumber:string, email:string) => void;
-    editContactData:(type:string, id:string, contactName:string, phoneNumber:string, email:string) => void;
-    deleteContactData:(type:string, id:string) => void;
+    createContactData:(type:string, contactName:string, phoneNumber:string, email:string) => Promise<boolean>;
+    editContactData:(type:string, id:string, contactName:string, phoneNumber:string, email:string) => Promise<boolean>;
+    deleteContactData:(type:string, id:string) => Promise<boolean>;
 }
 
 // For Tab Panel
@@ -111,6 +111,7 @@ export interface ContentTableCellProps extends ChildProps
 {
     TableName: string;
     value: number;
+    textColor?:string;
     Information: UserResultDataInterface | BookDataInterface | BookTableDataInterface | LoanBookInterface | ContactInterface;
 }
 

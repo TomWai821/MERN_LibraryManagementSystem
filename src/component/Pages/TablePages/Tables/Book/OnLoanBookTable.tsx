@@ -14,6 +14,7 @@ import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObject
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { calculateFineAmount, isExpired, TransferDateToISOString } from "../../../../../Controller/OtherController";
 import { useAuthContext } from "../../../../../Context/User/AuthContext";
+import { setLoanBookDataTextColor } from "../../../../../Controller/SetTextController";
 
 const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
@@ -72,9 +73,7 @@ const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                 <ContentTableCell TableName={TableName} value={value} Information={data}>{data.userDetails?.username}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} Information={data}>{TransferDateToISOString(data.loanDate as Date)}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} Information={data}>
-                                    {data.status}
-                                </ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data} textColor={setLoanBookDataTextColor(data.status)}>{data.status}</ContentTableCell>
 
                                 <ContentTableCell TableName={TableName} value={value} Information={data}>
                                 {
@@ -85,7 +84,7 @@ const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                 }
                                 </ContentTableCell>
 
-                                <ContentTableCell TableName={TableName} value={value} Information={data}>
+                                <ContentTableCell TableName={TableName} value={value} Information={data} textColor={setLoanBookDataTextColor(data.finesPaid as string)}>
                                     { isExpired(data.returnDate as Date, data.dueDate as Date) && data.finesPaid === "Not Fine Needed" ? "Not Paid" : data.finesPaid }
                                 </ContentTableCell>
 

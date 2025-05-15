@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
@@ -10,6 +10,7 @@ import { useModal } from "../../../../Context/ModalContext";
 import { QRCodeInterface, UserLoanBookModalBodyInterface } from "../../../../Model/ModelForModal";
 
 import LoanBookConfirmationModal from "./LoanBookConfirmationModal";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 
 const UserLoanBookConfirmationModal:FC<UserLoanBookModalBodyInterface> = (LoanBookData) => 
@@ -17,12 +18,7 @@ const UserLoanBookConfirmationModal:FC<UserLoanBookModalBodyInterface> = (LoanBo
     const {qrCodeData, _id, bookname, author, language, genre, description, imageUrl} = LoanBookData;
     const {loanBook} = useBookContext();
     const {handleOpen, handleClose} = useModal();
-
-    const ConfirmLoanBook = () => 
-    {
-        loanBook(_id, handleScanData().authToken);
-        handleClose();
-    }
+    const alertContext = useContext(AlertContext);
 
     const handleScanData = () =>
     {
@@ -33,6 +29,24 @@ const UserLoanBookConfirmationModal:FC<UserLoanBookModalBodyInterface> = (LoanBo
 
         const parseData = JSON.parse(qrCodeData) as QRCodeInterface;
         return {username: parseData.username, authToken: parseData.authToken}
+    }
+
+    const ConfirmLoanBook = async () => 
+    {
+        const response = loanBook(_id, handleScanData().authToken);
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Loan book to ${handleScanData().username} successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Unable to loan book to the user! Please try again later", open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     const returnUserLoanBookModal = () => 

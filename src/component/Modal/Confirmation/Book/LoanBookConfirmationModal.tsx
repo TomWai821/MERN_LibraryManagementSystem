@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useContext, useState } from "react";
 import { Box, Button, Tab, Tabs, Typography } from "@mui/material";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
@@ -16,6 +16,7 @@ import CustomTabPanel from "../../../UIFragment/CustomTabPanel";
 import SelfLoanConfirmationModalBody from "./ModalBody/SelfLoanConfirmationModalBody";
 import UserLoanModalBody from "./ModalBody/UserLoanModalBody";
 import UserLoanBookConfirmationModal from "./UserLoanBookConfirmModal";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 
 const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) => 
@@ -23,6 +24,7 @@ const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) =>
     const {tabValue, qrCodeData, _id, bookname, author, language, genre, description, imageUrl} = LoanBookData;
     const {loanBook} = useBookContext();
     const { handleOpen, handleClose} = useModal();
+    const alertContext = useContext(AlertContext);
 
     const [QrCodeData, setQrCodeData] = useState(qrCodeData ?? "");
     const [TabValue, setTabValue] = useState<number>(tabValue as number);
@@ -32,10 +34,22 @@ const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) =>
         TabValue === 0 ? ConfirmLoanBook() : confirmUserLoanbook();
     }
 
-    const ConfirmLoanBook = () =>     
+    const ConfirmLoanBook = async () =>     
     {
-        loanBook(_id);
-        handleClose();
+        const response = loanBook(_id);
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Loan book successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Unable to Loan book! Please try again later", open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     const confirmUserLoanbook = () => 

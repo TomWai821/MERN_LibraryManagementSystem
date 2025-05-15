@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Box, Typography } from "@mui/material";
 
 // Context
@@ -20,6 +20,7 @@ import { DefinitionInterface } from "../../../../Model/ResultModel";
 
 // Another Modal
 import CreateDefinitionModal from "../../Definition/CreateDefinitionModal";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 
 const CreateDefinitionConfirmModal:FC<CreateModalInterface> = (definationData) => 
@@ -30,25 +31,40 @@ const CreateDefinitionConfirmModal:FC<CreateModalInterface> = (definationData) =
  
     const { handleOpen, handleClose } = useModal();
     const { createDefinition } = useDefinitionContext();
+    const alertContext = useContext(AlertContext);
 
     const returnCreateUserModal = () => 
     {
         handleOpen(<CreateDefinitionModal {...definationData}/>);
     }
 
-    const createDefinitionData = () => 
+    const createDefinitionData = async () => 
     {
+        let response;
+
         switch(value)
         {
             case 0:
-                createDefinition(type, Data.shortName, Data.genre as string);
+                response = createDefinition(type, Data.shortName, Data.genre as string);
                 break;
 
             case 1:
-                createDefinition(type, Data.shortName, Data.language as string);
+                response = createDefinition(type, Data.shortName, Data.language as string);
                 break;
         }
-        handleClose();
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Create ${type} record successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to create ${type} record! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     return(

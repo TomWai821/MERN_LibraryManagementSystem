@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import { Box, Typography } from '@mui/material'
 
 // Models
@@ -18,6 +18,7 @@ import ModalTemplate from '../../../Templates/ModalTemplate';
 // Data (CSS syntax)
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import ModalConfirmButton from '../../../UIFragment/ModalConfirmButton';
+import { AlertContext } from '../../../../Context/AlertContext';
 
 
 const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) => 
@@ -27,11 +28,24 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
 
     const { actualDeleteUser } = useUserContext();
     const { handleClose } = useModal();
+    const alertContext = useContext(AlertContext);
 
-    const DeleteUserAction = (): void => 
+    const DeleteUserAction = async () => 
     {
-        actualDeleteUser(_id);
-        handleClose();
+        const response = actualDeleteUser(_id);
+        
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Delete User record successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to delete User record! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     return(

@@ -61,7 +61,9 @@ export const DefinitionProvider:FC<ChildProps> = ({children}) =>
         if(createDefinitionData)
         {
             fetchAllDefinition();
+            return true;
         }
+        return false;
     }
     ,[fetchAllDefinition])
 
@@ -72,7 +74,9 @@ export const DefinitionProvider:FC<ChildProps> = ({children}) =>
         if(editDefinitionData)
         {
             fetchAllDefinition();
+            return true;
         }
+        return false;
     }
     ,[fetchAllDefinition])
 
@@ -83,7 +87,9 @@ export const DefinitionProvider:FC<ChildProps> = ({children}) =>
         if(deleteDefinitionData)
         {
             fetchAllDefinition();
+            return true;
         }
+        return false;
     }
     ,[fetchAllDefinition])
 

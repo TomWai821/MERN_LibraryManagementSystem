@@ -1,9 +1,10 @@
-import { FC, Fragment } from "react"
+import { FC } from "react"
 import { DisplayDataModalBody } from "../../../../Model/ModelForModal"
 import { Avatar, Box, Typography } from "@mui/material";
 import { BookImageFormat, displayAsRow} from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { LoanBookInterface } from "../../../../Model/ResultModel";
 import { TransferDateToISOString } from "../../../../Controller/OtherController";
+import { setLoanBookDataTextColor } from "../../../../Controller/SetTextController";
 
 const LoanBookDataBody:FC<DisplayDataModalBody> = (AllUserData) => 
 {
@@ -39,19 +40,17 @@ const LoanBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
 
                 {
                     <Typography>
-                        Status: {LoanData.status}
+                        Status: <Box component={"span"} color={ setLoanBookDataTextColor(LoanData.status as string)}>{LoanData.status}</Box>
                         <Typography component="span" sx={{color: 'rgb(230, 0, 0)'}}>
                             { CalculateExpired && ` (Overdue by ${CalculateLateReturn} Day)`}
                         </Typography>
                     </Typography>
                 }
 
-                {
-                    CalculateExpired && 
-                    <Fragment>
-                        <Typography>Fines: { CalculateExpired && LoanData.finesPaid === "Not Fine Needed" ? "Not Paid" : LoanData.finesPaid} (HKD$ {CalculateFines})</Typography>
-                    </Fragment>
-                }
+                    <Typography>Fines: <Box component={"span"} color={ setLoanBookDataTextColor(LoanData.finesPaid as string)}>
+                            { CalculateExpired && LoanData.finesPaid === " Not Fine Needed" ? " Not Paid" : LoanData.finesPaid} {CalculateExpired && `(HKD$ ${CalculateFines})`}
+                        </Box>
+                    </Typography>
 
                 {
                     LoanData.status !== "Loaned" && <Typography>Return Date: {TransferDateToISOString(LoanData.returnDate as Date)}</Typography>

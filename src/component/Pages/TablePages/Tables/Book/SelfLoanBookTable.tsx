@@ -6,6 +6,7 @@ import ContentTableCell from "../../../../UIFragment/ContentTableCell";
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
 import { calculateFineAmount, isExpired, TransferDateToISOString } from "../../../../../Controller/OtherController";
+import { setLoanBookDataTextColor } from "../../../../../Controller/SetTextController";
 
 const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
@@ -62,11 +63,11 @@ const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                         <Avatar src={data.bookDetails?.image?.url} alt="Preview" variant="rounded" sx={{ width: "150px", height: "225px" }}/>
                                     </ContentTableCell>
 
-                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{data.bookDetails?.bookname}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{TransferDateToISOString(data.loanDate as Date)}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{data.status}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{TransferDateToISOString(data.returnDate as Date)}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={1} Information={data}>{data.bookDetails?.bookname}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={1} Information={data}>{TransferDateToISOString(data.loanDate as Date)}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={1} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={1} Information={data} textColor={setLoanBookDataTextColor(data.status)}>{data.status}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={1} Information={data}>{TransferDateToISOString(data.returnDate as Date)}</ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={value} Information={data}>
                                         { isExpired(data.returnDate as Date, data.dueDate as Date) && data.finesPaid === "Not Fine Needed" ? "Not Paid" : data.finesPaid }
                                     </ContentTableCell>

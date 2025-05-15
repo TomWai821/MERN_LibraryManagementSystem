@@ -6,6 +6,7 @@ import ContentTableCell from "../../../../UIFragment/ContentTableCell";
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
 import RecordBookTableCell from "../TableCell/RecordBookTableCell";
+import { setDataTextColor } from "../../../../../Controller/SetTextController";
 
 const FavouriteBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
@@ -67,7 +68,7 @@ const FavouriteBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                     <ContentTableCell TableName={TableName} value={0} Information={data}>{data.languageDetails?.language}</ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={0} Information={data}>{data.authorDetails?.author}</ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={0} Information={data}>{data.publisherDetails?.publisher}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={0} Information={data}>{data.bookDetails?.status}</ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={0} Information={data} textColor={setDataTextColor(data.bookDetails?.status as string, "OnShelf", "green", "red")}>{data.bookDetails?.status}</ContentTableCell>
                                     <RecordBookTableCell value={value} Information={data}/>
                                 </TableRow>
                             )

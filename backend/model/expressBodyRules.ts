@@ -9,6 +9,12 @@ export const UserRegisterRules =
     body("birthDay").notEmpty().withMessage("BirthDay is required")
 ];
 
+export const UserModifySelfDataRules = 
+[
+    body("username").notEmpty().withMessage("Username is required").isLength({min: 3}).withMessage("Username require at least 3 characters"),
+    body("password").notEmpty().withMessage("Password is required").isLength({min: 6}).withMessage("Password require at least 6 characters")
+]
+
 export const UserLoginRules = 
 [
     body("email").isEmail().withMessage("Invalid Email Address"),

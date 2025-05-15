@@ -32,7 +32,7 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
                 break;
 
             case 1:
-                displayData.title = "OnLoan Book Information";
+                displayData.title = "Loan Book Information";
                 displayData.displayBody = <LoanBookDataBody data={data as BookDataInterface}/>
                 break;
 

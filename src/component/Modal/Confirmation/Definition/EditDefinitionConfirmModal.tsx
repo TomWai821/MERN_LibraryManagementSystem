@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 
 // Models
 import { DefinitionInterface } from "../../../../Model/ResultModel";
@@ -18,12 +18,14 @@ import EditDefinitionModal from "../../Definition/EditDefinitionModal";
 
 // useful Array/Objects(Data)
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 const EditDefinitionConfirmModal:FC<EditModalInterface>  = (data) =>
 {
     const { value, compareData, editData } = data;
     const { handleOpen, handleClose } = useModal();
     const { editDefinition } = useDefinitionContext();
+    const alertContext = useContext(AlertContext);
 
     const [differences, setDifferences] = useState<string[]>([]);
     const type = value === 0 ? "Genre" : "Language";
@@ -33,18 +35,32 @@ const EditDefinitionConfirmModal:FC<EditModalInterface>  = (data) =>
         handleOpen(<EditDefinitionModal value={value} editData={editData} compareData={compareData}/>);
     }
 
-    const editDefinitionAction = () => 
+    const editDefinitionAction = async () => 
     {
         const EditData = editData as DefinitionInterface;
+        let response;
         switch(type)
         {
             case "Genre":
-                editDefinition(type, EditData._id, EditData.shortName, EditData.genre as string);
+                response = editDefinition(type, EditData._id, EditData.shortName, EditData.genre as string);
                 break;
 
             case "Language":
-                editDefinition(type, EditData._id, EditData.shortName, EditData.language as string);
+                response = editDefinition(type, EditData._id, EditData.shortName, EditData.language as string);
                 break;
+        }
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Edit ${type} record successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to edit ${type} record! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
         }
         
         handleClose();

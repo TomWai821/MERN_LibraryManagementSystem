@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Box, Typography } from "@mui/material";
 
 // UI Fragment
@@ -21,12 +21,14 @@ import SuspendUserModal from "../../User/SuspendUserModal";
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { dateOption } from "../../../../ArraysAndObjects/TextFieldsArrays";
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 const SuspendUserConfirmModal:FC<SuspendModalInterface> = (banData) => 
 {
     const { _id, username, durationOption, description } = banData;
     const { handleOpen, handleClose } = useModal();
     const { changeUserStatus } = useUserContext();
+    const alertContext = useContext(AlertContext);
 
     const returnSuspendUserModal = () => 
     {
@@ -34,10 +36,22 @@ const SuspendUserConfirmModal:FC<SuspendModalInterface> = (banData) =>
     }
 
 
-    const SuspendUser = (_id:string, duration:number, description:string) => 
+    const SuspendUser = async (_id:string, duration:number, description:string) => 
     {
-        changeUserStatus("Suspend", _id, "Suspend", undefined, duration, description);
-        handleClose();
+        const response = changeUserStatus("Suspend", _id, "Suspend", undefined, duration, description);
+         
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Suspend user successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to Suspend user! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     return(

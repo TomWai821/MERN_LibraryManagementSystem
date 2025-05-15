@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useContext } from "react"
 import ModalTemplate from "../../../Templates/ModalTemplate"
 import { CreateModalInterface } from "../../../../Model/ModelForModal"
 import { ContactInterface } from "../../../../Model/ResultModel";
@@ -8,6 +8,7 @@ import { useContactContext } from "../../../../Context/Book/ContactContext";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { Box, Typography } from "@mui/material";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 const CreateContactConfirmModal:FC<CreateModalInterface> = (createModalData) => 
 {
@@ -15,6 +16,7 @@ const CreateContactConfirmModal:FC<CreateModalInterface> = (createModalData) =>
 
     const { handleOpen, handleClose } = useModal();
     const { createContactData } = useContactContext();
+    const alertContext = useContext(AlertContext);
 
     const Data = data as ContactInterface;
     const type = value === 0 ? "Author" : "Publisher";
@@ -24,19 +26,32 @@ const CreateContactConfirmModal:FC<CreateModalInterface> = (createModalData) =>
         handleOpen(<CreateContextModal {...createModalData}/>);
     }
 
-    const CreateContactData = () => 
+    const CreateContactData = async () => 
     {
+        let response;
         switch(value)
         {
             case 0:
-                createContactData(type, Data.author as string, Data.phoneNumber, Data.email);
+                response = createContactData(type, Data.author as string, Data.phoneNumber, Data.email);
                 break;
 
             case 1:
-                createContactData(type, Data.publisher as string, Data.phoneNumber, Data.email);
+                response = createContactData(type, Data.publisher as string, Data.phoneNumber, Data.email);
                 break;
         }
-        handleClose();
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Create ${type} record successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to create ${type} record! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     return(

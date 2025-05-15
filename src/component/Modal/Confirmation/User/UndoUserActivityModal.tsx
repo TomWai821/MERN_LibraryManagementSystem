@@ -1,5 +1,5 @@
 
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Box,  Typography } from "@mui/material";
 
 // Template
@@ -18,6 +18,7 @@ import { DeleteModalInterface } from "../../../../Model/ModelForModal";
 // Data (CSS Syntax)
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
+import { AlertContext } from "../../../../Context/AlertContext";
 
 const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) => 
 {
@@ -27,11 +28,24 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
     
     const { changeUserStatus } = useUserContext();
     const { handleClose } = useModal();
+    const alertContext = useContext(AlertContext);
 
-    const UndoUserAction = () => 
+    const UndoUserAction = async () => 
     {
-        changeUserStatus("UnSuspend", _id, "Normal", Data.bannedDetails?._id as string);
-        handleClose();
+        const response = changeUserStatus("UnSuspend", _id, "Normal", Data.bannedDetails?._id as string);
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Unsuspend user successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to Unsuspend user! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
  
     return(

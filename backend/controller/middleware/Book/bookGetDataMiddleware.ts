@@ -73,11 +73,11 @@ export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Resp
                 return res.status(400).json({ success: false, message: `This suggestion type requires authToken!` });
             }
         
-            const loanedBooksCorpus = (suggestionData as Book[]).map( book => `${book.bookname} ${book.genre} ${book.publisher}`);
+            const loanedBooksCorpus = (suggestionData as Book[]).map( book => `${book.bookname} ${book.genre} ${book.author} ${book.publisher}`);
         
             const allBooks = await GetBook(undefined);
         
-            const allBooksCorpus = (allBooks as any[]).map(book => ({ id: book._id, metadata: `${book.bookname} ${book.genreDetails.genre} ${book.publisherDetails.publisher}` }));
+            const allBooksCorpus = (allBooks as any[]).map(book => ({ id: book._id, metadata: `${book.bookname} ${book.genreDetails.genre} ${book.authorDetails.author} ${book.publisherDetails.publisher}` }));
         
             const TF_IDF_Scores = calculateTFIDF(loanedBooksCorpus, allBooksCorpus);
         

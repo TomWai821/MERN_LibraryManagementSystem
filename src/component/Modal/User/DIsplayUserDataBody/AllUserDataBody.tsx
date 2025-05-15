@@ -3,6 +3,7 @@ import { Avatar, Box, Typography } from "@mui/material";
 import { DisplayDataModalBody } from "../../../../Model/ModelForModal"
 import { displayAsColumn } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
+import { setDataTextColor } from "../../../../Controller/SetTextController";
 
 
 const AllUserDataBody:FC<DisplayDataModalBody> = (AllUserData) => 
@@ -17,7 +18,9 @@ const AllUserDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
             <Box sx={{ display: 'grid', gap: '20px 50px', gridTemplateColumns: '100%'}}>
                 <Typography>Username: {Data.username}</Typography>
                 <Typography>Email: {Data.email}</Typography>
-                <Typography>Status: {Data.status}</Typography>
+                <Typography>Status: 
+                    <Box component="span" color={setDataTextColor(Data.status, "Normal", "green", "red")}>{Data.status}</Box>
+                </Typography>
                 <Typography>Gender: {Data.gender}</Typography>
             </Box>
         </Box>

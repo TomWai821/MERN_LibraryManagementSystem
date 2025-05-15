@@ -1,5 +1,5 @@
 import express from 'express';
-import { UserRegisterRules, UserLoginRules, UserModifyDataRules } from '../model/expressBodyRules'
+import { UserRegisterRules, UserLoginRules, UserModifyDataRules, UserModifySelfDataRules } from '../model/expressBodyRules'
 import { DeleteUser, GetUserData, ChangeUserData, UserLogin, UserRegister, ChangeStatus, ModifySuspendListData, UpdateUserData, GetSelfUserData } from '../controller/userController';
 import { FetchUserFromHeader } from '../controller/middleware/User/authMiddleware';
 import { SuspendListValidation, CompareUserStatus, FoundUserFromParams, UserLoginDataValidation, UserRegisterDataValidation } from '../controller/middleware/User/userValidationMiddleware';
@@ -10,7 +10,7 @@ import { LoginAndFindUser, ValidationForModifyStatus } from '../Arrays/routesMap
 const router = express.Router();
 
 router.get('/UserData/tableName=:tableName', FetchUserFromHeader, BuildUserQueryAndGetData, GetUserData);
-router.get('/UserData', FetchUserFromHeader, GetSelfUserData);
+router.get('/UserData', UserModifySelfDataRules, FetchUserFromHeader, GetSelfUserData);
 
 router.post('/Register', UserRegisterRules, UserRegisterDataValidation, UserRegister);
 router.post('/Login', UserLoginRules, UserLoginDataValidation, UserLogin);

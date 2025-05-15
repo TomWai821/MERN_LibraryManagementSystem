@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import { Box, Button,  Typography} from '@mui/material';
 
 // Template
@@ -12,17 +12,31 @@ import { BookDataInterfaceForDelete } from '../../../../Model/BookTableModel';
 import { useBookContext } from '../../../../Context/Book/BookContext';
 import { useModal } from '../../../../Context/ModalContext';
 import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../ArraysAndObjects/FormatSyntaxObjects';
+import { AlertContext } from '../../../../Context/AlertContext';
 
 const DeleteBookModal:FC<BookDataInterfaceForDelete> = ({...bookData}) => 
 {  
     const { bookID, bookname, language, genre, author, publisher } = bookData;
     const {deleteBook} = useBookContext();
     const {handleClose} = useModal();
+    const alertContext = useContext(AlertContext);
 
-    const DeleteBook = () => 
+    const DeleteBook = async () => 
     {
-        deleteBook(bookID);
-        handleClose();
+        const response =  deleteBook(bookID);
+
+        if (alertContext && alertContext.setAlertConfig) 
+        {
+            if (await response) 
+            {
+                alertContext.setAlertConfig({ AlertType: "success", Message: "Delete book record successfully!", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                setTimeout(() => { handleClose() }, 2000);
+            } 
+            else 
+            {
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Delete book record! Please try again later", open: true, onClose: () => alertContext.setAlertConfig(null) });
+            }
+        }
     }
 
     const fieldData = 

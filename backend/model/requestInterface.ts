@@ -47,6 +47,7 @@ interface Book
     _id: string;
     bookname: string;
     genre: string;
+    author: string;
     publisher: string;
 }
 

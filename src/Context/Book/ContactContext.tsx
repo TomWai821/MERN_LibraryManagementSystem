@@ -56,7 +56,9 @@ export const ContactProvider:FC<ChildProps> = ({children}) =>
         if(createContactData)
         {
             fetchAllContactData();
+            return true;
         }
+        return false;
     }
     ,[fetchAllContactData])
 
@@ -67,7 +69,9 @@ export const ContactProvider:FC<ChildProps> = ({children}) =>
         if(editContactData)
         {
             fetchAllContactData();
+            return true;
         }
+        return false;
     }
     ,[fetchAllContactData])
 
@@ -78,7 +82,9 @@ export const ContactProvider:FC<ChildProps> = ({children}) =>
         if(deleteContactData)
         {
             fetchAllContactData();
+            return true;
         }
+        return false;
     }
     ,[fetchAllContactData])
 

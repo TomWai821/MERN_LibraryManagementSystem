@@ -11,6 +11,7 @@ import { AllBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays"
 import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { BookDataInterface } from "../../../../../Model/ResultModel";
 import { useAuthContext } from "../../../../../Context/User/AuthContext";
+import { setDataTextColor } from "../../../../../Controller/SetTextController";
 
 const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) => 
 {
@@ -73,7 +74,7 @@ const AllBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                 {IsLoggedIn() && 
                                     (
                                         <Fragment>
-                                            <ContentTableCell TableName={TableName} value={value} Information={data}>{data.status}</ContentTableCell>
+                                            <ContentTableCell TableName={TableName} value={value} Information={data} textColor={setDataTextColor(data.status, "OnShelf", "green", "red" )}>{data.status}</ContentTableCell>
                                             <ActionTableCell value={value} TableName={TableName} Information={data} 
                                                 changeValue={changeValue as (type: string, newValue: number) => void} setSearchBook={setSearchBook} searchBook={searchBook}
                                             />

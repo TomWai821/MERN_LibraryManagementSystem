@@ -73,6 +73,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
                     {
                         bookname: book.bookDetails?.bookname || 'Unknown Book Name',
                         genre: book.genreDetails?.genre || 'Unknown Genre',
+                        author: book.authorDetails?.author || 'Unknown Author',
                         publisher: book.publisherDetails?.publisher || 'Unknown Publisher'
                     }
                 ));
@@ -83,7 +84,6 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
     
                     if (resultForUser && Array.isArray(resultForUser.foundBook)) 
                     {
-                        console.log(resultForUser.foundBook)
                         setBookForUser(resultForUser.foundBook);
                     }
                 }
@@ -159,7 +159,10 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         if(result)
         {
             fetchAllBook();
+            return true;
         }
+        return false;
+
     },[fetchAllBook])
 
     const editBook = useCallback(async (bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, publishDate:string, authorID:string, description:string) => 
@@ -169,7 +172,10 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         if(result)
         {
             fetchAllBook();
+            return true;
         }
+        return false;
+        
     },[fetchAllBook])
 
     const loanBook = useCallback(async(bookID:string, userID?:string) => 
@@ -180,8 +186,11 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
 
         if(result)
         {
-            fetchAllBook()
+            fetchAllBook();
+            return true;
         }
+        return false;
+
     },[fetchAllBook])
 
     const returnBook = useCallback(async(loanRecordID:string, fineAmount?:number, finesPaid?:string) =>
@@ -190,9 +199,12 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
 
         if(result)
         {
-            fetchAllBook()
+            fetchAllBook();
+            return true;
         }
-    },[])
+        return false;
+
+    },[fetchAllBook])
 
     const deleteBook = useCallback(async (bookID:string) => 
     {
@@ -201,7 +213,9 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         if(result)
         {
             fetchAllBook();
+            return true;
         }
+        return false;
 
     },[fetchAllBook])
 
@@ -214,8 +228,8 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
             fetchAllBook();
             return true;
         }
-
         return false;
+
     },[fetchAllBook])
 
     const unfavouriteBook = useCallback(async(FavouriteBookID:string) => 
@@ -227,8 +241,8 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
             fetchAllBook();
             return true;
         }
-        
         return false;
+
     },[fetchAllBook])
 
     useEffect(() => 

@@ -103,7 +103,6 @@ export const EditBookRecord = async (req: Request, res: Response) =>
         const updateBookRecord = await FindBookByIDAndUpdate(bookID, {$set: {image: { url: imageUrl, filename: newImageName }, 
                                                                     bookname, languageID, genreID, authorID, publisherID, description, publishDate:new Date(publishDate) }});
 
-        console.log(updateBookRecord);
         if (!updateBookRecord) 
         {
             return res.status(400).json({ success, error: 'Failed to Update Book Record' });

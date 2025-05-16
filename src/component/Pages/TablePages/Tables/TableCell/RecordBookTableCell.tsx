@@ -20,6 +20,7 @@ import { DisableValidationForLoanBook } from "../../../../../Controller/OtherUse
 import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { useBookContext } from "../../../../../Context/Book/BookContext";
 import { AlertContext } from "../../../../../Context/AlertContext";
+import { useSelfBookRecordContext } from "../../../../../Context/Book/SelfBookRecordContext";
 
 
 const RecordBookTableCell:FC<RecordTableCellInterface> = (returnBookTableCellData) => 
@@ -27,7 +28,7 @@ const RecordBookTableCell:FC<RecordTableCellInterface> = (returnBookTableCellDat
     const {value, Information} = returnBookTableCellData;
 
     const {handleOpen} = useModal();
-    const {unfavouriteBook} = useBookContext();
+    const {unfavouriteBook} = useSelfBookRecordContext();
     const alertContext = useContext(AlertContext);
 
     const openReturnBookModal = () => 

@@ -9,10 +9,11 @@ import { BookDataInterface } from "../../../../../Model/ResultModel";
 
 import { AlertContext } from "../../../../../Context/AlertContext";
 import { useBookContext } from "../../../../../Context/Book/BookContext";
+import { useSelfBookRecordContext } from "../../../../../Context/Book/SelfBookRecordContext";
 
 const ActionTableCellForUser:FC<UserActionTableCellInterface> = (actionTableCellData) => 
 {
-    const {BookRecordForUser, favouriteBook, unfavouriteBook} = useBookContext();
+    const {BookRecordForUser, favouriteBook, unfavouriteBook} = useSelfBookRecordContext();
     
     const {Information} = actionTableCellData;
 

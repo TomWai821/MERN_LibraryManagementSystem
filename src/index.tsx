@@ -10,6 +10,8 @@ import { BookProvider } from './Context/Book/BookContext';
 import { DefinitionProvider } from './Context/Book/DefinitionContext';
 import { ContactProvider } from './Context/Book/ContactContext';
 import { AuthProvider } from './Context/User/AuthContext';
+import { SelfBookRecordProvider } from './Context/Book/SelfBookRecordContext';
+import { RecommendBookProvider } from './Context/Book/RecommendBookContext';
 
 const root = ReactDOM.createRoot
 (
@@ -21,17 +23,21 @@ root.render
     <AuthProvider>
         <ContactProvider>
             <DefinitionProvider>
-                <BookProvider>
-                    <UserProvider>
-                        <AlertProvider>
-                            <ModalProvider>
-                                <BrowserRouter>
-                                    <App />
-                                </BrowserRouter>
-                            </ModalProvider>
-                        </AlertProvider>
-                    </UserProvider>
-                </BookProvider>
+                <SelfBookRecordProvider>
+                    <RecommendBookProvider>
+                        <BookProvider>
+                            <UserProvider>
+                                <AlertProvider>
+                                    <ModalProvider>
+                                        <BrowserRouter>
+                                            <App />
+                                        </BrowserRouter>
+                                    </ModalProvider>
+                                </AlertProvider>
+                            </UserProvider>
+                            </BookProvider>
+                    </RecommendBookProvider>
+                </SelfBookRecordProvider>
             </DefinitionProvider>
         </ContactProvider>
     </AuthProvider>

@@ -37,6 +37,12 @@ const fetchData = async (authToken:string, url: string, data: Record<string, any
     }
 };
 
+const ModifyProfileDataController = async (authToken:string, option:string, body:any) => 
+{
+    const URL = `${url}/UserData/type=${option}`;
+    const data: { username: string; password?: undefined;} | { password: string; username?: undefined;} = body; return await fetchData(authToken, URL, data);
+}
+
 const ModifyUserDataController = async (authToken:string, userId: string, username:string, email:string, gender:string, role:string) => 
 {
     const data = { username, email, gender, role };
@@ -59,12 +65,10 @@ const ModifyStatusController = async (type:string, authToken:string, userId: str
         UnSuspend: { statusForUserList, banListID: ListID }
     };
 
-    console.log(statusForUserList);
-
     const statusData = statusDataConfig[type as keyof typeof statusDataConfig];
         
     const URL = `${url}/Status/id=${userId}`;
     return await fetchData(authToken, URL, statusData);
 };
 
-export { ModifyUserDataController, ModifySuspendListDataController, ModifyStatusController };
+export { ModifyUserDataController, ModifyProfileDataController, ModifySuspendListDataController, ModifyStatusController };

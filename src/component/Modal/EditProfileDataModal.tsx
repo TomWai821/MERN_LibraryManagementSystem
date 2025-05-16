@@ -8,6 +8,7 @@ import { useAuthContext } from "../../Context/User/AuthContext";
 import { AlertContext } from "../../Context/AlertContext";
 import { useModal } from "../../Context/ModalContext";
 import { GetResultInterface } from "../../Model/ResultModel";
+import { ModifyProfileDataController } from "../../Controller/UserController/UserPutController";
 
 const EditProfileDataModal = () => 
 {
@@ -82,17 +83,7 @@ const EditProfileDataModal = () =>
     {
         const bodyData = option === "username" ? {username: editedData.username} : {password: editedData.password};
 
-        const response = await fetch(`${url}/user/UserData/type=${option}`,
-            {
-                method: 'PUT',
-                headers: 
-                { 
-                    'content-type': 'application/json',
-                    'authToken' : GetData("authToken" as string) as string
-                },
-                body: JSON.stringify(bodyData)
-            }
-        );
+        const response = await ModifyProfileDataController(GetData("authToken") as string, option, bodyData);
 
         const result: GetResultInterface = await response.json();
 
@@ -113,7 +104,7 @@ const EditProfileDataModal = () =>
     return(
         <ModalTemplate title={"Edit Profile Data"} width="400px" cancelButtonName={"Exit"}>
             <Box id="modal-description" sx={displayAsColumn}>
-                <FormControl sx={{ marginBottom: 3, width: '100%' }}>
+                <FormControl sx={{ marginBottom: 3, marginTop: 3, width: '100%' }}>
                     <TextField label="Edit option" size="small" value={option} name={option} onChange={onChange} select>
                         <MenuItem value="username">username</MenuItem>
                         <MenuItem value="password">password</MenuItem>

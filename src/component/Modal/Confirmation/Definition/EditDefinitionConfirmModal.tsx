@@ -62,8 +62,6 @@ const EditDefinitionConfirmModal:FC<EditModalInterface>  = (data) =>
                 alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to edit ${type} record! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
             }
         }
-        
-        handleClose();
     }
 
     const compareDifference = (editData: DefinitionInterface, compareData: DefinitionInterface) => 

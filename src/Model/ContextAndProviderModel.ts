@@ -65,16 +65,34 @@ export interface UserContextProps
 export interface BookContextProps
 {
     bookData:(BookDataInterface[] | LoanBookInterface[])[];
-    suggestBook: (BookDataInterface[] | LoanBookInterface[])[];
-    BookRecordForUser: LoanBookInterface[][];
+    fetchAllRecord: () => Promise<void>;
     fetchAllBook: () => Promise<void>;
-    fetchBookWithFliterData: (type:string, bookname?:string, status?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => Promise<void>;
+    fetchBookWithFliterData: (bookname?:string, status?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => Promise<void>;
     fetchLoanBookWithFliterData: (type:string, bookname?:string, username?:string, status?:string, finesPaid?:string) => Promise<void>;
     createBook: (image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => Promise<boolean>;
     editBook: (bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, publishDate:string, authorID:string, description:string) => Promise<boolean>;
     loanBook: (bookID:string, userID?:string) => Promise<boolean>;
     returnBook: (loanRecordID:string, fineAmount?:number, finesPaid?:string) => Promise<boolean>;
     deleteBook: (bookID:string) => Promise<boolean>;
+}
+
+export interface RecommendBookContextProps
+{
+    suggestBook: (BookDataInterface[] | LoanBookInterface[])[];
+    fetchRecommendBook: () => void;
+    fetchNewPublishBook: () => Promise<void>;
+    fetchMostPopularBook: () => Promise<void>;    
+}
+
+export interface SelfBookRecordContextProps
+{
+    BookRecordForUser: LoanBookInterface[][];
+    bookForUser: BookDataInterface[];
+    fetchFavouriteRecord: () => Promise<void>;
+    fetchSelfLoanRecord: () => Promise<boolean>;
+    GetSuggestData: (suggestBookData: LoanBookInterface[]) => Promise<{ bookname: string; genre: any; author: any; publisher: any; }[]>;
+    fetchSelfFavouriteBookWithFilterData: (bookname?:string, status?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => Promise<void>;
+    fetchSelfLoanBookWithFilterData: (type:string, bookname?:string, status?:string) => Promise<void>;
     favouriteBook: (bookID:string) => Promise<boolean>;
     unfavouriteBook: (favouriteBookID:string) => Promise<boolean>;
 }

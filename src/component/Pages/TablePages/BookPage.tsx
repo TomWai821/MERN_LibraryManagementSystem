@@ -67,7 +67,7 @@ const BookPage= () =>
                 const languageID = definition.Language.find((language) => language.language === searchBook.language)?._id as string;
                 const authorID = contact.Author.find((author) => author.author === searchBook.author)?._id as string;
                 const publisherID = contact.Publisher.find((publisher) => publisher.publisher === searchBook.publisher)?._id as string;
-                fetchBookWithFliterData("All", searchBook.bookname, searchBook.status, genreID, languageID, authorID, publisherID);
+                fetchBookWithFliterData(searchBook.bookname, searchBook.status, genreID, languageID, authorID, publisherID);
                 break;
 
             case 1:
@@ -81,7 +81,7 @@ const BookPage= () =>
         switch(tabValue)
         {
             case 0:
-                fetchBookWithFliterData("All", "", "All", "All", "All", "All", "All");
+                fetchBookWithFliterData("All", "", "All", "All", "All", "All");
                 break;
 
             case 1:

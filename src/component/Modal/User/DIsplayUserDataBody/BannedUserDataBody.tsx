@@ -5,6 +5,7 @@ import { CalculateDuration, CountDuration, TransferDateToString } from "../../..
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
 import { displayAsColumn } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
 import { useAuthContext } from "../../../../Context/User/AuthContext";
+import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
 
 const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) => 
 {
@@ -27,11 +28,8 @@ const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) =>
                         </Fragment>
                     )
                 }
-                <Fragment>
-                    <Typography>Description: {Data.bannedDetails?.description}</Typography>
-                    <Typography>Date: {TransferDateToString(Data.bannedDetails?.startDate as Date)} - {TransferDateToString(Data.bannedDetails?.dueDate as Date)}</Typography>
-                    <Typography>Duration: {CalculateDuration(Data.bannedDetails?.startDate as Date, Data.bannedDetails?.dueDate as Date)}</Typography>
-                </Fragment>
+                <Typography>Date: {TransferDateToString(Data.bannedDetails?.startDate as Date)} - {TransferDateToString(Data.bannedDetails?.dueDate as Date)}</Typography>
+                <Typography>Duration: {CalculateDuration(Data.bannedDetails?.startDate as Date, Data.bannedDetails?.dueDate as Date)}</Typography>
                 {
                     IsAdmin() && 
                     (
@@ -40,6 +38,7 @@ const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) =>
                         </Fragment>
                     )
                 }
+                <ExpandableTypography title={"Description"}> {Data.bannedDetails?.description}</ExpandableTypography>
             </Box>
         </Box>
     );

@@ -43,8 +43,6 @@ export const fetchSuggestBook = async (type:string, authToken?:string, data?:Rec
             headers: headers,
             body: JSON.stringify({ suggestionData: data })
         });
-
-        console.log(JSON.stringify({ suggestionData: data }))
     }
     else
     {
@@ -106,7 +104,6 @@ export const fetchLoanBook = async(authToken?:string, type?:string, bookname?:st
     if(response.ok)
     {
         const result: GetResultInterface = await response.json();
-        console.log(result);
         return result;
     }
 }

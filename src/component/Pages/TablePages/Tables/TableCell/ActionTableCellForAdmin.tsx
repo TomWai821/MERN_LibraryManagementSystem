@@ -34,11 +34,13 @@ import { useBookContext } from "../../../../../Context/Book/BookContext";
 import { AlertContext } from "../../../../../Context/AlertContext";
 import SubmitFinesConfirmModal from "../../../../Modal/Confirmation/Book/SubmitFineConfirmation";
 import { BookSearchInterface } from "../../../../../Model/BookTableModel";
+import { useSelfBookRecordContext } from "../../../../../Context/Book/SelfBookRecordContext";
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData}) => 
 {
     const { handleOpen } = useModal();
-    const {BookRecordForUser, favouriteBook, unfavouriteBook, fetchLoanBookWithFliterData} = useBookContext();
+    const { fetchLoanBookWithFliterData} = useBookContext();
+    const { BookRecordForUser, favouriteBook, unfavouriteBook} = useSelfBookRecordContext();
     const alertContext = useContext(AlertContext);
 
 

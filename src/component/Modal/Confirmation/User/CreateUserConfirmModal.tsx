@@ -36,7 +36,7 @@ const CreateUserConfirmModal = ({...userData}) =>
 
     const registerUser = async () => 
     {
-        const  response = createUser("UserManagementPanel", username, email, password, role, gender, birthDay);
+        const response = createUser("UserManagementPanel", username, email, password, role, gender, birthDay);
         if (alertContext && alertContext.setAlertConfig) 
         {
             if (await response) 

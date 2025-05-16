@@ -19,13 +19,14 @@ import { useContactContext } from "../../../Context/Book/ContactContext";
 import { useDefinitionContext } from "../../../Context/Book/DefinitionContext";
 import { useBookContext } from "../../../Context/Book/BookContext";
 import { useAuthContext } from "../../../Context/User/AuthContext";
+import { useSelfBookRecordContext } from "../../../Context/Book/SelfBookRecordContext";
 
 const SelfRecordPage = () => 
 {
     const { contact } = useContactContext();
     const { definition } = useDefinitionContext();
     const { IsLoggedIn } = useAuthContext();
-    const { BookRecordForUser, fetchLoanBookWithFliterData, fetchBookWithFliterData } = useBookContext();
+    const { BookRecordForUser, fetchSelfFavouriteBookWithFilterData, fetchSelfLoanBookWithFilterData } = useSelfBookRecordContext();
 
     const [tabValue, setTabValue] = useState(0);
     const [paginationValue, setPaginationValue] = useState(10);
@@ -56,7 +57,7 @@ const SelfRecordPage = () =>
         switch(tabValue)
         {
             case 0:
-                fetchLoanBookWithFliterData("Self", searchData.bookname, undefined, searchData.status);
+                fetchSelfLoanBookWithFilterData("Self", searchData.bookname, searchData.status);
                 break;
 
             case 1:
@@ -64,7 +65,7 @@ const SelfRecordPage = () =>
                 const languageID = definition.Language.find((language) => language.language === searchData.language)?._id as string;
                 const authorID = contact.Author.find((author) => author.author === searchData.author)?._id as string;
                 const publisherID = contact.Publisher.find((publisher) => publisher.publisher === searchData.publisher)?._id as string;
-                fetchBookWithFliterData("Favourite", searchData.bookname, searchData.status, genreID, languageID, authorID, publisherID);
+                fetchSelfFavouriteBookWithFilterData(searchData.bookname, searchData.status, genreID, languageID, authorID, publisherID);
                 break;
         }
     }
@@ -80,11 +81,11 @@ const SelfRecordPage = () =>
         switch(tabValue)
         {
             case 0:
-                fetchLoanBookWithFliterData("Self", "", "", "All");
+                fetchSelfLoanBookWithFilterData("Self", "", "");
                 break;
 
             case 1:
-                fetchBookWithFliterData("Favourite", "", "All", "All", "All", "All", "All");
+                fetchSelfFavouriteBookWithFilterData("Favourite", "", "All", "All", "All", "All");
                 break;
         }
         setSearchData(defaultValue);

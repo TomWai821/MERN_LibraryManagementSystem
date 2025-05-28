@@ -1,20 +1,26 @@
-export const SetUserCookie = (authToken:string, username:string, role:string, avatarUrl:string, status:string, days:number, expires?:string) => 
+export const SetUserCookie = (authToken: string, username: string, role: string, avatarUrl: string, status: string, days: number, expires?: string) => 
 {
-    if(!expires)
+    if (!expires) 
     {
-        let expires = "";
-        if(days)
+        if (days) 
         {
             const date = new Date();
-            const milliSeconds = days * 24 * 60 * 60 * 1000;
-            date.setTime(date.getTime() + milliSeconds);
-            expires = ":expires=" + date.toUTCString();
+            date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+            expires = date.toUTCString();
         }
     }
-    document.cookie = `authToken=${authToken};username=${username};role=${role};avatarUrl=${avatarUrl};status=${status};expires=${expires};path=/"` ;
-}
+    const userInfo = { authToken, username, role, avatarUrl, status };
+    document.cookie = `userInfo=${encodeURIComponent(JSON.stringify(userInfo))}; expires=${expires}; path=/; SameSite=Lax; Secure`;
+};
 
-export const GetUserCookie = (name:string) => 
+export const GetUserCookie = (data: string): string | null => 
 {
-    return document.cookie.split(';').find(row => row.startsWith(name+'='));
-}
+    if(document.cookie.length > 0) 
+    {
+        const userInfo = decodeURIComponent(document.cookie.split("userInfo=")[1]);
+        const userData = JSON.parse(userInfo);
+        return userData[data];
+    }
+
+    return null;
+};

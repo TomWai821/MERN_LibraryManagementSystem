@@ -16,6 +16,7 @@ export const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =
             sessionStorage.setItem("avatarUrl", userData.avatarUrl as string);
             return;
         }
+        
         SetUserCookie(userData.authToken as string, userData.username, userData.role , userData.status, userData.avatarUrl as string, 30);
     }
 }

@@ -9,8 +9,6 @@ const RecommendBookContext = createContext<RecommendBookContextProps | undefined
 
 export const RecommendBookProvider:FC<ChildProps> = ({children}) => 
 {
-    const { GetData } = useAuthContext();
-    const { GetSuggestData } = useSelfBookRecordContext();
     const {bookForUser} = useSelfBookRecordContext();
 
     const [newPublishBook, setNewPublishBook] = useState<BookDataInterface[]>([]);

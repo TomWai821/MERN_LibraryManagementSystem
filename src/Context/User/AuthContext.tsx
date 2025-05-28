@@ -10,7 +10,7 @@ export const AuthProvider: FC<ChildProps> = ({ children }) =>
 
     const IsLoggedIn = () => 
     {
-        const tokenFromCookie = document.cookie.split(';').find(row => row.startsWith('authToken='));
+        const tokenFromCookie = document.cookie.match("authToken");
     
         if (tokenFromCookie || sessionStorage.getItem('authToken')) 
         {
@@ -25,7 +25,7 @@ export const AuthProvider: FC<ChildProps> = ({ children }) =>
     
         if(DataList.includes(data))
         {
-            return GetUserCookie(data) || sessionStorage.getItem(data);
+            return GetUserCookie(data) as string || sessionStorage.getItem(data);
         }
     
         return undefined;
@@ -36,11 +36,11 @@ export const AuthProvider: FC<ChildProps> = ({ children }) =>
         return GetData("role") === "Admin";
     }
 
-    const handleLogout = async(username: string | null) =>
+    const handleLogout = async() =>
     {
         if(document.cookie)
         {
-            document.cookie = "authToken=" + username + '; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            document.cookie = "userInfo=" + {} + '; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         }
         sessionStorage.clear();
         window.location.href = mainPage;

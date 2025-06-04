@@ -12,7 +12,7 @@ import { useUserContext } from "../../../Context/User/UserContext";
 // Data (CSS Syntax and dropdown data)
 import { PaginationOption, UserTabLabel } from "../../../ArraysAndObjects/TableArrays";
 import TableTitle from "../../UIFragment/TableTitle";
-import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects";
+import { PageItemToCenter } from "../../../ArraysAndObjects/Style";
 import { useAuthContext } from "../../../Context/User/AuthContext";
 
 const UserPage = () =>

@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react"
 import { FilterInterface } from "../../../../Model/TablePagesAndModalModel"
 import { Box, TextField, Button, MenuItem, IconButton } from "@mui/material";
-import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ItemToCenter } from "../../../../ArraysAndObjects/Style";
 import { SelfLoanBookSearchInterface } from "../../../../Model/BookTableModel";
 import { AllBookStatusOption, LoanBookStatusOption } from "../../../../ArraysAndObjects/TableArrays";
 

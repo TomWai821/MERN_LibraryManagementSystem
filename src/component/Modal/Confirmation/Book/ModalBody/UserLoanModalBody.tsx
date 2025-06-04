@@ -1,5 +1,5 @@
 import { Box, TextField, Typography } from "@mui/material"
-import { displayAsRow } from "../../../../../ArraysAndObjects/FormatSyntaxObjects"
+import { displayAsRow } from "../../../../../ArraysAndObjects/Style"
 import { FC } from "react"
 import { UserLoanBookModalBodyInterface } from "../../../../../Model/ModelForModal"
 

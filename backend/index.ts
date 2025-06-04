@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { connectToMongoDB } from './connectToMongo';
+import detectRecords from './detectRecord';
 
 connectToMongoDB();
 
@@ -24,3 +25,5 @@ app.listen(PORT, () =>
 { 
     console.log(`Server listen to http://localhost:${PORT}`);
 })
+
+detectRecords();

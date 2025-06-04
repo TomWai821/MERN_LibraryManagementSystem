@@ -17,7 +17,7 @@ import { UserDataInterface } from '../../../Model/UserTableModel';
 import ModalConfirmButton from '../../UIFragment/ModalConfirmButton';
 
 // Arrays And Object(For Dropdown Data and css syntax)
-import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
+import { ModalBodySyntax } from '../../../ArraysAndObjects/Style';
 import { CreateUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
 import { DataValidateField } from '../../../Controller/ValidateController';
 

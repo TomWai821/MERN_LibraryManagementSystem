@@ -8,7 +8,7 @@ import { useDefinitionContext } from "../../../Context/Book/DefinitionContext";
 import { ChangePage } from "../../../Controller/OtherController";
 
 // data (CSS Syntax)
-import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects";
+import { PageItemToCenter } from "../../../ArraysAndObjects/Style";
 
 import { useAuthContext } from "../../../Context/User/AuthContext";
 

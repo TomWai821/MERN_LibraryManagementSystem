@@ -37,19 +37,19 @@ const ProfileMenu:FC<ProfileMenuInterface> = (navData) =>
                 <Divider/>
 
                 {settings.map((setting) => (
-                    <MenuItem key={setting.label} onClick={handleUserMenu} sx={{ MenuItemSyntax, NavSyntax }}>
+                    <MenuItem key={setting.label} onClick={(event: React.MouseEvent<HTMLElement>) => { handleUserMenu(event); setting.clickEvent(); }} sx={{ MenuItemSyntax, NavSyntax }}>
                         <ListItemIcon>
                             {setting.icon}
                         </ListItemIcon>
-                        <Typography onClick={setting.clickEvent} width={'100%'}>{setting.label}</Typography>
+                        <Typography width={'100%'}>{setting.label}</Typography>
                     </MenuItem>
                 ))}
                 
-                <MenuItem onClick={handleUserMenu} sx={{ MenuItemSyntax, NavSyntax }}>
+                <MenuItem onClick={(event: React.MouseEvent<HTMLElement>) => { handleUserMenu(event); handleLogout(GetData("username") as string | null); }} sx={{ MenuItemSyntax, NavSyntax }}>
                         <ListItemIcon>
                             <ExitToAppIcon />
                         </ListItemIcon>
-                        <Typography onClick={() => handleLogout(GetData("username") as string | null)} width={'100%'}>Logout</Typography>
+                        <Typography width={'100%'}>Logout</Typography>
                     </MenuItem>
             </Menu>
         </Box>

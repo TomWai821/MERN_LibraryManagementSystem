@@ -10,7 +10,7 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 import { UserDataTableInterface } from "../../../../../Model/UserTableModel";
 
 // Data (CSS Syntax and table header)
-import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ItemToCenter } from "../../../../../ArraysAndObjects/Style";
 import { SuspendUserTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
 
 import { CalculateDuration, TransferDateToString } from "../../../../../Controller/OtherController";

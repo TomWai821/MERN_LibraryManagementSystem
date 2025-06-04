@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { PageItemToCenter } from "../../ArraysAndObjects/FormatSyntaxObjects";
+import { PageItemToCenter } from "../../ArraysAndObjects/Style";
 import SuggestBookPanelTemplate from "../Templates/SuggestBookPanelTemplate";
 import { useRecommendBookContext } from "../../Context/Book/RecommendBookContext";
 

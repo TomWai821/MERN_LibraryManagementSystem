@@ -5,7 +5,7 @@ import EditContactModal from "../../Contact/EditContactModal";
 import { useModal } from "../../../../Context/ModalContext";
 import { useContactContext } from "../../../../Context/Book/ContactContext";
 import { Box, Typography } from "@mui/material";
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 import { ContactInterface } from "../../../../Model/ResultModel";
 import { AlertContext } from "../../../../Context/AlertContext";

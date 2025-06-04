@@ -29,7 +29,7 @@ import { ActionTableCellInterface } from "../../../../../Model/TablePagesAndModa
 import { BookDataInterface, DetailsInterfaceForSuspend, LoanBookInterface, UserResultDataInterface } from "../../../../../Model/ResultModel";
 
 // Data(CSS Syntax)
-import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/Style";
 import { useBookContext } from "../../../../../Context/Book/BookContext";
 import { AlertContext } from "../../../../../Context/AlertContext";
 import SubmitFinesConfirmModal from "../../../../Modal/Confirmation/Book/SubmitFineConfirmation";

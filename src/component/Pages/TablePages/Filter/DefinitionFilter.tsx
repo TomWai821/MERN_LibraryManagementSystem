@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
-import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ItemToCenter } from "../../../../ArraysAndObjects/Style";
 import { DefinitionFilterInterface } from "../../../../Model/TablePagesAndModalModel";
 
 const DefinitionFilter:FC<DefinitionFilterInterface> = (filterData) => 

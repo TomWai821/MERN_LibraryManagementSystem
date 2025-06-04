@@ -16,7 +16,7 @@ import ModalTemplate from '../../../Templates/ModalTemplate';
 import CreateUserModal from "../../User/CreateUserModal";
 
 // Data (CSS Synxax)
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
 
 
 

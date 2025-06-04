@@ -14,7 +14,7 @@ import { FetchUserData } from '../../Controller/UserController/UserGetController
 import { GetUserCookie } from '../../Controller/CookieController'
 
 // Data(CSS Syntax)
-import { displayAsColumn, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../ArraysAndObjects/FormatSyntaxObjects';
+import { displayAsColumn, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../ArraysAndObjects/Style';
 import { ViewProfileField } from '../../ArraysAndObjects/TextFieldsArrays';
 import DisplayQRCodeModal from '../Modal/DisplayQRCodeModal'
 import EditProfileDataModal from '../Modal/EditProfileDataModal'

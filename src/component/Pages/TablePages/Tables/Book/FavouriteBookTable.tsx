@@ -1,5 +1,5 @@
 import { Avatar, Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ItemToCenter } from "../../../../../ArraysAndObjects/Style";
 import { FC, Fragment, useState } from "react";
 import { AllBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
 import ContentTableCell from "../../../../UIFragment/ContentTableCell";

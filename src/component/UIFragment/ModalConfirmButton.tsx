@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 
 
 import { ModalConfirmButtonInterface } from "../../Model/ModelForModal";
-import { DeleteButton } from "../../ArraysAndObjects/FormatSyntaxObjects";
+import { DeleteButton } from "../../ArraysAndObjects/Style";
 
 const ModalConfirmButton:FC<ModalConfirmButtonInterface> = (modalConfirmButtonData) => 
 {

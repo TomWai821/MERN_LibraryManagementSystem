@@ -17,7 +17,7 @@ import { FilterInterface } from "../../../../Model/TablePagesAndModalModel";
 import { BookTableDataInterface } from "../../../../Model/BookTableModel";
 
 // Data(CSS Syntax and dropdown data)
-import { ItemToCenter } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ItemToCenter } from "../../../../ArraysAndObjects/Style";
 import { AllBookStatusOption, LoanBookStatusOption } from "../../../../ArraysAndObjects/TableArrays";
 import { useAuthContext } from "../../../../Context/User/AuthContext";
 

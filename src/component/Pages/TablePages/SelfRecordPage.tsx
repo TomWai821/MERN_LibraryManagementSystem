@@ -12,7 +12,7 @@ import { ChangePage } from "../../../Controller/OtherController";
 
 // Useful data
 import { BookRecordTabLabel, PaginationOption } from "../../../ArraysAndObjects/TableArrays";
-import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects"
+import { PageItemToCenter } from "../../../ArraysAndObjects/Style"
 
 // Context
 import { useContactContext } from "../../../Context/Book/ContactContext";
@@ -85,7 +85,7 @@ const SelfRecordPage = () =>
                 break;
 
             case 1:
-                fetchSelfFavouriteBookWithFilterData("Favourite", "", "All", "All", "All", "All");
+                fetchSelfFavouriteBookWithFilterData("", "All", "All", "All", "All", "All");
                 break;
         }
         setSearchData(defaultValue);

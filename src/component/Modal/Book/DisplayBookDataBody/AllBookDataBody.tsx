@@ -3,7 +3,7 @@ import { Avatar, Box, Tab, Tabs } from "@mui/material";
 
 import { DisplayDataModalBody } from "../../../../Model/ModelForModal"
 
-import { BookImageFormat, displayAsRow} from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { BookImageFormat, displayAsRow} from "../../../../ArraysAndObjects/Style";
 import { BookDataInterface, GetResultInterface, LoanBookInterface } from "../../../../Model/ResultModel";
 import { TransferDateToISOString } from "../../../../Controller/OtherController";
 

@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useContext, useState } from "react";
 import { Box, Button, Tab, Tabs, Typography } from "@mui/material";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
-import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
 
 import { useBookContext } from "../../../../Context/Book/BookContext";
 import { useModal } from "../../../../Context/ModalContext";

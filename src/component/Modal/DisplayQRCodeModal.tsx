@@ -2,7 +2,7 @@ import { FC } from "react"
 import { Box, Typography } from "@mui/material";
 import QRCode from "react-qr-code";
 
-import { ModalBodySyntax } from "../../ArraysAndObjects/FormatSyntaxObjects";
+import { ModalBodySyntax } from "../../ArraysAndObjects/Style";
 
 import ModalTemplate from "../Templates/ModalTemplate";
 

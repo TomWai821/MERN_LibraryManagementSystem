@@ -15,7 +15,7 @@ import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext
 import { useModal } from "../../../../Context/ModalContext";
 
 // Useful Object/Array Data
-import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
 import { AlertContext } from "../../../../Context/AlertContext";
 
 const DeleteDefinitionConfirmModal:FC<DeleteModalInterface> = (deleteData) =>

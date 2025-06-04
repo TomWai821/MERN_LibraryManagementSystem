@@ -16,7 +16,7 @@ import EditBookModal from "../../Book/EditBookModal";
 // Data (CSS Syntax)
 import { BookDataInterfaceForEdit } from "../../../../Model/ResultModel";
 import { useBookContext } from "../../../../Context/Book/BookContext";
-import { BookImageFormatForEdit, displayAsRow, ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { BookImageFormatForEdit, displayAsRow, ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
 
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 

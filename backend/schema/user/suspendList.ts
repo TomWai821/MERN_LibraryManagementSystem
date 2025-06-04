@@ -1,8 +1,9 @@
 import mongoose, { ObjectId } from "mongoose";
-import { DeleteAndSuspendListInterface } from "../../model/userSchemaInterface";
+import { SuspendListInterface } from "../../model/userSchemaInterface";
 import { printError } from "../../controller/Utils";
+import { FindUserByIDAndUpdate } from "./user";
 
-const SuspendListSchema = new mongoose.Schema<DeleteAndSuspendListInterface>
+const SuspendListSchema = new mongoose.Schema<SuspendListInterface>
 (
     {
         userID: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
@@ -12,7 +13,7 @@ const SuspendListSchema = new mongoose.Schema<DeleteAndSuspendListInterface>
     }
 )
 
-const SuspendList = mongoose.model<DeleteAndSuspendListInterface>('SuspendList', SuspendListSchema);
+const SuspendList = mongoose.model<SuspendListInterface>('SuspendList', SuspendListSchema);
 
 export const CreateSuspendList = async (data: Record<string, any>) =>
 {
@@ -103,3 +104,44 @@ export const FindSuspendListByIDAndDelete = async (banListID: ObjectId) =>
         printError(error);
     }
 }
+
+export const detectExpiredSuspendRecord = async () => 
+{
+    try
+    {
+        const currentDate = new Date();
+
+        const expiresRecord = await GetSuspendList({dueDate: {$lte: currentDate}}) as SuspendListInterface[];
+
+        if(expiresRecord.length > 0)
+        {
+            console.log(`Auto-Unsuspend ${expiresRecord.length} users`);
+
+            for(const user of expiresRecord)
+            {
+                const deleteSuspendRecord = await SuspendList.findByIdAndDelete(user.userID);
+            
+                if(!deleteSuspendRecord)
+                {
+                    return console.log(`Failed to Unsuspend ${user.userID}`);
+                }
+
+                const modifyUserStatus = await FindUserByIDAndUpdate(user.userID, {status: 'Normal'});
+
+                if(!modifyUserStatus)
+                {
+                    return console.log(`Failed to Change ${user.userID} status`);
+                }
+
+                console.log(`Unsuspend user ${user.userID} successfully!`);
+            }
+        }
+    }
+    catch(error)
+    {
+        console.error("Error detecting expired suspensions:", error);
+    }
+}
+
+const DayToMillionSeconds = 24 * 60 * 60 * 1000;
+setInterval(detectExpiredSuspendRecord, DayToMillionSeconds);

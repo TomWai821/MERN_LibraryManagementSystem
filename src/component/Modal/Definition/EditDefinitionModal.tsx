@@ -20,7 +20,7 @@ import { EditModalInterface } from '../../../Model/ModelForModal';
 // Data (Dropdown option and CSS Syntax)
 import { EditGenreInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
 import { EditLanguageInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
-import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
+import { ModalBodySyntax } from '../../../ArraysAndObjects/Style';
 
 const EditDefinitionModal:FC<EditModalInterface> = (editModalData) => 
 {

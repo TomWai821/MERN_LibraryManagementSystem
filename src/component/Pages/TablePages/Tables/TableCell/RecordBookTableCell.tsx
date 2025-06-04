@@ -17,7 +17,7 @@ import { RecordTableCellInterface } from "../../../../../Model/TablePagesAndModa
 import { DisableValidationForLoanBook } from "../../../../../Controller/OtherUsefulController";
 
 
-import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/Style";
 import { useBookContext } from "../../../../../Context/Book/BookContext";
 import { AlertContext } from "../../../../../Context/AlertContext";
 import { useSelfBookRecordContext } from "../../../../../Context/Book/SelfBookRecordContext";

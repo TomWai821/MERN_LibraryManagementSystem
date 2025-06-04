@@ -18,7 +18,7 @@ import { useUserContext } from "../../../../Context/User/UserContext";
 import SuspendUserModal from "../../User/SuspendUserModal";
 
 // Data (CSS Syntax and dropdown data)
-import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
 import { dateOption } from "../../../../ArraysAndObjects/TextFieldsArrays";
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
 import { AlertContext } from "../../../../Context/AlertContext";

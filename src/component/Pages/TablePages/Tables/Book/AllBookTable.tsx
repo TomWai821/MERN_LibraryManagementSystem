@@ -8,7 +8,7 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 // Models
 import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
 import { AllBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
-import { ItemToCenter } from "../../../../../ArraysAndObjects/FormatSyntaxObjects";
+import { ItemToCenter } from "../../../../../ArraysAndObjects/Style";
 import { BookDataInterface } from "../../../../../Model/ResultModel";
 import { useAuthContext } from "../../../../../Context/User/AuthContext";
 import { setDataTextColor } from "../../../../../Controller/SetTextController";

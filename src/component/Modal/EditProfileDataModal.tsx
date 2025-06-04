@@ -1,8 +1,8 @@
-import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { Box, Button, FormControl, MenuItem, TextField } from "@mui/material";
 
 import ModalTemplate from "../Templates/ModalTemplate";
-import { displayAsColumn } from "../../ArraysAndObjects/FormatSyntaxObjects";
+import { displayAsColumn } from "../../ArraysAndObjects/Style";
 import { DataValidateField } from "../../Controller/ValidateController";
 import { useAuthContext } from "../../Context/User/AuthContext";
 import { AlertContext } from "../../Context/AlertContext";
@@ -15,12 +15,9 @@ const EditProfileDataModal = () =>
     const {GetData} = useAuthContext();
     const {handleClose} = useModal();
     const alertContext = useContext(AlertContext);
-    
-    const url = process.env.REACT_APP_LOCAL_HOST;
 
     const [option, setOption] = useState("username");
-    const [editedData, setEditData] = useState(
-    { username: "",password: "",confirmPassword: "" });
+    const [editedData, setEditData] = useState({ username: "",password: "",confirmPassword: "" });
 
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errors, setErrors] = useState({email: "", password: "", confirmPassword: ""});
@@ -85,18 +82,19 @@ const EditProfileDataModal = () =>
 
         const response = await ModifyProfileDataController(GetData("authToken") as string, option, bodyData);
 
-        const result: GetResultInterface = await response.json();
+        const result = await response as GetResultInterface;
 
         if (alertContext && alertContext.setAlertConfig) 
         {
-            if (response.ok) 
+            if (response) 
             {
                 alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string, open: true, onClose: () => alertContext.setAlertConfig(null) });
-                setTimeout(() =>  handleClose(), 2000)
+                setTimeout(() => {handleClose(); window.location.reload()}, 2000);
+                
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: result.error as string, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to edit ${option}!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
             }
         }
     }

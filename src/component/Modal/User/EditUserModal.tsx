@@ -17,7 +17,7 @@ import { useModal } from '../../../Context/ModalContext';
 import { UserResultDataInterface } from '../../../Model/ResultModel';
 import { UserDataInterface } from '../../../Model/UserTableModel';
 import { EditModalInterface } from '../../../Model/ModelForModal';
-import { ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
+import { ModalBodySyntax } from '../../../ArraysAndObjects/Style';
 import { EditUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
 import { DataValidateField } from '../../../Controller/ValidateController';
 

@@ -40,7 +40,8 @@ const fetchData = async (authToken:string, url: string, data: Record<string, any
 const ModifyProfileDataController = async (authToken:string, option:string, body:any) => 
 {
     const URL = `${url}/UserData/type=${option}`;
-    const data: { username: string; password?: undefined;} | { password: string; username?: undefined;} = body; return await fetchData(authToken, URL, data);
+    const data: { username: string; password?: undefined;} | { password: string; username?: undefined;} = body; 
+    return await fetchData(authToken, URL, data);
 }
 
 const ModifyUserDataController = async (authToken:string, userId: string, username:string, email:string, gender:string, role:string) => 

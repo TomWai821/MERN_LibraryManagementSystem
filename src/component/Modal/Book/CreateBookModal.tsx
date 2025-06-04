@@ -16,7 +16,7 @@ import { CreateBookModalInterface } from '../../../Model/ModelForModal';
 
 // Data (CSS Syntax and dropdown data)
 import { useDefinitionContext } from '../../../Context/Book/DefinitionContext';
-import { BookImageFormat, DeleteButton, displayAsColumn, displayAsRow, ModalBodySyntax } from '../../../ArraysAndObjects/FormatSyntaxObjects';
+import { BookImageFormat, DeleteButton, displayAsColumn, displayAsRow, ModalBodySyntax } from '../../../ArraysAndObjects/Style';
 import { useContactContext } from '../../../Context/Book/ContactContext';
 import { ContactInterface, DefinitionInterface } from '../../../Model/ResultModel';
 import { GetCurrentDate } from '../../../Controller/OtherController';

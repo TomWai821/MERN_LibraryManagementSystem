@@ -7,7 +7,7 @@ import CustomTab from "../../UIFragment/CustomTab";
 import TableTitle from "../../UIFragment/TableTitle";
 
 // Data (CSS SYntax and dropdown)
-import { PageItemToCenter } from "../../../ArraysAndObjects/FormatSyntaxObjects";
+import { PageItemToCenter } from "../../../ArraysAndObjects/Style";
 import { ContactTabLabel, PaginationOption } from "../../../ArraysAndObjects/TableArrays";
 import { useContactContext } from "../../../Context/Book/ContactContext";
 import ContactTabPanel from "./Tabs/ContactTabPanel";

@@ -14,7 +14,7 @@ import { LoginController } from '../../Controller/UserController/UserPostControl
 import { ChangePage } from '../../Controller/OtherController';
 
 // Data (CSS Syntax and dropdown)
-import { PageItemToCenter, PageTitleSyntax } from '../../ArraysAndObjects/FormatSyntaxObjects';
+import { PageItemToCenter, PageTitleSyntax } from '../../ArraysAndObjects/Style';
 import { LoginField } from '../../ArraysAndObjects/TextFieldsArrays';
 
 const LoginPage = () => 

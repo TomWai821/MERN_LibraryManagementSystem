@@ -39,11 +39,10 @@ const fetchUserData = async (tableName: string, queryParams: any, userId?: Objec
 
 const buildQuery = (queryParams: any) => 
 {
-    const { username, email, status, role, gender } = queryParams;
+    const { username, status, role, gender } = queryParams;
 
     return {
         ...(username && { "username": { $regex: username, $options: "i" } }),
-        ...(email && { "email": { $regex: email, $options: "i" } }),
         ...(status && { status }),
         ...(role && { role }),
         ...(gender && { gender })

@@ -20,7 +20,6 @@ const OptionFieldsManager:FC<OptionFieldsInterface> = (searchOptionFieldData) =>
         User:
         [
             <SearchOptionField optionVisiable={optionVisiable} onChange={onChange} SearchField={AllUserSearchField} searchData={searchData} />,
-            <SearchOptionField optionVisiable={optionVisiable} onChange={onChange} SearchField={OtherUserSearchField} searchData={searchData} />,
             <SearchOptionField optionVisiable={optionVisiable} onChange={onChange} SearchField={OtherUserSearchField} searchData={searchData} />
         ],
         Record:

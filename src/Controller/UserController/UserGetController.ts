@@ -5,7 +5,7 @@ const localhost = process.env.REACT_APP_LOCAL_HOST;
 const contentType:string = 'application/json';
 const url:string = `${localhost}/user`;
 
-export const FetchUserData = async(tableName?: string, authToken?:string,  username?: string, email?: string , role?: string , status?: string, gender?: string, startDate?:Date, dueDate?: Date) => 
+export const FetchUserData = async(tableName?: string, authToken?:string,  username?: string, role?: string , status?: string, gender?: string, startDate?:Date, dueDate?: Date) => 
 {
     try
     {
@@ -19,7 +19,7 @@ export const FetchUserData = async(tableName?: string, authToken?:string,  usern
             headers['authToken'] = authToken;
         }
 
-        let queryParams = BuildQuery({username, email, role, status, gender, startDate, dueDate});
+        let queryParams = BuildQuery({username, role, status, gender, startDate, dueDate});
 
         const queryString = queryParams.toString();
         const URL = tableName === undefined ? `${url}/UserData` : `${url}/userData/tableName=${queryString ? `${tableName}?${queryString}` : `${tableName}`}`;

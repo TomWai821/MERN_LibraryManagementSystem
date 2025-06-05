@@ -38,8 +38,8 @@ export interface ActionTableCellInterface extends UserActionTableCellInterface
     changeValue?: (type:string, newValue: number) => void;
     setSearchBook?: (data: BookSearchInterface) => void;
     searchBook?: BookSearchInterface;
-    setSearchUserData?: (data: { username: string, email: string, role: string, status: string, gender: string }) => void;
-    searchUserData?: { username: string, email: string, role: string, status: string, gender: string };
+    setSearchUserData?: (data: { username: string, role: string, status: string, gender: string }) => void;
+    searchUserData?: { username: string, role: string, status: string, gender: string };
 }
 
 export interface RecordTableCellInterface 

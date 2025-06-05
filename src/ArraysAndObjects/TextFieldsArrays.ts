@@ -25,7 +25,6 @@ const ViewProfileField =
 // For user filter
 const UserSearchField = 
 [
-    {name: "email", label: "Email", type: "email"},
     {name: "gender", label: "Gender", type: "text", select: true, options: GenderFilterOption}
 ]
 
@@ -33,12 +32,11 @@ const AllUserSearchField =
 [
     ...UserSearchField,
     {name: "role", label: "Role", type: "text", select: true, options: RoleFilterOption},
-    {name: "status", label: "Status", type: "text", select: true, options: StatusFilterOption}
 ]
 
 const OtherUserSearchField = 
 [
-    {name: "role", label:"Role", type:"text", syntax:{ width: '10%', marginLeft: '10px' }, select: true, options: RoleFilterOption},
+    {name: "role", label: "Role", type: "text", syntax:{ width: '10%', marginLeft: '10px' }, select: true, options: RoleFilterOption},
     {name: "gender", label: "Gender", type: "text", select: true, options: GenderFilterOption},
 ]
 

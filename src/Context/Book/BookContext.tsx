@@ -16,7 +16,7 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
 {
     const { GetData } = useAuthContext();
     const { fetchFavouriteRecord, fetchSelfLoanRecord} = useSelfBookRecordContext();
-    const { fetchNewPublishBook, fetchMostPopularBook, fetchRecommendBook } = useRecommendBookContext();
+    const { fetchNewPublishBook, fetchMostPopularBook } = useRecommendBookContext();
     
     const [AllBook, setAllBook] = useState<BookDataInterface[]>([]);
     const [OnLoanBook, setOnLoanBook] = useState<LoanBookInterface[]>([]);
@@ -114,9 +114,9 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
 
     },[fetchAllBook])
 
-    const returnBook = useCallback(async(loanRecordID:string, fineAmount?:number, finesPaid?:string) =>
+    const returnBook = useCallback(async(loanRecordID:string, finesPaid?:string) =>
     {
-        const result = await returnBookAndChangeStatus(authToken, loanRecordID, fineAmount, finesPaid);
+        const result = await returnBookAndChangeStatus(authToken, loanRecordID, finesPaid);
 
         if(result)
         {

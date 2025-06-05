@@ -150,7 +150,15 @@ export const detectExpiredLoanRecord = async () =>
     {
         const currentDate = new Date();
 
-        const expiresLoanRecords = await GetBookLoaned({loanDate: {$lte: currentDate}}) as BookLoanedInterface[];
+        const loanRecords = await GetBookLoaned({status: 'Loaned'}) as BookLoanedInterface[];
+
+        const expiresLoanRecords = loanRecords.filter( bookLoaned => 
+            {
+                const dueDate = new Date(bookLoaned.dueDate);
+                const effectiveDueDate = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate() + 1)
+                return effectiveDueDate < currentDate;
+            }
+        )
 
         if(expiresLoanRecords.length > 0)
         {
@@ -189,17 +197,19 @@ export const modifyFinesAmount = async() =>
 
             for(const bookLoaned of expiresLoanRecords)
             {
-                const expireTime = new Date(bookLoaned.returnDate as Date).getTime();
+                const expireTime = new Date(bookLoaned.dueDate as Date).getTime();
                 const diffTime = currentDate.getTime() - expireTime;
                 const expireDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                const modifyFinesAmount = await FindBookLoanedByIDAndUpdate(bookLoaned._id as unknown as string, {finesAmount: 1.5 * expireDays});
+                const finesAmount = 1.5 * expireDays < 130 ? 1.5 * expireDays : 130;
+                const modifyFinesAmount = await FindBookLoanedByIDAndUpdate(bookLoaned._id as unknown as string, {fineAmount: finesAmount});
 
                 if(!modifyFinesAmount)
                 {
-                    console.log(`Failed to modify ${bookLoaned._id} loan record finesAmount!`)
+                    console.log(`Failed to modify ${bookLoaned._id} loan record finesAmount!`);
+                    continue;
                 }
 
-                console.log(`Loan Record ${bookLoaned._id} fines Amount modify successfully!`);
+                console.log(`Loan Record ${bookLoaned._id} fine Amount ($${1.5 * expireDays}) modify successfully!`);
             }
         }
     }

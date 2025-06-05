@@ -2,14 +2,17 @@ import mongoose, { ObjectId } from "mongoose";
 import { SuspendListInterface } from "../../model/userSchemaInterface";
 import { printError } from "../../controller/Utils";
 import { FindUserByIDAndUpdate } from "./user";
+import { suspendListStatus } from "../../Arrays/Types";
 
 const SuspendListSchema = new mongoose.Schema<SuspendListInterface>
 (
     {
         userID: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
         description: { type: String, default: "N/A" },
+        status: {type: String, default: 'Suspend', enum: suspendListStatus},
         startDate: { type: Date, required: true, immutable: true },
-        dueDate: { type: Date }
+        dueDate: { type: Date },
+        unSuspendDate: { type: Date, default: null }
     }
 )
 
@@ -93,47 +96,37 @@ export const FindSuspendListByIDAndUpdate = async (banListID: ObjectId, data: Re
     }
 }
 
-export const FindSuspendListByIDAndDelete = async (banListID: ObjectId) =>
-{
-    try 
-    {
-        return await SuspendList.findByIdAndDelete(banListID);
-    } 
-    catch (error) 
-    {
-        printError(error);
-    }
-}
-
 export const detectExpiredSuspendRecord = async () => 
 {
     try
     {
         const currentDate = new Date();
 
-        const expiresRecord = await GetSuspendList({dueDate: {$lte: currentDate}}) as SuspendListInterface[];
+        const expiresRecord = await GetSuspendList({dueDate: {$lt: currentDate}}) as SuspendListInterface[];
 
         if(expiresRecord.length > 0)
         {
             console.log(`Auto-Unsuspend ${expiresRecord.length} users`);
 
-            for(const user of expiresRecord)
+            for(const record of expiresRecord)
             {
-                const deleteSuspendRecord = await SuspendList.findByIdAndDelete(user.userID);
-            
-                if(!deleteSuspendRecord)
-                {
-                    return console.log(`Failed to Unsuspend ${user.userID}`);
-                }
-
-                const modifyUserStatus = await FindUserByIDAndUpdate(user.userID, {status: 'Normal'});
+                const modifyUserStatus = await FindUserByIDAndUpdate(record.userID, {status: 'Normal'});
 
                 if(!modifyUserStatus)
                 {
-                    return console.log(`Failed to Change ${user.userID} status`);
+                    console.log(`Failed to Change ${record.userID} status`);
+                    continue;
                 }
 
-                console.log(`Unsuspend user ${user.userID} successfully!`);
+                const modifySuspendStatus = await FindSuspendListByIDAndUpdate(record._id, {status: 'Unsuspend', unSuspendDate: currentDate});
+            
+                if(!modifySuspendStatus)
+                {
+                    console.log(`Failed to Unsuspend ${record._id}`);
+                    continue;
+                }
+
+                console.log(`Unsuspend user ${record.userID} successfully!`);
             }
         }
     }
@@ -142,6 +135,3 @@ export const detectExpiredSuspendRecord = async () =>
         console.error("Error detecting expired suspensions:", error);
     }
 }
-
-const DayToMillionSeconds = 24 * 60 * 60 * 1000;
-setInterval(detectExpiredSuspendRecord, DayToMillionSeconds);

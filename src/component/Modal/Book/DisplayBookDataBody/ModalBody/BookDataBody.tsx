@@ -12,7 +12,7 @@ const BookDataBody:FC<BookDataBodyInterface> = (bookBodyData) =>
     const {BookData, status, descriptionData} = bookBodyData;
       
     return(
-            <Box sx={{ display: 'grid', gap: '20px 50px', width:'350px', gridTemplateColumns: '100%'}}>
+            <Box sx={{ display: 'grid', gap: '20px 50px', width:'350px', gridTemplateColumns: '100%', paddingLeft: '10px'}}>
                 {
                     Object.entries(BookData).map(([key, value], index) => 
                         (

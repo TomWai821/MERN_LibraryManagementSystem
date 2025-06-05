@@ -83,7 +83,7 @@ const UserPage = () =>
             <CustomTab value={tabValue} changeValue={changeValue} paginationValue={paginationValue} tabLabel={UserTabLabel} paginationOption={PaginationOption} type={"User"}/>
 
             <TableContainer sx={{ marginTop: 5 }} component={Paper}>
-                <UserTabPanel value={tabValue} userData={userData} paginationValue={paginationValue}/>
+                <UserTabPanel value={tabValue} userData={userData} paginationValue={paginationValue} changeValue={changeValue} setSearchUserData={setSearchUserData} searchUserData={searchUserData}/>
             </TableContainer>
         </Box>
     );

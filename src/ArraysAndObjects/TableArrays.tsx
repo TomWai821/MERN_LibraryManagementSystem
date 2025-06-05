@@ -27,7 +27,7 @@ const SuspendUserTableHeader =
     {label:"No.", isAdmin: false},
     {label:"Username", isAdmin: false},
     {label:"Role", isAdmin: false},
-    {label:"Description", isAdmin: false},
+    {label:"Status", isAdmin: false},
     {label:"StartDate", isAdmin: false},
     {label:"DueDate", isAdmin: false},
     {label:"Duration", isAdmin: false},

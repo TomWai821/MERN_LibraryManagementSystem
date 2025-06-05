@@ -95,7 +95,7 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
 export const UpdateLoanBookRecord = async (req: AuthRequest, res:Response) => 
 {
     const foundLoanedRecord = req.foundLoanedRecord as BookLoanedInterface;
-    const { fineAmount, finesPaid } = req.body;
+    const { finesPaid } = req.body;
     let success = false;
 
     try
@@ -105,7 +105,7 @@ export const UpdateLoanBookRecord = async (req: AuthRequest, res:Response) =>
         
         const status = dueDate && currentDate <= dueDate ? 'Returned' : 'Returned(Late)';
 
-        const changeLoanRecordStatus = await FindBookLoanedByIDAndUpdate(foundLoanedRecord._id as unknown as string, {status: status, returnDate: currentDate, fineAmount: fineAmount, finesPaid: finesPaid})
+        const changeLoanRecordStatus = await FindBookLoanedByIDAndUpdate(foundLoanedRecord._id as unknown as string, {status: status, returnDate: currentDate, finesPaid: finesPaid})
 
         if(!changeLoanRecordStatus)
         {

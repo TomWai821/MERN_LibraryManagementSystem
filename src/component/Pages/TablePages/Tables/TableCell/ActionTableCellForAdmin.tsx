@@ -9,7 +9,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { useModal } from "../../../../../Context/ModalContext";
 
 // Useful function 
-import { DisableValidationForLoanBook, StatusDetectionForAllUser, StatusDetectionForBook } from "../../../../../Controller/OtherUsefulController";
+import { DisableValidationForLoanBook, StatusDetectionForAllUser, StatusDetection } from "../../../../../Controller/OtherUsefulController";
 
 // Another Modal
 import EditUserModal from "../../../../Modal/User/EditUserModal";
@@ -35,16 +35,18 @@ import { AlertContext } from "../../../../../Context/AlertContext";
 import SubmitFinesConfirmModal from "../../../../Modal/Confirmation/Book/SubmitFineConfirmation";
 import { BookSearchInterface } from "../../../../../Model/BookTableModel";
 import { useSelfBookRecordContext } from "../../../../../Context/Book/SelfBookRecordContext";
+import { useUserContext } from "../../../../../Context/User/UserContext";
 
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData}) => 
 {
     const { handleOpen } = useModal();
     const { fetchLoanBookWithFliterData} = useBookContext();
-    const { BookRecordForUser, favouriteBook, unfavouriteBook} = useSelfBookRecordContext();
+    const { fetchUser } = useUserContext();
+    const { BookRecordForUser, favouriteBook, unfavouriteBook } = useSelfBookRecordContext();
     const alertContext = useContext(AlertContext);
 
 
-    const { value, TableName, Information, changeValue, setSearchBook, searchBook } = tableCellData;
+    const { value, TableName, Information, changeValue, setSearchBook, searchBook, setSearchUserData, searchUserData } = tableCellData;
     const userData = Information as UserResultDataInterface;
     
     const isFavourite = BookRecordForUser[1].find((favouriteBook) => favouriteBook.bookDetails?._id === (Information as BookDataInterface)._id);
@@ -169,6 +171,26 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
         }
     };
 
+    const ViewSuspendRecord = () => 
+    {
+        if (changeValue && setSearchUserData) 
+        {
+            fetchUser("SuspendUser", {
+                username: (Information as UserResultDataInterface).username,
+                email: "",
+                role: "",
+                status: "",
+                gender: ""
+            });
+            changeValue("Tab", 1);
+            setSearchUserData({ ...searchUserData as UserResultDataInterface, username: (Information as UserResultDataInterface).username})
+        }
+        else 
+        {
+            console.error("changeValue is undefined.");
+        }
+    }
+
     const FavouriteIconSyntax = () => 
     {
         return isFavourite ? { "&:hover": { backgroundColor: 'lightGray' }, color: 'gold' } : { "&:hover": { backgroundColor: 'lightGray' } };
@@ -178,12 +200,14 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
     [
         [
             {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />},
+             {title: "View Suspend History",  syntax: { "&:hover": { backgroundColor: 'lightGray' } }, 
+                clickEvent: ViewSuspendRecord, icon: <SearchIcon/>},
             {title: "Suspend User" , syntax:ImportantActionButtonSyntax, clickEvent:openSuspendModal, icon:<BlockIcon />, disable: StatusDetectionForAllUser(userData.status).banned.disable},
             {title: "Delete User", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />, disable: StatusDetectionForAllUser(userData.status).delete.disable}
         ],
         [
-            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditSuspendDataModal, icon:<EditIcon />},
-            {title: "Unsuspend User", syntax:ImportantActionButtonSyntax, clickEvent:openUndoActionModal , icon:<LockOpenIcon />},
+            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditSuspendDataModal, icon:<EditIcon />, disable: StatusDetection(userData.bannedDetails?.status as string, "Unsuspend")},
+            {title: "Unsuspend User", syntax:ImportantActionButtonSyntax, clickEvent:openUndoActionModal , icon:<LockOpenIcon />, disable: StatusDetection(userData.bannedDetails?.status as string, "Unsuspend")},
         ]
     ]
 
@@ -195,7 +219,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
             {title: "View Loan Book History",  syntax: { "&:hover": { backgroundColor: 'lightGray' } }, 
                 clickEvent: ViewLoanRecord, icon: <SearchIcon/>},
             {title: "Loan Book", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openLoanBookModal, icon:<EventAvailableIcon />, 
-                disable: StatusDetectionForBook((Information as LoanBookInterface).status, "Loaned")},
+                disable: StatusDetection((Information as LoanBookInterface).status, "Loaned")},
             {title: isFavourite ? "Unfavourite" : "Favourite",  syntax: FavouriteIconSyntax, 
                 clickEvent: FavouriteHandler, icon: isFavourite ? <StarIcon/> : <StarBorderIcon />}
         ],

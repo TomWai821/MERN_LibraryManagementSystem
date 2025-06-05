@@ -7,13 +7,13 @@ import { useAuthContext } from "../../Context/User/AuthContext";
 
 const ActionTableCellManager: FC<ActionTableCellInterface> = (tableCellData) => 
 {
-    const { value, TableName, Information, changeValue, setSearchBook, searchBook } = tableCellData;
+    const { value, TableName, Information, changeValue, setSearchBook, searchBook, setSearchUserData, searchUserData } = tableCellData;
     const {IsAdmin} = useAuthContext();
 
     return (
         IsAdmin() ? 
             <ActionTableCellForAdmin value={value} TableName={TableName} Information={Information} 
-                changeValue={changeValue} setSearchBook={setSearchBook} searchBook={searchBook}/> 
+                changeValue={changeValue} setSearchBook={setSearchBook} searchBook={searchBook} setSearchUserData={setSearchUserData} searchUserData={searchUserData}/> 
             : 
             <ActionTableCellForUser Information={Information}/>
     );

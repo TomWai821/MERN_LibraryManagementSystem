@@ -72,7 +72,7 @@ export interface BookContextProps
     createBook: (image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => Promise<boolean>;
     editBook: (bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, publishDate:string, authorID:string, description:string) => Promise<boolean>;
     loanBook: (bookID:string, userID?:string) => Promise<boolean>;
-    returnBook: (loanRecordID:string, fineAmount?:number, finesPaid?:string) => Promise<boolean>;
+    returnBook: (loanRecordID:string, finesPaid?:string) => Promise<boolean>;
     deleteBook: (bookID:string) => Promise<boolean>;
 }
 

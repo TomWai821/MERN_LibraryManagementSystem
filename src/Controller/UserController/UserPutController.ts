@@ -53,7 +53,7 @@ const ModifyUserDataController = async (authToken:string, userId: string, userna
 
 const ModifySuspendListDataController = async(authToken:string, userId:string, banListID:string, dueDate:Date, description:string) => 
 {
-    const data = { banListID, dueDate, description }
+    const data =  { banListID, dueDate, description };
     const URL = `${url}/SuspendListData/id=${userId}`;
     return await fetchData(authToken, URL, data);
 }

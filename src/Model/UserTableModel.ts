@@ -31,6 +31,9 @@ interface UserDataTableInterface
     value: number;
     userData: UserResultDataInterface[][];
     paginationValue: number;
+    changeValue?: (type: string, newValue: number) => void;
+    setSearchUserData?: (data: { username: string, email: string, role: string, status: string, gender: string }) => void;
+    searchUserData?: { username: string, email: string, role: string, status: string, gender: string };
 }
 
 interface ChipBodyInterface

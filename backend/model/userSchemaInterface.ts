@@ -33,6 +33,7 @@ interface SuspendListInterface extends IDInterface
     userID: mongoose.Schema.Types.ObjectId;
     startDate: Date;
     dueDate: Date;
+    unSuspendDate: Date | null;
     description: string;
     status:string;
 }

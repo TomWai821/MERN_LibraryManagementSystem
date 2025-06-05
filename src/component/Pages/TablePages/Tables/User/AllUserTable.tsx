@@ -16,7 +16,7 @@ import { setDataTextColor } from "../../../../../Controller/SetTextController";
 
 const AllUserTable:FC<UserDataTableInterface> = (DataForAllUserTable) => 
 {
-    const {value, userData, paginationValue} = DataForAllUserTable;
+    const {value, userData, paginationValue, changeValue, setSearchUserData, searchUserData} = DataForAllUserTable;
     const {IsAdmin} = useAuthContext();
     const TableName = "User";
 
@@ -67,7 +67,12 @@ const AllUserTable:FC<UserDataTableInterface> = (DataForAllUserTable) =>
                                 <ContentTableCell TableName={TableName} value={value} Information={data}>{data.role}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} Information={data} textColor={setDataTextColor(data.status, "Normal", "green", "red")}>{data.status}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} Information={data}>{data.gender}</ContentTableCell>
-                                {IsAdmin() && (<ActionTableCell value={value} TableName={TableName} Information={data}/>)}
+                                {IsAdmin() && 
+                                    (
+                                        <ActionTableCell value={value} TableName={TableName} Information={data} changeValue={changeValue as (type: string, newValue: number) => void} 
+                                            setSearchUserData={setSearchUserData} searchUserData={searchUserData}/>
+                                    )
+                                }
                             </TableRow>
                         )
                     )}

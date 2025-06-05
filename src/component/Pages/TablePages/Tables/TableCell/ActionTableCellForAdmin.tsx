@@ -175,13 +175,7 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
     {
         if (changeValue && setSearchUserData) 
         {
-            fetchUser("SuspendUser", {
-                username: (Information as UserResultDataInterface).username,
-                email: "",
-                role: "",
-                status: "",
-                gender: ""
-            });
+            fetchUser("SuspendUser", {username: (Information as UserResultDataInterface).username, role: "", status: "",gender: ""});
             changeValue("Tab", 1);
             setSearchUserData({ ...searchUserData as UserResultDataInterface, username: (Information as UserResultDataInterface).username})
         }

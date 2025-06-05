@@ -54,7 +54,7 @@ export interface UserContextProps
 {
     userData: UserResultDataInterface[][];
     fetchAllUser: () => Promise<void>;
-    fetchUser: (type:string, UserData: UserDataInterface | undefined) => Promise<void>;
+    fetchUser: (type:string, UserData: {username?: string, role?: string , status?: string, gender?: string} | undefined) => Promise<void>;
     createUser: (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string) => Promise<boolean>;
     editUserData: (userId:string, username: string, email: string, gender: string, role: string) => Promise<boolean>;
     editSuspendUserData: (userId:string, bannedListID: string, dueDate: Date, description: string) => Promise<boolean>;

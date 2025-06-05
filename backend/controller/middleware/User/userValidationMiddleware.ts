@@ -40,9 +40,9 @@ export const UserLoginDataValidation = async (req: AuthRequest, res: Response, n
         return res.status(400).json({ success: false, error: 'Invalid email address' });
     }
 
-    if (user.status === "Suspendned") 
+    if (user.status === "Suspend") 
     {
-        return res.status(401).json({ successs: false, error: 'This user was banned' });
+        return res.status(401).json({ successs: false, error: 'This user was suspend' });
     }
 
     const compare = await comparePassword(password, user.password);

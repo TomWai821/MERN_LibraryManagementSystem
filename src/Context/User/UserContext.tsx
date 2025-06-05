@@ -8,7 +8,7 @@ import { RegisterController } from "../../Controller/UserController/UserPostCont
 
 // Models
 import { GetResultInterface, UserResultDataInterface } from "../../Model/ResultModel";
-import { FindUserInterface, UserDataInterface } from "../../Model/UserTableModel";
+import { FindUserInterface } from "../../Model/UserTableModel";
 import { ChildProps, UserContextProps } from "../../Model/ContextAndProviderModel";
 import { DeleteUserController } from "../../Controller/UserController/UserDeleteController";
 import { useAuthContext } from "./AuthContext";
@@ -49,12 +49,12 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
     },[authToken])
 
     // For search function
-    const fetchUser = useCallback(async (type:string, UserData: UserDataInterface | undefined) => 
+    const fetchUser = useCallback(async (type:string, UserData: {username?: string, role?: string , status?: string, gender?: string} | undefined) => 
     {
-        const {username, email, role, status, gender} = UserData as FindUserInterface;
+        const {username, role, status, gender} = UserData as FindUserInterface;
         try
         {
-            const result : GetResultInterface | undefined = await FetchUserData(type, authToken, username, email, role, status, gender);
+            const result : GetResultInterface | undefined = await FetchUserData(type, authToken, username, role, status, gender);
 
             if(result && Array.isArray(result.foundUser))
             {

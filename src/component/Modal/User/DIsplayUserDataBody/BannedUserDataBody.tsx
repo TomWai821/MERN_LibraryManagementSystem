@@ -6,6 +6,7 @@ import { UserResultDataInterface } from "../../../../Model/ResultModel";
 import { displayAsColumn } from "../../../../ArraysAndObjects/Style";
 import { useAuthContext } from "../../../../Context/User/AuthContext";
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
+import { setDataTextColor } from "../../../../Controller/SetTextController";
 
 const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) => 
 {
@@ -23,21 +24,25 @@ const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) =>
                     IsAdmin() && 
                     (
                         <Fragment>
-                            <Typography>Email: {Data.email}</Typography>
+                            <Typography>
+                                Status: <Box component={"span"} color={setDataTextColor(Data.bannedDetails?.status as string, "Unsuspend", "green", "red")}>{Data.bannedDetails?.status}</Box>
+                            </Typography>
                             <Typography>Gender: {Data.gender}</Typography>
                         </Fragment>
                     )
                 }
                 <Typography>Date: {TransferDateToString(Data.bannedDetails?.startDate as Date)} - {TransferDateToString(Data.bannedDetails?.dueDate as Date)}</Typography>
-                <Typography>Duration: {CalculateDuration(Data.bannedDetails?.startDate as Date, Data.bannedDetails?.dueDate as Date)}</Typography>
+                <Typography>Duration: {CalculateDuration(Data.bannedDetails?.startDate as Date, Data.bannedDetails?.dueDate as Date)} 
                 {
-                    IsAdmin() && 
+                    (IsAdmin() && Data.bannedDetails?.status === "Suspend") && 
                     (
                         <Fragment>
-                            <Typography>Count: {CountDuration(Data.bannedDetails?.dueDate as Date)}</Typography>
+                            ({CountDuration(Data.bannedDetails?.dueDate as Date)}Days Left)
                         </Fragment>
+
                     )
                 }
+                </Typography>
                 <ExpandableTypography title={"Description"}> {Data.bannedDetails?.description}</ExpandableTypography>
             </Box>
         </Box>

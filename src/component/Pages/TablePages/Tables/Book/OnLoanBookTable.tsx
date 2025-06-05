@@ -12,7 +12,7 @@ import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
 import { LoanBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
 import { ItemToCenter } from "../../../../../ArraysAndObjects/Style";
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
-import { calculateFineAmount, isExpired, TransferDateToISOString } from "../../../../../Controller/OtherController";
+import { TransferDateToISOString } from "../../../../../Controller/OtherController";
 import { useAuthContext } from "../../../../../Context/User/AuthContext";
 import { setLoanBookDataTextColor } from "../../../../../Controller/SetTextController";
 
@@ -77,24 +77,22 @@ const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
 
                                 <ContentTableCell TableName={TableName} value={value} Information={data}>
                                 {
-                                    data.status !== "Loaned" ?
-                                    TransferDateToISOString(data.returnDate as Date)
-                                    :
+                                    data.returnDate !== null ?
+                                    TransferDateToISOString(data.returnDate as Date): 
                                     "N/A"
                                 }
                                 </ContentTableCell>
 
                                 <ContentTableCell TableName={TableName} value={value} Information={data} textColor={setLoanBookDataTextColor(data.finesPaid as string)}>
-                                    { isExpired(data.returnDate as Date, data.dueDate as Date) && data.finesPaid === "Not Fine Needed" ? "Not Paid" : data.finesPaid }
+                                    { data.fineAmount as number > 0 && data.finesPaid === "Not Paid" ? "Not Paid" : data.finesPaid }
                                 </ContentTableCell>
 
                                 <ContentTableCell TableName={TableName} value={value} Information={data}>
-                                    HKD$ { calculateFineAmount(data.dueDate as string, data.returnDate as string) }
+                                    HKD$ { data.fineAmount }
                                 </ContentTableCell>
                                 {IsAdmin() && 
                                     (
-                                    <ActionTableCell value={value} TableName={TableName} Information={data} 
-                                        setSearchBook={setSearchBook} searchBook={searchBook}/>
+                                        <ActionTableCell value={value} TableName={TableName} Information={data} setSearchBook={setSearchBook} searchBook={searchBook}/>
                                     )
                                 }
                             </TableRow>

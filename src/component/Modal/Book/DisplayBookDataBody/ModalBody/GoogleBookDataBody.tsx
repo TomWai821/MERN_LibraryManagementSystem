@@ -13,7 +13,7 @@ const GoogleBookDataBody:FC<GoogleBookDataInterface> = (GoogleBookDatabody) =>
 {
     const {externalBookData, RatingAsNumber} = GoogleBookDatabody;
     return(
-        <Box sx={{ display: 'grid', gap: '20px 50px', width:'350px', gridTemplateColumns: '100%'}}>
+        <Box sx={{ display: 'grid', gap: '20px 50px', width:'350px', gridTemplateColumns: '100%', paddingLeft: '10px'}}>
             <Box sx={displayAsColumn}>
                 <Typography>Average Rating: {externalBookData.averageRating}</Typography>
                 <Box sx={displayAsRow}>

@@ -6,7 +6,7 @@ import ModalTemplate from "../../../Templates/ModalTemplate";
 
 
 import { ReturnBookInterface } from "../../../../Model/ModelForModal";
-import { calculateFineAmount, countLateReturn, TransferDateToISOString } from "../../../../Controller/OtherController";
+import { countLateReturn, TransferDateToISOString } from "../../../../Controller/OtherController";
 import { LoanBookInterface } from "../../../../Model/ResultModel";
 
 import { useBookContext } from "../../../../Context/Book/BookContext";
@@ -26,11 +26,11 @@ const ReturnBookConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) =>
 
     const Data = data as LoanBookInterface; 
 
-    const CalculateLateReturn = countLateReturn(Data.dueDate as string , data.returnDate as string) as number;
+    const CalculateLateReturn = countLateReturn(Data.dueDate as string) as number;
 
     const ReturnBook = async () => 
     {
-        const response =  CalculateLateReturn > 0 ?  returnBook(data._id, calculateFineAmount(Data.dueDate as string , data.returnDate as string), finesPaid) : returnBook(Data._id);
+        const response = data.fineAmount as number > 0 ?  returnBook(data._id, finesPaid) : returnBook(Data._id);
 
         if (alertContext && alertContext.setAlertConfig) 
         {
@@ -62,7 +62,7 @@ const ReturnBookConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) =>
         {label: "Bookname", value: Data.bookDetails?.bookname},
         {label: "Loan Date", value: TransferDateToISOString(Data.loanDate as Date)},
         {label: "Due Date", value: TransferDateToISOString(Data.dueDate as Date)},
-        {label: "Overdue", value: CalculateLateReturn > 0 ? `Yes (${CalculateLateReturn} days)` : "No"},
+        {label: "Overdue", value: data.fineAmount as number > 0 ? `Yes (${CalculateLateReturn} days)` : "No"},
     ]
 
     return(
@@ -83,9 +83,9 @@ const ReturnBookConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) =>
                         }
 
                         {
-                            CalculateLateReturn > 0 &&
+                            data.fineAmount as number > 0 &&
                             <Fragment>
-                                <Typography>{`Fine Amount: HKD$${calculateFineAmount(Data.dueDate as string , data.returnDate as string)}`}</Typography>
+                                <Typography>{`Fine Amount: HKD${data.fineAmount}`}</Typography>
 
                                 <Box sx={{...displayAsRow, alignItems: 'center'}}>
                                     <Typography sx={{paddingRight: '10px'}}>Fine Paid:</Typography>

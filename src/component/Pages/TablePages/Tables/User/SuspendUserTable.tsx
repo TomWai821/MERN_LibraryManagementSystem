@@ -15,6 +15,7 @@ import { SuspendUserTableHeader } from "../../../../../ArraysAndObjects/TableArr
 
 import { CalculateDuration, TransferDateToString } from "../../../../../Controller/OtherController";
 import { useAuthContext } from "../../../../../Context/User/AuthContext";
+import { setDataTextColor } from "../../../../../Controller/SetTextController";
 
 
 
@@ -71,7 +72,7 @@ const SuspendUserTable:FC<UserDataTableInterface> = (DataForBannedUserTable) =>
                                     <TableCell sx={{fontSize: "16px", "&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
                                     <ContentTableCell TableName={TableName} value={value} Information={data}> {data.username} </ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={value} Information={data}> {data.role} </ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={value} Information={data}> {data.bannedDetails?.description} </ContentTableCell>
+                                    <ContentTableCell TableName={TableName} value={value} Information={data} textColor={setDataTextColor(data.bannedDetails?.status as string, "Unsuspend", "green", "red")}> {data.bannedDetails?.status} </ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={value} Information={data}> {TransferDateToString(data.bannedDetails?.startDate as Date)} </ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={value} Information={data}> {TransferDateToString(data.bannedDetails?.dueDate as Date)} </ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={value} Information={data}> 

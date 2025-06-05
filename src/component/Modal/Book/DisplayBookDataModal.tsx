@@ -9,7 +9,7 @@ import { ModalBodySyntax } from '../../../ArraysAndObjects/Style';
 import AllBookDataBody from "./DisplayBookDataBody/AllBookDataBody";
 import LoanBookDataBody from "./DisplayBookDataBody/LoanBookDataBody";
 import { BookDataInterface, LoanBookInterface } from "../../../Model/ResultModel";
-import { StatusDetectionForBook } from "../../../Controller/OtherUsefulController";
+import { StatusDetection } from "../../../Controller/OtherUsefulController";
 import { useModal } from "../../../Context/ModalContext";
 import LoanBookConfirmationModal from "../Confirmation/Book/LoanBookConfirmationModal";
 import { useAuthContext } from "../../../Context/User/AuthContext";
@@ -40,7 +40,7 @@ const DisplayBookDataModal:FC<DisplayDataModalInterface> = (displayUserData) =>
         return displayData;
     }
 
-    const bookStatusValidation = StatusDetectionForBook((data as BookDataInterface).status as string|| (data as LoanBookInterface).bookDetails?.status as string, "Loaned");
+    const bookStatusValidation = StatusDetection((data as BookDataInterface).status as string|| (data as LoanBookInterface).bookDetails?.status as string, "Loaned");
 
     const openLoanBookModal = () => 
     {

@@ -18,7 +18,6 @@ import { DisableValidationForLoanBook } from "../../../../../Controller/OtherUse
 
 
 import { ImportantActionButtonSyntax } from "../../../../../ArraysAndObjects/Style";
-import { useBookContext } from "../../../../../Context/Book/BookContext";
 import { AlertContext } from "../../../../../Context/AlertContext";
 import { useSelfBookRecordContext } from "../../../../../Context/Book/SelfBookRecordContext";
 

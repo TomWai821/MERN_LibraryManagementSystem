@@ -171,7 +171,7 @@ export const UpdateUserData = async (req:AuthRequest, res:Response) =>
 
 export const ChangeStatus = async (req:AuthRequest, res:Response) => 
 {
-    const { statusForUserList, description, startDate, dueDate } = req.body;
+    const { statusForUserList, description, startDate, dueDate, banListID } = req.body;
     const foundUser = req.foundUser as UserInterface;
     const userId = foundUser._id as ObjectId;
     let success = false;
@@ -184,7 +184,7 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
 
             if(!createStatusData)
             {
-                return res.status(400).json({success, message:"Fail to Create Record in Delete List/Suspend List"});
+                return res.status(400).json({success, message:"Fail to Create Record in Suspend List"});
             }
         }
 
@@ -193,6 +193,16 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
         if(!changeStatusInUsertable)
         {
             return res.status(400).json({success, message:"Failed to update status in User Table"});
+        }
+
+        if(statusForUserList === "Normal")
+        {
+            const changeSuspendListStatus = await FindSuspendListByIDAndUpdate(banListID, {status: "Unsuspend"});
+
+            if(!changeSuspendListStatus)
+            {
+                return res.status(400).json({success, message:"Failed to update status in Suspend List Table"});
+            }
         }
 
         success = true;

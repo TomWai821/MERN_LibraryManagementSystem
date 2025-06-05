@@ -48,12 +48,12 @@ const LoanBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
                 }
 
                     <Typography>Fines: <Box component={"span"} color={ setLoanBookDataTextColor(LoanData.finesPaid as string)}>
-                            { CalculateExpired && LoanData.finesPaid === " Not Fine Needed" ? " Not Paid" : LoanData.finesPaid} {CalculateExpired && `(HKD$ ${CalculateFines})`}
+                            { CalculateExpired && LoanData.finesPaid === " Not Fine Needed" ? " Not Paid" : LoanData.finesPaid} {LoanData.fineAmount as number > 0 && `(HKD$ ${LoanData.fineAmount})`}
                         </Box>
                     </Typography>
 
                 {
-                    LoanData.status !== "Loaned" && <Typography>Return Date: {TransferDateToISOString(LoanData.returnDate as Date)}</Typography>
+                    LoanData.status !== "Loaned" && <Typography>Return Date: {LoanData.returnDate === null ? "N/A" : TransferDateToISOString(LoanData.returnDate as Date)}</Typography>
                 }
             </Box>
         </Box>

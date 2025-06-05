@@ -8,4 +8,5 @@ const detectRecords = () =>
     setInterval(modifyFinesAmount, DayToMillionSeconds);
     setInterval(detectExpiredLoanRecord, DayToMillionSeconds);
 }
+
 export default detectRecords;

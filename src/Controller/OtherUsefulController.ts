@@ -32,7 +32,7 @@ export  const StatusDetectionForAllUser = (status: string) =>
     }
 }
 
-export const StatusDetectionForBook = (status:string, value:string) =>
+export const StatusDetection = (status:string, value:string) =>
 {
     return status === value;
 }

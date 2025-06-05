@@ -22,15 +22,14 @@ export const updateBookRecord = async (authToken:string, bookID:string, imageNam
     }
 }
 
-export const returnBookAndChangeStatus = async (authToken:string, loanBookRecord:string, fineAmount?:number, finesPaid?:string) => 
+export const returnBookAndChangeStatus = async (authToken:string, loanBookRecord:string, finesPaid?:string) => 
 {
-    const requestBody = { fineAmount, finesPaid };
 
     const response = await fetch(`${localhost}/book/LoanBook/id=${loanBookRecord}`,
         {
             method: 'PUT',
             headers: { 'content-type': contentType, 'authToken': authToken },
-            body: JSON.stringify(requestBody)
+            body: JSON.stringify({ finesPaid })
         }
     );
     

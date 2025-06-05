@@ -2,7 +2,7 @@ import { NextFunction, Response } from "express";
 import { AuthRequest } from "../../../model/requestInterface";
 import { FindUser } from "../../../schema/user/user";
 import { ObjectId } from "mongoose";
-import { CreateSuspendList, FindSuspendList, FindSuspendListByIDAndDelete } from "../../../schema/user/suspendList";
+import { CreateSuspendList, FindSuspendList, FindSuspendListByIDAndUpdate } from "../../../schema/user/suspendList";
 import { UserInterface } from "../../../model/userSchemaInterface";
 
 // For user update(Require login)
@@ -54,36 +54,17 @@ export const BuildUpdateData = async (req: AuthRequest, res:Response, next:NextF
     next();
 }
 
-export const DeleteSuspendListData = async (req: AuthRequest, res: Response, next:NextFunction) => 
-{
-    const { banListID, statusForUserList} = req.body;
-
-    if(statusForUserList === "Normal")
-    {   
-        if(banListID)
-        {
-            const deleteDataFromSuspendList = await FindSuspendListByIDAndDelete(banListID);
-
-            if(!deleteDataFromSuspendList)
-            {
-                return res.status(400).json({ success: false, error:"Invalid Delete Suspend List Data!"});
-            }
-        }
-    }
-    next();
-}
-
 export const CreateStatusList = async (statusForUserList:string, userId:ObjectId, description: string, startDate: Date, dueDate: Date) => 
 {
-    const ListHandlers:Record<string, { find: () => Promise<any>; create: () => Promise<any>; }> = 
+    const ListHandlers:Record<string, { find: () => Promise<any>; actions: () => Promise<any>; }> = 
     {
         "Suspend":
         {
-            find: () => FindSuspendList({ userId }), create: () => CreateSuspendList({ userID: userId, description, startDate, dueDate }) 
+            find: () => FindSuspendList({ userId }), actions: () => CreateSuspendList({ userID: userId, description, startDate, dueDate }) 
         }
     }
 
-    const { find, create } = ListHandlers[statusForUserList];
+    const { find, actions } = ListHandlers[statusForUserList];
 
     if (!ListHandlers[statusForUserList]) 
     {
@@ -96,7 +77,7 @@ export const CreateStatusList = async (statusForUserList:string, userId:ObjectId
     {
         try
         {
-            return await create();
+            return await actions();
         } 
         catch (error) 
         {

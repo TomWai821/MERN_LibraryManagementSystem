@@ -93,31 +93,24 @@ export const CountDuration = (dueDate: Date | string) =>
     return days.toLocaleString('en-US') + " Days ";
 }
 
-export const countLateReturn = (dueDate: Date | string, returnDate: string): number => 
+export const countLateReturn = (dueDate: Date | string, returnDate?: Date | string): number => 
 {
     const due = new Date(dueDate);
-    const actualReturn = new Date(returnDate);
     const today = new Date();
-
+    
+    if (!returnDate)
+    {
+        const lateDays = Math.ceil((today.getTime() - due.getTime()) / (1000 * 60 * 60 * 24)) - 1;
+        return (lateDays > 0) ? lateDays : 0;
+    }
+    
+    const actualReturn = new Date(returnDate);
+    
     if (actualReturn > due) 
     {
-        const lateDays = Math.ceil((today.getTime() - due.getTime()) / (1000 * 60 * 60 * 24));
+        const lateDays = Math.ceil((actualReturn.getTime() - due.getTime()) / (1000 * 60 * 60 * 24)) - 1;
         return lateDays;
     }
+    
     return 0;
-};
-
-export const calculateFineAmount = (dueDate: string, returnDate: string): number => 
-{
-    const lateDays = countLateReturn(dueDate, returnDate);
-    const finePerDay = 1.5;
-
-
-    return lateDays * finePerDay > 130 ? 130 : lateDays * finePerDay;
-};
-
-export const isExpired = (returnDate:Date, dueDate: Date): boolean => 
-{
-
-    return new Date(returnDate) > new Date(dueDate);
 };

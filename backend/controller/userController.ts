@@ -197,7 +197,8 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
 
         if(statusForUserList === "Normal")
         {
-            const changeSuspendListStatus = await FindSuspendListByIDAndUpdate(banListID, {status: "Unsuspend"});
+            const unSuspendDate = new Date();
+            const changeSuspendListStatus = await FindSuspendListByIDAndUpdate(banListID, {status: "Unsuspend", unSuspendDate: unSuspendDate});
 
             if(!changeSuspendListStatus)
             {

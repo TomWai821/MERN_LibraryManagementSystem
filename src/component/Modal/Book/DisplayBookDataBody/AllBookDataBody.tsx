@@ -86,7 +86,7 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
         "language": { label: "Language", value: Data.languageDetails?.language || LoanData.languageDetails?.language },
         "author": { label: "Author", value: Data.authorDetails?.author || LoanData.authorDetails?.author },
         "publisher": { label: "Publisher", value: Data.publisherDetails?.publisher || LoanData.publisherDetails?.publisher },
-        "publishDate": { label: "Publisher Date", value: Data.publishDate ? TransferDateToISOString(Data.publishDate as Date) : TransferDateToISOString(LoanData.bookDetails?.publishDate as string) },     
+        "publishDate": { label: "Publish Date", value: Data.publishDate ? TransferDateToISOString(Data.publishDate as Date) : TransferDateToISOString(LoanData.bookDetails?.publishDate as string) },     
     };
 
     useEffect(() => 

@@ -120,6 +120,7 @@ export interface DetailsInterfaceForSuspend
     _id:string;
     userID:string;
     description:string;
+    unSuspendDate?: Date| string;
     startDate: Date | string;
     dueDate: Date | string;
     status:string;

@@ -9,7 +9,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { useModal } from "../../../../../Context/ModalContext";
 
 // Useful function 
-import { DisableValidationForLoanBook, StatusDetectionForAllUser, StatusDetection } from "../../../../../Controller/OtherUsefulController";
+import { DisableValidationForLoanBook, StatusDetection } from "../../../../../Controller/OtherUsefulController";
 
 // Another Modal
 import EditUserModal from "../../../../Modal/User/EditUserModal";
@@ -58,13 +58,9 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
         {
             case "Book":
                 const data = Information as BookDataInterface;
-                const Data = 
-                            { 
-                                _id: data._id, bookname: data.bookname, language: data.languageDetails.language as string,
-                                genre: data.genreDetails.genre as string, author: data.authorDetails.author as string,
-                                publisher: data.publisherDetails.publisher as string, publishDate: data.publishDate, description: data.description, 
-                                imageUrl: data.image?.url, filename: data.image?.filename
-                            }
+                const Data = { _id: data._id, bookname: data.bookname, language: data.languageDetails.language as string, genre: data.genreDetails.genre as string, 
+                    author: data.authorDetails.author as string, publisher: data.publisherDetails.publisher as string, publishDate: data.publishDate, 
+                    description: data.description, imageUrl: data.image?.url, filename: data.image?.filename}
                 handleOpen(<EditBookModal value={value} editData={Data} compareData={Data}/>);
                 break;
                 
@@ -78,65 +74,42 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
         }
     }
 
-    const openDeleteModal = () => 
+    const openDeleteBookModal = () => 
     {
-        switch (TableName) 
+        const data = Information as BookDataInterface;
+
+        handleOpen(<DeleteBookModal bookID={data._id} description={data.description} bookname={data.bookname} language={data.languageDetails.language as string} 
+            genre={data.genreDetails.genre as string} author={data.authorDetails.author as string}  publisher={data.publisherDetails.publisher as string} />);
+    }
+
+    const openAnotherModal = (type:string) => 
+    {
+        const ModalTypeMap: Record<string, JSX.Element> = 
         {
-            case "Book":
-                const data = Information as BookDataInterface;
-                handleOpen(
-                    <DeleteBookModal 
-                        bookID={data._id} description={data.description} bookname={data.bookname}
-                        language={data.languageDetails.language as string} 
-                        genre={data.genreDetails.genre as string} 
-                        author={data.authorDetails.author as string} 
-                        publisher={data.publisherDetails.publisher as string}
-                    />
-                );
-                break;
-
-            case "User":
-                handleOpen(<DeleteUserConfirmModal value={value} _id={userData._id} data={userData} />);
-                break;
-
-            case "Contact":
-                handleOpen(<DeleteContactConfirmModal value={value} _id={(Information as LoanBookInterface)._id} data={Information}/>);
-                break;
+            "Suspend" : <SuspendUserModal {...Information as UserResultDataInterface}/>,
+            "EditSuspendData": <EditSuspendUserModal value={value} editData={userData.bannedDetails as DetailsInterfaceForSuspend} compareData={userData.bannedDetails as DetailsInterfaceForSuspend}/>,
+            "UndoAction": <UndoUserActivityModal _id={userData._id} data={userData} />,
+            "ReturnBook": <ReturnBookConfirmModal data={Information as LoanBookInterface} modalOpenPosition={"AdminTableCell"}/>,
+            "SubmitFines": <SubmitFinesConfirmModal modalOpenPosition={""} data={Information as LoanBookInterface}/>,
+            "DeleteUser": <DeleteUserConfirmModal value={value} _id={userData._id} data={userData} />,
+            "DeleteContact": <DeleteContactConfirmModal value={value} _id={(Information as LoanBookInterface)._id} data={Information}/>
         }
-    }
 
-    const openSuspendModal = () => 
-    {
-        handleOpen(<SuspendUserModal {...Information as UserResultDataInterface}/>);
-    }
+        if(!ModalTypeMap[type])
+        {
+            console.log(`Invalid type: ${type}!`);
+            return;
+        }
 
-    const openEditSuspendDataModal = () => 
-    {
-        const banData = userData.bannedDetails as DetailsInterfaceForSuspend;
-        handleOpen(<EditSuspendUserModal value={value} editData={banData} compareData={banData}/>)
-    } 
-
-    const openUndoActionModal = () => 
-    {
-        handleOpen(<UndoUserActivityModal _id={userData._id} data={userData} />)
-    }
-
-    const openReturnBookModal = () => 
-    {
-        handleOpen(<ReturnBookConfirmModal data={Information as LoanBookInterface} modalOpenPosition={"AdminTableCell"}/>);
-    }
-
-    const openSubmitFinesModal = () => 
-    {
-        handleOpen(<SubmitFinesConfirmModal modalOpenPosition={""} data={Information as LoanBookInterface}/>);
+        handleOpen(ModalTypeMap[type])
     }
 
     const openLoanBookModal = () => 
     {
         const bookData = Information as BookDataInterface;
         handleOpen(<LoanBookConfirmationModal tabValue={0} _id={bookData._id} bookname={bookData.bookname} author={bookData.authorDetails.author as string} 
-            language={bookData.languageDetails.language as string} genre={bookData.genreDetails.genre as string}
-            description={bookData.description as string} imageUrl={bookData.image?.url as string} />)
+            language={bookData.languageDetails.language as string} genre={bookData.genreDetails.genre as string} description={bookData.description as string} 
+            imageUrl={bookData.image?.url as string} />)
     }
 
     const FavouriteHandler = async () => 
@@ -157,102 +130,94 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
         }
     }
 
-    const ViewLoanRecord = () => 
+    const ViewRecord = (type:string) => 
     {
-        if (changeValue && setSearchBook) 
+        switch(type)
         {
-            fetchLoanBookWithFliterData("AllUser", (Information as BookDataInterface).bookname);
-            changeValue("Tab", 1);
-            setSearchBook({ ...searchBook as BookSearchInterface, bookname: (Information as BookDataInterface).bookname });
-        }
-        else 
-        {
-            console.error("changeValue is undefined.");
+            case "LoanBook":
+                if (changeValue && setSearchBook) 
+                {
+                    fetchLoanBookWithFliterData("AllUser", (Information as BookDataInterface).bookname);
+                    changeValue("Tab", 1);
+                    setSearchBook({ ...searchBook as BookSearchInterface, bookname: (Information as BookDataInterface).bookname });
+                }
+                break;
+
+            case "Suspend":
+                if (changeValue && setSearchUserData) 
+                {
+                    fetchUser("SuspendUser", {username: (Information as UserResultDataInterface).username, role: "", status: "",gender: ""});
+                    changeValue("Tab", 1);
+                    setSearchUserData({ ...searchUserData as UserResultDataInterface, username: (Information as UserResultDataInterface).username})
+                }
+                break;
+
+            default:
+                console.log(`Invalid type: ${type}!`);
+                break;
         }
     };
-
-    const ViewSuspendRecord = () => 
-    {
-        if (changeValue && setSearchUserData) 
-        {
-            fetchUser("SuspendUser", {username: (Information as UserResultDataInterface).username, role: "", status: "",gender: ""});
-            changeValue("Tab", 1);
-            setSearchUserData({ ...searchUserData as UserResultDataInterface, username: (Information as UserResultDataInterface).username})
-        }
-        else 
-        {
-            console.error("changeValue is undefined.");
-        }
-    }
 
     const FavouriteIconSyntax = () => 
     {
         return isFavourite ? { "&:hover": { backgroundColor: 'lightGray' }, color: 'gold' } : { "&:hover": { backgroundColor: 'lightGray' } };
     }
-    
-    const UserActionTableCellForAdmin = 
-    [
-        [
-            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />},
-             {title: "View Suspend History",  syntax: { "&:hover": { backgroundColor: 'lightGray' } }, 
-                clickEvent: ViewSuspendRecord, icon: <SearchIcon/>},
-            {title: "Suspend User" , syntax:ImportantActionButtonSyntax, clickEvent:openSuspendModal, icon:<BlockIcon />, disable: StatusDetectionForAllUser(userData.status).banned.disable},
-            {title: "Delete User", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />, disable: StatusDetectionForAllUser(userData.status).delete.disable}
-        ],
-        [
-            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditSuspendDataModal, icon:<EditIcon />, disable: StatusDetection(userData.bannedDetails?.status as string, "Unsuspend")},
-            {title: "Unsuspend User", syntax:ImportantActionButtonSyntax, clickEvent:openUndoActionModal , icon:<LockOpenIcon />, disable: StatusDetection(userData.bannedDetails?.status as string, "Unsuspend")},
-        ]
-    ]
 
-    const BookActionTableCellForAdmin = 
-    [
-        [
-            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openEditModal, icon:<EditIcon />},
-            {title: "Delete (Actual)", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal, icon:<DeleteIcon />},
-            {title: "View Loan Book History",  syntax: { "&:hover": { backgroundColor: 'lightGray' } }, 
-                clickEvent: ViewLoanRecord, icon: <SearchIcon/>},
-            {title: "Loan Book", syntax:{ "&:hover": { backgroundColor: 'lightGray' } }, clickEvent:openLoanBookModal, icon:<EventAvailableIcon />, 
-                disable: StatusDetection((Information as LoanBookInterface).status, "Loaned")},
-            {title: isFavourite ? "Unfavourite" : "Favourite",  syntax: FavouriteIconSyntax, 
-                clickEvent: FavouriteHandler, icon: isFavourite ? <StarIcon/> : <StarBorderIcon />}
-        ],
-        [
-            {title: "Return Book", syntax:ImportantActionButtonSyntax, clickEvent:openReturnBookModal, icon:<HistoryIcon />, 
-                disable: DisableValidationForLoanBook(Information as LoanBookInterface)},
-            {title: "Submit fines", syntax:ImportantActionButtonSyntax, clickEvent:openSubmitFinesModal, icon:<AttachMoneyIcon />, 
-                disable: ((Information as LoanBookInterface).status !== "Returned(Late)")}
-        ]
-    ]
-
-    const ContactActionTableCellForAdmin = 
-    [
-        [
-            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />},
-            {title: "Delete Author", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal , icon:<DeleteIcon />},
-        ],
-        [
-            {title: "Edit", syntax:{ "&:hover": { backgroundColor: 'lightGray' }}, clickEvent:openEditModal, icon:<EditIcon />},
-            {title: "Delete Publisher", syntax:ImportantActionButtonSyntax, clickEvent:openDeleteModal , icon:<DeleteIcon />},
-        ],
-    ]
-
-    let actionsToRender: any[] = [];
-    
-    switch(TableName)
+    const tableCell: Record<string, Record<number, Array<{title: string, syntax: object, clickEvent: () => void, icon: JSX.Element, disable?: boolean}>>> = 
     {
-        case "User":
-            actionsToRender = UserActionTableCellForAdmin[value];
-            break;
+        User: 
+        {
+            0: 
+            [
+                { title: "Edit", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: openEditModal, icon: <EditIcon /> },
+                { title: "View Suspend History", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: () => ViewRecord("Suspend"), icon: <SearchIcon /> },
+                { title: "Suspend User", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("Suspend"), icon: <BlockIcon />, 
+                        disable: StatusDetection(userData.status, "Suspend")},
+                { title: "Delete User", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("DeleteUser"), icon: <DeleteIcon /> }
+            ],
+            1: 
+            [
+                { title: "Edit", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: () => openAnotherModal("EditSuspendData"), icon: <EditIcon />, 
+                    disable: StatusDetection(userData.bannedDetails?.status as string, "Unsuspend") },
+                { title: "Unsuspend User", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("UndoAction"), icon: <LockOpenIcon />, 
+                    disable: StatusDetection(userData.bannedDetails?.status as string, "Unsuspend") }
+            ]
+        },
+        Book: 
+        {
+            0: 
+            [
+                { title: "Edit", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: openEditModal, icon: <EditIcon /> },
+                { title: "Delete (Actual)", syntax: ImportantActionButtonSyntax, clickEvent: openDeleteBookModal, icon: <DeleteIcon /> },
+                { title: "View Loan Book History", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: () => ViewRecord("LoanBook"), icon: <SearchIcon /> },
+                { title: "Loan Book", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: openLoanBookModal, icon: <EventAvailableIcon />, 
+                disable: StatusDetection((Information as LoanBookInterface).status, "Loaned") },
+                { title: isFavourite ? "Unfavourite" : "Favourite", syntax: FavouriteIconSyntax, clickEvent: FavouriteHandler, icon: isFavourite ? <StarIcon /> : <StarBorderIcon /> }
+            ],
+            1: 
+            [
+                { title: "Return Book", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("ReturnBook"), 
+                    icon: <HistoryIcon />, disable: DisableValidationForLoanBook(Information as LoanBookInterface) },
+                { title: "Submit fines", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("SubmitFines"), 
+                    icon: <AttachMoneyIcon />, disable: ((Information as LoanBookInterface).status !== "Returned(Late)") }
+            ]
+        },
+        Contact: 
+        {
+            0: 
+            [
+                { title: "Edit", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: openEditModal, icon: <EditIcon /> },
+                { title: "Delete Author", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("DeleteContact"), icon: <DeleteIcon /> }
+            ],
+            1: 
+            [
+                { title: "Edit", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: openEditModal, icon: <EditIcon /> },
+                { title: "Delete Publisher", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("DeleteContact"), icon: <DeleteIcon /> }
+            ]
+        }
+    };
 
-        case "Book":
-            actionsToRender = BookActionTableCellForAdmin[value];
-            break;
-
-        case "Contact":
-            actionsToRender = ContactActionTableCellForAdmin[value];
-            break;
-    }
+    const actionsToRender = tableCell[TableName]?.[value] || [];
 
     return(
         <TableCell sx={{marginLeft: '20px'}}>

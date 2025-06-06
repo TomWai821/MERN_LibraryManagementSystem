@@ -75,21 +75,15 @@ const LoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                 <ContentTableCell TableName={TableName} value={value} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} Information={data} textColor={setLoanBookDataTextColor(data.status)}>{data.status}</ContentTableCell>
 
-                                <ContentTableCell TableName={TableName} value={value} Information={data}>
-                                {
-                                    data.returnDate !== null ?
-                                    TransferDateToISOString(data.returnDate as Date): 
-                                    "N/A"
-                                }
+                                <ContentTableCell TableName={TableName} value={value} Information={data}> 
+                                    { data.returnDate !== null ? TransferDateToISOString(data.returnDate as Date): "N/A"}
                                 </ContentTableCell>
 
                                 <ContentTableCell TableName={TableName} value={value} Information={data} textColor={setLoanBookDataTextColor(data.finesPaid as string)}>
                                     { data.fineAmount as number > 0 && data.finesPaid === "Not Paid" ? "Not Paid" : data.finesPaid }
                                 </ContentTableCell>
 
-                                <ContentTableCell TableName={TableName} value={value} Information={data}>
-                                    HKD$ { data.fineAmount }
-                                </ContentTableCell>
+                                <ContentTableCell TableName={TableName} value={value} Information={data}> HKD$ { data.fineAmount } </ContentTableCell>
                                 {IsAdmin() && 
                                     (
                                         <ActionTableCell value={value} TableName={TableName} Information={data} setSearchBook={setSearchBook} searchBook={searchBook}/>

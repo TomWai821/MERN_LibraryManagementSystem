@@ -21,17 +21,6 @@ export const handleSuccess = async(result: ResultInterface, stayLogin:boolean) =
     }
 }
 
-// For user status detect in Action TableCell for Admin
-export  const StatusDetectionForAllUser = (status: string) => 
-{
-    const isNormal = status === "Normal";
-
-    return {
-        delete: { disable: !isNormal },
-        banned: { disable: !isNormal },
-    }
-}
-
 export const StatusDetection = (status:string, value:string) =>
 {
     return status === value;

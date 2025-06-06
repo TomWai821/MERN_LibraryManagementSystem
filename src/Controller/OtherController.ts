@@ -53,7 +53,7 @@ export const TransferDateToString = (date: Date | undefined):string =>
 {
 
     if (!date) return "N/A";
-    return new Date(date).toLocaleDateString('en-US'); 
+    return new Date(date).toISOString().split("T")[0];
 }
 
 export const CalculateDuration = (startDate:Date, dueDate: Date | string) => 

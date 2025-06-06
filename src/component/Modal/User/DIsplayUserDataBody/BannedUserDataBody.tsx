@@ -24,10 +24,11 @@ const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) =>
                     IsAdmin() && 
                     (
                         <Fragment>
-                            <Typography>
-                                Status: <Box component={"span"} color={setDataTextColor(Data.bannedDetails?.status as string, "Unsuspend", "green", "red")}>{Data.bannedDetails?.status}</Box>
-                            </Typography>
                             <Typography>Gender: {Data.gender}</Typography>
+                            <Typography>
+                                Status: 
+                                <Box component={"span"} color={setDataTextColor(Data.bannedDetails?.status as string, "Unsuspend", "green", "red")}>{Data.bannedDetails?.status}</Box> (Unsuspend At: {TransferDateToString(Data.bannedDetails?.unSuspendDate as Date)})
+                            </Typography>
                         </Fragment>
                     )
                 }
@@ -36,10 +37,7 @@ const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) =>
                 {
                     (IsAdmin() && Data.bannedDetails?.status === "Suspend") && 
                     (
-                        <Fragment>
-                            ({CountDuration(Data.bannedDetails?.dueDate as Date)}Days Left)
-                        </Fragment>
-
+                        <Fragment> ({CountDuration(Data.bannedDetails?.dueDate as Date)}Days Left) </Fragment>
                     )
                 }
                 </Typography>

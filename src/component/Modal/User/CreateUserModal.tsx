@@ -45,7 +45,7 @@ const CreateUserModal = () =>
     
         Object.keys(user).forEach((field) => 
         {
-            if(["gender", "role"].includes(field))
+            if(["gender", "role", "status"].includes(field))
             {
                 return;
             }
@@ -58,6 +58,7 @@ const CreateUserModal = () =>
             {
                 validationPassed = false;
             }
+
         });
     
         setHelperText(newHelperTexts);

@@ -32,15 +32,20 @@ const BannedUserDataBody:FC<DisplayDataModalBody> = (BannedUserData) =>
                         </Fragment>
                     )
                 }
-                <Typography>Date: {TransferDateToString(Data.bannedDetails?.startDate as Date)} - {TransferDateToString(Data.bannedDetails?.dueDate as Date)}</Typography>
-                <Typography>Duration: {CalculateDuration(Data.bannedDetails?.startDate as Date, Data.bannedDetails?.dueDate as Date)} 
-                {
-                    (IsAdmin() && Data.bannedDetails?.status === "Suspend") && 
+                <Typography>Date: { !Data.bannedDetails?.dueDate || new Date(Data.bannedDetails?.dueDate).getTime() <= 0 ? "N/A" 
+                    : `${TransferDateToString(Data.bannedDetails?.startDate as Date)} - ${TransferDateToString(Data.bannedDetails?.dueDate as Date)}` }
+                </Typography>
+
+                <Typography>Duration: { !Data.bannedDetails?.dueDate || new Date(Data.bannedDetails?.dueDate).getTime() <= 0 ? "Forever" 
+                    : CalculateDuration(Data.bannedDetails?.startDate as Date, Data.bannedDetails?.dueDate as Date) }
+                { 
+                    IsAdmin() && Data.bannedDetails?.status === "Suspend" && Data.bannedDetails?.dueDate && new Date(Data.bannedDetails?.dueDate).getTime() > 0 && 
                     (
-                        <Fragment> ({CountDuration(Data.bannedDetails?.dueDate as Date)}Days Left) </Fragment>
+                        <Fragment> ({CountDuration(Data.bannedDetails?.dueDate as Date)} Days Left) </Fragment>
                     )
                 }
                 </Typography>
+
                 <ExpandableTypography title={"Description"}> {Data.bannedDetails?.description}</ExpandableTypography>
             </Box>
         </Box>

@@ -11,6 +11,7 @@ import { QRCodeInterface, UserLoanBookModalBodyInterface } from "../../../../Mod
 
 import LoanBookConfirmationModal from "./LoanBookConfirmationModal";
 import { AlertContext } from "../../../../Context/AlertContext";
+import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
 
 
 const UserLoanBookConfirmationModal:FC<UserLoanBookModalBodyInterface> = (LoanBookData) => 
@@ -81,10 +82,8 @@ const UserLoanBookConfirmationModal:FC<UserLoanBookModalBodyInterface> = (LoanBo
                                 )
                             )
                         }
-                        <Box sx={{display: "inline-block"}}>
-                            <Typography>Description</Typography>
-                            <Typography sx={BookDescriptionDisplayFormat}>{description}</Typography>
-                        </Box>
+                        
+                        <ExpandableTypography title={"Description"}>{description}</ExpandableTypography>
                      </Box>
                  </Box>
             </Box>

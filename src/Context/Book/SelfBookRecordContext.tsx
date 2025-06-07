@@ -49,7 +49,8 @@ export const SelfBookRecordProvider:FC<ChildProps> = ({children}) =>
         return false;
     },[])
 
-    const GetSuggestData = useCallback(async(suggestBookData: LoanBookInterface[]) => {
+    const GetSuggestData = useCallback(async (suggestBookData: LoanBookInterface[]) => 
+    {
         if (!suggestBookData || !Array.isArray(suggestBookData) || suggestBookData.length === 0) 
         {
             return []; 
@@ -125,7 +126,8 @@ export const SelfBookRecordProvider:FC<ChildProps> = ({children}) =>
         return false;
     },[])
 
-    useEffect(() => {
+    useEffect(() => 
+    {
         if (SelfLoanBook.length > 0) 
         {
             fetchRecommendBookForUser();

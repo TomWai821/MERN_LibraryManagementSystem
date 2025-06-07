@@ -87,7 +87,8 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
         const ModalTypeMap: Record<string, JSX.Element> = 
         {
             "Suspend" : <SuspendUserModal {...Information as UserResultDataInterface}/>,
-            "EditSuspendData": <EditSuspendUserModal value={value} editData={userData.bannedDetails as DetailsInterfaceForSuspend} compareData={userData.bannedDetails as DetailsInterfaceForSuspend}/>,
+            "EditSuspendData": <EditSuspendUserModal value={value} editData={userData.bannedDetails as DetailsInterfaceForSuspend} 
+                compareData={userData.bannedDetails as DetailsInterfaceForSuspend}/>,
             "UndoAction": <UndoUserActivityModal _id={userData._id} data={userData} />,
             "ReturnBook": <ReturnBookConfirmModal data={Information as LoanBookInterface} modalOpenPosition={"AdminTableCell"}/>,
             "SubmitFines": <SubmitFinesConfirmModal modalOpenPosition={""} data={Information as LoanBookInterface}/>,
@@ -172,8 +173,9 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
                 { title: "Edit", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: openEditModal, icon: <EditIcon /> },
                 { title: "View Suspend History", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: () => ViewRecord("Suspend"), icon: <SearchIcon /> },
                 { title: "Suspend User", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("Suspend"), icon: <BlockIcon />, 
-                        disable: StatusDetection(userData.status, "Suspend")},
-                { title: "Delete User", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("DeleteUser"), icon: <DeleteIcon /> }
+                    disable: StatusDetection(userData.status, "Suspend")},
+                { title: "Delete User", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("DeleteUser"), icon: <DeleteIcon />,
+                    disable: StatusDetection(userData.status, "Suspend")}
             ],
             1: 
             [
@@ -188,18 +190,18 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
             0: 
             [
                 { title: "Edit", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: openEditModal, icon: <EditIcon /> },
-                { title: "Delete (Actual)", syntax: ImportantActionButtonSyntax, clickEvent: openDeleteBookModal, icon: <DeleteIcon /> },
+                { title: "Delete (Actual)", syntax: ImportantActionButtonSyntax, clickEvent: openDeleteBookModal, icon: <DeleteIcon />, disable: (Information as BookDataInterface).status === "Loaned" },
                 { title: "View Loan Book History", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: () => ViewRecord("LoanBook"), icon: <SearchIcon /> },
                 { title: "Loan Book", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: openLoanBookModal, icon: <EventAvailableIcon />, 
-                disable: StatusDetection((Information as LoanBookInterface).status, "Loaned") },
+                    disable: StatusDetection((Information as LoanBookInterface).status, "Loaned") },
                 { title: isFavourite ? "Unfavourite" : "Favourite", syntax: FavouriteIconSyntax, clickEvent: FavouriteHandler, icon: isFavourite ? <StarIcon /> : <StarBorderIcon /> }
             ],
             1: 
             [
-                { title: "Return Book", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("ReturnBook"), 
-                    icon: <HistoryIcon />, disable: DisableValidationForLoanBook(Information as LoanBookInterface) },
-                { title: "Submit fines", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("SubmitFines"), 
-                    icon: <AttachMoneyIcon />, disable: ((Information as LoanBookInterface).status !== "Returned(Late)") }
+                { title: "Return Book", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("ReturnBook"), icon: <HistoryIcon />,
+                    disable: DisableValidationForLoanBook(Information as LoanBookInterface) },
+                { title: "Submit fines", syntax: ImportantActionButtonSyntax, clickEvent: () => openAnotherModal("SubmitFines"), icon: <AttachMoneyIcon />, 
+                    disable: !((Information as LoanBookInterface).finesPaid === "Not Paid" && (Information as LoanBookInterface).status as string === "Returned(Late)") }
             ]
         },
         Contact: 

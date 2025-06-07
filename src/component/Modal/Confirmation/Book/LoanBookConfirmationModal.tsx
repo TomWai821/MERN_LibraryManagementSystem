@@ -56,29 +56,8 @@ const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) =>
     {
         if (QrCodeData) 
         {
-            try 
-            {
-                const parsedData = typeof QrCodeData === "string" ? JSON.parse(QrCodeData) : QrCodeData;
-
-                if (!parsedData.username || !parsedData.authToken) 
-                {
-                    if (alertContext?.setAlertConfig) 
-                    {
-                        alertContext.setAlertConfig({ AlertType: "error", Message: "Invalid QR Code data!", open: true, onClose: () => alertContext.setAlertConfig(null)});
-                        return;
-                    }
-                }
-
-                handleOpen(<UserLoanBookConfirmationModal qrCodeData={parsedData} _id={_id} bookname={bookname} author={author} language={language} genre={genre} 
-                    description={description} imageUrl={imageUrl}tabValue={1}/>);
-            }
-            catch (error) 
-            {
-                if (alertContext?.setAlertConfig) 
-                {
-                    alertContext.setAlertConfig({AlertType: "error", Message: "Invalid QR Code data! Not a valid JSON",  open: true, onClose: () => alertContext.setAlertConfig(null)});
-                }
-            }
+            handleOpen(<UserLoanBookConfirmationModal qrCodeData={QrCodeData} _id={_id} bookname={bookname} author={author} language={language} genre={genre} 
+                description={description} imageUrl={imageUrl}tabValue={1}/>);
         }
     };
 

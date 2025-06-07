@@ -67,7 +67,9 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
     
     try
     {
-        const UserID = userID ? await jwtVerify(userID) as unknown as UserInterface : id;
+        const data = await jwtVerify(userID);
+        const userId = data.user?._id;
+        const UserID = userID ? userId : id;
         const createLoanRecord = await CreateBookLoaned({userID:UserID, bookID, loanDate, dueDate})
 
         if(!createLoanRecord)

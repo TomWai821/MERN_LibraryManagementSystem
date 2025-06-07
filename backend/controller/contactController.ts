@@ -103,22 +103,14 @@ export const UpdateContactRecord = async (req: AuthRequest, res: Response) =>
 {
     const contactType = req.params.type as keyof typeof contactHandler;
 
-    const contactTypeMap:Record<string, any> = 
-    {
-        "Author": UpdateAuthorRecord(req, res),
-        "Publisher": UpdatePublisherRecord(req, res)
-    }
-
-    contactTypeMap[contactType];
-
     switch(contactType)
     {
         case "Author":
-            
+            UpdateAuthorRecord(req, res);
             break;
 
         case "Publisher":
-            ;
+            UpdatePublisherRecord(req, res);
             break;
     }
 

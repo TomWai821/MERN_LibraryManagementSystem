@@ -199,7 +199,7 @@ export const modifyFinesAmount = async() =>
             {
                 const expireTime = new Date(bookLoaned.dueDate as Date).getTime();
                 const diffTime = currentDate.getTime() - expireTime;
-                const expireDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                const expireDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
                 const finesAmount = 1.5 * expireDays < 130 ? 1.5 * expireDays : 130;
                 const modifyFinesAmount = await FindBookLoanedByIDAndUpdate(bookLoaned._id as unknown as string, {fineAmount: finesAmount});
 

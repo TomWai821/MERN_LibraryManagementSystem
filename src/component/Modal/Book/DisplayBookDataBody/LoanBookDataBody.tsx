@@ -14,7 +14,6 @@ const LoanBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
     const imageUrl = LoanData.bookDetails?.image?.url;
 
     const CalculateExpired = "";
-    const CalculateFines = "";
     const CalculateLateReturn = "";
 
     const BookData: Record<string,{label:string, data:any}> = 

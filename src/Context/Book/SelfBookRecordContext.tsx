@@ -5,7 +5,6 @@ import { fetchFavouriteBook, fetchLoanBook, fetchSuggestBook } from "../../Contr
 import { createFavouriteBookRecord } from "../../Controller/BookController/BookPostController";
 import { useAuthContext } from "../User/AuthContext";
 import { deleteBookRecord } from "../../Controller/BookController/BookDeleteController";
-import { GetUserCookie } from "../../Controller/CookieController";
 
 const SelfBookRecordContext = createContext<SelfBookRecordContextProps | undefined>(undefined);
 

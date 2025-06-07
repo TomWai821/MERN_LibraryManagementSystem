@@ -28,14 +28,8 @@ const ContactPage= () =>
 
     const countLength = ()=> 
     {
-        switch(tabValue)
-        {
-            case 0:
-                return contact.Author.length;
-            
-            case 1:
-                return contact.Publisher.length;
-        }
+        const dataLength = [contact.Author.length, contact.Publisher.length];
+        return dataLength[tabValue];
     }
 
     const changeValue = useCallback((type:string, newValue: number) =>

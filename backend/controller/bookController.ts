@@ -48,8 +48,7 @@ export const CreateBookRecord = async (req:Request, res:Response) =>
         const mongoDate = new Date(publishDate);
 
         // Add imageUrl to each book
-        const createBook = await CreateBook({ image: {url:imageUrl, filename:imageName}, 
-                                                bookname, languageID, genreID, authorID, publisherID, description, publishDate:mongoDate });
+        const createBook = await CreateBook({ image: {url:imageUrl, filename:imageName}, bookname, languageID, genreID, authorID, publisherID, description, publishDate:mongoDate });
 
         if(!createBook)
         {
@@ -100,8 +99,8 @@ export const EditBookRecord = async (req: Request, res: Response) =>
             }
         }
     
-        const updateBookRecord = await FindBookByIDAndUpdate(bookID, {$set: {image: { url: imageUrl, filename: newImageName }, 
-                                                                    bookname, languageID, genreID, authorID, publisherID, description, publishDate:new Date(publishDate) }});
+        const updateBookRecord = await FindBookByIDAndUpdate(bookID, {$set: {image: { url: imageUrl, filename: newImageName }, bookname, languageID, 
+            genreID, authorID, publisherID, description, publishDate:new Date(publishDate) }});
 
         if (!updateBookRecord) 
         {

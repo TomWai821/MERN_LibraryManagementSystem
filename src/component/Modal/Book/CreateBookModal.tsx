@@ -151,12 +151,10 @@ const CreateBookModal: FC<CreateBookModalInterface> = ({...bookData}) =>
                     {
                         CreateBookInputField.map((field, index) => 
                         (
-                            <TextField key={index} label={field.label} name={field.name} 
-                                value={book[field.name as keyof BookTableDataInterface]} 
+                            <TextField key={index} label={field.label} name={field.name} value={book[field.name as keyof BookTableDataInterface]} 
                                 helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
-                                error={isSubmitted && errors[field.name as keyof typeof errors] !== ""}
-                                select={field.select} slotProps={field.slotProps} multiline={field.multiline} rows={field.rows} 
-                                type={field.type} size="small" onChange={onSelectChange}
+                                error={isSubmitted && errors[field.name as keyof typeof errors] !== ""} select={field.select} 
+                                slotProps={field.slotProps} multiline={field.multiline} rows={field.rows} type={field.type} size="small" onChange={onSelectChange}
                             >
                             {
                                 field.options && field.options.map((option, index) => 

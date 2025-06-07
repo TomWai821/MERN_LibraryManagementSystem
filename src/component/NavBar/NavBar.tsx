@@ -31,12 +31,9 @@ const NavBar = () =>
                     <Button sx={{ fontSize: 32, marginRight: 3, bgcolor: NavColor.background, color: NavColor.word }} href="./">Library</Button>
                 </Box>
 
-                <NavMenu AvatarSize={AvatarSize} NavSyntax={NavSyntax} anchorElNav={anchorElNav}
-                    MenuItemSyntax={MenuItemSyntax} handleNavMenu={handleNavMenu}
-                />
+                <NavMenu AvatarSize={AvatarSize} NavSyntax={NavSyntax} anchorElNav={anchorElNav} MenuItemSyntax={MenuItemSyntax} handleNavMenu={handleNavMenu}/>
 
-                <ProfileMenu AvatarSize={AvatarSize} NavSyntax={NavSyntax}MenuItemSyntax={MenuItemSyntax} anchorElUser={anchorElUser} handleUserMenu={handleUserMenu}
-                />
+                <ProfileMenu AvatarSize={AvatarSize} NavSyntax={NavSyntax}MenuItemSyntax={MenuItemSyntax} anchorElUser={anchorElUser} handleUserMenu={handleUserMenu}/>
 
             </Toolbar>
         </AppBar>

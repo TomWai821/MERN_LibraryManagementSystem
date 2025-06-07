@@ -28,7 +28,6 @@ const RegisterPage = () =>
 
     const handleDataValidate = async (event: FormEvent) => 
     {
-        // Perform validation for all fields
         let validationPassed = true;
         const newErrors = { ...errors };
         const newHelperTexts = { ...helperTexts };
@@ -96,14 +95,10 @@ const RegisterPage = () =>
                                 <FormControl key={index} sx={{ marginBottom: 3, width: '100%'}}>
                                     <Typography>{field.label}</Typography>
                                     <TextField 
-                                        name={field.name} 
-                                        type={field.type} 
-                                        value={Credentials[field.name as keyof RegisterModel]}
+                                        name={field.name} type={field.type} value={Credentials[field.name as keyof RegisterModel]}
                                         helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
                                         error={isSubmitted && errors[field.name as keyof typeof errors] !== ""} 
-                                        onChange={onChange} 
-                                        size="small" 
-                                        required/>
+                                        onChange={onChange} size="small" required/>
                                 </FormControl>
                             )
                         )

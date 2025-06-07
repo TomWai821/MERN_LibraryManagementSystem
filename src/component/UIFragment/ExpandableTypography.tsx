@@ -35,13 +35,12 @@ const ExpandableTypography:FC<ExpandableTypographyInterface> = ({title, children
             setDisplayFullDescription(true);
             setDisplayAmount(10);
             setOverFlow("auto");
+            return;
         }
-        else
-        {
-            setDisplayFullDescription(false);
-            setDisplayAmount(5);
-            setOverFlow("hidden");
-        }
+        
+        setDisplayFullDescription(false);
+        setDisplayAmount(5);
+        setOverFlow("hidden");
     }
 
     useLayoutEffect(() => 

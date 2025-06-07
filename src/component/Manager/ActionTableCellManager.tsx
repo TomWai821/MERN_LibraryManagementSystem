@@ -12,8 +12,8 @@ const ActionTableCellManager: FC<ActionTableCellInterface> = (tableCellData) =>
 
     return (
         IsAdmin() ? 
-            <ActionTableCellForAdmin value={value} TableName={TableName} Information={Information} 
-                changeValue={changeValue} setSearchBook={setSearchBook} searchBook={searchBook} setSearchUserData={setSearchUserData} searchUserData={searchUserData}/> 
+            <ActionTableCellForAdmin value={value} TableName={TableName} Information={Information} changeValue={changeValue} setSearchBook={setSearchBook} 
+                searchBook={searchBook} setSearchUserData={setSearchUserData} searchUserData={searchUserData}/> 
             : 
             <ActionTableCellForUser Information={Information}/>
     );

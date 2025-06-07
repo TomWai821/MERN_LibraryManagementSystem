@@ -29,7 +29,6 @@ const UserPage = () =>
 
     const defaultValue = { username: "", role: "All", status: "All", gender: "All" };
 
-    // useCallback could avoid unnecessary re-rendering
     const onChange = (event: ChangeEvent<HTMLInputElement>) => 
     {
         const { name, value } = event.target;

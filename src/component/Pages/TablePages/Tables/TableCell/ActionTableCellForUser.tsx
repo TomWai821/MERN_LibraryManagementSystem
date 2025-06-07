@@ -8,7 +8,6 @@ import { UserActionTableCellInterface } from "../../../../../Model/TablePagesAnd
 import { BookDataInterface } from "../../../../../Model/ResultModel";
 
 import { AlertContext } from "../../../../../Context/AlertContext";
-import { useBookContext } from "../../../../../Context/Book/BookContext";
 import { useSelfBookRecordContext } from "../../../../../Context/Book/SelfBookRecordContext";
 
 const ActionTableCellForUser:FC<UserActionTableCellInterface> = (actionTableCellData) => 

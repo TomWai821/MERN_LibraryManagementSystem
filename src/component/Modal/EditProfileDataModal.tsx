@@ -44,6 +44,7 @@ const EditProfileDataModal = () =>
         Object.keys(editedData).forEach((field) => 
         {
             const ignoreList = option === "username" ? ["password", "confirmPassword"] : ["username","confirmPassword"];
+            
             if(ignoreList.includes(field))
             {
                 return;

@@ -17,7 +17,7 @@ export const updateBookRecord = async (authToken:string, bookID:string, imageNam
 
     if(response.ok)
     {
-        const result = await response.json();
+        await response.json();
         return response.ok;
     }
 }

@@ -115,7 +115,6 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
                     <BookDataBody BookData={BookData} status={status as string} descriptionData={descriptionData}/>
                 </CustomTabPanel>
                
-
                 <CustomTabPanel index={tabValue} value={1}>
                     <GoogleBookDataBody externalBookData={externalBookData} RatingAsNumber={RatingAsNumber}/>
                 </CustomTabPanel>

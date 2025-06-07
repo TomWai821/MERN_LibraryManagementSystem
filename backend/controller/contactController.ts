@@ -103,14 +103,22 @@ export const UpdateContactRecord = async (req: AuthRequest, res: Response) =>
 {
     const contactType = req.params.type as keyof typeof contactHandler;
 
+    const contactTypeMap:Record<string, any> = 
+    {
+        "Author": UpdateAuthorRecord(req, res),
+        "Publisher": UpdatePublisherRecord(req, res)
+    }
+
+    contactTypeMap[contactType];
+
     switch(contactType)
     {
         case "Author":
-            UpdateAuthorRecord(req, res);
+            
             break;
 
         case "Publisher":
-            UpdatePublisherRecord(req, res);
+            ;
             break;
     }
 
@@ -124,11 +132,11 @@ const UpdateAuthorRecord = async (req: AuthRequest, res: Response) =>
 
     try 
     {
-        const createAuthor = await FindAuthorByIDAndUpdate(id, {author: author, phoneNumber: phoneNumber, email: email});
+        const updateAuthor = await FindAuthorByIDAndUpdate(id, {author: author, phoneNumber: phoneNumber, email: email});
 
-        if(!createAuthor)
+        if(!updateAuthor)
         {
-            return res.status(400).json({ success, error: `Failed to create Author Record` });
+            return res.status(400).json({ success, error: `Failed to update Author Record` });
         }
     } 
     catch (error) 
@@ -144,11 +152,11 @@ const UpdatePublisherRecord = async (req: AuthRequest, res: Response) =>
 
     try 
     {
-        const createPublisher = await FindPublisherByIDAndUpdate(id, {publisher: publisher, phoneNumber: phoneNumber, email: email});
+        const updatePublisher = await FindPublisherByIDAndUpdate(id, {publisher: publisher, phoneNumber: phoneNumber, email: email});
 
-        if(!createPublisher)
+        if(!updatePublisher)
         {
-            return res.status(400).json({ success, error: `Failed to create Publisher Record` });
+            return res.status(400).json({ success, error: `Failed to update Publisher Record` });
         }
     } 
     catch (error) 

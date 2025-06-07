@@ -11,7 +11,6 @@ import { UserDataInterface } from '../../Model/UserTableModel'
 
 // Controllers
 import { FetchUserData } from '../../Controller/UserController/UserGetController'
-import { GetUserCookie } from '../../Controller/CookieController'
 
 // Data(CSS Syntax)
 import { displayAsColumn, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../ArraysAndObjects/Style';

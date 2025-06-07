@@ -19,16 +19,19 @@ const ContentTableCell:FC<ContentTableCellProps> = (contentTableCellData) =>
     
     const onClick = () => 
     {
-        switch(TableName)
+        const ModalMap:Record<string, JSX.Element> = 
         {
-            case "User":
-                handleOpen(<DisplayUserDataModal value={value} data={Information as UserResultDataInterface} />);
-                break;
-            
-            case "Book":
-                handleOpen(<DisplayBookDataModal position={"Table"} value={value} data={Information as BookDataInterface}/>);
-                break;
+            "User": <DisplayUserDataModal value={value} data={Information as UserResultDataInterface} />,
+            "Book": <DisplayBookDataModal position={"Table"} value={value} data={Information as BookDataInterface}/>
         }
+
+        if(!ModalMap[TableName])
+        {
+            console.log(`Modal with type ${TableName} are not created`)
+            return;
+        }
+
+        handleOpen(ModalMap[TableName])
     }
     
     return(

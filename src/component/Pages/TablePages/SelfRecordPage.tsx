@@ -17,7 +17,6 @@ import { PageItemToCenter } from "../../../ArraysAndObjects/Style"
 // Context
 import { useContactContext } from "../../../Context/Book/ContactContext";
 import { useDefinitionContext } from "../../../Context/Book/DefinitionContext";
-import { useBookContext } from "../../../Context/Book/BookContext";
 import { useAuthContext } from "../../../Context/User/AuthContext";
 import { useSelfBookRecordContext } from "../../../Context/Book/SelfBookRecordContext";
 

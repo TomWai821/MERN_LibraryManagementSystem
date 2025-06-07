@@ -2,7 +2,6 @@ import { createContext, FC, useCallback, useContext, useEffect, useState } from 
 import { ChildProps, RecommendBookContextProps } from "../../Model/ContextAndProviderModel";
 import { BookDataInterface, GetResultInterface, LoanBookInterface } from "../../Model/ResultModel";
 import { fetchSuggestBook } from "../../Controller/BookController/BookGetController";
-import { useAuthContext } from "../User/AuthContext";
 import { useSelfBookRecordContext } from "./SelfBookRecordContext";
 
 const RecommendBookContext = createContext<RecommendBookContextProps | undefined>(undefined);

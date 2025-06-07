@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 
-
 import { ModalConfirmButtonInterface } from "../../Model/ModelForModal";
 import { DeleteButton } from "../../ArraysAndObjects/Style";
 

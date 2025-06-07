@@ -49,10 +49,8 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
     
     const backToCreateModal = () => 
     {
-        handleOpen(
-            <CreateBookModal image={image} imageURL={imageURL} bookname={bookname} language={language} genre={genre} author={author} 
-                publisher={publisher} description={description} publishDate={publishDate}/>
-        );
+        handleOpen( <CreateBookModal image={image} imageURL={imageURL} bookname={bookname} language={language} genre={genre} author={author} 
+                publisher={publisher} description={description} publishDate={publishDate}/> );
     }
 
     const CreateBook = async () => 

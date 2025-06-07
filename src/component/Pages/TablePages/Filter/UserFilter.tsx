@@ -19,7 +19,7 @@ import { UserDataInterface } from "../../../../Model/UserTableModel";
 // data (CSS Syntax)
 import { ItemToCenter } from "../../../../ArraysAndObjects/Style";
 import { useAuthContext } from "../../../../Context/User/AuthContext";
-import { RoleFilterOption, StatusFilterOption } from "../../../../ArraysAndObjects/TableArrays";
+import { StatusFilterOption } from "../../../../ArraysAndObjects/TableArrays";
 
 const UserFilter:FC<FilterInterface> = (filterData) => 
 {

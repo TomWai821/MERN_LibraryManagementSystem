@@ -16,19 +16,22 @@ const ChipBody:FC<ChipBodyInterface> = (chipBodyData) =>
     const {value, title, data} = chipBodyData;
     const {handleOpen} = useModal();
 
-    const openCreateModal = (value: number) => 
+    const OpenModal = (type: string, value?: number, data?: any, deleteType?: string ) => 
     {
-        handleOpen(<CreateDefinitionModal value={value} />);
-    }
+        const ModalMap:Record<string, JSX.Element> = 
+        {
+            "Create": <CreateDefinitionModal value={value} />,
+            "Edit": <EditDefinitionDataModal value={value as number} editData={data} compareData={data}/>,
+            "Delete": <DeleteDefinitionConfirmModal _id={data._id} type={deleteType} data={data}/>
+        }
 
-    const openEditModal = (value: number, data: any) => 
-    {
-        handleOpen(<EditDefinitionDataModal value={value as number} editData={data} compareData={data}/>);
-    }
+        if(!ModalMap[type])
+        {
+            console.log(`Invalid type: ${type}!`);
+            return;
+        }
 
-    const handleDelete = (type:string, data:any) =>
-    {
-        handleOpen(<DeleteDefinitionConfirmModal _id={data._id} type={type} data={data}/>);
+        handleOpen(ModalMap[type]);
     }
 
     return(
@@ -37,11 +40,11 @@ const ChipBody:FC<ChipBodyInterface> = (chipBodyData) =>
              data.map((Data, index) => 
                 (
                     <Chip sx={{marginRight: '10px'}} key={index} label={`${value === 0 ? Data.genre : Data.language} (${Data.shortName})`} variant="outlined" 
-                        onClick={() => openEditModal(value, Data)} onDelete={() => handleDelete(title, Data)}/>
+                        onClick={() => OpenModal("Edit", value, Data)} onDelete={() => OpenModal("Delete", undefined, Data, title)}/>
                 ))
             }
             <Tooltip title={`Create ${title} Definition Data`}>
-                <IconButton onClick={() => openCreateModal(value)}>
+                <IconButton onClick={() => OpenModal("Create", value)}>
                     <AddIcon/>
                 </IconButton>
             </Tooltip>

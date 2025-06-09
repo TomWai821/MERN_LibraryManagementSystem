@@ -231,8 +231,42 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 
       1. id = MongoDB ObjectID in book collection
 **For Loan Books Data (Require auth token in header):**
-   
+1. Get Loan book record
+   ```
+   - Endpoint: `GET /api/book/LoanBook` (For all loan book record)
+   - Endpoint: `GET /api/book/LoanBook?status=Returned` (For loan book record with status filtering)
+   - Endpoint: `GET /api/book/LoanBook?bookname=Harry` (For loan book record with bookname filtering)
+   - Endpoint: `GET /api/book/LoanBook?username=a` (For loan book record with username filtering)
+   - Endpoint: `GET /api/book/LoanBook?finesPaid=Paid` (For loan book record with finesPaid status filtering)
+2. Create Loan book record
+   ```
+   Endpoint: `POST /api/book/LoanBook`
 
+   Request Body Example:
+   {
+      "userID":"",
+      "bookID":"",
+      "loanDate":"2025-06-09T00:00:00.000+00:00",
+      "dueDate":"2025-06-16T00:00:00.000+00:00"
+   }
+
+   Remarks:
+   1. userID = MongoDB ObjectID in user collection
+   2. bookID = MongoDB ObjectID in book collection
+   3. It will change book status after loan record created
+3. Modify Loan book record
+   ```
+   Endpoint: `PUT /api/book/LoanBook/id=:id`
+
+   Request Body Example:
+   {
+      "finesPaid": "Not paid needed"
+   }
+
+   Remarks:
+   1. It will change the loan record status to returned/returned(late), based on the date to send the request(return book)
+   2. finesPaid could be "Not paid needed"/"Not paid"/"paid"
+   3. id = MongoDB ObjectID in bookloaned collection
 **For Favourite Book (Require auth token in header):**
 1. Get favourite book record
    ```

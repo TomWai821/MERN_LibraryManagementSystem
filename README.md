@@ -72,13 +72,11 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
       "phoneNumber: "N/A",
       "email": "N/A"
    }
-
 3. Get the whole contact data:
    ```
    Endpoint: `POST /api/book/contact/type=:type`<br>
    Endpoint(For author filtering): `POST /api/book/contact/type=Author?author=a`<br>
    Endpoint(For publisher filtering): `POST /api/book/contact/type=Publisher?author=a`<br>
-
 5. Update the contact data:
    ```
    Endpoint: `PUT /api/book/contact/type=:type`<br>
@@ -100,8 +98,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    }
    
    Remarks: id = MongoDB ObjectID
-
-6. Delete the contact data:
+4. Delete the contact data:
    ```
    Endpoint: `DELETE /api/book/contact/type=:type`<br>
    
@@ -111,7 +108,6 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    }
    
    Remarks: id = MongoDB ObjectID
-
 ## Technology Stack
 - **Front-end:** React, Material-UI for styling
 - **Back-end:** Node.js, Express.js

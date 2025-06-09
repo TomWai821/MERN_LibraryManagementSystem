@@ -48,40 +48,66 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    npm run both
    
 ## API Endpoints
-**For Book Data:**
+**For Authenication:**
+1. For login
+   ```
+   Endpoint: `POST /api/user/Login`
 
-**For User Data:**
+   Request Body Example:
+   {
+      "email":"",
+      "password: ""
+   }
+2. For Registration
+   ```
+   Endpoint: `POST /api/user/Register`
+   
+   Request Body Example:
+   {
+      "username":"",
+      "email":"",
+      "password":"",
+      "birthDay":"",
+      "gender":""
+   }
+**For User Data (Require auth token in header):**
 
-**For Book data definition:**
+**For Suspend List (Require auth token in header):**
 
-**For contact data:**
+**For Book Data (Require auth token in header):**
+
+**For Loan Books (Require auth token in header):**
+
+**For Book data definition (Require auth token in header):**
+
+**For contact data (Require auth token in header):**
 1. Creating a new contact:
    ```
-   Endpoint: `GET /api/book/contact/type=:type`<br>
+   Endpoint: `GET /api/book/contact/type=:type`
    
-   Request Body Example(Author):<br>
+   Request Body Example(Author):
    {
       "author":"author",
       "phoneNumber: "N/A",
       "email": "N/A"
    }
    
-   Request Body Example(Publisher):<br>
+   Request Body Example(Publisher):
    {
       "publisher":"publisher",
       "phoneNumber: "N/A",
       "email": "N/A"
    }
-3. Get the whole contact data:
+2. Get the whole contact data:
    ```
    Endpoint: `POST /api/book/contact/type=:type`<br>
-   Endpoint(For author filtering): `POST /api/book/contact/type=Author?author=a`<br>
-   Endpoint(For publisher filtering): `POST /api/book/contact/type=Publisher?author=a`<br>
-5. Update the contact data:
+   Endpoint(For author filtering): `POST /api/book/contact/type=Author?author=a`
+   Endpoint(For publisher filtering): `POST /api/book/contact/type=Publisher?author=a`
+3. Update the contact data:
    ```
-   Endpoint: `PUT /api/book/contact/type=:type`<br>
+   Endpoint: `PUT /api/book/contact/type=:type`
    
-   Request Body Example(Author):<br>
+   Request Body Example(Author):
    {
       "id": ""
       "author": "author",
@@ -89,7 +115,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
       "email": "author@gmail.com"
    }
    
-   Request Body Example(Publisher):<br>
+   Request Body Example(Publisher):
    {
       "id": ""
       "publisher": "publisher",
@@ -100,7 +126,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    Remarks: id = MongoDB ObjectID
 4. Delete the contact data:
    ```
-   Endpoint: `DELETE /api/book/contact/type=:type`<br>
+   Endpoint: `DELETE /api/book/contact/type=:type`
    
    Request Body Example:<br>
    {

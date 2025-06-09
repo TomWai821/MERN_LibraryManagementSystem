@@ -55,8 +55,8 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 
    Request Body Example:
    {
-      "email":"",
-      "password: ""
+      "email":"TimmyChan@gmail.com",
+      "password: "123456"
    }
 2. For Registration
    ```
@@ -64,19 +64,74 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    
    Request Body Example:
    {
-      "username":"",
-      "email":"",
-      "password":"",
-      "birthDay":"",
-      "gender":""
+      "username":"Timmy Chan",
+      "email":"TimmyChan@gmail.com",
+      "password":"123456",
+      "birthDay":"1/1/1999",
+      "gender":"Male"
    }
 
-Remarks: All authenication data is not allow null value
+   Validator in backend:
+   1. Both request body are not allow null/empty value
+   2. Username at least require 3 characters
+   3. Password at least require 6 characters
 
+   Remarks:
+   1. User record creation are using register API (In registration page/User management page)
+   2. Password will hashing with bcrypt
+   3. birthDay will transfer to Date type in backend side
 **For User Data (Require auth token in header):**
+1. Get User data (For user management/suspend list)
+   ```
+   Endpoint: `GET /api/user/UserData/tableName=:tableName` (For all record)
+   Endpoint: `GET /api/user/UserData/tableName=:tableName?username=a` (For username filtering)
+   Endpoint: `GET /api/user/UserData/tableName=:tableName?status=Normal` (For status filtering)
+   Endpoint: `GET /api/user/UserData/tableName=:tableName?role=User` (For role filtering)
+   Endpoint: `GET /api/user/UserData/tableName=:tableName?gender=Male` (For gender filtering)
 
+   Remarks: tableName = SuspendUser/AllUser
+2. Get User data (For the direct user only)
+   ```
+   Endpoint: `GET /api/user/UserData`
+
+   Remarks: It just require the auth token in header
+5. Modify User data 
+   ```
+   Endpoint: `PUT /api/user/UserData/id=:id`
+
+   Request Body Example:
+   {
+      "username": "Johnny Chan",
+      "password": "444444",
+      "gender":"Female",
+      "role":"Admin"
+   }
+
+   Remarks: id = MongoDB ObjectID in user collection
+6. Modify User data (For user himself)
+   ```
+   Endpoint: `PUT /api/user/UserData/type=:type`
+   
+   Request body(For username):
+   {
+      "username": "Jacky Wong"
+   }
+
+   Request body(For password):
+   {
+      password: "444444"
+   }
+
+   Remarks:
+   1. type = username/password
+   2. It will get the data from user collection with auth token(unhashed by JWT, then transfer to userID) before modify the username/password
+7. Delete User data
+   ```
+   EndPoint: `DELETE /api/user/User/id=:id`
+
+   Remarks: id = MongoDB ObjectID in user collection
 **For Suspend List (Require auth token in header):**
-
+   
 **For Book Data (Require auth token in header):**
 
 **For Loan Books (Require auth token in header):**
@@ -126,7 +181,7 @@ Remarks: All authenication data is not allow null value
       "email": "publisher@gmail.com"
    }
    
-   Remarks: id = MongoDB ObjectID
+   Remarks: id = MongoDB ObjectID in author/publisher collection
 4. Delete the contact data:
    ```
    Endpoint: `DELETE /api/book/contact/type=:type`

@@ -1,0 +1,56 @@
+[{
+  "_id": {
+    "$oid": "67d1018e6682366b8515c634"
+  },
+  "language": "Traditional Chinese",
+  "shortName": "TC",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d101b76682366b8515c636"
+  },
+  "language": "English",
+  "shortName": "EN",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d101cf6682366b8515c638"
+  },
+  "language": "Simplified Chinese",
+  "shortName": "SC",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e25a7598e3348a161bd5ba"
+  },
+  "language": "Japanese",
+  "shortName": "JP",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e779f689ef4d65ea765c69"
+  },
+  "language": "Spanish",
+  "shortName": "SP",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6821ac6fca4db34b83c41013"
+  },
+  "language": "German",
+  "shortName": "GM",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6821acafca4db34b83c41027"
+  },
+  "language": "Korean",
+  "shortName": "KR",
+  "__v": 0
+}]

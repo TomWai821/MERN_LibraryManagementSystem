@@ -1,0 +1,28 @@
+QR Code Data:{"username":"WhateverAdmin","authToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY3YzdjZjE0NWZkY2IwZTBlNTc1YWJlYSJ9LCJpYXQiOjE3NDkyOTgzMTh9.vblD1Syq5eciy-lVe9HmWiMQ4TQjiNN8mMeRkA494Zs"}
+
+QR Code Data:{"username":"IamTester","authToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY4MTFiZjFmODEzZDQ4NTY1MWI1YmY3MCJ9LCJpYXQiOjE3NDkzMDIxNDN9.DEGNa_E4jPHsFj-p1aSNkF1Dgjk_gn977MH8cHJSnBw"}
+
+Genre: Science Ficition
+ShortName: SF
+
+Language: Indian
+ShortName: IN
+
+username: TestAccount
+password: TestAccount
+email: TestAccount@gmail.com 
+
+Author: The Author
+Email: TheAuthor@gmail.com
+PhoneNumber: 88677210
+
+Publisher: The Publisher
+Email: ThePublisher@gmail.com
+PhoneNumber: 67208831
+
+BookName: Beast Senpai Travelling Diary
+Genre: Magazine
+Language: Japanese
+Author: BeastSenpai
+Publisher: Beast Senpai Company
+Description: It record the beast senpai travelling experience, and it require $114514 to bought it

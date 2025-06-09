@@ -1,0 +1,61 @@
+[{
+  "_id": {
+    "$oid": "67e217b0b135608ea8ba432c"
+  },
+  "publisher": "Bloomsbury",
+  "phoneNumber": "2877 3161",
+  "email": "contact@bloomsbury.com",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e51537f1438523c19bd908"
+  },
+  "publisher": "Addison-Wesley Professional",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e5199887a4e9cdfe68e32a"
+  },
+  "publisher": "DC Comics",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e53a0787a4e9cdfe68e37d"
+  },
+  "publisher": "O'Reilly Media",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e7a8a6245bfc4e3191ff51"
+  },
+  "publisher": "Shueisha",
+  "__v": 0,
+  "phoneNumber": "N/A"
+},
+{
+  "_id": {
+    "$oid": "67e7e3ddaa40bd928b20e289"
+  },
+  "publisher": "Beast Senpai Company",
+  "__v": 0,
+  "phoneNumber": "N/A"
+},
+{
+  "_id": {
+    "$oid": "680731798189c2ca8332cfd5"
+  },
+  "publisher": "British-American publishing company",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+}]

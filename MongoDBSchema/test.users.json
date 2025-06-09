@@ -1,0 +1,184 @@
+[{
+  "_id": {
+    "$oid": "67c7cddaae8c78bf45addf1b"
+  },
+  "username": "TestAdmin",
+  "email": "TestAdmin@gmail.com",
+  "password": "$2a$12$fW5yULUAE6332p8kTOPEF.bIPH8cfoLzhqi8cR0dB5KrVmod9SzoG",
+  "gender": "Female",
+  "role": "User",
+  "status": "Normal",
+  "birthDay": "01-01-2000",
+  "avatarUrl": "whatever",
+  "createdAt": {
+    "$date": "2025-03-05T04:06:50.006Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c7cf145fdcb0e0e575abea"
+  },
+  "username": "WhateverAdmin",
+  "email": "test@gmail.com",
+  "password": "$2b$10$h.pUUzTlWVgRwp3iCa1ON.Ksxwoact/4kDPiPNLmPoWL0hylpFPDu",
+  "gender": "Male",
+  "role": "Admin",
+  "status": "Normal",
+  "birthDay": "2025-03-05",
+  "avatarUrl": "https://via.placeholder.com/150?text=T",
+  "createdAt": {
+    "$date": "2025-03-05T04:12:04.142Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c956b177d1ef810eae655d"
+  },
+  "username": "userA",
+  "email": "userA@yahoo.com",
+  "password": "$2b$10$.VpM0YDcDswIa9jzgoMXbO54RZ3SOyg50JLQgALeISm/7kZu.sCQG",
+  "gender": "Female",
+  "role": "User",
+  "status": "Normal",
+  "birthDay": "2025-03-06",
+  "avatarUrl": "https://via.placeholder.com/150?text=W",
+  "createdAt": {
+    "$date": "2025-03-06T08:02:57.945Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d18d8b5d8406d7cefcb402"
+  },
+  "username": "testUserB",
+  "email": "testUserB@gmail.com",
+  "password": "$2b$10$zuSZqDcEwV8XW7JWR/CJ8OxeJ0NrdannDE0plgQyp0fq2ikO8w2le",
+  "gender": "Male",
+  "role": "User",
+  "status": "Normal",
+  "birthDay": "2025-03-12",
+  "avatarUrl": "https://via.placeholder.com/150?text=T",
+  "createdAt": {
+    "$date": "2025-03-12T13:35:07.791Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d18dc75d8406d7cefcb409"
+  },
+  "username": "admin123",
+  "email": "admin123@gmail.com",
+  "password": "$2b$10$zdYevtlBGNhzp.myxyeSxuIbH7DA9bnbN.Aan6pWZlIg1AB6kWct6",
+  "gender": "Male",
+  "role": "User",
+  "status": "Normal",
+  "birthDay": "2025-03-12",
+  "avatarUrl": "https://via.placeholder.com/150?text=A",
+  "createdAt": {
+    "$date": "2025-03-12T13:36:07.944Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d18ddc5d8406d7cefcb40f"
+  },
+  "username": "WhoAreYou",
+  "email": "whoAreYou@gmail.com",
+  "password": "$2b$10$9nALArSJlwSU8gAQ56SLAO1/hm4eKliK..TOMRbndeRyBCGCeBivG",
+  "gender": "Female",
+  "role": "Admin",
+  "status": "Normal",
+  "birthDay": "2025-03-12",
+  "avatarUrl": "https://via.placeholder.com/150?text=W",
+  "createdAt": {
+    "$date": "2025-03-12T13:36:28.576Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d23e09ef956b29bbe4740e"
+  },
+  "username": "TestAdmin1234",
+  "email": "test1234@gmail.com",
+  "password": "$2b$10$Ug.28ejG.JAFxkKeA/iod.31bUgLnC0J5gn.EVEFABZ0e3KYtKf3S",
+  "gender": "Male",
+  "role": "Admin",
+  "status": "Normal",
+  "birthDay": "2025-03-13",
+  "avatarUrl": "https://via.placeholder.com/150?text=A",
+  "createdAt": {
+    "$date": "2025-03-13T02:08:09.522Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d81a918790aff21b8ae529"
+  },
+  "username": "StudentA",
+  "email": "StudentA@gmail.com",
+  "password": "$2b$10$DwZeb0SR4uvVWZ3WGeAaEO7Hi3CVu56TXeE.NuO3xzmEexIxtQM9u",
+  "gender": "Male",
+  "role": "User",
+  "status": "Suspend",
+  "birthDay": "2025-03-17",
+  "avatarUrl": "https://via.placeholder.com/150?text=S",
+  "createdAt": {
+    "$date": "2025-03-17T12:50:25.651Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e7e966aa40bd928b20e3c9"
+  },
+  "username": "TestUser2",
+  "email": "TestUser2@yahoo.com",
+  "password": "$2b$10$YM8NEvjmcMtJ8os68aDgRuKpEdL2Y.Z7yXDGB8TPPoKBXsfIowm8e",
+  "gender": "Male",
+  "role": "User",
+  "status": "Normal",
+  "birthDay": {
+    "$date": "2025-03-01T00:00:00.000Z"
+  },
+  "avatarUrl": "https://via.placeholder.com/150?text=T",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f3bfc45d052359bc8e9ed1"
+  },
+  "username": "testCaseUser",
+  "email": "testCaseUser@yahoo.com.hk",
+  "password": "$2b$10$/25tU7R5e5NrB0ZJ5JkT3epo03zsMu4EN3c6BnkIjKiKbe.zuzwdi",
+  "gender": "Male",
+  "role": "User",
+  "status": "Normal",
+  "birthDay": {
+    "$date": "2010-01-01T00:00:00.000Z"
+  },
+  "avatarUrl": "https://via.placeholder.com/150?text=T",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6811bf1f813d485651b5bf70"
+  },
+  "username": "IamTester",
+  "email": "IamTester@gmail.com",
+  "password": "$2b$10$5Va39Qz.LD06B2V1EH9uu.eDHotNETvaxZNy58XhZBbvLZjUEVTsG",
+  "gender": "Male",
+  "role": "User",
+  "status": "Normal",
+  "birthDay": {
+    "$date": "2010-01-01T00:00:00.000Z"
+  },
+  "avatarUrl": "https://via.placeholder.com/150?text=I",
+  "__v": 0
+}]

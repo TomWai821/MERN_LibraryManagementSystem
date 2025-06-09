@@ -1,0 +1,108 @@
+[{
+  "_id": {
+    "$oid": "67e215c1ad7b49fc068fa048"
+  },
+  "author": "J.K. Rowling",
+  "phoneNumber": "12345678",
+  "email": "info@jkrowling.com",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e51518f1438523c19bd906"
+  },
+  "author": "Robert Lafore",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e5194987a4e9cdfe68e31b"
+  },
+  "author": "Peter David",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e519f587a4e9cdfe68e340"
+  },
+  "author": "Jeff Mariotte",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e51b7487a4e9cdfe68e34f"
+  },
+  "author": "Jason Aaron",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e51b9687a4e9cdfe68e351"
+  },
+  "author": "Scout Synder",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e539ef87a4e9cdfe68e37b"
+  },
+  "author": "Mark Lutz",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e53aa287a4e9cdfe68e393"
+  },
+  "author": "Vick Middleton",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e7a8b0245bfc4e3191ff53"
+  },
+  "author": "Akjia Soriyama",
+  "__v": 0,
+  "email": "N/A",
+  "phoneNumber": "N/A"
+},
+{
+  "_id": {
+    "$oid": "680731338189c2ca8332cfc1"
+  },
+  "author": "John Ronald Reuel Tolkien",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6843adca5fa23b7ad7f2c14a"
+  },
+  "author": "BeastSenpai",
+  "phoneNumber": "N/A",
+  "email": "N/A",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68443dae86ffe2dedf1b9d54"
+  },
+  "author": "The Author",
+  "phoneNumber": "88677210",
+  "email": "TheAuthor@gmail.com",
+  "__v": 0
+}]

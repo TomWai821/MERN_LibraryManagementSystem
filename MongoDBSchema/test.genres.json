@@ -1,0 +1,48 @@
+[{
+  "_id": {
+    "$oid": "67d26fa05a0312fcedc3a17e"
+  },
+  "genre": "Novel",
+  "shortName": "N",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d26fb15a0312fcedc3a182"
+  },
+  "genre": "Magazine",
+  "shortName": "M",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d26fc35a0312fcedc3a186"
+  },
+  "genre": "Horror Novel",
+  "shortName": "HN",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e26e59715e8a63743b7951"
+  },
+  "genre": "Academic Textbooks",
+  "shortName": "AT",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e50ee0ae0948d7349a17dc"
+  },
+  "genre": "Comic - America",
+  "shortName": "CA",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67e7a3bf0ccdaa9c1766e958"
+  },
+  "genre": "Comic - Japan",
+  "shortName": "CJ",
+  "__v": 0
+}]

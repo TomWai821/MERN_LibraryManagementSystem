@@ -1,0 +1,120 @@
+[{
+  "_id": {
+    "$oid": "681d8297bbfb983012b1d44f"
+  },
+  "userID": {
+    "$oid": "67c7cf145fdcb0e0e575abea"
+  },
+  "bookID": {
+    "$oid": "67e3778952b914f9f7ec279f"
+  },
+  "loanDate": {
+    "$date": "2025-05-09T04:20:39.168Z"
+  },
+  "dueDate": {
+    "$date": "2025-05-16T04:20:39.168Z"
+  },
+  "returnDate": {
+    "$date": "2025-05-09T04:24:42.277Z"
+  },
+  "status": "Returned",
+  "fineAmount": 0,
+  "finesPaid": "Not Fine Needed",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68247fe24adf5e35991b24e6"
+  },
+  "userID": {
+    "$oid": "67c7cf145fdcb0e0e575abea"
+  },
+  "bookID": {
+    "$oid": "67e379e3504ef96a4b067656"
+  },
+  "loanDate": {
+    "$date": "2025-05-14T11:34:58.936Z"
+  },
+  "dueDate": {
+    "$date": "2025-05-21T11:34:58.936Z"
+  },
+  "returnDate": {
+    "$date": "2025-05-14T13:00:45.097Z"
+  },
+  "status": "Returned",
+  "fineAmount": 0,
+  "finesPaid": "Not Fine Needed",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "684000ace720cef32fe21607"
+  },
+  "userID": {
+    "$oid": "67c7cddaae8c78bf45addf1b"
+  },
+  "bookID": {
+    "$oid": "67e53ac087a4e9cdfe68e3a5"
+  },
+  "loanDate": {
+    "$date": "2025-06-01T08:15:40.659Z"
+  },
+  "dueDate": {
+    "$date": "2025-06-07T08:15:40.659Z"
+  },
+  "returnDate": {
+    "$date": "2025-06-07T13:22:45.941Z"
+  },
+  "status": "Returned(Late)",
+  "fineAmount": 0,
+  "finesPaid": "Not Fine Needed",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68403cc05ff418ffdff67054"
+  },
+  "userID": {
+    "$oid": "67c7cddaae8c78bf45addf1b"
+  },
+  "bookID": {
+    "$oid": "67e379e3504ef96a4b067656"
+  },
+  "loanDate": {
+    "$date": "2024-06-04T12:32:00.379Z"
+  },
+  "dueDate": {
+    "$date": "2024-06-11T12:32:00.379Z"
+  },
+  "returnDate": {
+    "$date": "2025-06-07T13:23:27.973Z"
+  },
+  "status": "Returned(Late)",
+  "fineAmount": 130,
+  "finesPaid": "Paid",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6844425260cf4551abdd4fc5"
+  },
+  "userID": {
+    "$oid": "67c7cf145fdcb0e0e575abea"
+  },
+  "bookID": {
+    "$oid": "67e3778952b914f9f7ec279f"
+  },
+  "loanDate": {
+    "$date": "2025-06-07T13:44:50.024Z"
+  },
+  "dueDate": {
+    "$date": "2025-06-14T13:44:50.024Z"
+  },
+  "returnDate": {
+    "$date": "2025-06-07T13:44:59.384Z"
+  },
+  "status": "Returned",
+  "fineAmount": 0,
+  "finesPaid": "Not Fine Needed",
+  "__v": 0
+}]

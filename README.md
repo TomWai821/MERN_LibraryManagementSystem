@@ -70,6 +70,9 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
       "birthDay":"",
       "gender":""
    }
+
+Remarks: All authenication data is not allow null value
+
 **For User Data (Require auth token in header):**
 
 **For Suspend List (Require auth token in header):**

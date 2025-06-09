@@ -1,6 +1,9 @@
 # MERN Library Management System
 A full-stack application that streamlines library operations built as a Information Technology Project (ITP)
 
+[Presentation Video]()
+[Demonstration Video]()
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)

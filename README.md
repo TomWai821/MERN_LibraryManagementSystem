@@ -48,6 +48,22 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    npm run both
    
 ## API Endpoints
+**For Book Data:**
+
+**For User Data:**
+
+**For Book data definition:**
+
+**For contact data:**
+## API Endpoints
+
+| Method | Endpoint | Description | Request Parameters | Example Response |
+|--------|---------|-------------|--------------------|-----------------|
+| **GET** | `/api/books` | Retrieve all books | None | `{ "books": [ { "id": 1, "title": "Book A" } ] }` |
+| **GET** | `/api/books/:id` | Retrieve specific book | `id` (Book ID) | `{ "id": 1, "title": "Book A" }` |
+| **POST** | `/api/books` | Add a new book | `{ "title": "Book A", "author": "Author A" }` | `{ "message": "Book added successfully" }` |
+| **PUT** | `/api/books/:id` | Update book info | `id`, `{ "title": "New Title" }` | `{ "message": "Book updated" }` |
+| **DELETE** | `/api/books/:id` | Remove a book | `id` | `{ "message": "Book deleted" }` |
 
 
 ## Technology Stack

@@ -386,7 +386,8 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
       "email": "publisher@gmail.com"
    }
    
-   Remarks: id = MongoDB ObjectID in author/publisher collection
+   Remarks:
+   1. id = MongoDB ObjectID in author/publisher collection
 4. Delete the contact data:
    ```
    Endpoint: `DELETE /api/book/contact/type=:type`
@@ -396,7 +397,8 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
       "id": ""
    }
    
-   Remarks: id = MongoDB ObjectID
+   Remarks:
+   1. id = MongoDB ObjectID
 ## Technology Stack
 - **Front-end:** React, Material-UI for styling
 - **Back-end:** Node.js, Express.js

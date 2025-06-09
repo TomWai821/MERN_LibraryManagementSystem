@@ -2,7 +2,7 @@
 A full-stack application that streamlines library operations built as a Information Technology Project (ITP)
 
 ## Video for presentation and demonstration
-- **Presentation Video:** An overview of the project concept, goals, and the inspiration behind it [Presentation Video](https://youtu.be/QuyYn-r9Nr4)
+- **[Presentation Video](https://youtu.be/QuyYn-r9Nr4):** An overview of the project concept, goals, and the inspiration behind it 
 - **Demonstration Video:** A walkthrough of the project's features and live functionalities [Demonstration Video]()
 
 ## Table of Contents

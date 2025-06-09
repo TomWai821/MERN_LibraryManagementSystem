@@ -39,10 +39,10 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 4. **Run the application:**
    ```bash
    # For the server side
-   npm start
+   nodemon backend/index.ts  
    
    # For the client side
-   nodemon backend/index.ts
+   npm start
    
    # For the user who download concurrency
    npm run both

@@ -56,6 +56,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 
 **For contact data:**
 1. Creating a new contact:
+   ```
    Endpoint: `GET /api/book/contact/type=:type`<br>
    
    Request Body Example(Author):<br>
@@ -72,12 +73,14 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
       "email": "N/A"
    }
 
-2. Get the whole contact data:
+3. Get the whole contact data:
+   ```
    Endpoint: `POST /api/book/contact/type=:type`<br>
    Endpoint(For author filtering): `POST /api/book/contact/type=Author?author=a`<br>
    Endpoint(For publisher filtering): `POST /api/book/contact/type=Publisher?author=a`<br>
 
-3. Update the contact data:
+5. Update the contact data:
+   ```
    Endpoint: `PUT /api/book/contact/type=:type`<br>
    
    Request Body Example(Author):<br>
@@ -98,15 +101,16 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    
    Remarks: id = MongoDB ObjectID
 
-4. Delete the contact data:
-Endpoint: `DELETE /api/book/contact/type=:type`<br>
-
-Request Body Example:<br>
-{
-   "id": ""
-}
-
-Remarks: id = MongoDB ObjectID
+6. Delete the contact data:
+   ```
+   Endpoint: `DELETE /api/book/contact/type=:type`<br>
+   
+   Request Body Example:<br>
+   {
+      "id": ""
+   }
+   
+   Remarks: id = MongoDB ObjectID
 
 ## Technology Stack
 - **Front-end:** React, Material-UI for styling

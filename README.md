@@ -125,13 +125,45 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    Remarks:
    1. type = username/password
    2. It will get the data from user collection with auth token(unhashed by JWT, then transfer to userID) before modify the username/password
-7. Delete User data
+
+7. Modify user status (Include Suspend User/Unsuspend User)
+   ```
+   Endpoint: `PUT /api/user/Status/id=:id`
+
+   Request Body Example(For Suspend User):
+   {
+      "StatusForUserList": "Suspend",
+      "description": "Does not return book many times",
+      "startDate": "9-6-2025T04:06:50.006+00:00",
+      "dueDate": "9-7-2025T04:06:50.006+00:00"
+   }
+
+   Request Body Example(For Unsuspend User):
+   {
+      "StatusForUserList": "Normal",
+   }
+
+   Remarks: id = MongoDB ObjectID in user collection
+8. Delete User data
    ```
    EndPoint: `DELETE /api/user/User/id=:id`
 
    Remarks: id = MongoDB ObjectID in user collection
 **For Suspend List (Require auth token in header):**
-   
+   1. Modify Suspend List data
+      ```
+      Endpoint: `PUT /SuspendListData/id=:id`
+
+      Request Body Example:
+      {
+         "banListID":""
+         "dueDate":"8-7-2025T04:06:50.006+00:00"
+         "description":"Does not return books and paid fines many time"
+      }
+
+      Remarks:
+      1. id = the MongoDB ObjectID in user collection, it use to ensure the account was exist
+      2. banListID = the MongoDB ObjectID in suspendList
 **For Book Data (Require auth token in header):**
 
 **For Loan Books (Require auth token in header):**

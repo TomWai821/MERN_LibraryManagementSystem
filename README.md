@@ -55,16 +55,58 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 **For Book data definition:**
 
 **For contact data:**
-## API Endpoints
+1. Creating a new contact:
+Endpoint: `GET /api/book/contact/type=:type`<br>
 
-| Method | Endpoint | Description | Request Parameters | Example Response |
-|--------|---------|-------------|--------------------|-----------------|
-| **GET** | `/api/books` | Retrieve all books | None | `{ "books": [ { "id": 1, "title": "Book A" } ] }` |
-| **GET** | `/api/books/:id` | Retrieve specific book | `id` (Book ID) | `{ "id": 1, "title": "Book A" }` |
-| **POST** | `/api/books` | Add a new book | `{ "title": "Book A", "author": "Author A" }` | `{ "message": "Book added successfully" }` |
-| **PUT** | `/api/books/:id` | Update book info | `id`, `{ "title": "New Title" }` | `{ "message": "Book updated" }` |
-| **DELETE** | `/api/books/:id` | Remove a book | `id` | `{ "message": "Book deleted" }` |
+Request Body Example(Author):<br>
+{
+   "author":"author",
+   "phoneNumber: "N/A",
+   "email": "N/A"
+}
 
+Request Body Example(Publisher):<br>
+{
+   "publisher":"publisher",
+   "phoneNumber: "N/A",
+   "email": "N/A"
+}
+
+2. Get the whole contact data:
+Endpoint: `POST /api/book/contact/type=:type`<br>
+Endpoint(For author filtering): `POST /api/book/contact/type=Author?author=a`<br>
+Endpoint(For publisher filtering): `POST /api/book/contact/type=Publisher?author=a`<br>
+
+3. Update the contact data:
+Endpoint: `PUT /api/book/contact/type=:type`<br>
+
+Request Body Example(Author):<br>
+{
+   "id": ""
+   "author": "author",
+   "phoneNumber: "12345678",
+   "email": "author@gmail.com"
+}
+
+Request Body Example(Publisher):<br>
+{
+   "id": ""
+   "publisher": "publisher",
+   "phoneNumber: "12345678",
+   "email": "publisher@gmail.com"
+}
+
+Remarks: id = MongoDB ObjectID
+
+4. Delete the contact data:
+Endpoint: `DELETE /api/book/contact/type=:type`<br>
+
+Request Body Example:<br>
+{
+   "id": ""
+}
+
+Remarks: id = MongoDB ObjectID
 
 ## Technology Stack
 - **Front-end:** React, Material-UI for styling

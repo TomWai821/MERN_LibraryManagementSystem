@@ -89,12 +89,14 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    - Endpoint: `GET /api/user/UserData/tableName=:tableName?role=User` (For role filtering)
    - Endpoint: `GET /api/user/UserData/tableName=:tableName?gender=Male` (For gender filtering)
 
-   Remarks: tableName = SuspendUser/AllUser
+   Remarks:
+   1. tableName = SuspendUser/AllUser
 2. Get User data (For the direct user only)
    ```
    Endpoint: `GET /api/user/UserData`
 
-   Remarks: It just require the auth token in header
+   Remarks:
+   1. It just require the auth token in header
 5. Modify User data 
    ```
    Endpoint: `PUT /api/user/UserData/id=:id`
@@ -107,7 +109,8 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
       "role":"Admin"
    }
 
-   Remarks: id = MongoDB ObjectID in user collection
+   Remarks:
+   1. id = MongoDB ObjectID in user collection
 6. Modify User data (For user himself)
    ```
    Endpoint: `PUT /api/user/UserData/type=:type`
@@ -142,12 +145,14 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
       "StatusForUserList": "Normal",
    }
 
-   Remarks: id = MongoDB ObjectID in user collection
+   Remarks:
+   1. id = MongoDB ObjectID in user collection
 8. Delete User data
    ```
    EndPoint: `DELETE /api/user/User/id=:id`
 
-   Remarks: id = MongoDB ObjectID in user collection
+   Remarks:
+   1. id = MongoDB ObjectID in user collection
 **For Suspend List (Require auth token in header):**
    1. Modify Suspend List data
       ```

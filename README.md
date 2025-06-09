@@ -164,18 +164,92 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
       1. id = the MongoDB ObjectID in user collection, it use to ensure the account was exist
       2. banListID = the MongoDB ObjectID in suspendList
 **For Book Data (Require auth token in header):**
-   
+   1. Get book data
+      ```
+      - Endpoint:`GET /api/book/BookData` (For all books)
+      - Endpoint:`GET /api/book/BookData?bookname=a` (For all books with bookname filtering)
+      - Endpoint:`GET /api/book/BookData?status=OnShelf` (For all books with status filter)
+      - Endpoint:`GET /api/book/BookData?authorID=""` (For all books with authorID filtering)
+      - Endpoint:`GET /api/book/BookData?publisherID=""` (For all books with publisherID filtering)
+      - Endpoint:`GET /api/book/BookData?genreID=""` (For all books with genreID filtering)
+      - Endpoint:`GET /api/book/BookData?languageID=""` (For all books with languageID filtering)
 
+      Remarks:
+      1. authorID = MongoDB ObjectID in author collection
+      2. publisherID = MongoDB ObjectID in publisher collection
+      3. genreID = MongoDB ObjectID in genre collection
+      4. languageID = MongoDB ObjectID in language collection
+   2. Create book record
+      ```
+      Endpoint:`POST /api/book/BookData`
+
+      Request Body Example:
+      {
+         "bookname":"Beast Senpai Travelling Diary",
+         "languageID":"",
+         "genreID":"",
+         "authorID":"",
+         "publisherID":"",
+         "description":"It collect the photo about the fun facts during beast senpai travelling",
+         "publishDate":"2005-07-16T00:00:00.000+00:00"
+      }
+
+      Remarks:
+      1. authorID = MongoDB ObjectID in author collection
+      2. publisherID = MongoDB ObjectID in publisher collection
+      3. genreID = MongoDB ObjectID in genre collection
+      4. languageID = MongoDB ObjectID in language collection
+   3. Modify book record
+      ```
+      Endpoint:`PUT /api/book/BookData/id=:id`
+
+      Request Body Example:
+      {
+         "bookname":"Beast Senpai Travelling Diary",
+         "languageID":"",
+         "genreID":"",
+         "authorID":"",
+         "publisherID":"",
+         "description":"It collect the photo about the fun fact during beast senpai travelling, and it cost $114514",
+         "publishDate":"2005-07-16T00:00:00.000+00:00"
+      }
+
+      Remarks:
+      1. authorID = MongoDB ObjectID in author collection
+      2. publisherID = MongoDB ObjectID in publisher collection
+      3. genreID = MongoDB ObjectID in genre collection
+      4. languageID = MongoDB ObjectID in language collection
+      5. id = MongoDB ObjectID in book collection
+   4. Delete book record
+      ```
+      Endpoint:`DELETE /api/book/BookData/id=:id``
+
+      1. id = MongoDB ObjectID in book collection
 **For Loan Books Data (Require auth token in header):**
-
+   
 
 **For Favourite Book (Require auth token in header):**
-1. Create a favourite book record
+1. Get favourite book record
    ```
-   
-2. Delete a favourite book record
+   Endpoint:`GET /api/book/FavouriteBook`
+2. Create a favourite book record
    ```
+   Endpoint:`POST /api/book/FavouriteBook`
 
+   Request body Example:
+   {
+      "bookID":""
+   }
+
+   Remarks:
+   1. It will get the userID from auth token(unhash by jwt)
+   2. BookID  = MongoDB ObjectID in book collection
+3. Delete a favourite book record
+   ```
+   Endpoint:`DELETE /api/book/FavouriteBook/id=:id`
+
+   Remarks:
+   1. id = MongoDB ObjectID in favourite book collection
 **For Book data definition (Require auth token in header):**
 1. Create a new definition data:
    ```
@@ -185,7 +259,6 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 
    Remarks:
    1. type = Genre/Language
-   
 2. Get the whole definition data:
    ```
    Endpoint: `POST /api/book/definition/type=:type`
@@ -205,7 +278,6 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    Remarks:
    1. type = Genre/Language
    2. Here also has URL paramters(type) validation
-   
 3. Update the definition data:
    ```
    Endpoint: `PUT /api/book/definition/type=:type?id=""`
@@ -225,7 +297,6 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    Remarks:
    1. type = Genre/Language
    2. id = MongoDB ObjectID in langauge/genre collection
-   
 4. Delete the definition data:
    ```
    Endpoint: `DELETE /api/book/definition/type=:type?id=""`
@@ -233,7 +304,6 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    Remarks:
    1. type = Genre/Language
    2. id = MongoDB ObjectID in langauge/genre collection
-   
 **For contact data (Require auth token in header):**
 1. Creating a new contact:
    ```
@@ -254,9 +324,9 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    }
 2. Get the whole contact data:
    ```
-   Endpoint: `POST /api/book/contact/type=:type`
-   Endpoint(For author filtering): `POST /api/book/contact/type=Author?author=a`
-   Endpoint(For publisher filtering): `POST /api/book/contact/type=Publisher?publisher=a`
+   -Endpoint: `POST /api/book/contact/type=:type`
+   -Endpoint(For author filtering): `POST /api/book/contact/type=Author?author=a`
+   -Endpoint(For publisher filtering): `POST /api/book/contact/type=Publisher?publisher=a`
 3. Update the contact data:
    ```
    Endpoint: `PUT /api/book/contact/type=:type`

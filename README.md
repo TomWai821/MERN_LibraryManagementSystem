@@ -165,11 +165,72 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
       1. id = the MongoDB ObjectID in user collection, it use to ensure the account was exist
       2. banListID = the MongoDB ObjectID in suspendList
 **For Book Data (Require auth token in header):**
+   
 
 **For Loan Books (Require auth token in header):**
 
-**For Book data definition (Require auth token in header):**
 
+**For Favourite Books (Require auth token in header):**
+   
+
+**For Book data definition (Require auth token in header):**
+1. Create a new definition data:
+   ```
+   Endpoint: `GET /api/book/definition/type=:type`
+   Endpoint: `GET /api/book/definition/type=:Genre?genre=N` (Search genre with filter data)
+   Endpoint: `GET /api/book/definition/type=:Language?language=En` (Search language with filter data)
+
+   Remarks:
+   1. type = Genre/Language
+   
+2. Get the whole definition data:
+   ```
+   Endpoint: `POST /api/book/definition/type=:type`
+
+   Request Body Example(For Genre):
+   {
+      "genre":"Science Fiction",
+      "shortName":"SF"
+   }
+
+   Request Body Example(For Language):
+   {
+      "language":"English",
+      "shortName":"EN"
+   }
+
+   Remarks:
+   1. type = Genre/Language
+   2. Here also has URL paramters(type) validation
+   
+3. Update the definition data:
+   ```
+   Endpoint: `PUT /api/book/definition/type=:type?id=""`
+
+   Request Body Example(For Genre):
+   {
+      "genre":"Science Fiction",
+      "shortName":"SF"
+   }
+
+   Request Body Example(For Language):
+   {
+      "language":"English",
+      "shortName":"EN"
+   }
+
+   Remarks:
+   1. type = Genre/Language
+   2. id = MongoDB ObjectID in langauge/genre collection
+   
+4. Delete the definition data:
+   ```
+   Endpoint: `DELETE /api/book/definition/type=:type?id=""`
+
+   Remarks:
+   1. type = Genre/Language
+   2. id = MongoDB ObjectID in langauge/genre collection
+   
 **For contact data (Require auth token in header):**
 1. Creating a new contact:
    ```
@@ -190,9 +251,9 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    }
 2. Get the whole contact data:
    ```
-   Endpoint: `POST /api/book/contact/type=:type`<br>
+   Endpoint: `POST /api/book/contact/type=:type`
    Endpoint(For author filtering): `POST /api/book/contact/type=Author?author=a`
-   Endpoint(For publisher filtering): `POST /api/book/contact/type=Publisher?author=a`
+   Endpoint(For publisher filtering): `POST /api/book/contact/type=Publisher?publisher=a`
 3. Update the contact data:
    ```
    Endpoint: `PUT /api/book/contact/type=:type`
@@ -218,7 +279,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    ```
    Endpoint: `DELETE /api/book/contact/type=:type`
    
-   Request Body Example:<br>
+   Request Body Example:
    {
       "id": ""
    }

@@ -83,11 +83,11 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 **For User Data (Require auth token in header):**
 1. Get User data (For user management/suspend list)
    ```
-   Endpoint: `GET /api/user/UserData/tableName=:tableName` (For all record)
-   Endpoint: `GET /api/user/UserData/tableName=:tableName?username=a` (For username filtering)
-   Endpoint: `GET /api/user/UserData/tableName=:tableName?status=Normal` (For status filtering)
-   Endpoint: `GET /api/user/UserData/tableName=:tableName?role=User` (For role filtering)
-   Endpoint: `GET /api/user/UserData/tableName=:tableName?gender=Male` (For gender filtering)
+   - Endpoint: `GET /api/user/UserData/tableName=:tableName` (For all record)
+   - Endpoint: `GET /api/user/UserData/tableName=:tableName?username=a` (For username filtering)
+   - Endpoint: `GET /api/user/UserData/tableName=:tableName?status=Normal` (For status filtering)
+   - Endpoint: `GET /api/user/UserData/tableName=:tableName?role=User` (For role filtering)
+   - Endpoint: `GET /api/user/UserData/tableName=:tableName?gender=Male` (For gender filtering)
 
    Remarks: tableName = SuspendUser/AllUser
 2. Get User data (For the direct user only)
@@ -125,8 +125,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    Remarks:
    1. type = username/password
    2. It will get the data from user collection with auth token(unhashed by JWT, then transfer to userID) before modify the username/password
-
-7. Modify user status (Include Suspend User/Unsuspend User)
+7. Modify user Status (Include Suspend User/Unsuspend User)
    ```
    Endpoint: `PUT /api/user/Status/id=:id`
 
@@ -167,18 +166,22 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 **For Book Data (Require auth token in header):**
    
 
-**For Loan Books (Require auth token in header):**
+**For Loan Books Data (Require auth token in header):**
 
 
-**For Favourite Books (Require auth token in header):**
+**For Favourite Book (Require auth token in header):**
+1. Create a favourite book record
+   ```
    
+2. Delete a favourite book record
+   ```
 
 **For Book data definition (Require auth token in header):**
 1. Create a new definition data:
    ```
-   Endpoint: `GET /api/book/definition/type=:type`
-   Endpoint: `GET /api/book/definition/type=:Genre?genre=N` (Search genre with filter data)
-   Endpoint: `GET /api/book/definition/type=:Language?language=En` (Search language with filter data)
+   - Endpoint: `GET /api/book/definition/type=:type`
+   - Endpoint: `GET /api/book/definition/type=:Genre?genre=N` (Search genre with filter data)
+   - Endpoint: `GET /api/book/definition/type=:Language?language=En` (Search language with filter data)
 
    Remarks:
    1. type = Genre/Language

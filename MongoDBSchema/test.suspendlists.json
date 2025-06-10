@@ -26,16 +26,14 @@
     "$oid": "67c956b177d1ef810eae655d"
   },
   "description": "Does not pay the fine many times, also does not return many books($390)",
-  "status": "Unsuspend",
+  "status": "Suspend",
   "startDate": {
     "$date": "2025-06-05T06:22:49.852Z"
   },
   "dueDate": {
     "$date": "2025-08-05T00:00:00.000Z"
   },
-  "unSuspendDate": {
-    "$date": "2025-06-07T13:27:22.504Z"
-  },
+  "unSuspendDate": null,
   "__v": 0
 },
 {

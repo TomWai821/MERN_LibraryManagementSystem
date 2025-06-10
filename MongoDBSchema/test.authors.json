@@ -96,13 +96,4 @@
   "phoneNumber": "N/A",
   "email": "N/A",
   "__v": 0
-},
-{
-  "_id": {
-    "$oid": "68443dae86ffe2dedf1b9d54"
-  },
-  "author": "The Author",
-  "phoneNumber": "88677210",
-  "email": "TheAuthor@gmail.com",
-  "__v": 0
 }]

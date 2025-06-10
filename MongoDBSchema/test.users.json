@@ -41,7 +41,7 @@
   "password": "$2b$10$.VpM0YDcDswIa9jzgoMXbO54RZ3SOyg50JLQgALeISm/7kZu.sCQG",
   "gender": "Female",
   "role": "User",
-  "status": "Normal",
+  "status": "Suspend",
   "birthDay": "2025-03-06",
   "avatarUrl": "https://via.placeholder.com/150?text=W",
   "createdAt": {

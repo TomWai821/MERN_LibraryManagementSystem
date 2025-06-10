@@ -3,7 +3,9 @@ A full-stack application that streamlines library operations built as a Informat
 
 ## Video for presentation and demonstration
 - **[Presentation Video](https://youtu.be/QuyYn-r9Nr4):** An overview of the project concept, goals, and the inspiration behind it 
-- **Demonstration Video:** A walkthrough of the project's features and live functionalities [Demonstration Video]()
+- **Demonstration Video:** A walkthrough of the project's features and live functionalities for each roles
+  1. [For Non-Librarian (Guest User and Authenticate User)]()
+  2. [For Librarian]()
 
 ## Table of Contents
 - [Introduction](#introduction)

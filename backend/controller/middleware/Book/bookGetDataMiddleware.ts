@@ -84,8 +84,21 @@ export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Resp
             const topBookIds = TF_IDF_Scores.map(book => book.id);
             foundBook = await GetBook({ _id: { $in: topBookIds } }, undefined);
             
+            const scoreMap = new Map<string, number>();
+            
+            TF_IDF_Scores.forEach(item =>  { scoreMap.set(item.id.toString(), item.score); });
+
             const suggestedBookNames = (suggestionData as Book[]).map(book => book.bookname);
-            foundBook = (foundBook as BookInterface[]).filter(book => !suggestedBookNames.slice(0, 5).includes(book.bookname)).slice(0, 8);
+
+            foundBook = (foundBook as BookInterface[])
+                .filter(book => !suggestedBookNames.slice(0, 5).includes(book.bookname))
+                .sort((a, b) => 
+                {
+                    const scoreA = scoreMap.get(a._id.toString()) || 0;
+                    const scoreB = scoreMap.get(b._id.toString()) || 0;
+                    return scoreB - scoreA;
+                })
+                .slice(0, 8);
             break;
 
         default:

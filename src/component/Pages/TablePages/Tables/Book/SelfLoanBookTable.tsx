@@ -59,7 +59,7 @@ const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                 <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                     <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
                                     
-                                    <ContentTableCell TableName={TableName} value={value} Information={data}>
+                                    <ContentTableCell TableName={TableName} value={1} Information={data}>
                                         <Avatar src={data.bookDetails?.image?.url} alt="Preview" variant="rounded" sx={{ width: "150px", height: "225px" }}/>
                                     </ContentTableCell>
 
@@ -68,11 +68,11 @@ const SelfLoanBookTable:FC<BookRecordTableInterface> = (DataForAllUserTable) =>
                                     <ContentTableCell TableName={TableName} value={1} Information={data}>{TransferDateToISOString(data.dueDate as Date)}</ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={1} Information={data} textColor={setLoanBookDataTextColor(data.status as string)}>{data.status}</ContentTableCell>
                                     <ContentTableCell TableName={TableName} value={1} Information={data}>{data.returnDate === null ? "N/A" : TransferDateToISOString(data.returnDate as Date)}</ContentTableCell>
-                                    <ContentTableCell TableName={TableName} value={value} Information={data} textColor={setDataTextColor(data.finesPaid as string, "Not Paid", "red", "green")}>
+                                    <ContentTableCell TableName={TableName} value={1} Information={data} textColor={setDataTextColor(data.finesPaid as string, "Not Paid", "red", "green")}>
                                         { data.fineAmount !== 0 && data.finesPaid !== "Not Fine Needed" ? "Not Paid" : data.finesPaid }
                                     </ContentTableCell>
                                     
-                                    <ContentTableCell TableName={TableName} value={value} Information={data}>
+                                    <ContentTableCell TableName={TableName} value={1} Information={data}>
                                         HKD$ { data.fineAmount }
                                     </ContentTableCell>
                                 </TableRow>

@@ -6,6 +6,7 @@ import CreateContactConfirmModal from "../Confirmation/Contact/CreateContactConf
 import { Box, TextField } from "@mui/material";
 import { ModalBodySyntax } from "../../../ArraysAndObjects/Style";
 import ModalConfirmButton from "../../UIFragment/ModalConfirmButton";
+import { maskedData } from "../../../Controller/OtherController";
 
 const CreateContextModal:FC<CreateModalInterface> = (createModalData) => 
 {
@@ -65,9 +66,9 @@ const CreateContextModal:FC<CreateModalInterface> = (createModalData) =>
                     helperText={isSubmitted && helperTexts["publisher"]} error={isSubmitted && errors["publisher"] !== ""}
                 />
             }
-                <TextField label="Phone Number" name="phoneNumber" value={contact.phoneNumber} type="text" size="small" onChange={onChange}/>
+                <TextField label="Phone Number" name="phoneNumber" value={maskedData("phoneNumber", contact.phoneNumber)} type="text" size="small" onChange={onChange}/>
 
-                <TextField label="Email" name="email" value={contact.email} type="text" size="small" onChange={onChange}/>
+                <TextField label="Email" name="email" value={maskedData("email", contact.email)} type="text" size="small" onChange={onChange}/>
 
             </Box>
             

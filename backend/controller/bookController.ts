@@ -4,6 +4,7 @@ import { AuthRequest } from '../model/requestInterface';
 import { deleteImage } from '../storage';
 import fs from 'fs'
 import { BookInterface } from '../model/bookSchemaInterface';
+import { FindBookLoanedAndDelete } from '../schema/book/bookLoaned';
 
 export const GetBookRecord = async (req: AuthRequest, res: Response) => 
 {
@@ -129,6 +130,13 @@ export const DeleteBookRecord = async(req:Request, res:Response) =>
         if(!deleteBookRecord)
         {
             return res.status(400).json({success, error: "Failed to Delete book record"});
+        }
+
+        const deleteLoanBookRecord = await FindBookLoanedAndDelete({bookID: bookID});
+
+        if(!deleteLoanBookRecord)
+        {
+            return res.status(400).json({success, error: "Failed to Delete loaned book record"});
         }
 
         success = true;

@@ -114,3 +114,26 @@ export const countLateReturn = (dueDate: Date | string, returnDate?: Date | stri
     
     return 0;
 };
+
+/*
+export const maskedData = (type:string, data:string) => 
+{
+    switch(type)
+    {
+        case "email":
+            let [localPart, domain] = data.split("@");
+            let hashedLocal = localPart.split("").map((char, i) => (i < 3 ? char : "*")).join("");
+            return data === "N/A" ? data : `${hashedLocal}@${domain}`;
+
+        case "phoneNumber":
+            return data.split("").map((char, i) => (i < 3 ? char: "*")).join("");
+
+        case "password":
+            return data.split("").map((char) => (char = "*"));
+        
+        default:
+            console.log(`Invalid Type: ${type}!`);
+            break;
+    }
+}
+    */

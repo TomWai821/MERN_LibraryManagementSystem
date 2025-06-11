@@ -15,7 +15,6 @@ const AllUserTableHeader =
 [
     {label:"No."},
     {label:"Username"},
-    {label:"Email"},
     {label:"Role"},
     {label:"Status"},
     {label:"Gender"},
@@ -29,7 +28,6 @@ const SuspendUserTableHeader =
     {label:"Role", isAdmin: false},
     {label:"Status", isAdmin: false},
     {label:"StartDate", isAdmin: false},
-    {label:"DueDate", isAdmin: false},
     {label:"Duration", isAdmin: false},
     {label:"Actions", isAdmin: true}
 ]

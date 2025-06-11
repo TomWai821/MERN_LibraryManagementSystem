@@ -46,7 +46,7 @@ const AllUserTable:FC<UserDataTableInterface> = (DataForAllUserTable) =>
     
     return(
         <Fragment>
-            <Table>
+            <Table sx={{tableLayout: 'fixed', width: '100%'}}>
                 <TableHead>
                     <TableRow>
                         {AllUserTableHeader.map((header, index) =>
@@ -63,7 +63,6 @@ const AllUserTable:FC<UserDataTableInterface> = (DataForAllUserTable) =>
                             <TableRow key={index} sx={{"&:hover": {backgroundColor: "rgb(230, 230, 230)"}}}>
                                 <TableCell sx={{"&:hover": {cursor: "pointer"}}}>{index + 1}</TableCell>
                                 <ContentTableCell TableName={TableName} value={value} Information={data}>{data.username}</ContentTableCell>
-                                <ContentTableCell TableName={TableName} value={value} Information={data}>{data.email}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} Information={data}>{data.role}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} Information={data} textColor={setDataTextColor(data.status, "Normal", "green", "red")}>{data.status}</ContentTableCell>
                                 <ContentTableCell TableName={TableName} value={value} Information={data}>{data.gender}</ContentTableCell>

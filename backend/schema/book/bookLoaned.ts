@@ -144,6 +144,18 @@ export const FindBookLoanedByIDAndDelete = async (bookLoanedId: string, data: Re
     }
 }
 
+export const FindBookLoanedAndDelete = async (data: Record<string, any>) =>
+{
+    try
+    {
+        return await BookLoaned.deleteOne(data);
+    }
+    catch(error)
+    {
+        printError(error);
+    }
+}
+
 export const detectExpiredLoanRecord = async () => 
 {
     try

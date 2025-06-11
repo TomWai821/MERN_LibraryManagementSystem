@@ -5,11 +5,12 @@ import { displayAsColumn } from "../../../../ArraysAndObjects/Style";
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
 import { setDataTextColor } from "../../../../Controller/SetTextController";
 
-
 const AllUserDataBody:FC<DisplayDataModalBody> = (AllUserData) => 
 {
     const {data} = AllUserData;
     const Data = data as UserResultDataInterface;
+
+    
 
     return(
         <Box sx={{...displayAsColumn, alignItems:'center', justifyContent: 'center'}}>
@@ -18,9 +19,7 @@ const AllUserDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
             <Box sx={{ display: 'grid', gap: '20px 50px', gridTemplateColumns: '100%'}}>
                 <Typography>Username: {Data.username}</Typography>
                 <Typography>Email: {Data.email}</Typography>
-                <Typography>Status: 
-                    <Box component="span" color={setDataTextColor(Data.status, "Normal", "green", "red")}>{Data.status}</Box>
-                </Typography>
+                <Typography>Status: <Box component="span" color={setDataTextColor(Data.status, "Normal", "green", "red")}>{Data.status}</Box></Typography>
                 <Typography>Gender: {Data.gender}</Typography>
             </Box>
         </Box>

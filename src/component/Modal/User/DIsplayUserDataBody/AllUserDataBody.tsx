@@ -10,8 +10,6 @@ const AllUserDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
     const {data} = AllUserData;
     const Data = data as UserResultDataInterface;
 
-    
-
     return(
         <Box sx={{...displayAsColumn, alignItems:'center', justifyContent: 'center'}}>
             <Avatar src={Data.avatarUrl ?? "/broken-image.jpg"} sx={{ width: "100px", height: "100px" }} />
